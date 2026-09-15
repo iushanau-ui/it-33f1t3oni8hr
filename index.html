@@ -1,0 +1,3294 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0a6b5f">
+<title>Итальянский — тренажёр</title>
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#232019; --ink2:#4c463b; --muted:#847d6f;
+  --line:#e6e0d4; --line2:#f0ebe0;
+  --hard:#1b5e9c; --hard-bg:#e8f1fa; --soft:#b4531a; --soft-bg:#fbeee3; --neu:#4a7a52; --neu-bg:#eaf3ea;
+  --accent:#0a6b5f; --accent-bg:#e4f2ef; --hl:#fff8e0; --warn:#a8341f; --warn-bg:#fdeeea;
+  --ok:#1f7a3a; --ok-bg:#e3f3e7; --bad:#b3261e; --bad-bg:#fbe7e5;
+  --shadow:0 1px 2px rgba(40,32,16,.06), 0 6px 18px rgba(40,32,16,.05);
+  --r:14px; --nav:60px;
+}
+html[data-theme="dark"]{
+  --bg:#15140f; --card:#1e1c18; --ink:#ece7dc; --ink2:#cfc8ba; --muted:#968f81;
+  --line:#332f28; --line2:#282520;
+  --hard:#78b7f0; --hard-bg:#16283a; --soft:#eaa46c; --soft-bg:#3a2718; --neu:#8fc79a; --neu-bg:#1c2a1e;
+  --accent:#5fd0bd; --accent-bg:#183430; --hl:#33301c; --warn:#f08a72; --warn-bg:#38201c;
+  --ok:#7ad494; --ok-bg:#183a24; --bad:#f28b84; --bad-bg:#3d1f1c;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.25);
+}
+/* e-ink: без теней, без анимаций, жирные рамки, крупнее */
+html.eink{ --bg:#fff; --card:#fff; --ink:#000; --ink2:#000; --muted:#333; --line:#000; --line2:#ddd;
+  --accent:#000; --accent-bg:#eee; --hl:#eee; --ok:#000; --ok-bg:#e8e8e8; --bad:#000; --bad-bg:#fff;
+  --hard:#000; --hard-bg:#f2f2f2; --soft:#000; --soft-bg:#f2f2f2; --neu:#000; --neu-bg:#f2f2f2;
+  --shadow:none; }
+html.eink *{transition:none !important; animation:none !important; border-radius:6px !important}
+html.eink body{font-size:18px}
+html.eink .opt{border-width:2px}
+html.eink .opt.bad{text-decoration:line-through}
+html.eink .opt.good{outline:3px solid #000}
+html.eink button.pri{background:#000;color:#fff}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,"Segoe UI",Roboto,system-ui,sans-serif;font-size:16px;line-height:1.5;
+  -webkit-text-size-adjust:100%; padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom))}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+button:disabled{opacity:.45;cursor:default}
+a{color:var(--accent)}
+.it{font-family:Georgia,"Times New Roman",serif}
+.tr{color:var(--accent);font-size:.92em;white-space:nowrap}
+.muted{color:var(--muted)}
+.hidden{display:none !important}
+
+/* ---------- top bar ---------- */
+.top{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.top .wrap{display:flex;align-items:center;gap:10px;height:54px}
+.top h1{font-family:Georgia,serif;font-size:19px;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:6px 10px;font-size:14px;line-height:1.2}
+.icon:hover{border-color:var(--accent)}
+
+/* ---------- bottom nav ---------- */
+nav.bottom{position:fixed;left:0;right:0;bottom:0;height:calc(var(--nav) + env(safe-area-inset-bottom));
+  padding-bottom:env(safe-area-inset-bottom);background:var(--card);border-top:1px solid var(--line);
+  display:flex;z-index:40}
+nav.bottom button{flex:1;border:none;background:none;color:var(--muted);font-size:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 0}
+nav.bottom button .ic{font-size:21px;line-height:1}
+nav.bottom button.on{color:var(--accent);font-weight:700}
+nav.bottom button:focus{outline:none}
+nav.bottom button:focus-visible{box-shadow:inset 0 0 0 2px var(--accent);border-radius:10px}
+nav.bottom{justify-content:center}
+nav.bottom button{max-width:180px}
+button:focus{outline:none} button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.pane{display:none;padding:16px 0 24px}
+.pane.on{display:block}
+
+/* ---------- cards / boxes ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:14px 0;box-shadow:var(--shadow);scroll-margin-top:64px}
+.card > h2{margin:0 0 4px;font-family:Georgia,serif;font-size:20px;display:flex;align-items:baseline;gap:10px}
+.card > h2 .no{font-family:-apple-system,system-ui,sans-serif;font-size:12px;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:3px 8px;letter-spacing:.5px}
+.lead{color:var(--muted);font-size:14px;margin:4px 0 12px}
+h3{font-size:14px;margin:18px 0 8px;color:var(--ink2);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
+.box{border-radius:10px;padding:10px 14px;margin:12px 0;font-size:14px;border:1px solid var(--line);background:var(--bg)}
+.box.key{background:var(--hl);border-color:#e8d9a0}
+html[data-theme="dark"] .box.key{border-color:#5a5030}
+.box.exc{background:var(--warn-bg);border-color:var(--warn)}
+.box .ttl{font-weight:700;display:block;margin-bottom:3px}
+code{font-family:"Courier New",monospace;background:var(--line2);padding:1px 5px;border-radius:4px;font-size:.9em}
+
+/* ---------- tables (справочник) ---------- */
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:14.5px;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:8px 0 4px;background:var(--card)}
+th{background:var(--line2);color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
+td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.sp{font-family:"Courier New",monospace;font-weight:700;font-size:14px;white-space:nowrap}
+td.ex{font-family:Georgia,serif}
+td.ex i{color:var(--muted);font-style:normal;font-size:13.5px;font-family:-apple-system,system-ui,sans-serif}
+.b{display:inline-block;padding:2px 9px;border-radius:7px;font-weight:700;font-size:14px;white-space:nowrap;border:1px solid transparent}
+.hard{color:var(--hard);background:var(--hard-bg);border-color:var(--hard)}
+.soft{color:var(--soft);background:var(--soft-bg);border-color:var(--soft)}
+.neu{color:var(--neu);background:var(--neu-bg);border-color:var(--neu)}
+.pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin:10px 0}
+.pair{border:1px solid var(--line);border-radius:9px;padding:9px 12px;background:var(--bg);font-size:14px}
+.pair .a{font-family:Georgia,serif;font-weight:700}
+.pair .m{color:var(--muted);font-size:13px}
+
+/* ---------- study home ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}
+.stat b{display:block;font-size:22px;line-height:1.1}
+.stat span{font-size:11.5px;color:var(--muted)}
+button.pri{width:100%;border:none;background:var(--accent);color:#fff;font-size:18px;font-weight:700;
+  padding:16px;border-radius:14px;margin:10px 0 6px}
+button.sec{width:100%;border:1px solid var(--line);background:var(--card);padding:12px;border-radius:12px;font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13.5px}
+.chip.on{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);font-weight:600}
+.deckrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2)}
+.deckrow:last-child{border-bottom:none}
+.deckrow .nm{flex:1;min-width:0}
+.deckrow .nm small{display:block;color:var(--muted);font-size:12.5px}
+.bar{height:8px;background:var(--line2);border-radius:4px;overflow:hidden;margin-top:5px;display:flex}
+.bar i{display:block;height:100%}
+.bar .k{background:var(--ok)} .bar .l{background:var(--soft)} .bar .n{background:transparent}
+.sw{width:44px;height:26px;border-radius:13px;background:var(--line);position:relative;border:none;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.sw.on{background:var(--accent)} .sw.on::after{left:21px}
+
+/* ---------- числа ---------- */
+.dl .tr{white-space:normal}
+table.numtbl td{padding:6px 8px}
+table.numtbl td.n{font-family:Georgia,serif;font-weight:700;font-size:18px;width:52px;text-align:center;color:var(--accent)}
+table.numtbl td.w{font-family:Georgia,serif;font-weight:700;font-size:17px}
+table.numtbl td.t{color:var(--accent);white-space:nowrap}
+table.numtbl td.r{color:var(--muted)}
+body.num-hide-tr table.numtbl td.t{visibility:hidden}
+body.num-hide-it table.numtbl td.w{visibility:hidden}
+body.phr-hide-tr .dl.phr .tr{visibility:hidden}
+body.phr-hide-ru .dl.phr .m{visibility:hidden}
+body.phr-hide-it .dl.phr .w{visibility:hidden}
+.dl.phr{overflow:visible}
+.dl.phr .dgroup{position:sticky;top:54px;z-index:5}
+.dl.phr .drow .w{font-size:17px}
+#phrNav{margin-top:8px}
+
+/* ---------- session ---------- */
+#session{position:fixed;inset:0;background:var(--bg);z-index:50;display:none;flex-direction:column}
+#session.on{display:flex}
+.s-top{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border-bottom:1px solid var(--line)}
+.s-top .prog{flex:1;height:8px;background:var(--line2);border-radius:4px;overflow:hidden}
+.s-top .prog i{display:block;height:100%;background:var(--accent);transition:width .2s}
+.s-top .cnt{font-size:13px;color:var(--muted);white-space:nowrap}
+.s-body{flex:1;overflow-y:auto;padding:14px 16px 20px}
+.s-body .wrap{max-width:620px}
+.mode{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.mode .tag{font-weight:600;text-transform:none;letter-spacing:0;color:var(--accent);background:var(--accent-bg);padding:2px 8px;border-radius:6px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 20px;text-align:center;box-shadow:var(--shadow);min-height:150px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.q .big{font-family:Georgia,serif;font-size:32px;line-height:1.2;font-weight:700;word-break:break-word}
+.q .mid{font-size:20px;line-height:1.35}
+.q .tr{font-size:18px;white-space:normal}
+.q .note{color:var(--muted);font-size:13.5px;margin-top:6px}
+.q .src{color:var(--muted);font-size:12px}
+.spk{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 14px;font-size:14px;align-self:center;margin-top:4px}
+.opts{display:grid;gap:9px;margin-top:14px}
+.opt{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px 14px;text-align:left;font-size:17px;line-height:1.35;
+  display:flex;gap:10px;align-items:center;transition:background .1s}
+.opt .k{flex:none;width:24px;height:24px;border-radius:50%;background:var(--line2);color:var(--muted);font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.opt:hover{border-color:var(--accent)}
+.opt.good{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.opt.dim{opacity:.55}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.grades button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 4px;font-size:14px;line-height:1.2}
+.grades button small{display:block;color:var(--muted);font-size:11px;font-weight:400}
+.grades .g0{color:var(--bad)} .grades .g3{color:var(--ok)}
+.reveal{margin-top:14px}
+.typing{display:flex;gap:8px;margin-top:14px}
+.typing input{flex:1;padding:14px;border:1px solid var(--line);border-radius:12px;font-size:18px;background:var(--card);color:var(--ink);font-family:Georgia,serif}
+.typing input:focus{outline:none;border-color:var(--accent)}
+.fb{margin-top:14px;border-radius:12px;padding:12px 14px;border:1px solid var(--line)}
+.fb.ok{background:var(--ok-bg);border-color:var(--ok)} .fb.no{background:var(--bad-bg);border-color:var(--bad)}
+.fb .ans{font-family:Georgia,serif;font-size:20px;font-weight:700}
+.next{margin-top:12px}
+.done{text-align:center;padding:30px 10px}
+.done .big{font-size:44px}
+.kbd{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+
+/* ---------- dictionary ---------- */
+.search{display:flex;gap:8px;margin:0 0 10px}
+.search input{flex:1;padding:11px 13px;border:1px solid var(--line);border-radius:11px;font-size:15px;background:var(--card);color:var(--ink)}
+.search input:focus{outline:none;border-color:var(--accent)}
+.dl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.dgroup{padding:9px 14px;background:var(--line2);font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700}
+.drow{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line2)}
+.drow:last-child{border-bottom:none}
+.drow .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--line)}
+.drow .dot.l{background:var(--soft)} .drow .dot.k{background:var(--ok)} .drow .dot.s{background:transparent;border:2px solid var(--muted)}
+.drow .txt{flex:1;min-width:0}
+.drow .w{font-family:Georgia,serif;font-weight:600;font-size:16.5px}
+.drow .m{color:var(--muted);font-size:13.5px}
+.drow .m::before{content:" — "}
+.drow .n{display:block;color:var(--muted);font-size:12.5px}
+.drow .btns{display:flex;gap:6px;flex:none}
+.drow .btns button{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:5px 8px;font-size:13px}
+.drow.sus .w{text-decoration:line-through;color:var(--muted)}
+.more{width:100%;padding:12px;border:none;background:var(--line2);font-size:14px}
+
+
+/* ---------- все слова ---------- */
+.abc{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.abc a{display:inline-block;min-width:28px;text-align:center;padding:4px 6px;border:1px solid var(--line);border-radius:7px;text-decoration:none;color:var(--ink2);font-size:13px;background:var(--card);font-family:Georgia,serif;font-weight:700}
+.abc a.dis{opacity:.3;pointer-events:none}
+.dl.all{overflow:visible}
+.dl.all .dgroup:first-child{border-radius:var(--r) var(--r) 0 0}
+.dl.all .drow{padding:6px 12px}
+.dl.all .drow .w{font-size:16px}
+.dl.all .dgroup{position:sticky;top:54px;z-index:5}
+body.all-hide-tr .dl.all .tr{visibility:hidden}
+body.all-hide-ru .dl.all .m{visibility:hidden}
+@media print{ .top,nav.bottom,.search,.chips,.abc,.drow .btns{display:none !important} body{padding:0} .pane{display:none} .pane.on{display:block} .dl{border:none} .drow{break-inside:avoid} }
+
+/* ---------- settings ---------- */
+.set{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line2)}
+.set:last-child{border-bottom:none}
+.set .lbl{flex:1} .set .lbl small{display:block;color:var(--muted);font-size:12.5px}
+.set select,.set input[type=number]{padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-size:15px}
+.set input[type=number]{width:80px}
+textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:monospace;font-size:12px;background:var(--bg);color:var(--ink)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* ---------- reference sub-nav ---------- */
+.subnav{position:sticky;top:54px;z-index:20;background:var(--bg);padding:8px 0;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;margin:0 -16px;padding-left:16px;padding-right:16px}
+.subnav a{display:inline-block;margin-right:6px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--ink2);font-size:13px;background:var(--card)}
+.phr{display:grid;grid-template-columns:1fr;gap:0}
+.phr .drow{padding:8px 0}
+.conj{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.conj table{margin:0}
+.conj th{text-align:center}
+.footer{color:var(--muted);font-size:12.5px;margin:30px 0 10px;text-align:center}
+@media (min-width:760px){
+  .stats{grid-template-columns:repeat(4,1fr)}
+  .opts{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="wrap">
+  <h1 id="title">Итальянский — тренажёр</h1>
+  <button class="icon" id="ttsTest" title="Проверить озвучку">🔊</button>
+  <button class="icon" id="themeBtn" title="Тема">🌙</button>
+  <button class="icon" id="setBtn" title="Настройки">⚙️</button>
+</div></div>
+
+<!-- ======================= УЧИТЬ ======================= -->
+<div class="pane on" id="p-study"><div class="wrap">
+  <div class="stats">
+    <div class="stat"><b id="stDue">0</b><span>к повторению</span></div>
+    <div class="stat"><b id="stNew">0</b><span>новых сегодня</span></div>
+    <div class="stat"><b id="stKnown">0</b><span>выучено</span></div>
+    <div class="stat"><b id="stStreak">0</b><span>дней подряд</span></div>
+  </div>
+
+  <button class="pri" id="startBtn">Начать занятие</button>
+  <div class="muted" id="startHint" style="font-size:13px;text-align:center"></div>
+
+  <div class="card">
+    <h2>Режим</h2>
+    <div class="lead">«Смешанный» чередует все включённые режимы — так запоминается лучше всего. Отдельный режим — если хочешь отработать одно.</div>
+    <div class="chips" id="modeChips"></div>
+  </div>
+
+  <div class="card">
+    <h2>Колоды</h2>
+    <div class="lead">Что попадает в занятие. Зелёное — выучено (интервал от 3 недель), оранжевое — в процессе.</div>
+    <div id="deckList"></div>
+  </div>
+
+  <div class="card">
+    <h2>Как это работает</h2>
+    <div class="lead">
+      Каждое слово — карточка. После ответа она уходит и возвращается через 1 → 3 → 7 → 14 → 30 дней, если отвечаешь верно,
+      и через 10 минут, если ошибся. Занятие можно прервать в любой момент — прогресс сохраняется после каждого ответа.
+      Сначала показываются просроченные повторы, потом новые слова (лимит в настройках, можно добавить кнопкой «ещё новых»).
+    </div>
+  </div>
+</div></div>
+
+<!-- ======================= ФРАЗЫ ======================= -->
+<div class="pane" id="p-phr"><div class="wrap">
+  <div class="card" style="margin-top:0">
+    <h2><span class="no">💬</span>Фразы и вопросы для общения</h2>
+    <div class="lead">Всё, что уже можно сказать и спросить. Раздел «Вопросы для общения» — это пары вопрос → ответ: учи их целиком,
+      как готовые реплики. Кнопка ниже запускает занятие только по фразам.</div>
+    <button class="pri" id="phrLearn">Учить фразы</button>
+    <div class="chips">
+      <button class="chip" id="phrHideTr">Скрыть транскрипцию</button>
+      <button class="chip" id="phrHideRu">Скрыть перевод</button>
+      <button class="chip" id="phrHideIt">Скрыть итальянское</button>
+    </div>
+    <div class="search" style="margin-top:8px"><input type="search" id="pq" placeholder="Поиск по фразам…"></div>
+  </div>
+  <div class="subnav" id="phrNav"></div>
+  <div class="dl phr" id="phrList"></div>
+</div></div>
+
+<!-- ======================= ЧИСЛА ======================= -->
+<div class="pane" id="p-num"><div class="wrap">
+  <div class="card" style="margin-top:0">
+    <h2><span class="no">1–100</span>Числа — таблица для спокойного изучения</h2>
+    <div class="lead">Домашка: числительные 0–100. Всего надо запомнить <b>29 слов</b>: 0–20, десятки 30–90 и 100. Остальное собирается по правилу.</div>
+    <button class="pri" id="numLearn">Учить числа</button>
+    <div class="chips">
+      <button class="chip" id="numHideTr">Скрыть транскрипцию</button>
+      <button class="chip" id="numHideIt">Скрыть итальянское</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Как устроены числа</h2>
+    <div class="box key"><span class="ttl">Три правила — и ты считаешь до 100</span>
+      <b>1. Десяток + единица пишутся одним словом:</b> venti + due = <span class="it">ventidue</span>, trenta + cinque = <span class="it">trentacinque</span>.<br>
+      <b>2. Перед uno и otto последняя гласная десятка выпадает</b> (две гласные рядом не терпят):
+      vent<s>i</s> + uno = <span class="it">ventuno</span>, vent<s>i</s> + otto = <span class="it">ventotto</span>, trent<s>a</s> + uno = <span class="it">trentuno</span>, quarant<s>a</s> + otto = <span class="it">quarantotto</span>.<br>
+      <b>3. Tre на конце получает ударение и знак:</b> <span class="it">ventitré, trentatré, quarantatré</span> [вэнтитрЭ] — ударение уходит на последний слог.
+    </div>
+    <div class="box"><span class="ttl">Ударение внутри составных</span>
+      Оно всегда на единице, десяток произносится без ударения: <span class="it">ventiquattro</span> [вэнтикуАттро], <span class="it">cinquantacinque</span> [чинкуантачИнкуэ].
+      В транскрипции ниже заглавная гласная — ровно там.
+    </div>
+    <div class="box"><span class="ttl">11–16 и 17–19 устроены по-разному</span>
+      11–16: единица + <b>-dici</b>, ударение на единице: <span class="it">Undici, dOdici, trEdici, quattOrdici, quIndici, sEdici</span>.<br>
+      17–19: <b>dici-</b> + единица, ударение на единице: <span class="it">diciassEtte, diciOtto, diciannOve</span>. Это надо просто заучить.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>0–20: заучить</h2>
+    <div class="tbl-wrap"><table class="numtbl" id="numTbl1"></table></div>
+  </div>
+  <div class="card">
+    <h2>Десятки и 100: заучить</h2>
+    <div class="tbl-wrap"><table class="numtbl" id="numTbl2"></table></div>
+  </div>
+  <div class="card">
+    <h2>21–99: собираются по правилу</h2>
+    <div class="lead">Полная таблица, чтобы проверять себя. Нажми на десяток в шапке, чтобы показать только его.</div>
+    <div class="chips" id="numTens"></div>
+    <div class="tbl-wrap"><table class="numtbl" id="numTbl3"></table></div>
+  </div>
+
+  <div class="card">
+    <h2>Счёт и номера телефонов</h2>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Знак</th><th>Слово</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">+</td><td class="ex"><b>più</b> <span class="tr">[пью]</span></td><td class="ex">due più tre fa cinque — 2 + 3 = 5</td></tr>
+        <tr><td class="sp">−</td><td class="ex"><b>meno</b> <span class="tr">[мЭно]</span></td><td class="ex">dieci meno quattro fa sei — 10 − 4 = 6</td></tr>
+        <tr><td class="sp">=</td><td class="ex"><b>fa</b> <span class="tr">[фа]</span></td><td class="ex">«делает», то есть «будет, равно»</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box key"><span class="ttl">Как итальянцы читают номер телефона</span>
+      Чаще всего <b>парами</b>: 12 81 32 6 → <span class="it">dodici, ottantuno, trentadue, sei</span>. Можно и по цифрам, особенно код страны и тройки:
+      <span class="it">+375 29 758 98 99</span> → <span class="it">più tre sette cinque, ventinove, sette cinquantotto, novantotto, novantanove</span>.<br>
+      Свой номер полезно отрепетировать в обоих вариантах: <span class="it">Il mio numero è…</span>
+    </div>
+    <div class="box"><span class="ttl">Как спросить и ответить</span>
+      <span class="it">Qual è il tuo numero di telefono?</span> — <span class="it">Il mio numero è…</span><br>
+      <span class="it">Qual è il Suo cellulare?</span> (на «Вы») — <span class="it">Il mio cellulare è…</span><br>
+      <span class="it">Hai anche il fisso?</span> — есть ли и домашний? <span class="it">Come, scusi?</span> — переспросить.
+    </div>
+  </div>
+</div></div>
+
+<!-- ======================= СПРАВОЧНИК ======================= -->
+<div class="pane" id="p-ref"><div class="wrap">
+  <div class="subnav">
+    <a href="#g5">essere и avere</a><a href="#g6">Артикли</a><a href="#g1">Грамматика L1</a><a href="#g2">Алфавит</a><a href="#g4">Ошибки в тетради</a>
+    <a href="#r0">Шпаргалка</a><a href="#rc">C</a><a href="#rg">G</a><a href="#rsc">SC</a><a href="#rgn">GN</a><a href="#rgl">GL</a>
+    <a href="#rs">S</a><a href="#rz">Z</a><a href="#rqu">QU</a><a href="#rh">H</a><a href="#rdd">Двойные</a><a href="#rv">Гласные</a><a href="#rnl">N L R</a><a href="#rstr">Ударение</a>
+  </div>
+
+  <!-- ---- essere и avere: разбор ---- -->
+  <div class="card" id="g5">
+    <h2><span class="no">ГЛАГОЛ</span>essere и avere — как устроены</h2>
+    <div class="lead">Домашка 10.09: спряжение essere и avere. Это два главных глагола языка, на них держится половина фраз А1.</div>
+
+    <h3>Что такое спряжение и зачем оно</h3>
+    <div class="box">
+      В русском глагол тоже меняется: я <b>иду</b>, ты <b>идёшь</b>, он <b>идёт</b>. В итальянском так же, но окончания различаются сильнее,
+      поэтому <b>форма глагола сама показывает, кто действует</b>, и местоимение обычно опускают:
+      <span class="it">Sono di Minsk</span> = «(я) из Минска», <span class="it">Hai un gatto?</span> = «(у тебя) есть кот?».
+      Шесть лиц: я · ты · он/она/Вы · мы · вы · они. Форма для «Вы» (Lei) всегда совпадает с формой «он/она».
+    </div>
+
+    <h3>Обе таблицы рядом</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Кто</th><th>essere — быть</th><th>avere — иметь</th><th>Запомнить парой</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">io<br><i>я</i></td><td class="ex"><b>sono</b> <span class="tr">[сОно]</span></td><td class="ex"><b>ho</b> <span class="tr">[о]</span></td><td class="ex">Sono Ilia. Ho una domanda.</td></tr>
+        <tr><td class="sp">tu<br><i>ты</i></td><td class="ex"><b>sei</b> <span class="tr">[сЭй]</span></td><td class="ex"><b>hai</b> <span class="tr">[ай]</span></td><td class="ex">Sei stanco? Hai fame?</td></tr>
+        <tr><td class="sp">lui / lei / Lei<br><i>он / она / Вы</i></td><td class="ex"><b>è</b> <span class="tr">[э]</span></td><td class="ex"><b>ha</b> <span class="tr">[а]</span></td><td class="ex">Maria è di Roma. Maria ha il cellulare.</td></tr>
+        <tr><td class="sp">noi<br><i>мы</i></td><td class="ex"><b>siamo</b> <span class="tr">[сьЯмо]</span></td><td class="ex"><b>abbiamo</b> <span class="tr">[аббьЯмо]</span></td><td class="ex">Siamo pronti. Abbiamo gli appunti.</td></tr>
+        <tr><td class="sp">voi<br><i>вы (все)</i></td><td class="ex"><b>siete</b> <span class="tr">[сьЭтэ]</span></td><td class="ex"><b>avete</b> <span class="tr">[авЭтэ]</span></td><td class="ex">Siete italiani? Avete una domanda?</td></tr>
+        <tr><td class="sp">loro<br><i>они</i></td><td class="ex"><b>sono</b> <span class="tr">[сОно]</span></td><td class="ex"><b>hanno</b> <span class="tr">[Анно]</span></td><td class="ex">Sono in aeroporto. Hanno un cane.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Пять ловушек avere</h3>
+    <div class="box exc">
+      <b>1. h не читается никогда.</b> ho = [о], hai = [ай], ha = [а], hanno = [Анно]. Она стоит только на письме, чтобы отличать
+      <span class="it">ho</span> от <span class="it">o</span> «или», <span class="it">hai</span> от <span class="it">ai</span> «к», <span class="it">ha</span> от <span class="it">a</span> «в», <span class="it">hanno</span> от <span class="it">anno</span> «год».<br>
+      <b>2. Отрицание читается слитно:</b> <span class="it">non ho</span> = [нонО], <span class="it">non ha</span> = [нонА], <span class="it">non hai</span> = [нонАй]. Записано у тебя в тетради — правильно.<br>
+      <b>3. Ощущения — через avere, не essere.</b> По-русски «мне холодно, я голоден», по-итальянски «имею холод, имею голод»:
+      <span class="it">ho freddo, ho fame, ho sete, ho sonno, ho paura, ho fretta, ho la febbre</span>. Сказать <span class="it">sono fame</span> — грубая ошибка.<br>
+      <b>4. Вопрос — та же фраза с интонацией вверх:</b> <span class="it">Hai il cellulare.</span> → <span class="it">Hai il cellulare?</span> Порядок слов не меняется.<br>
+      <b>5. Ударение в abbiamo и avete — на предпоследний слог:</b> [аббьЯмо], [авЭтэ]. В hanno двойное nn держим: [Ан-но].
+    </div>
+
+    <h3>Три ловушки essere</h3>
+    <div class="box exc">
+      <b>1. sono — это и «я есть», и «они есть».</b> Различаем по контексту или по местоимению: <span class="it">io sono / loro sono</span>.<br>
+      <b>2. è — со знаком ударения.</b> Без знака <span class="it">e</span> — это «и». <span class="it">Lui è italiano e lei è spagnola.</span><br>
+      <b>3. Перед именем страны/города — di, перед состоянием — ничего:</b> <span class="it">Sono di Minsk. Sono stanco.</span>
+    </div>
+
+    <h3>Когда какой глагол</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>essere — «быть кем/каким/откуда»</th><th>avere — «иметь что / ощущать»</th></tr></thead>
+      <tbody>
+        <tr><td class="ex">имя, национальность, профессия: <span class="it">Sono Ilia. Sono bielorusso.</span></td><td class="ex">вещи: <span class="it">Ho il cellulare. Hai gli appunti? Ha un cane.</span></td></tr>
+        <tr><td class="ex">происхождение: <span class="it">Sono di Minsk. È di Genova.</span></td><td class="ex">ощущения: <span class="it">Ho fame, ho sonno, ho freddo.</span></td></tr>
+        <tr><td class="ex">качество, состояние: <span class="it">Sono stanco. È facile. Non è facile!</span></td><td class="ex">возраст (скоро): <span class="it">Ho 32 anni.</span></td></tr>
+        <tr><td class="ex">где находится: <span class="it">Sono in aeroporto.</span></td><td class="ex">«у меня есть вопрос»: <span class="it">Ho una domanda.</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Отработка: упр. 11 на стр. 148 с ответами</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Фраза</th><th>Почему так</th></tr></thead>
+      <tbody>
+        <tr><td class="ex">Maria non <b>ha</b> il cellulare.</td><td>Maria = она → 3-е лицо</td></tr>
+        <tr><td class="ex">Signore, <b>ha</b> un giornale?</td><td>обращение на «Вы» → форма как для «он»</td></tr>
+        <tr><td class="ex">Tu <b>hai</b> un gatto?</td><td>tu → hai</td></tr>
+        <tr><td class="ex">Io <b>ho</b> un cane.</td><td>io → ho</td></tr>
+        <tr><td class="ex">Signora, Lei <b>ha</b> un cane?</td><td>Lei → ha</td></tr>
+        <tr><td class="ex">Tu non <b>hai</b> il cellulare?</td><td>tu → hai; non перед глаголом</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box key"><span class="ttl">Как выучить за вечер</span>
+      Учи <b>парами по лицам</b>, проговаривая вслух с местоимением и без: «io sono — io ho, sono — ho», «tu sei — tu hai, sei — hai»…
+      Потом закрой таблицу и прогони колоду «Формы глаголов» в тренажёре в режиме «Написание»: там нужно набрать форму руками — это и есть контроль.
+    </div>
+  </div>
+
+  <!-- ---- Артикли и притяжательные ---- -->
+  <div class="card" id="g6">
+    <h2><span class="no">L2</span>Артикли il / lo / la / l' — i / gli / le и «мой, твой, Ваш»</h2>
+    <div class="lead">С урока 10.09: <span class="it">la borsa, lo zaino, le matite, gli appunti, gli studi, il lavoro, il mio numero, il tuo cellulare</span>.</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Род</th><th>ед. ч.</th><th>мн. ч.</th><th>Когда</th><th>Примеры</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">м.</td><td class="ex"><b>il</b> [иль]</td><td class="ex"><b>i</b> [и]</td><td>перед обычной согласной</td><td class="ex">il numero → i numeri; il gatto → i gatti; il lavoro</td></tr>
+        <tr><td class="sp">м.</td><td class="ex"><b>lo</b> [ло]</td><td class="ex"><b>gli</b> [льи]</td><td>перед <b>z</b>, <b>s+согласная</b>, gn, ps, x, y</td><td class="ex">lo zaino → gli zaini; lo studente → gli studenti; gli studi</td></tr>
+        <tr><td class="sp">м.</td><td class="ex"><b>l'</b> [ль]</td><td class="ex"><b>gli</b> [льи]</td><td>перед гласной</td><td class="ex">l'amico → gli amici; l'appunto → gli appunti</td></tr>
+        <tr><td class="sp">ж.</td><td class="ex"><b>la</b> [ла]</td><td class="ex"><b>le</b> [лэ]</td><td>перед согласной</td><td class="ex">la borsa → le borse; la matita → le matite</td></tr>
+        <tr><td class="sp">ж.</td><td class="ex"><b>l'</b> [ль]</td><td class="ex"><b>le</b> [лэ]</td><td>перед гласной</td><td class="ex">l'amica → le amiche</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box key"><span class="ttl">Алгоритм в две проверки</span>
+      1) Род: слово на <b>-o</b> — почти всегда мужской, на <b>-a</b> — женский, на <b>-e</b> — смотреть в словаре.<br>
+      2) Первая буква: обычная согласная → il / la; <b>z или s+согласная</b> → lo (ж. р. всё равно la); гласная → l'.<br>
+      Множественное: il → i, lo и l' (м.) → gli, la и l' (ж.) → le. Само существительное меняет окончание: -o → -i, -a → -e, -e → -i.
+    </div>
+    <h3>Мой, твой, Ваш — всегда с артиклем</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th></th><th>м. р.</th><th>ж. р.</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">мой / моя</td><td class="ex"><b>il mio</b> [иль мИо]</td><td class="ex"><b>la mia</b> [ла мИа]</td><td class="ex">il mio numero, la mia borsa</td></tr>
+        <tr><td class="sp">твой / твоя</td><td class="ex"><b>il tuo</b> [иль тУо]</td><td class="ex"><b>la tua</b> [ла тУа]</td><td class="ex">il tuo cellulare, la tua matita</td></tr>
+        <tr><td class="sp">Ваш / Ваша</td><td class="ex"><b>il Suo</b> [иль сУо]</td><td class="ex"><b>la Sua</b> [ла сУа]</td><td class="ex">il Suo indirizzo, la Sua domanda</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box">Артикль перед притяжательным <b>обязателен</b>: не «mio numero», а <span class="it">il mio numero</span>. Suo/Sua пишут с большой буквы, когда это вежливое «Ваш», чтобы отличить от «его/её».</div>
+  </div>
+
+  <!-- ---- Грамматика Lezione 1 ---- -->
+  <div class="card" id="g1">
+    <h2><span class="no">L1</span>Грамматика Lezione 1 — primi contatti</h2>
+    <div class="lead">Всё, что даёт учебник Nuovo Espresso 1 в первом уроке, плюс глагол stare из тетради.</div>
+
+    <h3>Три глагола в единственном числе</h3>
+    <div class="conj">
+      <table><thead><tr><th colspan="2">essere — быть</th></tr></thead><tbody>
+        <tr><td class="sp">io</td><td class="ex"><b>sono</b> <span class="tr">[сОно]</span></td></tr>
+        <tr><td class="sp">tu</td><td class="ex"><b>sei</b> <span class="tr">[сЭй]</span></td></tr>
+        <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>è</b> <span class="tr">[э]</span></td></tr>
+        <tr><td class="sp">noi</td><td class="ex"><b>siamo</b> <span class="tr">[сьЯмо]</span></td></tr>
+        <tr><td class="sp">voi</td><td class="ex"><b>siete</b> <span class="tr">[сьЭтэ]</span></td></tr>
+        <tr><td class="sp">loro</td><td class="ex"><b>sono</b> <span class="tr">[сОно]</span></td></tr>
+      </tbody></table>
+      <table><thead><tr><th colspan="2">avere — иметь</th></tr></thead><tbody>
+        <tr><td class="sp">io</td><td class="ex"><b>ho</b> <span class="tr">[о]</span></td></tr>
+        <tr><td class="sp">tu</td><td class="ex"><b>hai</b> <span class="tr">[ай]</span></td></tr>
+        <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>ha</b> <span class="tr">[а]</span></td></tr>
+        <tr><td class="sp">noi</td><td class="ex"><b>abbiamo</b> <span class="tr">[аббьЯмо]</span></td></tr>
+        <tr><td class="sp">voi</td><td class="ex"><b>avete</b> <span class="tr">[авЭтэ]</span></td></tr>
+        <tr><td class="sp">loro</td><td class="ex"><b>hanno</b> <span class="tr">[Анно]</span></td></tr>
+      </tbody></table>
+      <table><thead><tr><th colspan="2">chiamarsi — зваться</th></tr></thead><tbody>
+        <tr><td class="sp">io</td><td class="ex"><b>mi chiamo</b> <span class="tr">[ми кьЯмо]</span></td></tr>
+        <tr><td class="sp">tu</td><td class="ex"><b>ti chiami</b> <span class="tr">[ти кьЯми]</span></td></tr>
+        <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>si chiama</b> <span class="tr">[си кьЯма]</span></td></tr>
+      </tbody></table>
+      <table><thead><tr><th colspan="2">stare — находиться, чувствовать себя</th></tr></thead><tbody>
+        <tr><td class="sp">io</td><td class="ex"><b>sto</b> <span class="tr">[сто]</span> — sto bene</td></tr>
+        <tr><td class="sp">tu</td><td class="ex"><b>stai</b> <span class="tr">[стай]</span> — come stai?</td></tr>
+        <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>sta</b> <span class="tr">[ста]</span> — come sta?</td></tr>
+      </tbody></table>
+    </div>
+    <div class="box key"><span class="ttl">essere или stare?</span>
+      <b>stare</b> — про состояние здесь и сейчас (здоровье, настроение, самочувствие): <span class="it">Sto bene. Sto male. Come stai?</span><br>
+      <b>essere</b> — про постоянные качества и характер, но тоже годится для состояний: <span class="it">Sono felice. Sono stanco. Sono contento.</span><br>
+      <b>avere</b> — для ощущений, которые по-русски «у меня»: <span class="it">Ho fame, ho sete, ho sonno, ho freddo, ho paura, ho fretta, ho la febbre.</span> Не «sono fame»!
+    </div>
+
+    <h3>Местоимения: io, tu, Lei</h3>
+    <div class="box">
+      В итальянском местоимение обычно <b>опускают</b> — форма глагола уже говорит, кто действует: <span class="it">Sono di Genova</span> = «Я из Генуи».
+      Ставят его для выделения или противопоставления: <span class="it">Io sono triste, tu invece sei felice.</span><br>
+      <b>tu</b> — «ты»: друзья, семья, молодые между собой, дети. <b>Lei</b> (с большой буквы) — «Вы» к одному человеку, и к мужчине, и к женщине.
+      Молодёжь и люди на «ты» здороваются <span class="it">Ciao</span>, на «Вы» — <span class="it">Buongiorno / Buona sera</span>.
+    </div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th></th><th>на «ты» (tu)</th><th>на «Вы» (Lei)</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">как зовут</td><td class="ex">Come ti chiami?</td><td class="ex">Come si chiama?</td></tr>
+        <tr><td class="sp">откуда</td><td class="ex">Di dove sei?</td><td class="ex">Di dov'è?</td></tr>
+        <tr><td class="sp">как дела</td><td class="ex">Come stai?</td><td class="ex">Come sta?</td></tr>
+        <tr><td class="sp">телефон</td><td class="ex">Qual è il tuo numero?</td><td class="ex">Qual è il Suo numero?</td></tr>
+        <tr><td class="sp">не расслышал</td><td class="ex">Come, scusa?</td><td class="ex">Come, scusi?</td></tr>
+        <tr><td class="sp">до свидания</td><td class="ex">Ciao! / Arrivederci!</td><td class="ex">ArrivederLa!</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Национальности: -o / -a и -e</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Страна</th><th>он</th><th>она</th><th>они / оне</th></tr></thead>
+      <tbody>
+        <tr><td class="ex">Italia</td><td class="ex">italian<b>o</b></td><td class="ex">italian<b>a</b></td><td class="ex">italian<b>i</b> / italian<b>e</b></td></tr>
+        <tr><td class="ex">Spagna</td><td class="ex">spagnol<b>o</b></td><td class="ex">spagnol<b>a</b></td><td class="ex">spagnol<b>i</b> / spagnol<b>e</b></td></tr>
+        <tr><td class="ex">Austria</td><td class="ex">austriac<b>o</b></td><td class="ex">austriac<b>a</b></td><td class="ex">austriac<b>i</b> / austriach<b>e</b></td></tr>
+        <tr><td class="ex">Germania</td><td class="ex">tedesc<b>o</b></td><td class="ex">tedesc<b>a</b></td><td class="ex">tedesch<b>i</b> / tedesch<b>e</b></td></tr>
+        <tr><td class="ex">Svizzera</td><td class="ex">svizzer<b>o</b></td><td class="ex">svizzer<b>a</b></td><td class="ex">svizzer<b>i</b> / svizzer<b>e</b></td></tr>
+        <tr><td class="ex">Inghilterra</td><td class="ex" colspan="2">ingles<b>e</b> — одна форма</td><td class="ex">ingles<b>i</b></td></tr>
+        <tr><td class="ex">Francia</td><td class="ex" colspan="2">frances<b>e</b></td><td class="ex">frances<b>i</b></td></tr>
+        <tr><td class="ex">Irlanda</td><td class="ex" colspan="2">irlandes<b>e</b></td><td class="ex">irlandes<b>i</b></td></tr>
+        <tr><td class="ex">Portogallo</td><td class="ex" colspan="2">portoghes<b>e</b></td><td class="ex">portoghes<b>i</b></td></tr>
+      </tbody>
+    </table></div>
+    <div class="box">Прилагательные на <b>-o</b> меняются по роду (italiano / italiana), на <b>-e</b> — нет (inglese для обоих).
+      Национальности пишутся <b>с маленькой буквы</b>, страны — с большой.</div>
+
+    <h3>Мелочи, которые спрашивают на уроке</h3>
+    <div class="tbl-wrap"><table><tbody>
+      <tr><td class="sp">di + город</td><td class="ex"><span class="it">Sono di Genova.</span> — «из» перед названием города</td></tr>
+      <tr><td class="sp">il / la</td><td class="ex">артикль м. р. / ж. р.: <span class="it">il signore, il numero — la signora, la lettera</span></td></tr>
+      <tr><td class="sp">dottore → dottor</td><td class="ex">перед фамилией конечное -e отпадает: <span class="it">dottor Rossi, professor Visconti, signor Muti</span></td></tr>
+      <tr><td class="sp">вопросы</td><td class="ex"><span class="it">come</span> как · <span class="it">di dove</span> откуда · <span class="it">qual è</span> какой (из) · <span class="it">chi</span> кто · <span class="it">che cosa / cosa / che</span> что</td></tr>
+      <tr><td class="sp">non</td><td class="ex">отрицание ставится перед глаголом: <span class="it">Non sono stanco. Non c'è male.</span></td></tr>
+      <tr><td class="sp">anche / anch'io</td><td class="ex">«тоже»; перед io сливается: <span class="it">anch'io</span> [анкИо]</td></tr>
+      <tr><td class="sp">e / è</td><td class="ex"><span class="it">e</span> без знака — «и», <span class="it">è</span> со знаком — «есть» (он/она). Перед гласной «и» часто <span class="it">ed</span></td></tr>
+    </tbody></table></div>
+  </div>
+
+  <!-- ---- Алфавит ---- -->
+  <div class="card" id="g2">
+    <h2><span class="no">ABC</span>Алфавит — 21 буква + 5 иностранных</h2>
+    <div class="lead">Названия нужны, чтобы диктовать имя: <span class="it">Come si scrive? — GI - I - ENNE - O</span>.</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Буква</th><th>Название</th><th>Звук</th><th>Буква</th><th>Название</th><th>Звук</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">A a</td><td>[а]</td><td>а</td><td class="sp">N n</td><td>[Эннэ]</td><td>н</td></tr>
+        <tr><td class="sp">B b</td><td>[би]</td><td>б</td><td class="sp">O o</td><td>[о]</td><td>о</td></tr>
+        <tr><td class="sp">C c</td><td>[чи]</td><td>ч / к</td><td class="sp">P p</td><td>[пи]</td><td>п</td></tr>
+        <tr><td class="sp">D d</td><td>[ди]</td><td>д</td><td class="sp">Q q</td><td>[ку]</td><td>к (всегда qu)</td></tr>
+        <tr><td class="sp">E e</td><td>[э]</td><td>э</td><td class="sp">R r</td><td>[Эррэ]</td><td>р</td></tr>
+        <tr><td class="sp">F f</td><td>[Эффэ]</td><td>ф</td><td class="sp">S s</td><td>[Эссэ]</td><td>с / з</td></tr>
+        <tr><td class="sp">G g</td><td>[джи]</td><td>дж / г</td><td class="sp">T t</td><td>[ти]</td><td>т</td></tr>
+        <tr><td class="sp">H h</td><td>[Акка]</td><td>—</td><td class="sp">U u</td><td>[у]</td><td>у</td></tr>
+        <tr><td class="sp">I i</td><td>[и]</td><td>и</td><td class="sp">V v</td><td>[ви] / [ву]</td><td>в</td></tr>
+        <tr><td class="sp">L l</td><td>[Эллэ]</td><td>л</td><td class="sp">Z z</td><td>[дзЭта]</td><td>дз / ц</td></tr>
+        <tr><td class="sp">M m</td><td>[Эммэ]</td><td>м</td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table></div>
+    <div class="box"><span class="ttl">Только в иностранных словах</span>
+      <b>J</b> [и лУнга] · <b>K</b> [кАппа] · <b>W</b> [дОппья ву] · <b>X</b> [икс] · <b>Y</b> [Ипсилон] или [и грЭка].
+      Итальянцы говорят о своём алфавите «21 буква»; с этими пятью — 26.
+    </div>
+  </div>
+
+  <!-- ---- Ошибки в тетради ---- -->
+  <div class="card" id="g4">
+    <h2><span class="no">✎</span>Что в тетради записано с ошибкой</h2>
+    <div class="lead">В приложении везде уже правильные варианты. Стоит исправить и в тетради.</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>В тетради</th><th>Правильно</th><th>Пояснение</th></tr></thead>
+      <tbody>
+        <tr><td class="ex">In culo aua halena</td><td class="ex"><b>In culo alla balena</b></td><td>alla = a + la; balena — кит</td></tr>
+        <tr><td class="ex">Un po' fame</td><td class="ex"><b>Ho un po' di fame</b></td><td>нужен глагол ho и предлог di</td></tr>
+        <tr><td class="ex">Sciopere</td><td class="ex"><b>sciopero</b></td><td>забастовка, на -o</td></tr>
+        <tr><td class="ex">Fuore</td><td class="ex"><b>fuori</b></td><td>снаружи</td></tr>
+        <tr><td class="ex">Abastanza</td><td class="ex"><b>abbastanza</b></td><td>двойная bb</td></tr>
+        <tr><td class="ex">Anchio</td><td class="ex"><b>anch'io</b></td><td>с апострофом</td></tr>
+        <tr><td class="ex">arabbiato</td><td class="ex"><b>arrabbiato</b></td><td>rr и bb — обе двойные</td></tr>
+        <tr><td class="ex">Svedest</td><td class="ex"><b>svedese</b></td><td>шведский</td></tr>
+        <tr><td class="ex">Dove sone?</td><td class="ex"><b>Dove sono?</b></td><td>3-е лицо мн. ч. — sono</td></tr>
+        <tr><td class="ex">sempre — сверкает</td><td class="ex"><b>sempre — всегда</b></td><td>«сверкает (молния)» — lampeggia</td></tr>
+        <tr><td class="ex">vuota — опустошать</td><td class="ex"><b>vuotare</b> — опустошать</td><td>vuota — «пустая» (прилагательное)</td></tr>
+        <tr><td class="ex">quoto</td><td class="ex"><b>quota</b></td><td>квота, высота (quoto — «я котирую»)</td></tr>
+        <tr><td class="ex">celesto</td><td class="ex"><b>celeste</b></td><td>небесно-голубой; на -e для обоих родов (10.09)</td></tr>
+        <tr><td class="ex">Sebici</td><td class="ex"><b>sedici</b></td><td>16: se + dici (10.09)</td></tr>
+        <tr><td class="ex">Qal il tu cellulare?</td><td class="ex"><b>Qual è il tuo cellulare?</b></td><td>нужен глагол è, притяжательное tuo (10.09)</td></tr>
+        <tr><td class="ex">Qale è il Suo numero…</td><td class="ex"><b>Qual è il Suo numero…</b></td><td>qual без -e и без апострофа (10.09)</td></tr>
+        <tr><td class="ex">risposto</td><td class="ex"><b>risposta</b></td><td>ответ — ж. р. на -a (10.09)</td></tr>
+        <tr><td class="ex">tutto a post</td><td class="ex"><b>tutto a posto</b></td><td>posto — место (10.09)</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <!-- ---------- 0. Шпаргалка ---------- -->
+<div class="card" id="r0">
+  <h2><span class="no">ШПАРГАЛКА</span>Какой звук — как он пишется</h2>
+  <div class="lead">Обратный взгляд на правила: не «что читать», а «когда получается К, а когда ДЖ».
+    <span class="b hard">синий</span> — твёрдый звук, <span class="b soft">оранжевый</span> — мягкий.</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:110px">Звук</th><th style="width:230px">Пишется так</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td><span class="b hard">[к]</span></td><td class="sp">ca · co · cu · che · chi</td>
+          <td class="ex"><b>ca</b>sa, <b>co</b>lpo, <b>cu</b>bo, <b>che</b>, <b>chi</b>lo</td></tr>
+      <tr><td><span class="b soft">[ч]</span></td><td class="sp">ce · ci · cia · cio · ciu</td>
+          <td class="ex"><b>ce</b>na, <b>ci</b>nema, <b>cia</b>o, <b>cio</b>ccolata, <b>ciu</b>ffo</td></tr>
+      <tr><td><span class="b hard">[г]</span></td><td class="sp">ga · go · gu · ghe · ghi</td>
+          <td class="ex"><b>ga</b>tto, a<b>go</b>sto, <b>gu</b>sto, <b>ghe</b>tto, la<b>ghi</b></td></tr>
+      <tr><td><span class="b soft">[дж]</span></td><td class="sp">ge · gi · gia · gio · giu</td>
+          <td class="ex"><b>ge</b>nte, <b>gi</b>ro, <b>già</b>, <b>gio</b>rno, <b>giu</b>sto</td></tr>
+      <tr><td><span class="b hard">[ск]</span></td><td class="sp">sca · sco · scu · sche · schi</td>
+          <td class="ex"><b>sca</b>la, <b>sco</b>po, <b>scu</b>ro, <b>sche</b>ma, <b>schi</b>fo</td></tr>
+      <tr><td><span class="b soft">[ш]</span></td><td class="sp">sce · sci · scia · scio · sciu</td>
+          <td class="ex"><b>sce</b>na, <b>sci</b>, <b>scia</b>rpa, <b>scio</b>pero, <b>sciu</b>pare</td></tr>
+      <tr><td><span class="b soft">[нь]</span></td><td class="sp">gn</td>
+          <td class="ex">ba<b>gn</b>o, si<b>gn</b>ora, <b>gn</b>occhi</td></tr>
+      <tr><td><span class="b soft">[ль]</span></td><td class="sp">gli</td>
+          <td class="ex">fi<b>gli</b>o, fami<b>gli</b>a, mo<b>gli</b>e</td></tr>
+      <tr><td><span class="b hard">[куа]</span></td><td class="sp">qu · cqu · gu</td>
+          <td class="ex"><b>qu</b>esto, a<b>cqu</b>a, lin<b>gu</b>a</td></tr>
+      <tr><td><span class="b neu">[ц] / [дз]</span></td><td class="sp">z · zz</td>
+          <td class="ex">sta<b>z</b>ione [ц] · <b>z</b>ero [дз] — <i>см. раздел Z</i></td></tr>
+      <tr><td><span class="b neu">[с] / [з]</span></td><td class="sp">s · ss</td>
+          <td class="ex">ba<b>ss</b>o [с] · ro<b>s</b>a [з] — <i>см. раздел S</i></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box key"><span class="ttl">🔑 Ключ ко всей системе — две буквы-переключателя</span>
+    <b>h</b> делает согласную <b>твёрдой</b> и сама никогда не читается: <span class="it">chi, ghe, sche</span>.<br>
+    <b>i</b> делает согласную <b>мягкой</b> и сама тоже пропадает, если за ней идёт другая гласная:
+    <span class="it">ciao</span> [чАо], <span class="it">giorno</span> [джОрно], <span class="it">sciarpa</span> [шАрпа].<br>
+    Перед <b>e</b> и <b>i</b> буквы c, g, sc мягкие «сами по себе»; перед <b>a, o, u</b> — твёрдые «сами по себе».
+  </div>
+</div>
+
+<!-- ---------- C ---------- -->
+<div class="card" id="rc">
+  <h2><span class="no">§1</span>Буква C — [к] или [ч]</h2>
+  <div class="lead">Из твоего конспекта, первые четыре строки. Упражнения 1–4.</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:170px">Написание</th><th style="width:90px">Звук</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">c + a, o, u</td><td><span class="b hard">[к]</span></td>
+        <td class="ex"><span class="it">casa</span> <span class="tr">[кАза]</span> дом · <span class="it">colpo</span> <span class="tr">[кОлпо]</span> удар · <span class="it">cubo</span> <span class="tr">[кУбо]</span> куб</td></tr>
+      <tr><td class="sp">c + h + e, i</td><td><span class="b hard">[к]</span></td>
+        <td class="ex"><span class="it">che</span> <span class="tr">[кэ]</span> что · <span class="it">chi</span> <span class="tr">[ки]</span> кто · <span class="it">forchetta</span> <span class="tr">[форкЭтта]</span> вилка</td></tr>
+      <tr><td class="sp">c + e, i</td><td><span class="b soft">[ч]</span></td>
+        <td class="ex"><span class="it">cena</span> <span class="tr">[чЭна]</span> ужин · <span class="it">cinema</span> <span class="tr">[чИнэма]</span> кино</td></tr>
+      <tr><td class="sp">c + i + a, o, u</td><td><span class="b soft">[ч]</span></td>
+        <td class="ex"><span class="it">ciao</span> <span class="tr">[чАо]</span> привет · <span class="it">cioccolata</span> <span class="tr">[чокколАта]</span> шоколад · <span class="it">ciuffo</span> <span class="tr">[чУффо]</span> прядь</td></tr>
+      <tr><td class="sp">cc</td><td><span class="b hard">[кк]</span></td>
+        <td class="ex"><span class="it">bocca</span> <span class="tr">[бОкка]</span> рот · <span class="it">sacco</span> <span class="tr">[сАкко]</span> мешок — согласная долгая</td></tr>
+      <tr><td class="sp">cc + e, i</td><td><span class="b soft">[чч]</span></td>
+        <td class="ex"><span class="it">faccia</span> <span class="tr">[фАчча]</span> лицо · <span class="it">cacciare</span> <span class="tr">[каччАрэ]</span> охотиться</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box"><span class="ttl">Проверь себя на паре</span>
+    <span class="it">amico</span> [амИко] друг → <span class="it">amici</span> [амИчи] друзья, но <span class="it">amiche</span> [амИкэ] подруги.
+    Буква <b>h</b> в женской форме нужна именно для того, чтобы сохранить звук [к].
+  </div>
+</div>
+
+<!-- ---------- G ---------- -->
+<div class="card" id="rg">
+  <h2><span class="no">§2</span>Буква G — [г] или [дж]</h2>
+  <div class="lead">Устроена точно так же, как C. Упражнения 5–7.</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:170px">Написание</th><th style="width:90px">Звук</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">g + a, o, u</td><td><span class="b hard">[г]</span></td>
+        <td class="ex"><span class="it">gatto</span> <span class="tr">[гАтто]</span> кот · <span class="it">agosto</span> <span class="tr">[агОсто]</span> август · <span class="it">gusto</span> <span class="tr">[гУсто]</span> вкус</td></tr>
+      <tr><td class="sp">g + согласная</td><td><span class="b hard">[г]</span></td>
+        <td class="ex"><span class="it">grande</span> <span class="tr">[грАндэ]</span> большой · <span class="it">magro</span> <span class="tr">[мАгро]</span> худой</td></tr>
+      <tr><td class="sp">g + h + e, i</td><td><span class="b hard">[г]</span></td>
+        <td class="ex"><span class="it">ghetto</span> <span class="tr">[гЭтто]</span> гетто · <span class="it">laghi</span> <span class="tr">[лАги]</span> озёра</td></tr>
+      <tr><td class="sp">g + e, i</td><td><span class="b soft">[дж]</span></td>
+        <td class="ex"><span class="it">gente</span> <span class="tr">[джЭнтэ]</span> люди · <span class="it">giro</span> <span class="tr">[джИро]</span> круг</td></tr>
+      <tr><td class="sp">g + i + a, o, u</td><td><span class="b soft">[дж]</span></td>
+        <td class="ex"><span class="it">giorno</span> <span class="tr">[джОрно]</span> день · <span class="it">giusto</span> <span class="tr">[джУсто]</span> верный · <span class="it">già</span> <span class="tr">[джа]</span> уже</td></tr>
+      <tr><td class="sp">gg + e, i</td><td><span class="b soft">[дждж]</span></td>
+        <td class="ex"><span class="it">oggi</span> <span class="tr">[Оджджи]</span> сегодня · <span class="it">formaggio</span> <span class="tr">[формАджджо]</span> сыр</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box exc"><span class="ttl">⚠ Описка в конспекте</span>
+    В тетради 8-я строка записана как «g + h + a, o, u → [дж]». Так не бывает: сочетание <b>gh</b> перед a/o/u в
+    итальянском не встречается, а звук [дж] перед a, o, u даёт <b>g + i</b> — <span class="it">giorno, giusto</span>,
+    ровно по образцу строки «c + i + a, o, u». Выше исправлено.
+  </div>
+  <div class="box"><span class="ttl">Как произносить [дж]</span>
+    Это <b>один слитный</b> звук, как в английском <i>jam</i>, а не «д» + «ж».
+    Двойное <b>gg</b> — тот же звук, только долгий: <span class="it">leggere</span> [лЭджджэрэ].
+  </div>
+</div>
+
+<!-- ---------- SC ---------- -->
+<div class="card" id="rsc">
+  <h2><span class="no">§3</span>Сочетание SC — [ск] или [ш]</h2>
+  <div class="lead">Та же логика в третий раз. Упражнения 15–18.</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:170px">Написание</th><th style="width:110px">Звук</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">sc + a, o, u</td><td><span class="b hard">[ск]</span></td>
+        <td class="ex"><span class="it">scala</span> <span class="tr">[скАла]</span> лестница · <span class="it">scopo</span> <span class="tr">[скОпо]</span> цель · <span class="it">scuro</span> <span class="tr">[скУро]</span> тёмный</td></tr>
+      <tr><td class="sp">sc + согласная</td><td><span class="b hard">[ск]</span></td>
+        <td class="ex"><span class="it">scrivere</span> <span class="tr">[скрИвэрэ]</span> писать · <span class="it">sclerosi</span> <span class="tr">[склэрОзи]</span> склероз</td></tr>
+      <tr><td class="sp">sc + h + e, i</td><td><span class="b hard">[ск]</span></td>
+        <td class="ex"><span class="it">schema</span> <span class="tr">[скЭма]</span> схема · <span class="it">schifo</span> <span class="tr">[скИфо]</span> гадость · <span class="it">maschera</span> <span class="tr">[мАскэра]</span> маска</td></tr>
+      <tr><td class="sp">sc + e, i</td><td><span class="b soft">[шэ] [ши]</span></td>
+        <td class="ex"><span class="it">scena</span> <span class="tr">[шЭна]</span> сцена · <span class="it">sci</span> <span class="tr">[ши]</span> лыжи · <span class="it">piscina</span> <span class="tr">[пишИна]</span> бассейн</td></tr>
+      <tr><td class="sp">sc + i + a, o, u</td><td><span class="b soft">[ш]</span></td>
+        <td class="ex"><span class="it">sciarpa</span> <span class="tr">[шАрпа]</span> шарф · <span class="it">sciopero</span> <span class="tr">[шОпэро]</span> забастовка · <span class="it">sciupare</span> <span class="tr">[шупАрэ]</span> портить</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box"><span class="ttl">Звук [ш] здесь всегда долгий и мягкий</span>
+    Между гласными он тянется, ближе к русскому «щ»: <span class="it">pesce</span> [пЭшшэ] рыба,
+    <span class="it">uscire</span> [ушшИрэ] выходить. Отличай на слух пару:
+    <span class="it">pesca</span> [пЭска] персик — <span class="it">pesce</span> [пЭшэ] рыба.
+  </div>
+</div>
+
+<!-- ---------- GN ---------- -->
+<div class="card" id="rgn">
+  <h2><span class="no">§4</span>Сочетание GN — всегда [нь]</h2>
+  <div class="lead">Самое простое правило: исключений в итальянских словах нет. Упражнение 8.</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:170px">Написание</th><th style="width:110px">Звук</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">gn в любом месте слова</td><td><span class="b soft">[нь]</span></td>
+        <td class="ex"><span class="it">signora</span> <span class="tr">[синьОра]</span> госпожа · <span class="it">ogni</span> <span class="tr">[Оньи]</span> каждый</td></tr>
+      <tr><td class="sp">gn между гласными</td><td><span class="b soft">[ньнь]</span></td>
+        <td class="ex"><span class="it">bagno</span> <span class="tr">[бАньньо]</span> ванная · <span class="it">montagna</span> <span class="tr">[монтАньнья]</span> гора — звук долгий</td></tr>
+      <tr><td class="sp">gn в начале слова</td><td><span class="b soft">[нь]</span></td>
+        <td class="ex"><span class="it">gnocchi</span> <span class="tr">[ньОкки]</span> ньокки · <span class="it">gnomo</span> <span class="tr">[ньОмо]</span> гном</td></tr>
+      <tr><td class="sp">gn + i + гласная</td><td><span class="b soft">[нь]</span></td>
+        <td class="ex"><span class="it">sogniamo</span> <span class="tr">[соньЯмо]</span> мы мечтаем — <b>i</b> написана, но не читается</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box key"><span class="ttl">Как поставить звук</span>
+    Это <b>один</b> звук, а не «г» + «н». Русский ориентир — «конь<u>я</u>к», «ба<u>ня</u>»: кончик языка внизу,
+    средняя часть языка прижата к нёбу. Частая ошибка — сказать [багно] вместо [бАньньо].
+  </div>
+  <div class="box"><span class="ttl">Когда i после gn читается, а когда нет</span>
+    Читается, если она сама гласная слога: <span class="it">ogni</span> [Оньи], <span class="it">compagnia</span> [компаньИа] (тут на неё ещё и падает ударение).<br>
+    Не читается, если за ней идёт другая гласная в безударном слоге — это просто «след» орфографии:
+    <span class="it">sogniamo</span> [соньЯмо], <span class="it">bagniamo</span> [баньЯмо], <span class="it">guadagniamo</span> [гуаданьЯмо].
+  </div>
+  <div class="box exc"><span class="ttl">Исключения</span>
+    В исконно итальянских словах их нет. Раздельно <b>г + н</b> звучит только в иностранных именах и
+    заимствованиях: <span class="it">Wagner</span> [вАгнэр], <span class="it">wagneriano</span> [вагнэриАно].<br>
+    Практическая мелочь: слова на <b>gn-</b> берут артикль <b>lo / gli</b>, как перед s+согласная:
+    <span class="it">lo gnocco, gli gnocchi</span>.
+  </div>
+</div>
+
+<!-- ---------- GL ---------- -->
+<div class="card" id="rgl">
+  <h2><span class="no">§5</span>Сочетание GL — [ль] или [гл]</h2>
+  <div class="lead">Здесь исключения есть, и их надо знать в лицо. Упражнение 9.</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:190px">Написание</th><th style="width:110px">Звук</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">gli (на конце слова)</td><td><span class="b soft">[льи]</span></td>
+        <td class="ex"><span class="it">figli</span> <span class="tr">[фИльи]</span> дети · <span class="it">fogli</span> <span class="tr">[фОльи]</span> листы · <span class="it">gli</span> <span class="tr">[льи]</span> артикль «the» мн. ч.</td></tr>
+      <tr><td class="sp">gl + i + гласная</td><td><span class="b soft">[ль]</span></td>
+        <td class="ex"><span class="it">figlio</span> <span class="tr">[фИльо]</span> сын · <span class="it">famiglia</span> <span class="tr">[фамИльа]</span> семья · <span class="it">moglie</span> <span class="tr">[мОльэ]</span> жена — <b>i</b> не читается</td></tr>
+      <tr><td class="sp">gl + a, e, o, u</td><td><span class="b hard">[гл]</span></td>
+        <td class="ex"><span class="it">gloria</span> <span class="tr">[глОриа]</span> слава · <span class="it">globo</span> <span class="tr">[глОбо]</span> шар · <span class="it">inglese</span> <span class="tr">[инглЭзэ]</span> английский · <span class="it">glucosio</span> <span class="tr">[глукОзьо]</span> глюкоза</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box key"><span class="ttl">Короткая формула</span>
+    <b>gl</b> смягчается только перед <b>i</b>. Перед a, e, o, u — это обычное «гл», как в русском «глобус».
+    Между гласными мягкий звук долгий: <span class="it">figlio</span> [фИль-льо], <span class="it">bottiglia</span> [боттИль-льа].
+  </div>
+  <div class="box exc"><span class="ttl">⚠ Исключения: здесь gli = [гли] раздельно</span>
+    Почти все — книжные, научные или заимствованные слова:<br>
+    <span class="it">glicerina</span> [гличерИна] глицерин · <span class="it">glicine</span> [глИчинэ] глициния ·
+    <span class="it">glicemia</span> [гличемИа] гликемия · <span class="it">negligente</span> [нэглиджЭнтэ] нерадивый ·
+    <span class="it">negligenza</span> [нэглиджЭнца] небрежность · <span class="it">anglicano</span> [англикАно] англиканский ·
+    <span class="it">geroglifico</span> [джероглИфико] иероглиф · <span class="it">ganglio</span> [гАнглио] ганглий ·
+    <span class="it">glissare</span> [глиссАрэ] уклоняться.
+  </div>
+  <div class="box"><span class="ttl">Как произносить [ль]</span>
+    Тоже <b>один</b> звук, не «л» + «й». Язык широко прижимается к нёбу — примерно как в «Ита<u>ль</u>янский».
+    Ошибка — сказать [фиглио]: буква g тут вообще не звучит.
+  </div>
+</div>
+
+<!-- ---------- S ---------- -->
+<div class="card" id="rs">
+  <h2><span class="no">§6</span>Буква S — [с] или [з]</h2>
+  <div class="lead">Зависит от позиции, а не от настроения. Упражнения 13–14.</div>
+  <h3>Глухое [с]</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:230px">Позиция</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">начало слова + гласная</td><td class="ex"><span class="it">sole</span> [сОлэ] солнце · <span class="it">sera</span> [сЭра] вечер · <span class="it">sì</span> [си] да</td></tr>
+      <tr><td class="sp">перед глухой c, f, p, q, t</td><td class="ex"><span class="it">scuola</span> [скуОла] · <span class="it">sfera</span> [сфЭра] · <span class="it">spesso</span> [спЭссо] · <span class="it">squadra</span> [скуАдра] · <span class="it">stella</span> [стЭлла]</td></tr>
+      <tr><td class="sp">двойное ss</td><td class="ex"><span class="it">basso</span> [бАссо] низкий · <span class="it">adesso</span> [адЭссо] сейчас · <span class="it">professore</span> [профэссОрэ]</td></tr>
+      <tr><td class="sp">после согласной (l, n, r)</td><td class="ex"><span class="it">falso</span> [фАльсо] · <span class="it">penso</span> [пЭнсо] я думаю · <span class="it">corso</span> [кОрсо] курс</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Звонкое [з]</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:230px">Позиция</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">между двумя гласными</td><td class="ex"><span class="it">rosa</span> [рОза] роза · <span class="it">musica</span> [мУзика] · <span class="it">paese</span> [паЭзэ] страна · <span class="it">francese</span> [франчЭзэ]</td></tr>
+      <tr><td class="sp">перед звонкой b, d, g, l, m, n, r, v</td><td class="ex"><span class="it">sbaglio</span> [збАльо] ошибка · <span class="it">sdraiarsi</span> [здрайЯрси] · <span class="it">sgridare</span> [згридАрэ] · <span class="it">slitta</span> [злИтта] · <span class="it">smettere</span> [змЭттэрэ] · <span class="it">snello</span> [знЭлло] · <span class="it">svegliare</span> [звэльЯрэ]</td></tr>
+      <tr><td class="sp">суффикс -ese (национальности)</td><td class="ex"><span class="it">inglese, danese, cortese, portoghese</span> — все с [з]</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box exc"><span class="ttl">⚠ Две ловушки</span>
+    <b>1. Составные слова.</b> Если вторая часть слова начинается на s-, она сохраняет глухое [с], даже оказавшись между гласными:
+    <span class="it">girasole</span> [джирасОлэ] подсолнух (gira+sole), <span class="it">risalire</span> [рисалИрэ] подниматься (ri+salire),
+    <span class="it">presupporre</span> [прэсуппОррэ] предполагать.<br>
+    <b>2. Региональная разница.</b> На севере Италии любое s между гласными звонкое [з] — так же учат в большинстве курсов.
+    В тосканской (литературной) норме часть таких слов звучит глухо: <span class="it">casa</span> [кАса],
+    <span class="it">cosa</span> [кОса], <span class="it">così</span> [косИ], <span class="it">mese</span> [мЭсэ], <span class="it">naso</span> [нАсо].
+    Оба варианта считаются правильными — держись того, что даёт преподаватель.
+  </div>
+</div>
+
+<!-- ---------- Z ---------- -->
+<div class="card" id="rz">
+  <h2><span class="no">§7</span>Буква Z — [ц] или [дз]</h2>
+  <div class="lead">Самая капризная буква итальянского. Стопроцентного правила нет, но есть надёжные признаки —
+    ниже они разложены по таблицам. Упражнения 20–21.</div>
+
+  <div class="box key"><span class="ttl">Три вещи, которые надо понять до таблиц</span>
+    <b>1.</b> [ц] и [дз] — это одна буква в двух вариантах: глухом и звонком. [дз] — <b>слитный</b> звук,
+    как в «дзюдо», а не «д» + «з».<br>
+    <b>2.</b> Между гласными z всегда <b>долгая</b>, даже если написана одна буква:
+    <span class="it">azione</span> [аццьОнэ], <span class="it">ozio</span> [Оццьо].<br>
+    <b>3.</b> Сочетание <b>zi + гласная</b> даёт [ць] / [дзь], и <b>i</b> не образует отдельного слога:
+    <span class="it">stazione</span> = ста-цьО-нэ, три слога, а не четыре.
+  </div>
+
+  <h3>Когда [ц] — глухое</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:220px">Признак</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">-zione, -zio, -zia, -zie<br><i>суффикс существительных</i></td>
+        <td class="ex"><span class="it">stazione, lezione, azione, nazione, attenzione, silenzio, servizio, negozio, notizia, polizia, giustizia, grazie</span></td></tr>
+      <tr><td class="sp">-anza, -enza</td>
+        <td class="ex"><span class="it">speranza, vacanza, distanza, senza, pazienza, differenza, scienza, esperienza, presenza</span></td></tr>
+      <tr><td class="sp">-ezza, -izia, -zzo, -zza<br><i>большинство слов с zz</i></td>
+        <td class="ex"><span class="it">bellezza, giovinezza, altezza, ricchezza, pigrizia, ragazzo, palazzo, pezzo, prezzo, pazzo, tazza, pizza, mazzo, terrazza</span></td></tr>
+      <tr><td class="sp">после l и r</td>
+        <td class="ex"><span class="it">alzare, calza, balzare, marzo, forza, terzo, scherzo, orzo, garza, sforzo</span></td></tr>
+      <tr><td class="sp">z- в начале — закрытый список слов</td>
+        <td class="ex"><span class="it">zio, zia, zitto, zoppo, zucca, zucchero, zuppa, zampa, zappa, zoccolo, zolfo, zolla, zufolo</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Когда [дз] — звонкое</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:220px">Признак</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">z- в начале слова<br><i>вариант по умолчанию</i></td>
+        <td class="ex"><span class="it">zero, zona, zaino, zebra, zanzara, zingaro, zelo, zafferano, zodiaco, zoo</span></td></tr>
+      <tr><td class="sp">глаголы на -izzare<br>и всё, что от них</td>
+        <td class="ex"><span class="it">organizzare, realizzare, utilizzare, analizzare, meccanizzare, polemizzare, organizzazione, civilizzazione</span></td></tr>
+      <tr><td class="sp">-zz- закрытый список</td>
+        <td class="ex"><span class="it">mezzo, mezzanotte, mezzogiorno, azzurro, azzardo, rozzo, brezza, olezzo</span></td></tr>
+      <tr><td class="sp">после n — часть слов</td>
+        <td class="ex"><span class="it">pranzo, manzo, romanzo, bronzo, gonzo</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Ловушки и слова-исключения</h3>
+  <div class="box exc"><span class="ttl">Пары, которые надо просто запомнить</span>
+    <div class="pairs">
+      <div class="pair"><span class="a">mezzo</span> [мЭддзо] — <span class="a">pezzo</span> [пЭццо]<div class="m">одинаковое -zz-, разный звук</div></div>
+      <div class="pair"><span class="a">zio</span> [цИо] — <span class="a">zero</span> [дзЭро]<div class="m">оба на z-, но zio из глухого списка</div></div>
+      <div class="pair"><span class="a">pranzo</span> [прАндзо] — <span class="a">senza</span> [сЭнца]<div class="m">n перед z звонкости не гарантирует</div></div>
+      <div class="pair"><span class="a">danza, canzone, vacanza</span> [ц]<div class="m">а вот manzo, romanzo, bronzo — [дз]</div></div>
+      <div class="pair"><span class="a">razza</span> [рАцца] раса, порода<div class="m">и <b>razza</b> [рАддза] — скат (рыба). Одно написание, два слова</div></div>
+      <div class="pair"><span class="a">zucchero</span> [цУккэро] сахар<div class="m">начальное z- глухое, вопреки общему правилу</div></div>
+    </div>
+  </div>
+  <div class="box"><span class="ttl">Если совсем не уверен</span>
+    В реальной речи различие [ц] / [дз] сильно размыто по регионам: на севере почти всё звучит звонко,
+    на юге — почти всё глухо, и ни один вариант не мешает понимать. Отрабатывай по спискам выше,
+    но не застревай: гораздо важнее долгота (<span class="it">pizza</span> = [пИц-ца], а не [пИца])
+    и ударение.
+  </div>
+</div>
+
+<!-- ---------- QU / GU ---------- -->
+<div class="card" id="rqu">
+  <h2><span class="no">§8</span>QU, GU, CQU — [куа], [гуа], [ккуа]</h2>
+  <div class="lead">Упражнение 19.</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:170px">Написание</th><th style="width:130px">Звук</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">qu + гласная</td><td><span class="b hard">[куэ] [куи] [куа]</span></td>
+        <td class="ex"><span class="it">questo</span> [куЭсто] этот · <span class="it">qui</span> [куИ] здесь · <span class="it">quadro</span> [куАдро] картина</td></tr>
+      <tr><td class="sp">gu + гласная</td><td><span class="b hard">[гуэ] [гуи] [гуа]</span></td>
+        <td class="ex"><span class="it">guardare</span> [гуардАрэ] смотреть · <span class="it">lingua</span> [лИнгуа] язык · <span class="it">seguente</span> [сэгуЭнтэ]</td></tr>
+      <tr><td class="sp">cqu</td><td><span class="b hard">[ккуа]</span></td>
+        <td class="ex"><span class="it">acqua</span> [Аккуа] вода · <span class="it">acquisto</span> [аккуИсто] покупка · <span class="it">nacque</span> [нАккуэ] родился</td></tr>
+      <tr><td class="sp">q всегда с u</td><td><span class="b neu">—</span></td>
+        <td class="ex">Одна <b>q</b> без <b>u</b> в итальянском не пишется никогда</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box key"><span class="ttl">Главное — не разбивать на слоги</span>
+    <b>u</b> здесь не отдельный гласный, а полугласный призвук: <span class="it">qui</span> — <b>один</b> слог [куи],
+    а не «ку-и». Русский ориентир — «куэ» в слове «Куэнка», произнесённое одним махом.<br>
+    Долгота в <b>cqu</b> реальна: <span class="it">acqua</span> = [Ак-куа], с задержкой на «к».
+  </div>
+</div>
+
+<!-- ---------- H ---------- -->
+<div class="card" id="rh">
+  <h2><span class="no">§9</span>Буква H — не читается никогда</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:220px">Роль</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">переключатель твёрдости</td>
+        <td class="ex">в <b>ch, gh, sch</b>: <span class="it">che, chi, ghetto, laghi, schema</span></td></tr>
+      <tr><td class="sp">различитель на письме<br><i>формы глагола avere</i></td>
+        <td class="ex"><span class="it">ho</span> [о] у меня есть · <span class="it">hai</span> [ай] · <span class="it">ha</span> [а] · <span class="it">hanno</span> [Анно] —
+        против <span class="it">o</span> «или», <span class="it">ai</span> «к», <span class="it">a</span> «в», <span class="it">anno</span> «год»</td></tr>
+      <tr><td class="sp">в заимствованиях</td>
+        <td class="ex"><span class="it">hotel</span> [отЭль] · <span class="it">hobby</span> [Обби]</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ---------- Двойные ---------- -->
+<div class="card" id="rdd">
+  <h2><span class="no">§10</span>Двойные согласные — меняют смысл слова</h2>
+  <div class="lead">Для русского уха это самое непривычное: долгота согласной здесь работает так же, как у нас разные буквы.</div>
+  <div class="pairs">
+    <div class="pair"><span class="a">capello</span> [капЭлло] волос<div class="m">↔ <b>cappello</b> [каппЭлло] шляпа</div></div>
+    <div class="pair"><span class="a">nono</span> [нОно] девятый<div class="m">↔ <b>nonno</b> [нОнно] дедушка</div></div>
+    <div class="pair"><span class="a">casa</span> [кАза] дом<div class="m">↔ <b>cassa</b> [кАсса] касса, ящик</div></div>
+    <div class="pair"><span class="a">pala</span> [пАла] лопата<div class="m">↔ <b>palla</b> [пАлла] мяч</div></div>
+    <div class="pair"><span class="a">sete</span> [сЭтэ] жажда<div class="m">↔ <b>sette</b> [сЭттэ] семь</div></div>
+    <div class="pair"><span class="a">sono</span> [сОно] я есть<div class="m">↔ <b>sonno</b> [сОнно] сон</div></div>
+    <div class="pair"><span class="a">fato</span> [фАто] судьба<div class="m">↔ <b>fatto</b> [фАтто] факт, сделанный</div></div>
+    <div class="pair"><span class="a">copia</span> [кОпьа] копия<div class="m">↔ <b>coppia</b> [кОппьа] пара</div></div>
+  </div>
+  <div class="box key"><span class="ttl">Как их произносить</span>
+    Не «два раза подряд», а <b>задержка</b> на согласной: гласная перед ней становится короче, звук тянется.
+    Скажи «от-тащи», «под-держка» — примерно этот эффект.
+  </div>
+  <div class="box"><span class="ttl">Скрытые долгие</span>
+    Некоторые звуки долгие всегда, хотя пишутся одной буквой — между гласными:
+    <b>gn</b> (<span class="it">bagno</span>), <b>gli</b> (<span class="it">figlio</span>),
+    <b>sc(i/e)</b> (<span class="it">pesce</span>), <b>z</b> (<span class="it">azione</span>).
+    А удвоение <b>q</b> пишется как <b>cq</b>: <span class="it">acqua</span>.
+  </div>
+</div>
+
+<!-- ---------- Гласные ---------- -->
+<div class="card" id="rv">
+  <h2><span class="no">§11</span>Гласные и дифтонги</h2>
+  <div class="lead">Упражнения 10 и 22.</div>
+  <h3>Пять гласных, все чёткие</h3>
+  <div class="box exc"><span class="ttl">⚠ Главная русская ошибка — редукция</span>
+    В русском безударное «о» превращается в «а»: «дОктор» → [дАктар]. В итальянском этого нет <b>никогда</b>:
+    <span class="it">dottore</span> = [доттОрэ], не [даттОрэ]; <span class="it">telefono</span> = [тэлЭфоно], не [тэлЭфана].
+    Каждый гласный звучит полностью, в любом слоге.
+  </div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:90px">Буква</th><th style="width:130px">Звук</th><th>Примечание</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">a</td><td><span class="b neu">[а]</span></td><td class="ex">всегда открытое: <span class="it">casa</span> [кАза]</td></tr>
+      <tr><td class="sp">e</td><td><span class="b neu">[э]</span></td><td class="ex">как в «эти», никогда не «йэ». В конце слова тоже [э]: <span class="it">pane</span> [пАнэ]. Бывает закрытым (<span class="it">perché</span>) и открытым (<span class="it">caffè</span>)</td></tr>
+      <tr><td class="sp">i</td><td><span class="b neu">[и]</span></td><td class="ex">не смягчает предыдущую согласную: <span class="it">ti</span> = [ти], а не [ть]</td></tr>
+      <tr><td class="sp">o</td><td><span class="b neu">[о]</span></td><td class="ex">всегда [о], без призвука «а»</td></tr>
+      <tr><td class="sp">u</td><td><span class="b neu">[у]</span></td><td class="ex">всегда [у]: <span class="it">gusto</span> [гУсто]</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Дифтонг: два гласных в одном слоге</h3>
+  <div class="lead">Безударные <b>i</b> и <b>u</b> рядом с другой гласной становятся полугласными — «й» и «ў».</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:100px">Тип</th><th style="width:130px">Звучит</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">ie</td><td><span class="b soft">[ьэ] / [йэ]</span></td><td class="ex"><span class="it">piede</span> [пьЭдэ] нога · <span class="it">ieri</span> [йЭри] вчера · <span class="it">chiave</span> [кьЯвэ] ключ</td></tr>
+      <tr><td class="sp">ia, io, iu</td><td><span class="b soft">[ья] [ьо] [ью]</span></td><td class="ex"><span class="it">piano</span> [пьЯно] тихо · <span class="it">fiore</span> [фьОрэ] цветок · <span class="it">più</span> [пью] больше</td></tr>
+      <tr><td class="sp">uo, ua, ue, ui</td><td><span class="b hard">[уо] [уа] [уэ] [уи]</span></td><td class="ex"><span class="it">uomo</span> [уОмо] человек · <span class="it">buono</span> [буОно] хороший · <span class="it">guida</span> [гуИда] гид</td></tr>
+      <tr><td class="sp">ai, ei, oi, au, eu</td><td><span class="b hard">[ай] [эй] [ой] [ау] [эу]</span></td><td class="ex"><span class="it">mai</span> [май] никогда · <span class="it">sei</span> [сэй] шесть · <span class="it">poi</span> [пой] потом · <span class="it">causa</span> [кАуза] · <span class="it">Europa</span> [эурОпа]</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box"><span class="ttl">Когда дифтонга нет (упр. 10)</span>
+    Если <b>i</b> ударная — она полноценный гласный и образует свой слог:
+    <span class="it">mia</span> [мИ-а], <span class="it">zia</span> [цИ-а], <span class="it">via</span> [вИ-а],
+    <span class="it">addio</span> [ад-дИ-о], <span class="it">riunione</span> [ри-уньО-нэ].
+    Сравни: <span class="it">mio</span> [мИ-о] мой (два слога) — <span class="it">fiore</span> [фьО-рэ] цветок (два слога, но i «съедена»).
+  </div>
+</div>
+
+<!-- ---------- N, L, R ---------- -->
+<div class="card" id="rnl">
+  <h2><span class="no">§12</span>Согласные N, L, R</h2>
+  <div class="lead">Упражнения 11 и 12.</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:170px">Что</th><th style="width:130px">Как</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">n перед c, g, q</td><td><span class="b neu">носовой [нг]</span></td>
+        <td class="ex"><span class="it">banca</span> [бАнка] · <span class="it">lingua</span> [лИнгуа] · <span class="it">dunque</span> [дУнквэ] — язык уходит назад, как в английском <i>sing</i></td></tr>
+      <tr><td class="sp">l</td><td><span class="b neu">средний</span></td>
+        <td class="ex">твёрже русского «ль» в «мель», мягче «л» в «мел»: <span class="it">largo, molto, allegro</span>. Кончик языка у верхних зубов</td></tr>
+      <tr><td class="sp">r</td><td><span class="b neu">раскатистый</span></td>
+        <td class="ex">одиночная <b>r</b> — один удар кончика языка (<span class="it">caro</span>), <b>rr</b> — раскат (<span class="it">carro</span> [кАрро] телега)</td></tr>
+      <tr><td class="sp">b, d, p, t</td><td><span class="b neu">без придыхания</span></td>
+        <td class="ex">итальянские p, t, k произносятся «сухо», без выдоха, ближе к русским, чем к английским</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ---------- Ударение ---------- -->
+<div class="card" id="rstr">
+  <h2><span class="no">§13</span>Ударение</h2>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th style="width:230px">Правило</th><th>Примеры</th></tr></thead>
+    <tbody>
+      <tr><td class="sp">чаще всего — предпоследний слог<br><i>таких слов большинство</i></td>
+        <td class="ex"><span class="it">amico</span> [амИко] · <span class="it">signora</span> [синьОра] · <span class="it">italiano</span> [итальЯно] · <span class="it">gelato</span> [джелАто]</td></tr>
+      <tr><td class="sp">последний слог — тогда пишут знак,<br>и он обязателен</td>
+        <td class="ex"><span class="it">città</span> [читтА] город · <span class="it">caffè</span> [каффЭ] · <span class="it">perché</span> [пэркЭ] · <span class="it">giovedì</span> [джоведИ] · <span class="it">virtù</span> [виртУ]</td></tr>
+      <tr><td class="sp">третий слог от конца —<br>знак не пишется, надо запоминать</td>
+        <td class="ex"><span class="it">màcchina</span> [мАккина] · <span class="it">tàvolo</span> [тАволо] стол · <span class="it">telèfono</span> [тэлЭфоно] · <span class="it">sùbito</span> [сУбито] · <span class="it">càmera</span> [кАмэра] комната · <span class="it">mèdico</span> · <span class="it">nùmero</span> · <span class="it">dìfficile</span> · <span class="it">fàcile</span> · <span class="it">gìovane</span> · <span class="it">ùtile</span> · <span class="it">sàbato</span> · <span class="it">mùsica</span> · <span class="it">ìsola</span> · <span class="it">àngolo</span> · <span class="it">règola</span> · <span class="it">esèrcito</span> · <span class="it">domènica</span></td></tr>
+      <tr><td class="sp">четвёртый от конца —<br>в формах глаголов</td>
+        <td class="ex"><span class="it">àbitano</span> [Абитано] они живут · <span class="it">telèfonano</span> [тэлЭфонано] они звонят</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box"><span class="ttl">Про знаки над гласными</span>
+    В обычном тексте ударение помечают <b>только</b> на последнем слоге: <span class="it">città, caffè, però, così</span>.
+    Значки в третьей строке таблицы (<span class="it">màcchina</span>) — учебные, в жизни их не пишут.
+    Направление знака различает открытое è и закрытое é: <span class="it">caffè</span> [каффЭ] — <span class="it">perché</span> [пэркЭ].
+  </div>
+</div>
+
+
+
+  <div class="footer">Источники: конспект тетради, распечатка FORMITALIA (упр. 1–27), Nuovo Espresso 1 — Lezione 1 и начало Lezione 2, домашки 20.08 / 27.08 / 03.09 / 10.09. Обновлено 15.09.2026.</div>
+</div></div>
+
+<!-- ======================= ВСЕ СЛОВА ======================= -->
+<div class="pane" id="p-all"><div class="wrap">
+  <div class="search"><input type="search" id="aq" placeholder="Поиск по всем словам…"></div>
+  <div class="chips" id="allChips">
+    <button class="chip on" data-sort="abc">По алфавиту</button>
+    <button class="chip" data-sort="deck">По темам</button>
+    <span style="flex:1"></span>
+    <button class="chip" id="allHideTr">Скрыть транскрипцию</button>
+    <button class="chip" id="allHideRu">Скрыть перевод</button>
+  </div>
+  <div class="chips" id="allDeckChips"></div>
+  <div class="chips" id="allStatChips"></div>
+  <div class="abc" id="abcBar"></div>
+  <div class="muted" id="allCount" style="font-size:12.5px;margin:4px 0 8px"></div>
+  <div class="muted" style="font-size:12.5px;margin:0 0 8px">● зелёный — выучено, ● оранжевый — учится, ○ — не начато. «✓» убирает слово из занятий как уже известное, «↺» возвращает.</div>
+  <div class="dl all" id="allList"></div>
+</div></div>
+
+<!-- ======================= НАСТРОЙКИ ======================= -->
+<div class="pane" id="p-set"><div class="wrap">
+  <div class="card">
+    <h2>Занятие</h2>
+    <div class="set"><div class="lbl">Новых карточек в день<small>Повторы показываются всегда, лимит только на новые. Кнопка «ещё новых» его обходит.</small></div>
+      <input type="number" id="setNew" min="0" max="200" step="5"></div>
+    <div class="set"><div class="lbl">Направление карточек<small>Для режима «Карточки»</small></div>
+      <select id="setDir"><option value="it">итальянское → перевод</option><option value="ru">перевод → итальянское</option><option value="mix">вперемешку</option></select></div>
+    <div class="set"><div class="lbl">Показывать транскрипцию на лицевой стороне<small>Выключи, когда захочешь читать без подсказки</small></div>
+      <button class="sw" id="setShowTr"></button></div>
+  </div>
+
+  <div class="card">
+    <h2>Озвучка</h2>
+    <div class="set"><div class="lbl">Произносить слова<small>Голос браузера. На Android нужен установленный итальянский голос (Google TTS → языки → Italiano).</small></div>
+      <button class="sw" id="setTts"></button></div>
+    <div class="set"><div class="lbl">Автоозвучка при показе карточки</div><button class="sw" id="setTtsAuto"></button></div>
+    <div class="set"><div class="lbl">Скорость</div>
+      <select id="setRate"><option value="0.7">медленно</option><option value="0.85">чуть медленнее</option><option value="1">обычная</option></select></div>
+    <div class="set"><div class="lbl">Голос</div><select id="setVoice"><option value="">авто</option></select></div>
+  </div>
+
+  <div class="card">
+    <h2>Вид</h2>
+    <div class="set"><div class="lbl">Тёмная тема</div><button class="sw" id="setDark"></button></div>
+    <div class="set"><div class="lbl">Режим e-ink<small>Для читалки: чёрно-белое, без анимаций, крупнее, без теней</small></div><button class="sw" id="setEink"></button></div>
+    <div class="set"><div class="lbl">Размер текста</div>
+      <select id="setFont"><option value="15">мелкий</option><option value="16">обычный</option><option value="18">крупный</option><option value="20">очень крупный</option></select></div>
+  </div>
+
+  <div class="card">
+    <h2>Прогресс</h2>
+    <div class="lead">Прогресс хранится в этом браузере. Чтобы перенести на другое устройство — скопируй код здесь и вставь там.</div>
+    <div class="row2">
+      <button class="sec" id="expBtn">Скопировать код прогресса</button>
+      <button class="sec" id="expFile">Скачать файлом</button>
+    </div>
+    <textarea id="ioArea" placeholder="Сюда вставь код прогресса с другого устройства…" style="margin-top:10px"></textarea>
+    <div class="row2" style="margin-top:8px">
+      <button class="sec" id="impBtn">Загрузить из текста</button>
+      <label class="sec" style="text-align:center;cursor:pointer">Загрузить из файла<input type="file" id="impFile" accept=".json,application/json" hidden></label>
+    </div>
+    <div class="muted" id="ioMsg" style="font-size:13px;margin-top:8px"></div>
+    <div class="set" style="margin-top:12px"><div class="lbl">Сбросить весь прогресс<small>Необратимо. Сначала сохрани код на всякий случай.</small></div>
+      <button class="icon" id="resetBtn" style="color:var(--bad)">Сбросить</button></div>
+  </div>
+
+  <div class="card">
+    <h2>О приложении</h2>
+    <div class="lead">Один HTML-файл, работает без интернета. Новые уроки добавляются в этот же файл — прогресс по старым карточкам сохраняется.
+      Колоды и слова: <span id="aboutCount"></span>.</div>
+  </div>
+</div></div>
+
+<!-- ======================= СЕССИЯ ======================= -->
+<div id="session">
+  <div class="s-top">
+    <button class="icon" id="sClose">✕</button>
+    <div class="prog"><i id="sProg" style="width:0%"></i></div>
+    <div class="cnt" id="sCnt"></div>
+    <button class="icon" id="sMore" title="Добавить новых слов">+10</button>
+  </div>
+  <div class="s-body"><div class="wrap" id="sBody"></div></div>
+</div>
+
+<nav class="bottom">
+  <button class="on" data-p="p-study"><span class="ic">🎯</span>Учить</button>
+  <button data-p="p-phr"><span class="ic">💬</span>Фразы</button>
+  <button data-p="p-num"><span class="ic">🔢</span>Числа</button>
+  <button data-p="p-all"><span class="ic">🔤</span>Слова</button>
+  <button data-p="p-ref"><span class="ic">📐</span>Правила</button>
+</nav>
+
+<script>
+
+const DATA = [
+{
+ id:"e1", n:"1", t:"c + a, o, u — как русское К",
+ rule:"Перед a, o, u буква <b>c</b> читается [к]. Двойное <b>cc</b> — долгое [кк].",
+ w:[
+  ["Cappello","каппЭлло","шляпа"],
+  ["compito","кОмпито","задание, домашняя работа"],
+  ["piccolo","пИкколо","маленький"],
+  ["bocca","бОкка","рот"],
+  ["oca","Ока","гусь, гусыня"],
+  ["tacco","тАкко","каблук"],
+  ["vacca","вАкка","корова"],
+  ["domenica","домЭника","воскресенье"],
+  ["pacco","пАкко","посылка, пакет"],
+  ["sacco","сАкко","мешок"],
+  ["toccare","токкАрэ","трогать, касаться"],
+  ["ricordare","рикордАрэ","помнить, вспоминать"],
+  ["polacco","полАкко","польский; поляк"],
+  ["dimenticare","диментикАрэ","забывать"],
+  ["tabacco","табАкко","табак"],
+  ["colpo","кОлпо","удар"],
+  ["campo","кАмпо","поле"],
+  ["scontrino","сконтрИно","чек (кассовый)"],
+  ["carne","кАрнэ","мясо"],
+  ["contorno","контОрно","гарнир"]
+ ]
+},
+{
+ id:"e2", n:"2", t:"c + e, i — как русское Ч",
+ rule:"Перед <b>e</b> и <b>i</b> буква <b>c</b> читается [ч]: cena, cinema.",
+ w:[
+  ["Arrivederci","арривэдЭрчи","до свидания"],
+  ["pace","пАчэ","мир, покой"],
+  ["voce","вОчэ","голос"],
+  ["difficile","диффИчилэ","трудный, сложный"],
+  ["cinema","чИнэма","кино"],
+  ["undici","Ундичи","одиннадцать"],
+  ["vicino","вичИно","близкий, рядом; сосед"],
+  ["concerto","кончЭрто","концерт"],
+  ["centro","чЭнтро","центр"],
+  ["cena","чЭна","ужин"],
+  ["certo","чЭрто","конечно; определённый"],
+  ["circa","чИрка","около, примерно"],
+  ["falce","фАльчэ","коса, серп"],
+  ["piacere","пьячЭрэ","нравиться; удовольствие («приятно познакомиться»)"],
+  ["piacevole","пьячЭволэ","приятный"],
+  ["vincere","вИнчэрэ","побеждать, выигрывать"],
+  ["decina","дэчИна","десяток"],
+  ["cento","чЭнто","сто"],
+  ["incidente","инчидЭнтэ","происшествие, авария"],
+  ["cimitero","чимитЭро","кладбище"],
+  ["invece","инвЭчэ","вместо; наоборот, а вот"],
+  ["officina","оффичИна","мастерская"],
+  ["cera","чЭра","воск"],
+  ["facile","фАчилэ","лёгкий, простой"],
+  ["bottoncino","боттончИно","пуговка, маленькая пуговица"],
+  ["tacere","тачЭрэ","молчать"]
+ ]
+},
+{
+ id:"e3", n:"3", t:"ci + a, o, u — как русское Ч (i не читается)",
+ rule:"<b>i</b> здесь только «смягчитель»: cia = [ча], cio = [чо], ciu = [чу].",
+ w:[
+  ["Cacciare","каччАрэ","охотиться; прогонять"],
+  ["ciao","чАо","привет; пока"],
+  ["Francia","фрАнча","Франция"],
+  ["cocciuto","коччУто","упрямый"],
+  ["ufficiale","уффичАлэ","официальный; офицер"],
+  ["lanciare","ланчАрэ","бросать, метать, запускать"],
+  ["arancio","арАнчо","апельсиновое дерево; оранжевый"],
+  ["pronunciare","пронунчАрэ","произносить"],
+  ["doccia","дОчча","душ"],
+  ["fanciulla","фанчУлла","девушка, девочка"],
+  ["panciuto","панчУто","пузатый"],
+  ["speciale","спэчАлэ","особый, специальный"],
+  ["cioè","чоЭ","то есть"],
+  ["faccia","фАчча","лицо"],
+  ["ciuffo","чУффо","чуб, прядь"],
+  ["minaccia","минАчча","угроза"],
+  ["ciondoloni","чондолОни","свесившись, болтаясь"],
+  ["artificiale","артифичАлэ","искусственный"],
+  ["diciassette","дичассЭттэ","семнадцать"],
+  ["diciannove","дичаннОвэ","девятнадцать"],
+  ["mancia","мАнча","чаевые"],
+  ["arancione","аранчОнэ","оранжевый (цвет)"],
+  ["pronuncia","пронУнча","произношение"],
+  ["calcio","кАльчо","футбол; пинок; кальций"],
+  ["pancia","пАнча","живот (в распечатке напечатано «panda» — похоже на опечатку)"],
+  ["cioccolata","чокколАта","шоколад"],
+  ["carciofi","карчОфи","артишоки"]
+ ]
+},
+{
+ id:"e4", n:"4", t:"ch + e, i — как русское К",
+ rule:"<b>h</b> не читается никогда, её задача — оставить c твёрдой: che = [кэ], chi = [ки].",
+ w:[
+  ["Che","кэ","что; который"],
+  ["perché","пэркЭ","почему; потому что"],
+  ["chilo","кИло","килограмм"],
+  ["panchina","панкИна","скамейка"],
+  ["Michele","микЭлэ","Микеле (имя)"],
+  ["amiche","амИкэ","подруги"],
+  ["pacchetto","паккЭтто","пачка, пакетик"],
+  ["orchestra","оркЭстра","оркестр"],
+  ["maccheroni","маккэрОни","макароны"],
+  ["chicchessia","киккэссИа","кто угодно, кто бы ни был"],
+  ["chi","ки","кто"],
+  ["archeologo","аркэОлого","археолог"],
+  ["pochissimo","покИссимо","очень мало"],
+  ["macchina","мАккина","машина, автомобиль"],
+  ["chicchera","кИккэра","чашечка (кофейная)"],
+  ["chirurgo","кирУрго","хирург"],
+  ["chimico","кИмико","химик; химический"],
+  ["forchetta","форкЭтта","вилка"],
+  ["chiacchiera","кьЯккьера","болтовня"]
+ ]
+},
+{
+ id:"e5", n:"5", t:"g + a, o, u и g + согласная — как русское Г",
+ rule:"Твёрдое [г]: ga, go, gu, а также gr-, gl- в начале (grande, gloria).",
+ w:[
+  ["Gamba","гАмба","нога"],
+  ["ago","Аго","игла"],
+  ["magro","мАгро","худой, тощий"],
+  ["grido","грИдо","крик"],
+  ["agrario","агрАрио","аграрный, земледельческий"],
+  ["gridare","гридАрэ","кричать"],
+  ["grande","грАндэ","большой, великий"],
+  ["gatto","гАтто","кот"],
+  ["legumi","лэгУми","бобовые, овощи"],
+  ["regola","рЭгола","правило"],
+  ["grillo","грИлло","сверчок"],
+  ["agricoltura","агрикольтУра","сельское хозяйство"],
+  ["gusto","гУсто","вкус"],
+  ["grembo","грЭмбо","лоно; колени, подол"],
+  ["aggressione","аггрэссьОнэ","нападение, агрессия"],
+  ["gallo","гАлло","петух"],
+  ["Gastone","гастОнэ","Гастоне (имя)"],
+  ["arguto","аргУто","остроумный"],
+  ["agosto","агОсто","август"]
+ ]
+},
+{
+ id:"e6", n:"6", t:"g + e, i — как слитное ДЖ",
+ rule:"[дж] — один слитный звук, не «д-ж». Двойное <b>gg</b> — долгое [дждж].",
+ w:[
+  ["Gente","джЭнтэ","люди"],
+  ["girare","джирАрэ","поворачивать(ся), вращать; гулять"],
+  ["gendarme","джендАрмэ","жандарм"],
+  ["ginnastica","джиннАстика","гимнастика"],
+  ["agitare","аджитАрэ","трясти, взбалтывать; волновать"],
+  ["gesto","джЭсто","жест"],
+  ["leggere","лЭджджэрэ","читать"],
+  ["oggi","Оджджи","сегодня"],
+  ["salvagente","сальваджЭнтэ","спасательный круг"],
+  ["Genova","джЭнова","Генуя"],
+  ["giro","джИро","круг, оборот; прогулка"],
+  ["genitori","дженитОри","родители"],
+  ["giovedì","джоведИ","четверг"],
+  ["gerundio","джерУндьо","герундий"],
+  ["oggetto","оджджЭтто","предмет, объект"],
+  ["agente","аджЭнтэ","агент"],
+  ["gemma","джЭмма","драгоценный камень; бутон"],
+  ["gigante","джигАнтэ","гигант, великан"],
+  ["reagire","рэаджИрэ","реагировать"]
+ ]
+},
+{
+ id:"e7a", n:"7а", t:"gi + a, o, u — как слитное ДЖ (i не читается)",
+ rule:"gia = [джа], gio = [джо], giu = [джу].",
+ w:[
+  ["Già","джа","уже"],
+  ["agio","Аджо","удобство, досуг (a proprio agio — как дома)"],
+  ["giorno","джОрно","день"],
+  ["aggettivo","аджджеттИво","прилагательное"],
+  ["giusto","джУсто","правильный, справедливый"],
+  ["mangiare","манджАрэ","есть, кушать"],
+  ["maggiore","маджджОрэ","больший, старший"],
+  ["viaggiare","вьяджджАрэ","путешествовать"],
+  ["Sergio","сЭрджо","Серджо (имя)"],
+  ["passeggiare","пассэджджАрэ","гулять, прогуливаться"],
+  ["passeggio","пассЭджджо","прогулка"],
+  ["maggio","мАджджо","май"],
+  ["grigio","грИджо","серый"],
+  ["giocare","джокАрэ","играть"],
+  ["giovane","джОванэ","молодой; юноша"],
+  ["stagione","стаджОнэ","сезон, время года"],
+  ["giungere","джУнджэрэ","прибывать, достигать"],
+  ["formaggio","формАджджо","сыр"],
+  ["assaggiare","ассаджджАрэ","пробовать на вкус"],
+  ["Eugenio","эуджЭньо","Эудженио (имя)"],
+  ["partigiano","партиджАно","партизан"],
+  ["Giappone","джаппОнэ","Япония"],
+  ["Giulio","джУльо","Джулио (имя)"],
+  ["viaggio","вьЯджджо","путешествие, поездка"],
+  ["passaggio","пассАджджо","переход, проход; отрывок"],
+  ["punteggiatura","пунтэджджатУра","пунктуация"]
+ ]
+},
+{
+ id:"e7b", n:"7б", t:"gh — как русское Г",
+ rule:"<b>h</b> возвращает g твёрдость перед e, i: ghe = [гэ], ghi = [ги].",
+ w:[
+  ["Ghetto","гЭтто","гетто"],
+  ["mughetto","мугЭтто","ландыш"],
+  ["Ungheria","унгэрИа","Венгрия"],
+  ["laghetto","лагЭтто","пруд, маленькое озеро"],
+  ["mingherlino","мингэрлИно","худосочный, хилый"],
+  ["ghermire","гэрмИрэ","схватить (когтями)"],
+  ["laghi","лАги","озёра"],
+  ["sughero","сУгэро","пробка (материал), пробковый дуб"],
+  ["ghiandola","гьЯндола","железа"]
+ ]
+},
+{
+ id:"e8", n:"8", t:"gn — как мягкое НЬ",
+ rule:"Один слитный мягкий звук [нь] (как в «коньяк»), слегка удлинённый: [ннь].",
+ w:[
+  ["Signora","синьОра","синьора, госпожа"],
+  ["signore","синьОрэ","синьор, господин"],
+  ["signorina","синьорИна","синьорина, девушка"],
+  ["bagno","бАньо","ванная, туалет; купание"],
+  ["sogno","сОньо","сон; мечта"],
+  ["montagna","монтАнья","гора"],
+  ["insegnante","инсэньЯнтэ","преподаватель, учитель"],
+  ["insegnare","инсэньЯрэ","преподавать, учить (кого-то)"],
+  ["sognare","соньЯрэ","мечтать; видеть во сне"],
+  ["Sardegna","сардЭнья","Сардиния"],
+  ["Spagna","спАнья","Испания"],
+  ["ingegnere","инджэньЭрэ","инженер"],
+  ["spagnolo","спаньОло","испанский; испанец"],
+  ["campagna","кампАнья","деревня, сельская местность; кампания"],
+  ["lavagna","лавАнья","школьная доска"],
+  ["stagno","стАньо","пруд, болото; олово"]
+ ]
+},
+{
+ id:"e9", n:"9", t:"gl (перед i) — как мягкое ЛЬ",
+ rule:"<b>gli</b> = один мягкий звук [ль], сама i после него не звучит отдельно: figli = [фИльи].",
+ w:[
+  ["Meglio","мЭльо","лучше"],
+  ["moglie","мОльэ","жена"],
+  ["famiglia","фамИльа","семья"],
+  ["foglio","фОльо","лист (бумаги)"],
+  ["portafogli","портафОльи","бумажник, портфель"],
+  ["figli","фИльи","сыновья, дети"],
+  ["figlie","фИльэ","дочери"],
+  ["migliore","мильОрэ","лучший"],
+  ["luglio","лУльо","июль"],
+  ["tovaglia","товАльа","скатерть"],
+  ["bottiglia","боттИльа","бутылка"],
+  ["voglia","вОльа","желание, охота"],
+  ["ammogliarsi","аммольАрси","жениться"],
+  ["gentaglia","джентАльа","сброд, шваль"],
+  ["maglia","мАльа","свитер, майка; вязка, петля"]
+ ]
+},
+{
+ id:"e10", n:"10", t:"i — как русское И (не «й»)",
+ rule:"В этих словах <b>i</b> — полноценный гласный, каждый гласный проговаривается отдельно: mi-a, ri-u-ni-o-ne.",
+ w:[
+  ["Mia","мИа","моя"],
+  ["zia","цИа","тётя"],
+  ["io","Ио","я"],
+  ["dio","дИо","бог"],
+  ["riassunto","риассУнто","краткое изложение, резюме"],
+  ["riaccendere","риаччЭндэрэ","снова зажечь, снова включить"],
+  ["riattaccare","риаттаккАрэ","снова прикрепить; повесить трубку"],
+  ["riaffermare","риаффэрмАрэ","вновь подтвердить"],
+  ["riunione","риуньОнэ","собрание, встреча"],
+  ["via","вИа","улица; прочь, долой"],
+  ["addio","аддИо","прощай"],
+  ["mio","мИо","мой"],
+  ["Pio","пИо","Пио (имя)"],
+  ["riunire","риунИрэ","объединять, собирать"],
+  ["viale","вьЯлэ","бульвар, аллея"],
+  ["avviamento","аввьямЭнто","запуск, начало, введение"]
+ ]
+},
+{
+ id:"e11", n:"11", t:"l — твёрже русского «ль», но мягче «л»",
+ rule:"Средний звук: кончик языка у верхних зубов. Не «мел» и не «мель», а между.",
+ w:[
+  ["Alunno","алУнно","ученик"],
+  ["parlare","парлАрэ","говорить, разговаривать"],
+  ["lontano","лонтАно","далёкий, далеко"],
+  ["calorifero","калорИфэро","радиатор, отопление"],
+  ["largo","лАрго","широкий"],
+  ["lotta","лОтта","борьба"],
+  ["ballare","баллАрэ","танцевать"],
+  ["molto","мОльто","очень; много"],
+  ["piccolo","пИкколо","маленький"],
+  ["classe","клАссэ","класс"],
+  ["colore","колОрэ","цвет"],
+  ["allegro","аллЭгро","весёлый"],
+  ["calore","калОрэ","тепло, жар"],
+  ["lamentarsi","ламэнтАрси","жаловаться"]
+ ]
+},
+{
+ id:"e12", n:"12", t:"n перед c, g, q — носовой звук",
+ rule:"<b>n</b> здесь произносится «в нос», как английское <i>ng</i>: banca, lingua, dunque.",
+ w:[
+  ["Panca","пАнка","лавка, скамья"],
+  ["banca","бАнка","банк"],
+  ["ancora","анкОра","ещё, снова (Ancora — якорь)"],
+  ["stanco","стАнко","усталый"],
+  ["incontrare","инконтрАрэ","встречать"],
+  ["mancare","манкАрэ","не хватать; отсутствовать"],
+  ["angolo","Анголо","угол"],
+  ["neanche","нэАнкэ","даже не; тоже не"],
+  ["dunque","дУнквэ","итак, значит"],
+  ["venga","вЭнга","пусть придёт (форма от venire)"],
+  ["lingua","лИнгуа","язык"],
+  ["bianco","бьЯнко","белый"],
+  ["rimango","римАнго","я остаюсь"],
+  ["franco","фрАнко","откровенный; франк"],
+  ["mongolo","мОнголо","монгол; монгольский"],
+  ["sangue","сАнгуэ","кровь"],
+  ["vengo","вЭнго","я иду, я прихожу"],
+  ["incontro","инкОнтро","встреча"],
+  ["ringraziare","ринграцьЯрэ","благодарить"]
+ ]
+},
+{
+ id:"e13", n:"13", t:"s — как русское С (глухое)",
+ rule:"Глухое [с]: в начале слова перед гласной, перед глухой согласной (sp, st, sc), после согласной и в <b>ss</b>.",
+ w:[
+  ["Sì","си","да"],
+  ["solo","сОло","только; один, одинокий"],
+  ["sperare","спэрАрэ","надеяться"],
+  ["sedia","сЭдьа","стул"],
+  ["sapere","сапЭрэ","знать, уметь"],
+  ["salutare","салутАрэ","приветствовать, здороваться"],
+  ["finestra","финЭстра","окно"],
+  ["basso","бАссо","низкий"],
+  ["scaffale","скаффАлэ","полка, стеллаж"],
+  ["rivista","ривИста","журнал"],
+  ["rispondere","риспОндэрэ","отвечать"],
+  ["essi","Эсси","они"],
+  ["adesso","адЭссо","сейчас, теперь"],
+  ["aspettare","аспэттАрэ","ждать"],
+  ["assente","ассЭнтэ","отсутствующий"],
+  ["sempre","сЭмпрэ","всегда"],
+  ["passare","пассАрэ","проходить; передавать"],
+  ["interessante","интэрэссАнтэ","интересный"],
+  ["estate","эстАтэ","лето"],
+  ["spesso","спЭссо","часто"],
+  ["sera","сЭра","вечер"],
+  ["professore","профэссОрэ","преподаватель, профессор"],
+  ["subito","сУбито","сразу, немедленно"],
+  ["scrivere","скрИвэрэ","писать"],
+  ["sala","сАла","зал"],
+  ["secco","сЭкко","сухой"],
+  ["benissimo","бэнИссимо","отлично, очень хорошо"],
+  ["complesso","комплЭссо","сложный; комплекс"],
+  ["Sicilia","сичИльа","Сицилия"],
+  ["Sardegna","сардЭнья","Сардиния"],
+  ["Naso","нАзо","нос — а вот здесь s между гласными звучит [з], в отличие от списка выше"]
+ ]
+},
+{
+ id:"e14", n:"14", t:"s — как русское З (звонкое)",
+ rule:"Звонкое [з]: между двумя гласными (casa, rosa) и перед звонкой согласной (sb, sd, sg, sl, sm, sn, sv).",
+ w:[
+  ["Caso","кАзо","случай"],
+  ["cosa","кОза","вещь; что"],
+  ["presente","прэзЭнтэ","присутствующий; настоящее время"],
+  ["inglese","инглЭзэ","английский; англичанин"],
+  ["sbaglio","збАльо","ошибка"],
+  ["esercito","эзЭрчито","армия, войско"],
+  ["riposare","рипозАрэ","отдыхать"],
+  ["musica","мУзика","музыка"],
+  ["esercizio","эзэрчИцьо","упражнение"],
+  ["presidente","прэзидЭнтэ","президент"],
+  ["così","козИ","так, таким образом"],
+  ["visita","вИзита","визит, посещение"],
+  ["presentare","прэзэнтАрэ","представлять, знакомить"],
+  ["bisogna","бизОнья","нужно, надо"],
+  ["vaso","вАзо","ваза; горшок"],
+  ["esempio","эзЭмпьо","пример"],
+  ["quasi","куАзи","почти"],
+  ["piselli","пизЭлли","зелёный горошек"],
+  ["Pisa","пИза","Пиза"],
+  ["posate","позАтэ","столовые приборы"],
+  ["isola","Изола","остров"],
+  ["rosa","рОза","роза; розовый"],
+  ["paese","паЭзэ","страна; деревня, посёлок"],
+  ["risultato","ризультАто","результат"],
+  ["usare","узАрэ","использовать"],
+  ["televisione","тэлэвизьОнэ","телевидение, телевизор"],
+  ["danese","данЭзэ","датский; датчанин"],
+  ["cortese","кортЭзэ","вежливый, учтивый"],
+  ["francese","франчЭзэ","французский; француз"],
+  ["portoghese","портогЭзэ","португальский; португалец"],
+  ["bisogno","бизОньо","нужда, потребность"]
+ ]
+},
+{
+ id:"e15", n:"15", t:"sc + a, o, u — как русское СК",
+ rule:"Твёрдо: sca = [ска], sco = [ско], scu = [ску]. Так же перед согласной: scrivere.",
+ w:[
+  ["Scuro","скУро","тёмный"],
+  ["ascoltare","аскольтАрэ","слушать"],
+  ["scolaro","сколАро","школьник"],
+  ["scarpe","скАрпэ","обувь, туфли"],
+  ["scultore","скультОрэ","скульптор"],
+  ["scopo","скОпо","цель"],
+  ["opuscolo","опУсколо","брошюра, буклет"],
+  ["scusare","скузАрэ","извинять (scusa — извини)"],
+  ["bosco","бОско","лес"],
+  ["pesca","пЭска","персик; рыбалка"],
+  ["casco","кАско","шлем, каска"],
+  ["scala","скАла","лестница; шкала"],
+  ["scontento","сконтЭнто","недовольный"],
+  ["cascare","каскАрэ","падать"],
+  ["scontro","скОнтро","столкновение, стычка"],
+  ["scorso","скОрсо","прошлый, минувший"],
+  ["scortese","скортЭзэ","невежливый"],
+  ["scontare","сконтАрэ","вычитать, делать скидку; отбывать срок"],
+  ["crepuscolo","крэпУсколо","сумерки"],
+  ["minuscolo","минУсколо","крошечный; строчная буква"],
+  ["scrivi","скрИви","ты пишешь; пиши!"],
+  ["miscuglio","мискУльо","смесь, мешанина"],
+  ["scultura","скультУра","скульптура"],
+  ["pascolo","пАсколо","пастбище"],
+  ["pescatore","пэскатОрэ","рыбак"],
+  ["scacciare","скаччАрэ","прогонять, отгонять"],
+  ["scopa","скОпа","метла, веник"],
+  ["scappare","скаппАрэ","убегать, ускользать"],
+  ["mescolare","мэсколАрэ","смешивать, перемешивать"]
+ ]
+},
+{
+ id:"e16", n:"16", t:"sc + e, i — как мягкое Ш",
+ rule:"sce = [шэ], sci = [ши]. Звук долгий и мягкий, ближе к «щ»: scena, sci.",
+ w:[
+  ["Palcoscenico","палькошЭнико","сцена (в театре), подмостки"],
+  ["cascina","кашИна","ферма, хутор"],
+  ["scimmia","шИммья","обезьяна"],
+  ["disciplina","дишиплИна","дисциплина"],
+  ["sci","ши","лыжи"],
+  ["mescere","мЭшэрэ","разливать (вино, напиток)"],
+  ["ascetico","ашЭтико","аскетичный"],
+  ["pasce","пАшэ","пасётся (от pascere)"],
+  ["piscina","пишИна","бассейн"],
+  ["uscire","ушИрэ","выходить"],
+  ["discepolo","дишЭполо","ученик, последователь"],
+  ["scendere","шЭндэрэ","спускаться, сходить"],
+  ["scena","шЭна","сцена, эпизод"],
+  ["trascinare","трашинАрэ","тащить, волочить"],
+  ["mascella","машЭлла","челюсть"],
+  ["sciroppo","широппо","сироп"],
+  ["scelta","шЭльта","выбор"],
+  ["scissione","шиссьОнэ","раскол, расщепление"],
+  ["scegliere","шЭльэрэ","выбирать"],
+  ["discesa","дишЭза","спуск"],
+  ["ascesa","ашЭза","подъём, восхождение"],
+  ["fascista","фашИста","фашист"]
+ ]
+},
+{
+ id:"e17", n:"17", t:"sci + a, o, u — как мягкое Ш (i не читается)",
+ rule:"scia = [ша], scio = [шо], sciu = [шу].",
+ w:[
+  ["Sciopero","шОпэро","забастовка"],
+  ["sciagura","шагУра","беда, несчастье"],
+  ["scialle","шАллэ","шаль, платок"],
+  ["lasciare","лашАрэ","оставлять, покидать; позволять"],
+  ["asciugare","ашугАрэ","сушить, вытирать"],
+  ["striscia","стрИша","полоска, лента"],
+  ["sciogliere","шОльэрэ","растворять; распускать, развязывать"],
+  ["asciutto","ашУтто","сухой, высохший"],
+  ["fascia","фАша","полоса; бинт, повязка"],
+  ["sciarpa","шАрпа","шарф"],
+  ["sciocco","шОкко","глупый; глупец"],
+  ["prosciutto","прошУтто","окорок, прошутто"],
+  ["sciupare","шупАрэ","портить; тратить зря"],
+  ["coscia","кОша","бедро, ляжка"],
+  ["fasciare","фашАрэ","бинтовать, обматывать"],
+  ["sciame","шАмэ","рой (пчёл), стая"],
+  ["asciugamano","ашугамАно","полотенце"]
+ ]
+},
+{
+ id:"e18", n:"18", t:"sch + e, i — как русское СК",
+ rule:"<b>h</b> снова делает звук твёрдым: sche = [скэ], schi = [ски].",
+ w:[
+  ["Maschio","мАскьо","самец; мужской; мальчик"],
+  ["scherzo","скЭрцо","шутка"],
+  ["scherzare","скэрцАрэ","шутить"],
+  ["schermo","скЭрмо","экран"],
+  ["schifo","скИфо","отвращение, гадость"],
+  ["fischiare","фискьЯрэ","свистеть"],
+  ["mischiare","мискьЯрэ","смешивать, перемешивать"],
+  ["maschera","мАскэра","маска"],
+  ["smascherare","змаскэрАрэ","разоблачать, снимать маску"],
+  ["meschino","мэскИно","жалкий, мелочный"],
+  ["scheletro","скЭлэтро","скелет"],
+  ["schema","скЭма","схема"],
+  ["rischio","рИскьо","риск"],
+  ["taschino","таскИно","кармашек"],
+  ["rischiare","рискьЯрэ","рисковать"],
+  ["mischia","мИскья","свалка, схватка, драка"]
+ ]
+},
+{
+ id:"e19", n:"19", t:"qu, gu + гласная — слитно КУЭ, КУИ, КУА, ГУЭ, ГУИ, ГУА",
+ rule:"<b>u</b> не отдельный слог, а полугласный [ў]: qui = [куИ] в один слог. <b>cqu</b> — долгое [ккуа]: acqua.",
+ w:[
+  ["Questo","куЭсто","этот"],
+  ["quello","куЭлло","тот"],
+  ["qui","куИ","здесь, тут"],
+  ["quindici","куИндичи","пятнадцать"],
+  ["quercia","куЭрча","дуб"],
+  ["quintale","куинтАлэ","центнер"],
+  ["quinto","куИнто","пятый"],
+  ["quasi","куАзи","почти"],
+  ["quindi","куИнди","следовательно, значит"],
+  ["qualche","куАлькэ","какой-то, несколько"],
+  ["lingua","лИнгуа","язык"],
+  ["risciacquare","ришаккуАрэ","прополаскивать"],
+  ["quaderno","куадЭрно","тетрадь"],
+  ["guardia","гуАрдьа","охрана, стража, караул"],
+  ["seguente","сэгуЭнтэ","следующий"],
+  ["guardare","гуардАрэ","смотреть"],
+  ["qualunque","куалУнквэ","любой, какой угодно"],
+  ["guanti","гуАнти","перчатки"],
+  ["guaio","гуАйо","беда, неприятность"],
+  ["qualcosa","куалькОза","что-то, что-нибудь"],
+  ["quadro","куАдро","картина; квадратный"],
+  ["Quirinale","куиринАлэ","Квиринал (резиденция президента Италии)"],
+  ["Pasquale","паскуАлэ","Паскуале (имя); пасхальный"],
+  ["quota","куОта","квота, доля; высота"],
+  ["acquedotto","аккуэдОтто","водопровод, акведук"],
+  ["acqua","Аккуа","вода"],
+  ["quartiere","куартьЭрэ","квартал, район"],
+  ["squadra","скуАдра","команда; отряд; угольник"],
+  ["acquerello","аккуэрЭлло","акварель"],
+  ["annacquare","аннаккуАрэ","разбавлять водой"],
+  ["guidare","гуидАрэ","водить (машину), вести, руководить"],
+  ["anguilla","ангуИлла","угорь"]
+ ]
+},
+{
+ id:"e20", n:"20", t:"z — как русское Ц (глухое)",
+ rule:"Глухое [ц]; <b>zz</b> — долгое [цц]. Сочетание <b>zi</b>+гласная = [ць]: stazione [стацьОнэ].",
+ w:[
+  ["Ragazzo","рагАццо","парень, юноша"],
+  ["servizio","сэрвИцьо","услуга, сервис, обслуживание"],
+  ["Tizio","тИцьо","Тицио; «некто, некий тип»"],
+  ["Maurizio","маурИцьо","Маурицио (имя)"],
+  ["Grazia","грАцьа","милость, благодать; Грация (имя)"],
+  ["stazione","стацьОнэ","станция, вокзал"],
+  ["canzone","канцОнэ","песня"],
+  ["danzare","данцАрэ","танцевать"],
+  ["stanza","стАнца","комната"],
+  ["grazie","грАцьэ","спасибо"],
+  ["giovinezza","джовинЭцца","молодость, юность"],
+  ["pazzo","пАццо","сумасшедший"],
+  ["tazza","тАцца","чашка"],
+  ["lezione","лэцьОнэ","урок"],
+  ["notizia","нотИцьа","новость, известие"],
+  ["senza","сЭнца","без"],
+  ["pezzo","пЭццо","кусок, часть"],
+  ["pulizia","пулицИа","уборка, чистота"],
+  ["polizia","полицИа","полиция"],
+  ["danza","дАнца","танец"],
+  ["mazzo","мАццо","букет; колода (карт)"],
+  ["esercizio","эзэрчИцьо","упражнение"],
+  ["speranza","спэрАнца","надежда"],
+  ["pigrizia","пигрИцьа","лень"],
+  ["mascalzone","маскальцОнэ","негодяй, подлец"],
+  ["zucchero","цУккэро","сахар"],
+  ["zampa","цАмпа","лапа"],
+  ["zio","цИо","дядя"],
+  ["zuppa","цУппа","суп (густой)"],
+  ["zoccolo","цОкколо","копыто; башмак, сабо; плинтус"]
+ ]
+},
+{
+ id:"e21", n:"21", t:"z — как слитное ДЗ (звонкое)",
+ rule:"[дз] — один слитный звук, не «д-з». <b>zz</b> здесь долгое [ддз]: azzurro, mezzo.",
+ w:[
+  ["Pranzo","прАндзо","обед"],
+  ["romanzo","ромАндзо","роман"],
+  ["mezzanotte","мэддзанОттэ","полночь"],
+  ["polemizzare","полемиддзАрэ","полемизировать, спорить"],
+  ["azzurro","аддзУрро","голубой, лазурный"],
+  ["meccanizzare","мэкканиддзАрэ","механизировать"],
+  ["zelo","дзЭло","усердие, ревность"],
+  ["mezzo","мЭддзо","половина; средство; средний"],
+  ["mezzogiorno","мэддзоджОрно","полдень; юг Италии"],
+  ["manzo","мАндзо","говядина; бычок"],
+  ["zero","дзЭро","ноль"],
+  ["zingaro","дзИнгаро","цыган"],
+  ["organizzare","органиддзАрэ","организовывать"],
+  ["zanzara","дзандзАра","комар"],
+  ["zona","дзОна","зона, район"],
+  ["zaino","дзАйно","рюкзак"],
+  ["zebra","дзЭбра","зебра"]
+ ]
+}
+,
+{
+ id:"e22", n:"22", t:"Дифтонги — два гласных в одном слоге",
+ rule:"Безударные <b>i</b> и <b>u</b> рядом с гласной становятся полугласными [й] и [ў]: piede [пьЭдэ], buono [буОно]. Ударение — на второй гласной.",
+ w:[
+  ["piede","пьЭдэ","нога, ступня"],
+  ["bicchiere","биккьЭрэ","стакан, бокал"],
+  ["fieno","фьЭно","сено"],
+  ["portiere","портьЭрэ","вратарь; портье, швейцар"],
+  ["pieno","пьЭно","полный"],
+  ["insieme","инсьЭмэ","вместе"],
+  ["barbiere","барбьЭрэ","парикмахер (мужской)"],
+  ["spiegare","спьегАрэ","объяснять"],
+  ["ieri","йЭри","вчера"],
+  ["schiera","скьЭра","ряд, шеренга"],
+  ["maschietto","маскьЭтто","мальчишка"],
+  ["fiero","фьЭро","гордый"],
+  ["scienza","шЭнца","наука"],
+  ["maniera","маньЭра","манера, способ"],
+  ["chiedere","кьЭдэрэ","спрашивать, просить"],
+  ["parrucchiere","парруккьЭрэ","парикмахер"],
+  ["impiegato","импьегАто","служащий"],
+  ["cavaliere","кавальЭрэ","всадник, рыцарь; кавалер"],
+  ["allievo","алльЭво","ученик"],
+  ["cielo","чЭло","небо"],
+  ["Pietro","пьЭтро","Пьетро (имя)"],
+  ["bandiera","бандьЭра","флаг"],
+  ["azione","ацьОнэ","действие, поступок"],
+  ["razione","рацьОнэ","порция, паёк"],
+  ["colazione","колацьОнэ","завтрак"],
+  ["collezione","коллецьОнэ","коллекция"],
+  ["porzione","порцьОнэ","порция"],
+  ["rivoluzione","риволуцьОнэ","революция"],
+  ["costituzione","коституцьОнэ","конституция"],
+  ["lezione","лецьОнэ","урок"],
+  ["attenzione","аттэнцьОнэ","внимание"],
+  ["piombo","пьОмбо","свинец"],
+  ["chioma","кьОма","шевелюра, грива; листва"],
+  ["fiore","фьОрэ","цветок"],
+  ["fiorire","фьорИрэ","цвести"],
+  ["ragione","раджОнэ","причина; разум (avere ragione — быть правым)"],
+  ["occhio","Оккьо","глаз"],
+  ["inchiostro","инкьОстро","чернила"],
+  ["orecchio","орЭккьо","ухо"],
+  ["ghiotto","гьОтто","лакомый; лакомка"],
+  ["unione","уньОнэ","союз, объединение"],
+  ["piovere","пьОвэрэ","идти (о дожде)"],
+  ["regione","реджОнэ","область, регион"],
+  ["biondo","бьОндо","светловолосый, блондин"],
+  ["piuma","пьЮма","перо, пух"],
+  ["chiuso","кьЮзо","закрытый"],
+  ["schiuma","скьЮма","пена"],
+  ["fiume","фьЮмэ","река"],
+  ["chiudere","кьЮдэрэ","закрывать"],
+  ["aiuto","айЮто","помощь"],
+  ["aiutare","айютАрэ","помогать"],
+  ["piuttosto","пьюттОсто","скорее, довольно"],
+  ["compiuto","компьЮто","завершённый, исполнившийся"],
+  ["fiutare","фьютАрэ","нюхать, чуять"],
+  ["chiunque","кьЮнквэ","кто угодно"],
+  ["più","пью","больше, более"],
+  ["rifiuto","рифьЮто","отказ; мусор"],
+  ["siamo","сьЯмо","мы есть (essere)"],
+  ["bianco","бьЯнко","белый"],
+  ["pianta","пьЯнта","растение; план"],
+  ["chiaro","кьЯро","ясный, светлый"],
+  ["chiamare","кьямАрэ","звать, звонить"],
+  ["invecchiare","инвэккьЯрэ","стареть"],
+  ["fiamma","фьЯмма","пламя"],
+  ["andiamo","андьЯмо","мы идём; идём!"],
+  ["occhiali","оккьЯли","очки"],
+  ["cucchiaio","куккьЯйо","ложка"],
+  ["ghiaccio","гьЯччо","лёд"],
+  ["abbiamo","аббьЯмо","у нас есть, мы имеем (avere)"],
+  ["parliamo","парльЯмо","мы говорим"],
+  ["diamo","дьЯмо","мы даём"],
+  ["scienziato","шэнцьЯто","учёный"],
+  ["fiato","фьЯто","дыхание"],
+  ["buono","буОно","хороший, добрый; вкусный"],
+  ["scuola","скуОла","школа"],
+  ["duomo","дуОмо","собор"],
+  ["cuore","куОрэ","сердце"],
+  ["tuono","туОно","гром"],
+  ["suono","суОно","звук"],
+  ["suonare","суонАрэ","звучать; играть (на инструменте)"],
+  ["duole","дуОлэ","болит (mi duole — у меня болит)"],
+  ["suolo","суОло","почва, земля"],
+  ["sottosuolo","соттосуОло","недра; подвал"],
+  ["ruoto","руОто","я вращаю"],
+  ["arruolarsi","арруолАрси","записаться в армию"],
+  ["nuovo","нуОво","новый"],
+  ["luogo","луОго","место"],
+  ["fuori","фуОри","снаружи, вне"],
+  ["cuoco","куОко","повар"],
+  ["portai","портАй","я принёс (прош. время)"],
+  ["fai","фай","ты делаешь"],
+  ["sai","сай","ты знаешь"],
+  ["gridai","гридАй","я крикнул"],
+  ["semmai","сэммАй","если уж; разве что"],
+  ["andai","андАй","я пошёл"],
+  ["stai","стай","ты находишься; ты поживаешь (come stai?)"],
+  ["mangiai","манджАй","я поел"],
+  ["scappai","скаппАй","я убежал"],
+  ["balzai","бальцАй","я прыгнул"],
+  ["vai","вай","ты идёшь"],
+  ["ormai","ормАй","уже, теперь уж"],
+  ["poi","пой","потом, затем"],
+  ["voi","вой","вы"],
+  ["coi","кой","с (con + i)"],
+  ["eppoi","эппОй","и потом"],
+  ["noi","ной","мы"]
+ ]
+},
+{
+ id:"e23", n:"23", t:"Без редукции — каждая гласная звучит чётко",
+ rule:"Безударное <b>o</b> остаётся [о], безударное <b>e</b> остаётся [э]. Никакого «а» вместо «о»: piccolo = [пИкколо], не [пИккала].",
+ w:[
+  ["nessuno","нэссУно","никто; никакой"],
+  ["mostrare","мострАрэ","показывать"],
+  ["componimento","компонимЭнто","сочинение"],
+  ["cartolina","картолИна","открытка"],
+  ["libero","лИбэро","свободный"],
+  ["profondo","профОндо","глубокий"],
+  ["moneta","монЭта","монета"],
+  ["Paolo","пАоло","Паоло (имя)"],
+  ["nero","нЭро","чёрный"],
+  ["bambino","бамбИно","ребёнок, мальчик"],
+  ["colonna","колОнна","колонна"],
+  ["duro","дУро","твёрдый, жёсткий"],
+  ["bambina","бамбИна","девочка"],
+  ["opera","Опэра","опера; произведение"],
+  ["animo","Анимо","дух, душа"],
+  ["tavolo","тАволо","стол"],
+  ["albero","Альбэро","дерево"],
+  ["tono","тОно","тон"],
+  ["orologio","оролОджо","часы"],
+  ["compagno","компАньо","товарищ, спутник"],
+  ["compagna","компАнья","подруга, спутница"],
+  ["maestro","маЭстро","учитель; маэстро"],
+  ["maestra","маЭстра","учительница"],
+  ["soldato","сольдАто","солдат"],
+  ["minuto","минУто","минута"],
+  ["chilometro","килОмэтро","километр"],
+  ["sicuro","сикУро","уверенный; безопасный"],
+  ["telefono","тэлЭфоно","телефон"],
+  ["portare","портАрэ","носить, приносить"],
+  ["simpatico","симпАтико","симпатичный, приятный"],
+  ["memoria","мэмОрья","память"],
+  ["domandare","домандАрэ","спрашивать"],
+  ["gruppo","грУппо","группа"]
+ ]
+},
+{
+ id:"e24", n:"24", t:"d и t перед i, e — твёрдые, без смягчения",
+ rule:"Итальянское <b>ti</b> = [ти] с твёрдым т, как в «тир», а не [ть]. То же для <b>di</b>: [ди], не [дь].",
+ w:[
+  ["di","ди","из; о (предлог)"],
+  ["ti","ти","тебя, тебе"],
+  ["tipo","тИпо","тип"],
+  ["divano","дивАно","диван"],
+  ["tardi","тАрди","поздно"],
+  ["diploma","диплОма","диплом"],
+  ["pettinarsi","пэттинАрси","причёсываться"],
+  ["partire","партИрэ","уезжать, отправляться"],
+  ["tutti","тУтти","все"],
+  ["frutti","фрУтти","плоды"],
+  ["matita","матИта","карандаш"],
+  ["diligente","дилиджЭнтэ","прилежный"],
+  ["utile","Утилэ","полезный"],
+  ["dito","дИто","палец"],
+  ["partito","партИто","партия; уехавший"],
+  ["mattino","маттИно","утро"],
+  ["altissimo","альтИссимо","очень высокий"],
+  ["sottile","соттИлэ","тонкий"],
+  ["sostantivo","состантИво","имя существительное"],
+  ["attivo","аттИво","активный"],
+  ["istituto","иститУто","институт"],
+  ["davanti","давАнти","впереди, перед"],
+  ["dentro","дЭнтро","внутри"],
+  ["difetto","дифЭтто","недостаток, дефект"],
+  ["attento","аттЭнто","внимательный"],
+  ["tema","тЭма","тема; сочинение"],
+  ["debito","дЭбито","долг"],
+  ["credito","крЭдито","кредит"],
+  ["tela","тЭла","холст, полотно"],
+  ["modello","модЭлло","модель, образец"],
+  ["terminare","тэрминАрэ","заканчивать"],
+  ["cadere","кадЭрэ","падать"]
+ ]
+},
+{
+ id:"e25", n:"25–26", t:"Двойные согласные — произносить отчётливо",
+ rule:"Задержка на согласной, гласная перед ней короче. Пары для контраста: pena/penna, pala/palla, nono/nonno, polo/pollo, note/notte.",
+ w:[
+  ["bello","бЭлло","красивый"],
+  ["tutto","тУтто","всё, весь"],
+  ["nonno","нОнно","дедушка"],
+  ["fratello","фратЭлло","брат"],
+  ["sorella","сорЭлла","сестра"],
+  ["mamma","мАмма","мама"],
+  ["babbo","бАббо","папа (тосканское)"],
+  ["lettera","лЭттэра","письмо; буква"],
+  ["mettere","мЭттэрэ","класть, ставить"],
+  ["penna","пЭнна","ручка; перо"],
+  ["allora","аллОра","тогда; итак"],
+  ["arrivare","арривАрэ","прибывать"],
+  ["attore","аттОрэ","актёр"],
+  ["danno","дАнно","ущерб; они дают"],
+  ["malattia","малаттИа","болезнь"],
+  ["freddo","фрЭддо","холод; холодный"],
+  ["anno","Анно","год"],
+  ["troppo","трОппо","слишком"],
+  ["mattina","маттИна","утро"],
+  ["atto","Атто","акт, действие"],
+  ["brutto","брУтто","некрасивый, плохой"],
+  ["autunno","аутУнно","осень"],
+  ["donna","дОнна","женщина"],
+  ["abbandonare","аббандонАрэ","покидать, бросать"],
+  ["avvenire","аввэнИрэ","будущее; происходить"],
+  ["casetta","казЭтта","домик"],
+  ["repubblica","рэпУбблика","республика"],
+  ["pubblico","пУбблико","публика; публичный"],
+  ["direttore","дирэттОрэ","директор"],
+  ["direttrice","дирэттрИчэ","директор (женщина)"],
+  ["abbracciare","аббраччАрэ","обнимать"],
+  ["berretto","бэррЭтто","кепка, берет"],
+  ["tetto","тЭтто","крыша"],
+  ["petto","пЭтто","грудь"],
+  ["improvviso","импроввИзо","внезапный (all'improvviso — вдруг)"],
+  ["battere","бАттэрэ","бить, стучать"],
+  ["appello","аппЭлло","перекличка; призыв"],
+  ["tradurre","традУррэ","переводить"],
+  ["traduttore","традуттОрэ","переводчик"],
+  ["sorridere","соррИдэрэ","улыбаться"],
+  ["terra","тЭрра","земля"],
+  ["interrogare","интэррогАрэ","опрашивать, допрашивать"],
+  ["purtroppo","пуртрОппо","к сожалению"],
+  ["oppure","оппУрэ","или же"],
+  ["pollo","пОлло","курица (мясо)"],
+  ["frutta","фрУтта","фрукты"],
+  ["caffè","каффЭ","кофе"],
+  ["fretta","фрЭтта","спешка"],
+  ["grammatica","граммАтика","грамматика"],
+  ["suffisso","суффИссо","суффикс"],
+  ["pena","пЭна","наказание; мука (↔ penna — ручка)"],
+  ["pala","пАла","лопата (↔ palla — мяч)"],
+  ["palla","пАлла","мяч; пуля"],
+  ["nono","нОно","девятый (↔ nonno — дедушка)"],
+  ["polo","пОло","полюс (↔ pollo — курица)"],
+  ["note","нОтэ","заметки; ноты (↔ notte — ночь)"],
+  ["notte","нОттэ","ночь"]
+ ]
+}
+];
+
+/* ============================================================
+   КОЛОДЫ. prio — порядок ввода новых карточек (меньше = раньше).
+   def — включена ли колода по умолчанию.
+   ============================================================ */
+const DECKS = [
+  {id:"fr",   name:"Фразы для жизни",              prio:1, def:true,  desc:"Приветствия, знакомство, как дела, состояния, разговорные выражения — всё, что уже прошли."},
+  {id:"lex",  name:"Слова уроков",                 prio:2, def:true,  desc:"Тетрадь + учебник Nuovo Espresso 1, Lezione 1–2 + домашки."},
+  {id:"gram", name:"Формы глаголов и местоимения", prio:3, def:true,  desc:"essere, avere, chiamarsi, stare; io/tu/lui…; артикли il/lo/la/l — i/gli/le."},
+  {id:"num",  name:"Числа 0–100",                  prio:4, def:true,  desc:"0–20, десятки, 100 и составные по правилу. Полная таблица — во вкладке «Числа»."},
+  {id:"alfa", name:"Алфавит: названия букв",       prio:5, def:true,  desc:"Чтобы диктовать имя и фамилию по буквам (come si scrive?)."},
+  {id:"fon",  name:"Чтение: слова из упражнений",  prio:6, def:true,  desc:"691 слово из фонетических упражнений 1–26. Тренируют правила чтения, много редких слов."},
+  {id:"bonus",name:"Фразы для урока (бонус)",      prio:9, def:false, desc:"Ещё не проходили, но нужны на каждом занятии. Включи, если хочешь."}
+];
+
+/* ============================================================
+   КАРТОЧКИ: [колода, итальянское, транскрипция, перевод, заметка]
+   ЗАГЛАВНАЯ гласная в транскрипции = ударение.
+   ============================================================ */
+const LEX = [
+
+["fr","#","","Приветствия"],
+["fr","Ciao!","чАо","Привет! / Пока!","на «ты»; и при встрече, и при прощании"],
+["fr","Salve!","сАльвэ","Здравствуйте!","нейтрально — годится и на «ты», и на «Вы»"],
+["fr","Buongiorno!","буонджОрно","Доброе утро! / Добрый день!","примерно до 13–14 часов; пишется и Buon giorno"],
+["fr","Buona sera!","буОна сЭра","Добрый вечер!","с 13–14 часов и до ночи; пишется и Buonasera"],
+["fr","Buona notte!","буОна нОттэ","Спокойной ночи!","только при прощании перед сном"],
+["fr","Buona giornata!","буОна джорнАта","Хорошего дня!","при прощании"],
+
+["fr","#","","Как дела"],
+["fr","Come stai?","кОмэ стАй","Как у тебя дела?","на «ты»"],
+["fr","Come sta?","кОмэ стА","Как у Вас дела?","на «Вы», официальнее"],
+["fr","Come va?","кОмэ вА","Как оно? / Как жизнь?","универсально"],
+["fr","Bene, grazie. E tu?","бЭнэ грАцьэ, э тУ","Хорошо, спасибо. А у тебя?",""],
+["fr","E Lei?","э лЭй","А у Вас?",""],
+["fr","Molto bene","мОльто бЭнэ","Очень хорошо",""],
+["fr","Benissimo","бэнИссимо","Прекрасно, отлично",""],
+["fr","Abbastanza bene","аббастАнца бЭнэ","Достаточно хорошо","в тетради abastanza — правильно с двойной bb"],
+["fr","Poco bene","пОко бЭнэ","Так себе, не очень",""],
+["fr","Così così","козИ козИ","Так себе",""],
+["fr","Non c'è male","нон чЭ мАлэ","Неплохо","букв. «нет ничего плохого»"],
+["fr","Sto bene","сто бЭнэ","Я в порядке, мне хорошо","stare — о состоянии"],
+["fr","Sto male","сто мАлэ","Мне плохо",""],
+
+["fr","#","","Прощания"],
+["fr","Arrivederci!","арривэдЭрчи","До свидания!","универсально"],
+["fr","ArrivederLa!","арривэдЭрла","До свидания!","на «Вы», одному человеку, очень вежливо"],
+["fr","A presto!","а прЭсто","До скорого!",""],
+["fr","A più tardi!","а пью тАрди","До встречи позже!","увидимся ещё сегодня"],
+["fr","A domani!","а домАни","До завтра!",""],
+["fr","Ci vediamo!","чи вэдьЯмо","Увидимся!",""],
+["fr","Ci vediamo presto","чи вэдьЯмо прЭсто","Скоро увидимся",""],
+["fr","Ci sentiamo!","чи сэнтьЯмо","Услышимся! / Созвонимся!",""],
+["fr","Ci scriviamo!","чи скривьЯмо","Спишемся!",""],
+["fr","Alla prossima volta!","Алла прОссима вОльта","До следующего раза!",""],
+["fr","Stiamo in contatto","стьЯмо ин контАтто","Будем на связи",""],
+
+["fr","#","","Вежливость"],
+["fr","Grazie!","грАцьэ","Спасибо!",""],
+["fr","Prego!","прЭго","Пожалуйста! (ответ на спасибо)","также «проходите», «прошу»"],
+["fr","Permesso?","пэрмЭссо","Разрешите? (пройти, войти)",""],
+["fr","Scusi!","скУзи","Извините! (Вы)",""],
+["fr","Scusa!","скУза","Извини! (ты)",""],
+["fr","Scusate!","скузАтэ","Извините! (к нескольким людям)",""],
+["fr","Attenzione!","аттэнцьОнэ","Внимание! / Осторожно!",""],
+["fr","Molto gentile","мОльто джэнтИлэ","Очень любезно (с Вашей стороны)",""],
+["fr","Come, scusa?","кОмэ скУза","Как, прости? (не расслышал)","на «Вы»: Come, scusi?"],
+["fr","Come, scusi?","кОмэ скУзи","Как, простите? (не расслышал)",""],
+
+["fr","#","","Знакомство"],
+["fr","Come ti chiami?","кОмэ ти кьЯми","Как тебя зовут?",""],
+["fr","Scusi, Lei come si chiama?","скУзи, лЭй кОмэ си кьЯма","Простите, как Вас зовут?",""],
+["fr","Mi chiamo…","ми кьЯмо","Меня зовут…",""],
+["fr","Sono Valeria, e tu?","сОно валЭрья, э тУ","Я Валерия, а ты?","представиться можно просто через sono"],
+["fr","Piacere!","пьячЭрэ","Приятно познакомиться!",""],
+["fr","Molto piacere","мОльто пьячЭрэ","Очень приятно",""],
+["fr","Piacere mio","пьячЭрэ мИо","Взаимно, мне тоже приятно",""],
+["fr","Molto lieto / lieta","мОльто льЭто","Очень рад / рада","элегантнее, чем piacere; lieta — говорит женщина"],
+["fr","Anch'io mi chiamo Gucci","анкИо ми кьЯмо гУччи","Меня тоже зовут Гуччи","anch'io = anche + io"],
+["fr","Mi presento…","ми прэзЭнто","Представлюсь… / Позвольте представиться…",""],
+["fr","Di dove sei?","ди дОвэ сЭй","Откуда ты?",""],
+["fr","Di dov'è?","ди довЭ","Откуда Вы? / Откуда он(а)?","di dove + è"],
+["fr","Sono di Genova","сОно ди джЭнова","Я из Генуи","с городом — предлог di"],
+["fr","Sono italiano / italiana","сОно итальЯно","Я итальянец / итальянка",""],
+["fr","Lei è italiana? — Sì.","лЭй э итальЯна — сИ","Вы итальянка? — Да.",""],
+["fr","Sei tedesco? — No, sono austriaco.","сЭй тэдЭско — но, сОно аустрИако","Ты немец? — Нет, я австриец.",""],
+["fr","Come si scrive?","кОмэ си скрИвэ","Как это пишется?","просьба продиктовать по буквам"],
+["fr","Qual è il tuo numero di telefono?","куАль э иль тУо нУмэро ди тэлЭфоно","Какой у тебя номер телефона?",""],
+["fr","Qual è il Suo numero di telefono?","куАль э иль сУо нУмэро ди тэлЭфоно","Какой у Вас номер телефона?","Suo с большой — вежливое «Ваш»"],
+["fr","Qual è il tuo indirizzo?","куАль э иль тУо индирИццо","Какой у тебя адрес?",""],
+["fr","Via Garibaldi, 22","вИа гарибАльди вэнтидУэ","улица Гарибальди, 22","адрес: сначала улица, потом номер"],
+["fr","Però ho anche il cellulare","пэрО о Анкэ иль чэллулАрэ","Но у меня есть и мобильный",""],
+["fr","Primi contatti","прИми контАтти","Первые контакты, первое знакомство","название Lezione 1"],
+
+["fr","#","","Состояния с essere"],
+["fr","Sono felice","сОно фэлИчэ","Я счастлив(а)",""],
+["fr","Sono contento / contenta","сОно контЭнто","Я доволен / довольна, рад(а)",""],
+["fr","Sono lieto / lieta","сОно льЭто","Я рад / рада","более элегантно"],
+["fr","Sono stanco / stanca","сОно стАнко","Я устал / устала",""],
+["fr","Non sono stanco","нон сОно стАнко","Я не устал","отрицание: non перед глаголом"],
+["fr","Sono triste","сОно трИстэ","Мне грустно",""],
+["fr","Sono arrabbiato / arrabbiata","сОно арраббьЯто","Я злой / злая, я злюсь","в тетради arabbiato — правильно с rr и bb"],
+["fr","Sono preoccupato / preoccupata","сОно прэоккупАто","Я обеспокоен(а), волнуюсь",""],
+["fr","Sono stupito / stupita","сОно ступИто","Я удивлён / удивлена",""],
+["fr","Sono annoiato / annoiata","сОно анноЯто","Мне скучно",""],
+["fr","Sono innamorato / innamorata","сОно иннаморАто","Я влюблён / влюблена",""],
+["fr","Sono ubriaco / ubriaca","сОно убрьЯко","Я пьян(а)",""],
+["fr","Sono malato / malata","сОно малАто","Я болен / больна",""],
+["fr","Non sono malato","нон сОно малАто","Я не болен",""],
+["fr","Sono pieno / piena di energia","сОно пьЭно ди энэрджИа","Я полон / полна энергии",""],
+["fr","Non sono pieno di energia","нон сОно пьЭно ди энэрджИа","Я не полон энергии",""],
+["fr","Io invece sono felice","Ио инвЭчэ сОно фэлИчэ","А я, наоборот, счастлив","invece — противопоставление"],
+["fr","Anch'io","анкИо","Я тоже",""],
+["fr","Anche tu sei…","Анкэ ту сЭй","Ты тоже…",""],
+["fr","È assente","э ассЭнтэ","Он(а) отсутствует",""],
+
+["fr","#","","Состояния с avere"],
+["fr","Ho fame","о фАмэ","Я голоден","букв. «имею голод» — с avere, не с essere!"],
+["fr","Ho un po' di fame","о ун пО ди фАмэ","Я немного голоден","в тетради «un po' fame» — нужно di"],
+["fr","Ho sete","о сЭтэ","Я хочу пить",""],
+["fr","Ho sonno","о сОнно","Я хочу спать",""],
+["fr","Ho freddo","о фрЭддо","Мне холодно",""],
+["fr","Ho paura","о паУра","Мне страшно",""],
+["fr","Ho fretta","о фрЭтта","Я спешу",""],
+["fr","Ho la febbre","о ла фЭббрэ","У меня температура",""],
+["fr","Ho il raffreddore","о иль раффрэддОрэ","У меня простуда, насморк",""],
+["fr","Ho dei soldi","о дЭй сОльди","У меня есть деньги",""],
+
+["fr","#","","Разговорные"],
+["fr","In bocca al lupo!","ин бОкка аль лУпо","Ни пуха ни пера!","букв. «в пасть волку»"],
+["fr","Crepi!","крЭпи","К чёрту! (ответ на in bocca al lupo)","букв. «пусть сдохнет (волк)»"],
+["fr","In culo alla balena!","ин кУло Алла балЭна","Ни пуха! (грубоватый вариант)","букв. «в зад киту»; в тетради записано неверно"],
+["fr","Che peccato!","кэ пэккАто","Как жаль!",""],
+["fr","Che tristezza!","кэ тристЭцца","Какая грусть! / Как грустно!",""],
+["fr","Che cosa vuoi?","кэ кОза вуОй","Что ты хочешь?","che cosa = cosa = che — все три значат «что»"],
+["fr","Chissà","киссА","Кто знает…","chi + sa"],
+["fr","Tutto a posto","тУтто а пОсто","Всё в порядке",""],
+["fr","A proposito","а пропОзито","Кстати",""],
+["fr","Mi sento a mio agio","ми сЭнто а мИо Аджо","Мне комфортно, я в своей тарелке",""],
+["fr","Beato te!","бэАто тЭ","Повезло тебе! / Счастливчик!",""],
+["fr","Buone notizie","буОнэ нотИцьэ","Хорошие новости",""],
+["fr","Benvenuto / Benvenuta!","бэнвэнУто","Добро пожаловать!",""],
+["fr","Una tazza di caffè","Уна тАцца ди каффЭ","Чашка кофе",""],
+["fr","Voglio mangiare","вОльо манджАрэ","Я хочу есть",""],
+["fr","Ho perso…","о пЭрсо","Я потерял(а)…",""],
+["fr","Pronto!","прОнто","Алло! (по телефону)","также «готов(о)»"],
+["fr","Può spiegare?","пуО спьегАрэ","Можете объяснить?",""],
+["fr","Vuole…?","вуОлэ","Хотите…?","вежливое «Вы»"],
+["fr","Dove sono?","дОвэ сОно","Где они? / Где они находятся?","в тетради «Dove sone» — правильно sono"],
+["fr","Sono in aeroporto","сОно ин аэропОрто","Они в аэропорту / Я в аэропорту",""],
+["fr","Piove","пьОвэ","Идёт дождь",""],
+["fr","Tuona","туОна","Гремит гром",""],
+["fr","Lampeggia","лампЭджджа","Сверкает молния","в тетради «sempre — сверкает», но sempre = всегда"],
+["fr","Non è facile!","нон э фАчилэ","Это нелегко!","урок 10.09"],
+["fr","Davvero?","даввЭро","Правда? / Да ладно?","удивление; урок 10.09"],
+["fr","Ma dai!","ма дАй","Да ладно! / Ну брось!","недоверие, удивление; урок 10.09"],
+["fr","Sto alla grande","сто Алла грАндэ","У меня всё отлично","ответ на come stai; урок 10.09"],
+["fr","Sono pronto per studiare","сОно прОнто пэр студьЯрэ","Я готов учиться","pronto per + глагол; урок 10.09"],
+["fr","Sono pronto per il lavoro","сОно прОнто пэр иль лавОро","Я готов к работе","pronto per + существительное с артиклем"],
+["fr","Sono pronto per gli studi","сОно прОнто пэр льи стУди","Я готов к учёбе","gli — артикль мн. ч. перед s+согласная"],
+["fr","Ho una domanda","о Уна домАнда","У меня вопрос","на уроке; урок 10.09"],
+
+["fr","#","","Вопросы для общения — и как на них ответить"],
+["fr","Come ti chiami? — Mi chiamo Ilia.","кОмэ ти кьЯми — ми кьЯмо илИя","Как тебя зовут? — Меня зовут Илья.",""],
+["fr","Come si chiama? — Mi chiamo Ilia Ushanau.","кОмэ си кьЯма — ми кьЯмо илИя ушАнау","Как Вас зовут? — Меня зовут Илья Ушанов.","на «Вы»"],
+["fr","Di dove sei? — Sono di Minsk, sono bielorusso.","ди дОвэ сЭй — сОно ди мИнск, сОно бьелорУссо","Откуда ты? — Я из Минска, я белорус.","bielorusso / bielorussa"],
+["fr","Di dov'è? — Sono di Minsk.","ди довЭ — сОно ди мИнск","Откуда Вы? — Я из Минска.",""],
+["fr","Sei italiano? — No, sono bielorusso.","сЭй итальЯно — но, сОно бьелорУссо","Ты итальянец? — Нет, я белорус.",""],
+["fr","Come stai? — Bene, grazie. E tu?","кОмэ стАй — бЭнэ грАцьэ, э тУ","Как дела? — Хорошо, спасибо. А у тебя?",""],
+["fr","Come sta? — Non c'è male, grazie. E Lei?","кОмэ стА — нон чЭ мАлэ грАцьэ, э лЭй","Как Вы? — Неплохо, спасибо. А Вы?","на «Вы»"],
+["fr","Come va? — Tutto a posto!","кОмэ вА — тУтто а пОсто","Как оно? — Всё в порядке!",""],
+["fr","Come si scrive? — I - ELLE - I - A.","кОмэ си скрИвэ — и Эллэ и а","Как пишется? — И-эль-и-а.","диктуем по названиям букв"],
+["fr","Qual è il tuo numero di telefono? — Il mio numero è…","куАль э иль тУо нУмэро ди тэлЭфоно — иль мИо нУмэро э","Какой у тебя номер телефона? — Мой номер…",""],
+["fr","Qual è il Suo numero di telefono?","куАль э иль сУо нУмэро ди тэлЭфоно","Какой у Вас номер телефона?","в тетради «Qale è» — правильно Qual è"],
+["fr","Qual è il tuo cellulare?","куАль э иль тУо чэллулАрэ","Какой у тебя мобильный?","в тетради «Qal il tu» — правильно Qual è il tuo"],
+["fr","Qual è il Suo cellulare?","куАль э иль сУо чэллулАрэ","Какой у Вас мобильный?",""],
+["fr","Il mio numero è più tre sette cinque…","иль мИо нУмэро э пью трэ сЭттэ чИнкуэ","Мой номер +375…","код страны читают по цифрам"],
+["fr","Qual è il tuo indirizzo? — Via Garibaldi, 22.","куАль э иль тУо индирИццо — вИа гарибАльди вэнтидУэ","Какой у тебя адрес? — Улица Гарибальди, 22.",""],
+["fr","Hai il cellulare? — Sì, ho il cellulare.","ай иль чэллулАрэ — сИ, о иль чэллулАрэ","У тебя есть мобильный? — Да, есть.","вопрос = та же фраза с вопросительной интонацией"],
+["fr","Hai un gatto? — No, ho un cane.","ай ун гАтто — но, о ун кАнэ","У тебя есть кот? — Нет, у меня собака.","из упр. 11, стр. 148"],
+["fr","Signora, Lei ha un cane?","синьОра, лЭй а ун кАнэ","Синьора, у Вас есть собака?","Lei + 3-е лицо: ha"],
+["fr","Signore, ha un giornale?","синьОрэ, а ун джорнАлэ","Синьор, у Вас есть газета?",""],
+["fr","Maria non ha il cellulare.","марИя нон А иль чэллулАрэ","У Марии нет мобильного.","non перед глаголом"],
+["fr","Senti, hai gli appunti?","сЭнти, ай льи аппУнти","Слушай, у тебя есть конспекты?","senti — «слушай», начало обращения; урок 10.09"],
+["fr","No, non ho gli appunti.","но, нонО льи аппУнти","Нет, у меня нет конспектов.","non ho читается слитно [нонО]"],
+["fr","Che cosa vuoi? — Voglio mangiare.","кэ кОза вуОй — вОльо манджАрэ","Что ты хочешь? — Я хочу есть.",""],
+["fr","Hai fame? — Sì, ho un po' di fame.","ай фАмэ — сИ, о ун пО ди фАмэ","Ты голоден? — Да, немного.",""],
+["fr","Sei stanco? — No, sto alla grande!","сЭй стАнко — но, сто Алла грАндэ","Ты устал? — Нет, у меня всё отлично!",""],
+["fr","Sei pronto? — Sì, sono pronto per studiare.","сЭй прОнто — сИ, сОно прОнто пэр студьЯрэ","Ты готов? — Да, я готов учиться.",""],
+["fr","Dove sono? — Sono in aeroporto.","дОвэ сОно — сОно ин аэропОрто","Где они? — Они в аэропорту.",""],
+["fr","Che significa «appunti»? — Значит «конспекты».","кэ синьИфика аппУнти","Что значит «appunti»?","che significa — «что значит»"],
+["fr","Come si dice «спасибо» in italiano? — Grazie.","кОмэ си дИчэ … ин итальЯно — грАцьэ","Как сказать «спасибо» по-итальянски? — Grazie.",""],
+
+["bonus","#","","Фразы для урока"],
+["bonus","Puoi ripetere, per favore?","пуОй рипЭтэрэ пэр фавОрэ","Можешь повторить, пожалуйста?",""],
+["bonus","Può ripetere, per favore?","пуО рипЭтэрэ пэр фавОрэ","Можете повторить, пожалуйста?",""],
+["bonus","Come si dice … in italiano?","кОмэ си дИчэ … ин итальЯно","Как сказать … по-итальянски?",""],
+["bonus","Che significa?","кэ синьИфика","Что это значит?",""],
+["bonus","Non ho capito","нон о капИто","Я не понял(а)",""],
+["bonus","Non lo so","нон ло сО","Я не знаю",""],
+["bonus","Per favore","пэр фавОрэ","Пожалуйста (просьба)",""],
+["bonus","Più lentamente, per favore","пью лентамЭнтэ пэр фавОрэ","Помедленнее, пожалуйста",""],
+
+["lex","#","","Тетрадь"],
+["lex","oggi","Оджджи","сегодня",""],
+["lex","sempre","сЭмпрэ","всегда",""],
+["lex","ma","ма","но",""],
+["lex","e","э","и","перед гласной часто ed"],
+["lex","o","о","или",""],
+["lex","poi","пОй","потом, затем",""],
+["lex","invece","инвЭчэ","наоборот; а вот; вместо",""],
+["lex","ora","Ора","сейчас; час",""],
+["lex","adesso","адЭссо","сейчас",""],
+["lex","bere","бЭрэ","пить",""],
+["lex","ascoltare","аскольтАрэ","слушать","ascolto — я слушаю"],
+["lex","augurare","аугурАрэ","желать (кому-то чего-то), поздравлять",""],
+["lex","ragazzo","рагАццо","парень, юноша",""],
+["lex","angolo","Анголо","угол",""],
+["lex","soldi","сОльди","деньги",""],
+["lex","che","кэ","что; какой; который",""],
+["lex","coso","кОзо","штука, «эта самая»","когда не помнишь слово"],
+["lex","amico","амИко","друг","мн. ч. amici [амИчи]"],
+["lex","amici","амИчи","друзья",""],
+["lex","casa","кАза","дом",""],
+["lex","cosa","кОза","вещь; что",""],
+["lex","notizia","нотИцьа","новость","мн. ч. notizie"],
+["lex","vuoi","вуОй","ты хочешь","от volere"],
+["lex","voglio","вОльо","я хочу","от volere"],
+["lex","vuoto / vuota","вуОто","пустой / пустая","vuotare — опустошать"],
+["lex","pronto","прОнто","готовый; алло",""],
+["lex","stanco","стАнко","усталый","ж. р. stanca"],
+["lex","felice","фэлИчэ","счастливый","одна форма для м. и ж. р."],
+["lex","triste","трИстэ","грустный",""],
+["lex","contento","контЭнто","довольный, рад",""],
+["lex","lieto","льЭто","рад, радостный (элегантно)",""],
+["lex","arrabbiato","арраббьЯто","злой, рассерженный",""],
+["lex","preoccupato","прэоккупАто","обеспокоенный",""],
+["lex","stupito","ступИто","удивлённый",""],
+["lex","annoiato","анноЯто","скучающий",""],
+["lex","innamorato","иннаморАто","влюблённый",""],
+["lex","ubriaco","убрьЯко","пьяный",""],
+["lex","malato","малАто","больной",""],
+["lex","pieno","пьЭно","полный",""],
+["lex","energia","энэрджИа","энергия",""],
+["lex","fame","фАмэ","голод",""],
+["lex","sete","сЭтэ","жажда",""],
+["lex","sonno","сОнно","сон (желание спать)",""],
+["lex","freddo","фрЭддо","холод; холодный",""],
+["lex","paura","паУра","страх","ударение на u — это не дифтонг"],
+["lex","fretta","фрЭтта","спешка",""],
+["lex","febbre","фЭббрэ","температура, жар",""],
+["lex","raffreddore","раффрэддОрэ","простуда, насморк",""],
+["lex","un po'","ун пО","немного","po' = poco с апострофом"],
+["lex","scopo","скОпо","цель",""],
+["lex","scatola","скАтола","коробка",""],
+["lex","sciopero","шОпэро","забастовка","в тетради sciopere — правильно sciopero"],
+["lex","scivolare","шиволАрэ","скользить",""],
+["lex","pesca","пЭска","персик; рыбалка",""],
+["lex","aereo","аЭрэо","самолёт","три гласных подряд, все звучат"],
+["lex","caos","кАос","хаос",""],
+["lex","pizzeria","пиццэрИа","пиццерия","ударение на i — не дифтонг"],
+["lex","riassumere","риассУмэрэ","кратко пересказывать, резюмировать",""],
+["lex","cielo","чЭло","небо",""],
+["lex","fiore","фьОрэ","цветок",""],
+["lex","fuori","фуОри","снаружи, вне","в тетради fuore — правильно fuori"],
+["lex","fiume","фьЮмэ","река",""],
+["lex","piede","пьЭдэ","нога, ступня",""],
+["lex","piano","пьЯно","тихо; медленно; этаж",""],
+["lex","fiero","фьЭро","гордый",""],
+["lex","buono","буОно","хороший; вкусный",""],
+["lex","quindi","куИнди","поэтому, следовательно",""],
+["lex","guerra","гуЭрра","война",""],
+["lex","guarda","гуАрда","смотри!; он(а) смотрит",""],
+["lex","qua","куА","здесь, сюда",""],
+["lex","qui","куИ","здесь, тут",""],
+["lex","quota","куОта","квота, доля; высота",""],
+["lex","quercia","куЭрча","дуб",""],
+["lex","cui","кУи","который (после предлога)","con cui — с которым"],
+["lex","beato","бэАто","блаженный, счастливый",""],
+["lex","aeroporto","аэропОрто","аэропорт",""],
+["lex","contatto","контАтто","контакт",""],
+["lex","primo","прИмо","первый",""],
+["lex","tazza","тАцца","чашка",""],
+["lex","mangiare","манджАрэ","есть, кушать",""],
+["lex","tutto","тУтто","всё, весь",""],
+["lex","posto","пОсто","место",""],
+["lex","non","нон","не",""],
+["lex","male","мАлэ","плохо",""],
+["lex","bene","бЭнэ","хорошо",""],
+["lex","molto","мОльто","очень; много",""],
+["lex","abbastanza","аббастАнца","достаточно",""],
+["lex","poco","пОко","мало",""],
+["lex","così","козИ","так, таким образом",""],
+["lex","assente","ассЭнтэ","отсутствующий",""],
+["lex","tristezza","тристЭцца","грусть",""],
+["lex","peccato","пэккАто","жаль; грех",""],
+["lex","lupo","лУпо","волк",""],
+["lex","bocca","бОкка","рот, пасть",""],
+["lex","balena","балЭна","кит",""],
+["lex","saldi","сАльди","распродажа",""],
+["lex","basso","бАссо","низкий",""],
+["lex","studente","студЭнтэ","студент",""],
+["lex","rosa","рОза","роза; розовый",""],
+["lex","svedese","звэдЭзэ","шведский; швед","в тетради svedest — правильно svedese"],
+["lex","sbrigare","збригАрэ","быстро справиться","sbrigarsi — торопиться"],
+
+["lex","#","","Домашка 20.08"],
+["lex","cena","чЭна","ужин",""],
+["lex","chiesa","кьЭза","церковь",""],
+["lex","consolato","консолАто","консульство",""],
+["lex","città","читтА","город",""],
+["lex","certo","чЭрто","конечно",""],
+["lex","cucina","кучИна","кухня",""],
+["lex","dicembre","дичЭмбрэ","декабрь",""],
+["lex","facile","фАчилэ","лёгкий, простой",""],
+["lex","domenica","домЭника","воскресенье",""],
+["lex","speciale","спэчАлэ","особенный",""],
+["lex","generale","джэнэрАлэ","общий; генерал",""],
+["lex","agosto","агОсто","август",""],
+["lex","elegante","элэгАнтэ","элегантный",""],
+["lex","giro","джИро","круг; прогулка",""],
+["lex","gente","джЭнтэ","люди",""],
+["lex","margherita","маргэрИта","маргаритка; пицца «Маргарита»",""],
+["lex","singolare","синголАрэ","единственное число; особенный",""],
+["lex","lago","лАго","озеро",""],
+["lex","urgente","урджЭнтэ","срочный",""],
+["lex","agenda","аджЭнда","ежедневник",""],
+["lex","prosciutto","прошУтто","окорок, прошутто",""],
+["lex","sciarpa","шАрпа","шарф",""],
+["lex","coscia","кОша","бедро",""],
+["lex","schiena","скьЭна","спина",""],
+["lex","chiosco","кьОско","киоск",""],
+
+["lex","#","","Учебник, lezione 1"],
+["lex","dottore","доттОрэ","доктор (обращение к человеку с высшим образованием)","с фамилией: dottor Rossi"],
+["lex","professore","профэссОрэ","преподаватель, профессор","с фамилией: professor Visconti"],
+["lex","signore","синьОрэ","синьор, господин","перед фамилией: signor Muti"],
+["lex","signora","синьОра","синьора, госпожа",""],
+["lex","signorina","синьорИна","синьорина, девушка",""],
+["lex","tu","ту","ты",""],
+["lex","Lei","лЭй","Вы (вежливое, к одному человеку)","с маленькой lei — «она»"],
+["lex","io","Ио","я",""],
+["lex","sì","сИ","да",""],
+["lex","no","но","нет",""],
+["lex","essere","Эссэрэ","быть",""],
+["lex","avere","авЭрэ","иметь",""],
+["lex","chiamarsi","кьямАрси","называться, зваться","mi chiamo — меня зовут"],
+["lex","stare","стАрэ","находиться; чувствовать себя","come stai? sto bene"],
+["lex","fare conoscenza","фАрэ коношЭнца","познакомиться",""],
+["lex","alfabeto","альфабЭто","алфавит",""],
+["lex","lettera","лЭттэра","буква; письмо",""],
+["lex","straniero","страньЭро","иностранец; иностранный",""],
+["lex","come","кОмэ","как",""],
+["lex","caffè","каффЭ","кофе",""],
+["lex","spaghetti","спагЭтти","спагетти",""],
+["lex","gatto","гАтто","кот",""],
+["lex","cane","кАнэ","собака",""],
+["lex","cinema","чИнэма","кино",""],
+["lex","chitarra","китАрра","гитара",""],
+["lex","gelato","джэлАто","мороженое",""],
+["lex","giornale","джорнАлэ","газета",""],
+["lex","formaggio","формАджджо","сыр",""],
+["lex","zucchero","цУккэро","сахар",""],
+["lex","medico","мЭдико","врач",""],
+["lex","pronuncia","пронУнча","произношение",""],
+["lex","davanti","давАнти","перед, впереди",""],
+["lex","nome","нОмэ","имя",""],
+["lex","cognome","коньОмэ","фамилия",""],
+["lex","numero","нУмэро","номер, число",""],
+["lex","telefono","тэлЭфоно","телефон",""],
+["lex","cellulare","чэллулАрэ","мобильный телефон",""],
+["lex","indirizzo","индирИццо","адрес",""],
+["lex","via","вИа","улица",""],
+["lex","però","пэрО","но, однако",""],
+["lex","anche","Анкэ","тоже, также",""],
+["lex","incontro","инкОнтро","встреча",""],
+["lex","italiano / italiana","итальЯно","итальянский; итальянец / итальянка","мн. ч.: italiani / italiane"],
+["lex","inglese","инглЭзэ","английский; англичанин / англичанка","одна форма для м. и ж. р."],
+["lex","irlandese","ирландЭзэ","ирландский; ирландец",""],
+["lex","austriaco / austriaca","аустрИако","австрийский; австриец",""],
+["lex","tedesco / tedesca","тэдЭско","немецкий; немец",""],
+["lex","svizzero / svizzera","звИццэро","швейцарский; швейцарец",""],
+["lex","spagnolo / spagnola","спаньОло","испанский; испанец",""],
+["lex","portoghese","портогЭзэ","португальский; португалец",""],
+["lex","francese","франчЭзэ","французский; француз",""],
+["lex","Italia","итАлья","Италия",""],
+["lex","Germania","джэрмАнья","Германия",""],
+["lex","Austria","Аустрия","Австрия",""],
+["lex","Svizzera","звИццэра","Швейцария",""],
+["lex","Spagna","спАнья","Испания",""],
+["lex","Inghilterra","ингильтЭрра","Англия",""],
+["lex","Irlanda","ирлАнда","Ирландия",""],
+["lex","Portogallo","портогАлло","Португалия",""],
+["lex","Francia","фрАнча","Франция",""],
+["lex","Genova","джЭнова","Генуя",""],
+["lex","Verona","вэрОна","Верона",""],
+["lex","Dublino","дублИно","Дублин",""],
+["lex","Parigi","парИджи","Париж",""],
+["lex","Londra","лОндра","Лондон",""],
+["lex","Berlino","бэрлИно","Берлин",""],
+["lex","Vienna","вьЭнна","Вена",""],
+["lex","Berna","бЭрна","Берн",""],
+["lex","Lisbona","лизбОна","Лиссабон",""],
+
+["lex","#","","Тетрадь 10.09 (Lezione 2)"],
+["lex","fisso","фИссо","стационарный (telefono fisso — домашний телефон)",""],
+["lex","con","кон","с (предлог)",""],
+["lex","davvero","даввЭро","правда, действительно",""],
+["lex","senti","сЭнти","слушай (обращение)","от sentire — слышать, чувствовать"],
+["lex","appunti","аппУнти","записи, конспект","gli appunti — всегда мн. ч."],
+["lex","borsa","бОрса","сумка","la borsa"],
+["lex","zaino","дзАйно","рюкзак","lo zaino — артикль lo перед z"],
+["lex","azzurro","аддзУрро","голубой, лазурный",""],
+["lex","celeste","чэлЭстэ","небесно-голубой","в тетради celesto — правильно celeste"],
+["lex","matita","матИта","карандаш","le matite — карандаши"],
+["lex","cruciverba","кручивЭрба","кроссворд","не меняется во мн. ч."],
+["lex","domanda","домАнда","вопрос",""],
+["lex","risposta","риспОста","ответ","в тетради risposto — правильно risposta"],
+["lex","studiare","студьЯрэ","учиться, изучать",""],
+["lex","lavoro","лавОро","работа","il lavoro"],
+["lex","studi","стУди","учёба, занятия","gli studi"],
+["lex","pronto","прОнто","готовый; алло",""],
+["lex","alla grande","Алла грАндэ","отлично, по-крупному","sto alla grande"],
+["lex","più","пью","плюс; больше","2 più 2 fa 4"],
+["lex","meno","мЭно","минус; меньше","5 meno 2 fa 3"],
+["lex","fa","фа","равно, будет (в счёте)","букв. «делает»; от fare"],
+["lex","il mio / la mia","иль мИо / ла мИа","мой / моя","il mio numero"],
+["lex","il tuo / la tua","иль тУо / ла тУа","твой / твоя","il tuo cellulare"],
+["lex","il Suo / la Sua","иль сУо / ла сУа","Ваш / Ваша","il Suo indirizzo; с большой буквы"],
+["lex","bielorusso / bielorussa","бьелорУссо","белорусский; белорус / белоруска",""],
+["lex","Bielorussia","бьелорУссья","Беларусь",""],
+["lex","Minsk","мИнск","Минск",""],
+
+["num","#","","Числа 0–20"],
+["num","zero","дзЭро","0 — ноль",""],
+["num","uno","Уно","1 — один",""],
+["num","due","дУэ","2 — два",""],
+["num","tre","трЭ","3 — три",""],
+["num","quattro","куАттро","4 — четыре",""],
+["num","cinque","чИнкуэ","5 — пять",""],
+["num","sei","сЭй","6 — шесть","и «ты есть»"],
+["num","sette","сЭттэ","7 — семь",""],
+["num","otto","Отто","8 — восемь",""],
+["num","nove","нОвэ","9 — девять",""],
+["num","dieci","дьЭчи","10 — десять",""],
+["num","undici","Ундичи","11 — одиннадцать",""],
+["num","dodici","дОдичи","12 — двенадцать",""],
+["num","tredici","трЭдичи","13 — тринадцать",""],
+["num","quattordici","куаттОрдичи","14 — четырнадцать",""],
+["num","quindici","куИндичи","15 — пятнадцать",""],
+["num","sedici","сЭдичи","16 — шестнадцать",""],
+["num","diciassette","дичассЭттэ","17 — семнадцать",""],
+["num","diciotto","дичОтто","18 — восемнадцать",""],
+["num","diciannove","дичаннОвэ","19 — девятнадцать",""],
+["num","venti","вЭнти","20 — двадцать",""],
+
+["num","#","","Числа 21–100"],
+["num","ventuno","вэнтУно","21 — двадцать один","venti + uno → выпадает i"],
+["num","ventidue","вэнтидУэ","22 — двадцать два",""],
+["num","ventitré","вэнтитрЭ","23 — двадцать три","на tré пишется ударение"],
+["num","ventiquattro","вэнтикуАттро","24 — двадцать четыре",""],
+["num","venticinque","вэнтичИнкуэ","25 — двадцать пять",""],
+["num","ventisei","вэнтисЭй","26 — двадцать шесть",""],
+["num","ventisette","вэнтисЭттэ","27 — двадцать семь",""],
+["num","ventotto","вэнтОтто","28 — двадцать восемь","venti + otto → выпадает i"],
+["num","ventinove","вэнтинОвэ","29 — двадцать девять",""],
+["num","trenta","трЭнта","30 — тридцать",""],
+["num","trentuno","трэнтУно","31 — тридцать один",""],
+["num","trentatré","трэнтатрЭ","33 — тридцать три",""],
+["num","trentotto","трэнтОтто","38 — тридцать восемь",""],
+["num","quaranta","куарАнта","40 — сорок",""],
+["num","quarantotto","куарантОтто","48 — сорок восемь",""],
+["num","cinquanta","чинкуАнта","50 — пятьдесят",""],
+["num","cinquantacinque","чинкуантачИнкуэ","55 — пятьдесят пять",""],
+["num","sessanta","сэссАнта","60 — шестьдесят",""],
+["num","sessantasette","сэссантасЭттэ","67 — шестьдесят семь",""],
+["num","settanta","сэттАнта","70 — семьдесят",""],
+["num","settantasei","сэттантасЭй","76 — семьдесят шесть",""],
+["num","ottanta","оттАнта","80 — восемьдесят",""],
+["num","ottantuno","оттантУно","81 — восемьдесят один",""],
+["num","novanta","новАнта","90 — девяносто",""],
+["num","novantanove","новантанОвэ","99 — девяносто девять",""],
+["num","cento","чЭнто","100 — сто",""],
+
+["gram","#","","Формы глаголов"],
+["gram","io sono","Ио сОно","я есть (essere)",""],
+["gram","tu sei","ту сЭй","ты есть (essere)",""],
+["gram","lui / lei / Lei è","луй / лэй Э","он / она есть; Вы есть (essere)","è с ударением! e без ударения = «и»"],
+["gram","noi siamo","ной сьЯмо","мы есть (essere)",""],
+["gram","voi siete","вой сьЭтэ","вы есть (essere)",""],
+["gram","loro sono","лОро сОно","они есть (essere)","совпадает с io sono"],
+["gram","io ho","Ио О","у меня есть, я имею (avere)","h не читается"],
+["gram","tu hai","ту Ай","у тебя есть (avere)",""],
+["gram","lui / lei / Lei ha","луй / лэй А","у него / у неё / у Вас есть (avere)",""],
+["gram","noi abbiamo","ной аббьЯмо","у нас есть (avere)",""],
+["gram","voi avete","вой авЭтэ","у вас есть (avere)",""],
+["gram","loro hanno","лОро Анно","у них есть (avere)","anno без h — «год»"],
+["gram","mi chiamo","ми кьЯмо","меня зовут (chiamarsi)",""],
+["gram","ti chiami","ти кьЯми","тебя зовут (chiamarsi)",""],
+["gram","si chiama","си кьЯма","его / её / Вас зовут (chiamarsi)",""],
+["gram","io sto","Ио стО","я нахожусь, я чувствую себя (stare)","sto bene"],
+["gram","tu stai","ту стАй","ты находишься (stare)","come stai?"],
+["gram","lui / lei / Lei sta","луй / лэй стА","он / она находится; Вы (stare)","come sta?"],
+["gram","lui","лУй","он",""],
+["gram","lei","лЭй","она","с большой буквы Lei — «Вы»"],
+["gram","noi","нОй","мы",""],
+["gram","voi","вОй","вы (несколько человек)",""],
+["gram","loro","лОро","они",""],
+["gram","il","иль","определённый артикль м. р.","il signore, il numero"],
+["gram","la","ла","определённый артикль ж. р.","la signora, la lettera"],
+["gram","lo","ло","артикль м. р. перед z, s+согласная, gn","lo zaino, lo studente"],
+["gram","l'","ль","артикль перед гласной (м. и ж. р.)","l'amico, l'amica"],
+["gram","i","и","артикль м. р. мн. ч.","i numeri, i gatti"],
+["gram","gli","льи","артикль м. р. мн. ч. перед z, s+согл., гласной","gli appunti, gli studi, gli zaini, gli amici"],
+["gram","le","лэ","артикль ж. р. мн. ч.","le matite, le borse"],
+
+["alfa","#","","Названия букв"],
+["alfa","A","а","буква A",""],
+["alfa","B","би","буква B",""],
+["alfa","C","чи","буква C",""],
+["alfa","D","ди","буква D",""],
+["alfa","E","э","буква E",""],
+["alfa","F","Эффэ","буква F",""],
+["alfa","G","джи","буква G",""],
+["alfa","H","Акка","буква H",""],
+["alfa","I","и","буква I",""],
+["alfa","L","Эллэ","буква L",""],
+["alfa","M","Эммэ","буква M",""],
+["alfa","N","Эннэ","буква N",""],
+["alfa","O","о","буква O",""],
+["alfa","P","пи","буква P",""],
+["alfa","Q","ку","буква Q",""],
+["alfa","R","Эррэ","буква R",""],
+["alfa","S","Эссэ","буква S",""],
+["alfa","T","ти","буква T",""],
+["alfa","U","у","буква U",""],
+["alfa","V","ви / ву","буква V",""],
+["alfa","Z","дзЭта","буква Z",""],
+["alfa","J","и лУнга","буква J (только в иностранных словах)",""],
+["alfa","K","кАппа","буква K (только в иностранных словах)",""],
+["alfa","W","дОппья ву","буква W (только в иностранных словах)",""],
+["alfa","X","икс","буква X (только в иностранных словах)",""],
+["alfa","Y","Ипсилон / и грЭка","буква Y (только в иностранных словах)",""]
+];
+
+
+/* ====================================================================
+   ТРЕНАЖЁР — логика
+   ==================================================================== */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const DAY = 86400000, MIN = 60000;
+const now = () => Date.now();
+const todayStr = (d=new Date()) => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const shuffle = a => { for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const pick = a => a[Math.floor(Math.random()*a.length)];
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const norm = s => s.toLowerCase().replace(/[!?…,.:;«»"()]/g,'').replace(/\s+/g,' ').trim();
+const stripAcc = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’]/g,"'");
+
+/* ---------------- карточки ---------------- */
+const DECK = Object.fromEntries(DECKS.map(d=>[d.id,d]));
+const CARDS = [];
+const GROUPS = {};            // deck -> [{title, from}]
+(function build(){
+  const seen = new Set();
+  let idx = 0, grp = {};
+  LEX.forEach(([deck,it,tr,ru,note])=>{
+    if (it === '#'){ grp[deck] = ru; (GROUPS[deck] ||= []).push({title:ru, from:idx}); return; }
+    const n = norm(it);
+    const key = (deck==='alfa'||deck==='gram'||deck==='bonus') ? deck+'|'+n : n;
+    if (seen.has(key)) return; seen.add(key);
+    CARDS.push({key, deck, it, tr, ru, note:note||'', grp:grp[deck]||'', src:'', idx:idx++});
+  });
+  DATA.forEach(s=>{
+    (GROUPS.fon ||= []).push({title:'Упр. '+s.n+' — '+s.t, from:idx});
+    s.w.forEach(([it,tr,ru])=>{
+      const key = norm(it);
+      if (seen.has(key)) return; seen.add(key);
+      CARDS.push({key, deck:'fon', it, tr, ru, note:'', grp:'Упр. '+s.n+' — '+s.t.split('—')[0].trim(), src:'упр. '+s.n, idx:idx++});
+    });
+  });
+})();
+const BYKEY = Object.fromEntries(CARDS.map(c=>[c.key,c]));
+
+/* ---------------- состояние ---------------- */
+const LS = 'it-trainer-v1';
+const DEF_SET = { decks: DECKS.filter(d=>d.def).map(d=>d.id), mode:'mix',
+  modes:['flash','mcru','mcit','trans','type','listen'], newPerDay:20, dir:'it', showTr:true,
+  tts:true, ttsAuto:true, rate:0.85, voice:'', dark:false, eink:false, font:16 };
+let ST = { prog:{}, days:{}, set:{...DEF_SET} };
+function load(){
+  try{ const raw = localStorage.getItem(LS); if(raw){ const o=JSON.parse(raw); ST.prog=o.prog||{}; ST.days=o.days||{}; ST.set={...DEF_SET, ...(o.set||{})}; } }catch(e){}
+}
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(ST)); }catch(e){} }
+const S = () => ST.set;
+const P = key => ST.prog[key];
+const isKnown = p => p && p.reps>0 && p.iv>=21;
+const isLearning = p => p && p.reps>0 && p.iv<21;
+const today = () => (ST.days[todayStr()] ||= {n:0,r:0});
+
+/* ---------------- планирование (SM-2 lite) ---------------- */
+function grade(card, g){
+  const p = ST.prog[card.key] ||= {iv:0, ease:2.5, due:0, reps:0, lapses:0, last:0};
+  const t = today();
+  if (p.reps===0) t.n++; else t.r++;
+  if (g===0){ if(p.reps>0) p.lapses++; p.iv=0; p.ease=Math.max(1.3,p.ease-0.2); p.due=now()+10*MIN; }
+  else if (g===1){ p.iv = p.iv===0 ? 1 : Math.max(p.iv+1, Math.round(p.iv*1.2)); p.ease=Math.max(1.3,p.ease-0.15); p.due=now()+p.iv*DAY; }
+  else if (g===2){ p.iv = p.iv===0 ? 1 : Math.round(p.iv*p.ease); p.due=now()+p.iv*DAY; }
+  else { p.iv = p.iv===0 ? 3 : Math.round(p.iv*p.ease*1.3); p.ease=Math.min(3.2,p.ease+0.15); p.due=now()+p.iv*DAY; }
+  p.iv = Math.min(p.iv, 365);
+  p.reps++; p.last=now();
+  save();
+}
+
+/* ---------------- озвучка ---------------- */
+let VOICES = [];
+function loadVoices(){
+  if (!window.speechSynthesis) return;
+  VOICES = speechSynthesis.getVoices().filter(v=>/^it/i.test(v.lang));
+  const sel = $('#setVoice'); if(!sel) return;
+  sel.innerHTML = '<option value="">авто</option>' + VOICES.map(v=>`<option value="${esc(v.name)}">${esc(v.name)} (${v.lang})</option>`).join('');
+  sel.value = S().voice || '';
+}
+if (window.speechSynthesis){ speechSynthesis.onvoiceschanged = loadVoices; setTimeout(loadVoices, 300); }
+function ttsText(c){
+  let t = c.it.replace(/\s*\/\s*/g,', ').replace(/…/g,'').replace(/—/g,',').replace(/\(.*?\)/g,'').trim();
+  if (c.deck==='alfa') t = c.it.length===1 ? c.it : t;
+  return t;
+}
+function speak(text){
+  if (!S().tts || !window.speechSynthesis) return false;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'it-IT'; u.rate = parseFloat(S().rate)||0.85;
+    const v = VOICES.find(v=>v.name===S().voice) || VOICES[0];
+    if (v) u.voice = v;
+    speechSynthesis.speak(u);
+    return true;
+  }catch(e){ return false; }
+}
+const canListen = () => S().tts && window.speechSynthesis && (VOICES.length>0);
+
+/* ---------------- вкладки, тема ---------------- */
+function showPane(id){
+  $$('.pane').forEach(p=>p.classList.toggle('on', p.id===id));
+  $$('nav.bottom button').forEach(b=>b.classList.toggle('on', b.dataset.p===id));
+  window.scrollTo(0,0);
+  if (id==='p-study') renderHome();
+  if (id==='p-phr') renderPhrases();
+  if (id==='p-num') renderNumbers();
+  if (id==='p-all') renderAll();
+}
+$$('nav.bottom button').forEach(b=> b.onclick = ()=> showPane(b.dataset.p));
+$('#setBtn').onclick = ()=> showPane('p-set');
+function applyLook(){
+  document.documentElement.setAttribute('data-theme', S().dark?'dark':'light');
+  document.documentElement.classList.toggle('eink', !!S().eink);
+  document.body.style.fontSize = (S().font||16)+'px';
+  $('#themeBtn').textContent = S().dark ? '☀️' : '🌙';
+}
+$('#themeBtn').onclick = ()=>{ S().dark=!S().dark; save(); applyLook(); syncSettingsUI(); };
+$('#ttsTest').onclick = ()=>{ if(!speak('Buongiorno! Come stai?')) alert('Озвучка недоступна: включи её в настройках или установи итальянский голос в системе.'); };
+
+/* ---------------- главная ---------------- */
+const MODES = [
+  ['mix','Смешанный'],['flash','Карточки'],['mcru','Выбор перевода'],['mcit','Выбор слова'],
+  ['trans','Транскрипция'],['type','Написание'],['listen','На слух']
+];
+const MODE_NAME = Object.fromEntries(MODES);
+function activeCards(){ const on = new Set(S().decks); return CARDS.filter(c=> on.has(c.deck) && !(P(c.key)||{}).sus); }
+function dueCards(pool){ const t=now(); return pool.filter(c=>{ const p=P(c.key); return p && p.reps>0 && p.due<=t; }).sort((a,b)=>P(a.key).due-P(b.key).due); }
+function freshCards(pool){ return pool.filter(c=>{ const p=P(c.key); return !p || p.reps===0; }).sort((a,b)=> (DECK[a.deck].prio-DECK[b.deck].prio) || (a.idx-b.idx)); }
+function streak(){
+  let n=0; const d=new Date();
+  const key = ()=>todayStr(d);
+  if (!(ST.days[key()] && (ST.days[key()].n+ST.days[key()].r)>0)) d.setDate(d.getDate()-1);
+  while (ST.days[key()] && (ST.days[key()].n+ST.days[key()].r)>0){ n++; d.setDate(d.getDate()-1); }
+  return n;
+}
+function renderHome(){
+  const pool = activeCards();
+  const due = dueCards(pool).length, fresh = freshCards(pool).length;
+  const known = CARDS.filter(c=>isKnown(P(c.key))).length;
+  $('#stDue').textContent = due;
+  $('#stNew').textContent = today().n + ' / ' + S().newPerDay;
+  $('#stKnown').textContent = known;
+  $('#stStreak').textContent = streak();
+  const newLeft = Math.max(0, S().newPerDay - today().n);
+  const planned = due + Math.min(newLeft, fresh);
+  $('#startBtn').textContent = planned>0 ? `Начать занятие · ${planned} карточек` : 'Начать занятие';
+  $('#startHint').textContent = planned>0
+    ? `${due} повторов + ${Math.min(newLeft,fresh)} новых. Можно остановиться в любой момент.`
+    : (fresh>0 ? 'На сегодня всё повторено. Нажми «Начать» — добавлю новых слов сверх лимита.' : 'Всё выучено и повторено. Отдыхай!');
+  $('#modeChips').innerHTML = MODES.map(([id,nm])=>`<button class="chip ${S().mode===id?'on':''}" data-m="${id}">${nm}</button>`).join('');
+  $$('#modeChips .chip').forEach(b=> b.onclick=()=>{ S().mode=b.dataset.m; save(); renderHome(); });
+  $('#deckList').innerHTML = DECKS.map(d=>{
+    const cs = CARDS.filter(c=>c.deck===d.id);
+    const k = cs.filter(c=>isKnown(P(c.key))).length, l = cs.filter(c=>isLearning(P(c.key))).length;
+    const on = S().decks.includes(d.id);
+    return `<div class="deckrow"><div class="nm"><b>${d.name}</b> <span class="muted" style="font-size:12.5px">· ${cs.length}</span><small>${d.desc}</small>
+      <div class="bar"><i class="k" style="width:${100*k/cs.length}%"></i><i class="l" style="width:${100*l/cs.length}%"></i></div></div>
+      <button class="sw ${on?'on':''}" data-d="${d.id}" aria-label="вкл/выкл"></button></div>`;
+  }).join('');
+  $$('#deckList .sw').forEach(b=> b.onclick=()=>{
+    const id=b.dataset.d, i=S().decks.indexOf(id);
+    if (i>=0) S().decks.splice(i,1); else S().decks.push(id);
+    save(); renderHome();
+  });
+}
+$('#startBtn').onclick = ()=> startSession();
+
+/* ---------------- сессия ---------------- */
+let SES = null;
+function startSession(onlyDecks){
+  // onlyDecks — список колод для занятия «только это» (кнопки «Учить фразы», «Учить числа»)
+  const pool = onlyDecks ? CARDS.filter(c=> onlyDecks.includes(c.deck) && !(P(c.key)||{}).sus) : activeCards();
+  const due = shuffle(dueCards(pool));
+  const newLeft = Math.max(0, S().newPerDay - today().n);
+  let fresh = freshCards(pool).slice(0, newLeft);
+  if (due.length===0 && fresh.length===0) fresh = freshCards(pool).slice(0, 10);
+  // перемешиваем: новые вставляем каждые ~3 повтора
+  const q = []; let fi=0;
+  due.forEach((c,i)=>{ q.push({c}); if ((i+1)%3===0 && fi<fresh.length) q.push({c:fresh[fi++], intro:true}); });
+  while (fi<fresh.length) q.push({c:fresh[fi++], intro:true});
+  SES = { q, i:0, done:0, failed:new Set(), stats:{ok:0,bad:0,new:0}, pool };
+  $('#session').classList.add('on');
+  renderStep();
+}
+$('#sClose').onclick = ()=>{ endSession(); };
+$('#sMore').onclick = ()=> addFresh(10);
+function addFresh(n){
+  if (!SES) return;
+  const inQ = new Set(SES.q.map(x=>x.c.key));
+  const more = freshCards(SES.pool).filter(c=>!inQ.has(c.key)).slice(0,n);
+  more.forEach(c=> SES.q.push({c, intro:true}));
+  if (more.length===0) alert('Новых слов в выбранных колодах больше нет.');
+  renderStep();
+}
+function endSession(){ $('#session').classList.remove('on'); SES=null; if(window.speechSynthesis) speechSynthesis.cancel(); renderHome(); }
+function progressUI(){
+  const total = SES.q.length, left = total - SES.i;
+  $('#sProg').style.width = (100*SES.i/Math.max(1,total))+'%';
+  $('#sCnt').textContent = `${SES.i} / ${total}`;
+}
+function applicableModes(c, isNew){
+  let m = S().modes.slice();
+  if (!c.tr || c.deck==='alfa') m = m.filter(x=>x!=='trans');
+  if (c.deck==='alfa' || c.it.length>26 || /[…—]/.test(c.it)) m = m.filter(x=>x!=='type');
+  if (!canListen() || c.deck==='alfa') m = m.filter(x=>x!=='listen');
+  if (isNew) m = m.filter(x=>x!=='type' && x!=='listen');   // первое тестирование — узнавание, не воспроизведение
+  if (m.length===0) m=['flash'];
+  return m;
+}
+function chooseMode(c, isNew){
+  const ap = applicableModes(c, isNew);
+  if (S().mode!=='mix') return ap.includes(S().mode) ? S().mode : (S().mode==='listen'||S().mode==='trans'||S().mode==='type' ? 'flash' : ap[0]);
+  return pick(ap);
+}
+function cardHTML(c, {showIt=true, showTr=true, showRu=true, big=true}={}){
+  let h = '';
+  if (showIt) h += `<div class="${big?'big':'mid'} it">${esc(c.it)}</div>`;
+  if (showTr && c.tr) h += `<div class="tr">[${esc(c.tr)}]</div>`;
+  if (showRu) h += `<div class="mid">${esc(c.ru)}</div>`;
+  if (showRu && c.note) h += `<div class="note">${esc(c.note)}</div>`;
+  if (showRu && c.src) h += `<div class="src">${esc(DECK[c.deck].name)} · ${esc(c.src)}</div>`;
+  return h;
+}
+const spkBtn = c => (S().tts && window.speechSynthesis) ? `<button class="spk" data-say="${esc(ttsText(c))}">🔊 послушать</button>` : '';
+function wireSpeak(root){ $$('[data-say]', root).forEach(b=> b.onclick = e=>{ e.stopPropagation(); speak(b.dataset.say); }); }
+
+function renderStep(){
+  progressUI();
+  const body = $('#sBody');
+  if (SES.i >= SES.q.length){
+    // добираем «через 10 минут», если что-то из проваленного уже подошло
+    const t = now()+20*MIN;
+    const again = Array.from(SES.failed).map(k=>BYKEY[k]).filter(c=>c && P(c.key).due<=t && !SES.q.slice(SES.i).some(x=>x.c.key===c.key));
+    if (again.length && !SES.q.some(x=>x.retake && !x.done)){
+      again.forEach(c=>{ SES.failed.delete(c.key); SES.q.push({c, retake:true}); });
+      return renderStep();
+    }
+    const s = SES.stats, acc = s.ok+s.bad ? Math.round(100*s.ok/(s.ok+s.bad)) : 0;
+    body.innerHTML = `<div class="done"><div class="big">🎉</div><h2>Занятие закончено</h2>
+      <p>Ответов: <b>${s.ok+s.bad}</b> · верно <b>${acc}%</b> · новых слов <b>${s.new}</b></p>
+      <p class="muted">Следующие повторы подтянутся сами, когда придёт их время.</p>
+      <button class="pri" id="dMore">Ещё 10 новых слов</button>
+      <button class="sec" id="dClose">Закрыть</button></div>`;
+    $('#dMore').onclick = ()=> addFresh(10);
+    $('#dClose').onclick = endSession;
+    return;
+  }
+  const item = SES.q[SES.i], c = item.c;
+  const p = P(c.key), isNew = !p || p.reps===0;
+  if (item.intro && !item.introShown){
+    item.introShown = true;
+    body.innerHTML = `<div class="mode"><span>Новое слово</span><span class="tag">${esc(DECK[c.deck].name)}</span></div>
+      <div class="q">${cardHTML(c)}${spkBtn(c)}</div>
+      <button class="pri next" id="nx">Понятно, дальше</button>
+      <div class="kbd">Через пару карточек спрошу это слово. Enter — дальше.</div>`;
+    wireSpeak(body);
+    if (S().ttsAuto) speak(ttsText(c));
+    $('#nx').onclick = ()=>{ // повторно вставляем в очередь через 2–4 позиции
+      const pos = Math.min(SES.q.length, SES.i + 2 + Math.floor(Math.random()*3));
+      SES.q.splice(pos, 0, {c, quiz:true});
+      SES.i++; SES.stats.new++; renderStep();
+    };
+    return;
+  }
+  const mode = chooseMode(c, isNew);
+  item.mode = mode;
+  ({flash:renderFlash, mcru:renderMC, mcit:renderMC, trans:renderTrans, type:renderType, listen:renderListen})[mode](c, mode);
+}
+function head(mode, c){ return `<div class="mode"><span>${MODE_NAME[mode]}</span><span class="tag">${esc(DECK[c.deck].name)}</span></div>`; }
+
+/* --- после ответа --- */
+function answered(c, ok, g){
+  const p0 = P(c.key); const wasNew = !p0 || p0.reps===0;
+  grade(c, g);
+  if (ok) SES.stats.ok++; else { SES.stats.bad++; SES.failed.add(c.key); }
+  if (!ok){ // повтор через несколько карточек
+    const pos = Math.min(SES.q.length, SES.i + 3 + Math.floor(Math.random()*3));
+    SES.q.splice(pos, 0, {c, again:true});
+  }
+}
+function feedback(c, ok, chosenText){
+  const el = document.createElement('div');
+  el.className = 'fb ' + (ok?'ok':'no');
+  el.innerHTML = `<div>${ok?'✅ Верно':'❌ Неверно'}</div>
+    <div class="ans it">${esc(c.it)} <span class="tr">[${esc(c.tr)}]</span></div>
+    <div>${esc(c.ru)}</div>${c.note?`<div class="muted" style="font-size:13.5px">${esc(c.note)}</div>`:''}
+    <div style="margin-top:6px">${spkBtn(c)}</div>
+    <button class="pri next" id="nx">Дальше</button>`;
+  $('#sBody').appendChild(el);
+  wireSpeak(el);
+  if (S().ttsAuto) speak(ttsText(c));
+  $('#nx').onclick = ()=>{ SES.i++; renderStep(); };
+  $('#nx').focus();
+  el.scrollIntoView({block:'nearest'});
+}
+
+/* --- режим: карточки --- */
+function renderFlash(c){
+  const dir = S().dir==='mix' ? pick(['it','ru']) : S().dir;
+  const body = $('#sBody');
+  const front = dir==='it' ? cardHTML(c,{showRu:false, showTr:S().showTr}) : `<div class="mid">${esc(c.ru)}</div>`;
+  body.innerHTML = head('flash',c) + `<div class="q" id="qc">${front}${dir==='it'?spkBtn(c):''}</div>
+    <button class="sec reveal" id="revealBtn">Показать ответ</button><div class="kbd">Пробел / Enter — показать. Потом 1–4 — оценка.</div>`;
+  wireSpeak(body);
+  if (dir==='it' && S().ttsAuto) speak(ttsText(c));
+  const reveal = ()=>{
+    $('#qc').innerHTML = cardHTML(c) + spkBtn(c); wireSpeak(body);
+    if (dir==='ru' && S().ttsAuto) speak(ttsText(c));
+    $('#revealBtn').outerHTML = `<div class="grades">
+      <button class="g0" data-g="0">Не знаю<small>через 10 мин</small></button>
+      <button class="g1" data-g="1">С трудом<small>${ivText(c,1)}</small></button>
+      <button class="g2" data-g="2">Знаю<small>${ivText(c,2)}</small></button>
+      <button class="g3" data-g="3">Легко<small>${ivText(c,3)}</small></button></div>`;
+    $$('.grades button').forEach(b=> b.onclick=()=>{ const g=+b.dataset.g; answered(c, g>=2, g); SES.i++; renderStep(); });
+  };
+  $('#revealBtn').onclick = reveal; $('#qc').onclick = e=>{ if(!e.target.dataset.say && $('#revealBtn')) reveal(); };
+  SES.keys = k=>{ if ($('#revealBtn') && (k===' '||k==='Enter')) reveal(); else if (!$('#revealBtn') && /^[1-4]$/.test(k)) $(`.grades button[data-g="${+k-1}"]`)?.click(); };
+}
+function ivText(c,g){
+  const p = P(c.key)||{iv:0,ease:2.5};
+  let iv = g===1 ? (p.iv===0?1:Math.max(p.iv+1,Math.round(p.iv*1.2))) : g===2 ? (p.iv===0?1:Math.round(p.iv*p.ease)) : (p.iv===0?3:Math.round(p.iv*p.ease*1.3));
+  iv=Math.min(iv,365); return iv===1?'1 день': iv<5?iv+' дня': iv<30? iv+' дней' : Math.round(iv/30)+' мес.';
+}
+
+/* --- режим: выбор из 4 --- */
+function distractors(c, field, n=3){
+  const same = CARDS.filter(x=>x.key!==c.key && x.deck===c.deck && norm(x[field])!==norm(c[field]));
+  const isPhrase = /\s/.test(c.it);
+  const pref = same.filter(x=> /\s/.test(x.it)===isPhrase && Math.abs(x[field].length-c[field].length)<12);
+  const out = [], used = new Set([norm(c[field])]);
+  for (const src of [shuffle(pref), shuffle(same), shuffle(CARDS.filter(x=>x.key!==c.key))]){
+    for (const x of src){ const k=norm(x[field]); if(used.has(k)) continue; used.add(k); out.push(x); if(out.length>=n) return out; }
+  }
+  return out;
+}
+function renderMC(c, mode){
+  const field = mode==='mcru' ? 'ru' : 'it';
+  const opts = shuffle([c, ...distractors(c, field)]);
+  const body = $('#sBody');
+  const q = mode==='mcru'
+    ? `<div class="q">${cardHTML(c,{showRu:false, showTr:S().showTr})}${spkBtn(c)}</div>`
+    : `<div class="q"><div class="mid">${esc(c.ru)}</div>${c.note && !/тетради/.test(c.note) ? `<div class="note">${esc(c.note)}</div>`:''}</div>`;
+  body.innerHTML = head(mode,c) + q + `<div class="opts">${opts.map((o,i)=>`<button class="opt" data-k="${esc(o.key)}"><span class="k">${i+1}</span><span class="${field==='it'?'it':''}">${esc(o[field])}</span></button>`).join('')}</div>
+    <div class="kbd">Клавиши 1–4</div>`;
+  wireSpeak(body);
+  if (mode==='mcru' && S().ttsAuto) speak(ttsText(c));
+  const pickOpt = b=>{
+    if (SES.answered) return; SES.answered=true;
+    const ok = b.dataset.k===c.key;
+    $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.k===c.key) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    answered(c, ok, ok?2:0); feedback(c, ok);
+  };
+  SES.answered=false;
+  $$('.opt').forEach(b=> b.onclick=()=>pickOpt(b));
+  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+}
+
+/* --- режим: транскрипция (варианты-мутации) --- */
+const SWAPS = [['ч','к'],['дж','г'],['ш','ск'],['з','с'],['ц','дз'],['ль','л'],['нь','н'],['куа','ка'],['гуа','га'],['куэ','кэ'],['куи','ки'],['ки','чи'],['кэ','чэ'],['ги','джи'],['гэ','джэ']];
+function mutateTr(tr){
+  const out = new Set();
+  const lower = tr.toLowerCase();
+  SWAPS.forEach(([a,b])=>{
+    [[a,b],[b,a]].forEach(([x,y])=>{
+      const i = lower.indexOf(x);
+      if (i>=0){ const v = tr.slice(0,i) + y + tr.slice(i+x.length); if (v!==tr) out.add(v); }
+    });
+  });
+  // перенос ударения
+  const vowels = 'аэиоуяюеё';
+  const up = [...tr].findIndex(ch=>/[АЭИОУЯЮЕЁ]/.test(ch));
+  if (up>=0){
+    const cand = [...tr].map((ch,i)=>i).filter(i=> i!==up && vowels.includes(tr[i]) );
+    shuffle(cand).slice(0,2).forEach(i=>{ const a=[...tr]; a[up]=a[up].toLowerCase(); a[i]=a[i].toUpperCase(); out.add(a.join('')); });
+  }
+  // удвоение / разудвоение согласной
+  const m = tr.match(/([бвгдзклмнпрстфц])\1/); if (m){ out.add(tr.replace(m[0], m[1])); }
+  else { const mm = tr.match(/[аэиоуяюАЭИОУЯЮ]([бвгдклмнпрстф])[аэиоуяюАЭИОУЯЮ]/); if(mm){ const i=tr.indexOf(mm[0])+1; out.add(tr.slice(0,i)+mm[1]+tr.slice(i)); } }
+  out.delete(tr);
+  return shuffle([...out].filter(v=>!/ьь|йй|ъ/.test(v)));
+}
+function renderTrans(c){
+  let vars = mutateTr(c.tr).slice(0,3);
+  if (vars.length<3) distractors(c,'tr',3-vars.length).forEach(x=>vars.push(x.tr));
+  const opts = shuffle([c.tr, ...vars]);
+  const body = $('#sBody');
+  body.innerHTML = head('trans',c) + `<div class="q"><div class="big it">${esc(c.it)}</div><div class="note">Как это читается?</div></div>
+    <div class="opts">${opts.map((o,i)=>`<button class="opt" data-t="${esc(o)}"><span class="k">${i+1}</span><span>[${esc(o)}]</span></button>`).join('')}</div>
+    <div class="kbd">Клавиши 1–4. Заглавная гласная — ударение.</div>`;
+  SES.answered=false;
+  $$('.opt').forEach(b=> b.onclick=()=>{
+    if (SES.answered) return; SES.answered=true;
+    const ok = b.dataset.t===c.tr;
+    $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.t===c.tr) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    answered(c, ok, ok?2:0); feedback(c, ok);
+  });
+  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+}
+
+/* --- режим: написание --- */
+function typeOk(input, c){
+  const alts = c.it.split(/\s*\/\s*/).map(norm).concat([norm(c.it)]);
+  const a = norm(input);
+  if (alts.includes(a)) return 'ok';
+  if (alts.map(stripAcc).includes(stripAcc(a))) return 'acc';   // только ударение/апостроф
+  return 'no';
+}
+function renderType(c){
+  const body = $('#sBody');
+  body.innerHTML = head('type',c) + `<div class="q"><div class="mid">${esc(c.ru)}</div>${S().showTr?`<div class="tr">[${esc(c.tr)}]</div>`:''}<div class="note">Напиши по-итальянски</div></div>
+    <div class="typing"><input id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="…" lang="it"><button class="sec" id="chk" style="width:auto">Проверить</button></div>
+    <div class="kbd">Enter — проверить. Знак ударения (è, à) желателен, но без него засчитаю «с трудом».</div>`;
+  const inp = $('#ti'); inp.focus();
+  const check = ()=>{
+    if (SES.answered) return; SES.answered=true;
+    const r = typeOk(inp.value, c);
+    inp.disabled=true; $('#chk').disabled=true;
+    inp.style.borderColor = r==='no' ? 'var(--bad)' : 'var(--ok)';
+    if (r==='ok'){ answered(c,true,2); feedback(c,true); }
+    else if (r==='acc'){ answered(c,true,1); feedback(c,true); $('.fb div').textContent='✅ Почти: проверь знак ударения / апостроф'; }
+    else { answered(c,false,0); feedback(c,false); }
+  };
+  SES.answered=false;
+  $('#chk').onclick=check;
+  inp.onkeydown = e=>{ if(e.key==='Enter'){ e.preventDefault(); if(!SES.answered) check(); else $('#nx')?.click(); } };
+  SES.keys = k=>{ if (k==='Enter' && SES.answered) $('#nx')?.click(); };
+}
+
+/* --- режим: на слух --- */
+function mutateSpelling(it){
+  const out = new Set();
+  const tries = [
+    [/ch([ei])/, 'c$1'], [/c([ei])/, 'ch$1'], [/gh([ei])/, 'g$1'], [/g([ei])/, 'gh$1'],
+    [/sch([ei])/, 'sc$1'], [/sc([ei])/, 'sch$1'], [/sci([aou])/, 'sc$1'], [/ci([aou])/, 'c$1'], [/gi([aou])/, 'g$1'],
+    [/qu/, 'cu'], [/cu/, 'qu'], [/gn/, 'n'], [/gli/, 'li'], [/z/, 'zz'], [/zz/, 'z'],
+    [/([bcdfglmnprstv])\1/, '$1'], [/([aeiou])([bcdfglmnprstv])([aeiou])/, '$1$2$2$3'], [/s([aeiou])/, 'ss$1'], [/e\b/, 'a'], [/o\b/, 'e']
+  ];
+  tries.forEach(([re,rep])=>{ if (re.test(it)){ const v = it.replace(re,rep); if (v!==it && v.length>0) out.add(v); } });
+  return shuffle([...out]);
+}
+function renderListen(c){
+  let vars = mutateSpelling(c.it).slice(0,3);
+  if (vars.length<3) distractors(c,'it',3-vars.length).forEach(x=>vars.push(x.it));
+  const opts = shuffle([c.it, ...vars]);
+  const body = $('#sBody');
+  body.innerHTML = head('listen',c) + `<div class="q"><div class="big">🔊</div><div class="note">Послушай и выбери, что прозвучало</div><button class="spk" data-say="${esc(ttsText(c))}">🔊 ещё раз</button></div>
+    <div class="opts">${opts.map((o,i)=>`<button class="opt" data-t="${esc(o)}"><span class="k">${i+1}</span><span class="it">${esc(o)}</span></button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
+  wireSpeak(body); speak(ttsText(c));
+  SES.answered=false;
+  $$('.opt').forEach(b=> b.onclick=()=>{
+    if (SES.answered) return; SES.answered=true;
+    const ok = b.dataset.t===c.it;
+    $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.t===c.it) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    answered(c, ok, ok?2:0); feedback(c, ok);
+  });
+  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+}
+document.addEventListener('keydown', e=>{
+  if (!SES) return;
+  if (e.target.tagName==='INPUT' || e.target.tagName==='TEXTAREA') return;
+  if (e.key==='Escape') return endSession();
+  if (SES.keys){ if (e.key===' ') e.preventDefault(); SES.keys(e.key); }
+});
+
+function statusOf(c){ const p=P(c.key); if(p&&p.sus) return 'sus'; if(isKnown(p)) return 'known'; if(isLearning(p)) return 'learn'; return 'new'; }
+function toggleSus(key, after){ const p = ST.prog[key] ||= {iv:0,ease:2.5,due:0,reps:0,lapses:0,last:0}; p.sus=!p.sus; save(); after&&after(); }
+
+/* ---------------- все слова ---------------- */
+let ALL = { sort:'abc', q:'', deck:'all', status:'all' };
+const firstLetter = c => { const ch = stripAcc(c.it).replace(/^[^a-zA-Zàèéìòù]+/,'').charAt(0).toLowerCase(); return ch || '#'; };
+function renderAll(){
+  const q = ALL.q.toLowerCase().trim();
+  let list = CARDS.filter(c=> c.deck!=='alfa' && (ALL.deck==='all'||c.deck===ALL.deck) && (ALL.status==='all'||statusOf(c)===ALL.status)
+    && (!q || (c.it+' '+c.tr+' '+c.ru+' '+c.note).toLowerCase().includes(q)));
+  $$('#allChips [data-sort]').forEach(b=> b.classList.toggle('on', b.dataset.sort===ALL.sort));
+  const dch = [['all','Все колоды'], ...DECKS.filter(d=>d.id!=='alfa').map(d=>[d.id,d.name])];
+  const sch = [['all','любой статус'],['new','не начато'],['learn','учится'],['known','выучено'],['sus','скрытые']];
+  $('#allDeckChips').innerHTML = dch.map(([id,nm])=>`<button class="chip ${ALL.deck===id?'on':''}" data-d="${id}">${nm}</button>`).join('');
+  $('#allStatChips').innerHTML = sch.map(([id,nm])=>`<button class="chip ${ALL.status===id?'on':''}" data-s="${id}">${nm}</button>`).join('');
+  $$('#allDeckChips [data-d]').forEach(b=> b.onclick=()=>{ ALL.deck=b.dataset.d; renderAll(); });
+  $$('#allStatChips [data-s]').forEach(b=> b.onclick=()=>{ ALL.status=b.dataset.s; renderAll(); });
+  let html='';
+  if (ALL.sort==='abc'){
+    list = list.slice().sort((a,b)=> stripAcc(norm(a.it)).localeCompare(stripAcc(norm(b.it)), 'it'));
+    const letters = 'abcdefghilmnopqrstuvz'.split('');
+    const present = new Set(list.map(firstLetter));
+    $('#abcBar').innerHTML = letters.map(l=>`<a href="#L-${l}" class="${present.has(l)?'':'dis'}">${l.toUpperCase()}</a>`).join('');
+    let last='';
+    list.forEach(c=>{
+      const l = firstLetter(c);
+      if (l!==last){ html+=`<div class="dgroup" id="L-${l}">${l.toUpperCase()}</div>`; last=l; }
+      html += rowHTML(c, true);
+    });
+  } else {
+    $('#abcBar').innerHTML='';
+    let last='';
+    list.forEach(c=>{
+      const g = DECK[c.deck].name + (c.grp?' · '+c.grp:'');
+      if (g!==last){ html+=`<div class="dgroup">${esc(g)}</div>`; last=g; }
+      html += rowHTML(c, false);
+    });
+  }
+  $('#allCount').textContent = `${list.length} слов и фраз` + (q?` по запросу «${ALL.q}»`:'') + '. Буквы алфавита (a, bi, ci…) — во вкладке «Правила».';
+  $('#allList').innerHTML = html || '<div class="dgroup">Ничего не найдено</div>';
+  wireSpeak($('#allList')); wireSus($('#allList'), renderAll);
+  $$('#abcBar a').forEach(a=> a.onclick=e=>{ e.preventDefault(); const t=$(a.getAttribute('href')); if(t){ const y=t.getBoundingClientRect().top+window.scrollY-110; window.scrollTo({top:y}); } });
+}
+function wireSus(root, after){ $$('[data-sus]', root).forEach(b=> b.onclick=()=> toggleSus(b.dataset.sus, after)); }
+function rowHTML(c, showDeck){
+  const s = statusOf(c);
+  return `<div class="drow ${s==='sus'?'sus':''}"><span class="dot ${s==='known'?'k':s==='learn'?'l':s==='sus'?'s':''}"></span>
+    <div class="txt"><span class="w">${esc(c.it)}</span> <span class="tr">[${esc(c.tr)}]</span><span class="m">${esc(c.ru)}</span>${c.note?`<span class="n">${esc(c.note)}</span>`:''}${showDeck?`<span class="n">${esc(DECK[c.deck].name)}${c.src?' · '+esc(c.src):''}</span>`:''}</div>
+    <div class="btns">${S().tts&&window.speechSynthesis?`<button data-say="${esc(ttsText(c))}" title="послушать">🔊</button>`:''}<button data-sus="${esc(c.key)}" title="${s==='sus'?'вернуть в занятия':'уже знаю — убрать из занятий'}">${s==='sus'?'↺':'✓'}</button></div></div>`;
+}
+$('#aq').addEventListener('input', e=>{ ALL.q=e.target.value; renderAll(); });
+$$('#allChips [data-sort]').forEach(b=> b.onclick=()=>{ ALL.sort=b.dataset.sort; renderAll(); });
+$('#allHideTr').onclick = ()=>{ document.body.classList.toggle('all-hide-tr'); $('#allHideTr').classList.toggle('on'); };
+$('#allHideRu').onclick = ()=>{ document.body.classList.toggle('all-hide-ru'); $('#allHideRu').classList.toggle('on'); };
+
+/* ---------------- вкладка: фразы ---------------- */
+let PHR = { q:'' };
+function renderPhrases(){
+  const q = PHR.q.toLowerCase().trim();
+  const fr = CARDS.filter(c=> c.deck==='fr' && (!q || (c.it+' '+c.tr+' '+c.ru+' '+c.note).toLowerCase().includes(q)));
+  let html='', nav='', lastG='', gi=0;
+  fr.forEach(c=>{
+    if (c.grp!==lastG){ gi++; html+=`<div class="dgroup" id="PG-${gi}">${esc(c.grp)}</div>`; nav+=`<a href="#PG-${gi}">${esc(c.grp.split(' — ')[0])}</a>`; lastG=c.grp; }
+    html += rowHTML(c, false);
+  });
+  $('#phrNav').innerHTML = nav;
+  $('#phrList').innerHTML = html || '<div class="dgroup">Ничего не найдено</div>';
+  wireSpeak($('#phrList')); wireSus($('#phrList'), renderPhrases);
+  $$('#phrNav a').forEach(a=> a.onclick=e=>{ e.preventDefault(); const t=$(a.getAttribute('href')); if(t){ const y=t.getBoundingClientRect().top+window.scrollY-110; window.scrollTo({top:y}); } });
+}
+$('#pq').addEventListener('input', e=>{ PHR.q=e.target.value; renderPhrases(); });
+$('#phrLearn').onclick = ()=> startSession(['fr']);
+[['#phrHideTr','phr-hide-tr'],['#phrHideRu','phr-hide-ru'],['#phrHideIt','phr-hide-it'],['#numHideTr','num-hide-tr'],['#numHideIt','num-hide-it']]
+  .forEach(([id,cls])=>{ $(id).onclick = ()=>{ document.body.classList.toggle(cls); $(id).classList.toggle('on'); }; });
+
+/* ---------------- вкладка: числа ---------------- */
+const NUM_U = [ ['zero','дзЭро','ноль'],['uno','Уно','один'],['due','дУэ','два'],['tre','трЭ','три'],['quattro','куАттро','четыре'],['cinque','чИнкуэ','пять'],
+  ['sei','сЭй','шесть'],['sette','сЭттэ','семь'],['otto','Отто','восемь'],['nove','нОвэ','девять'],['dieci','дьЭчи','десять'],
+  ['undici','Ундичи','одиннадцать'],['dodici','дОдичи','двенадцать'],['tredici','трЭдичи','тринадцать'],['quattordici','куаттОрдичи','четырнадцать'],
+  ['quindici','куИндичи','пятнадцать'],['sedici','сЭдичи','шестнадцать'],['diciassette','дичассЭттэ','семнадцать'],['diciotto','дичОтто','восемнадцать'],
+  ['diciannove','дичаннОвэ','девятнадцать'],['venti','вЭнти','двадцать'] ];
+// десятки: слово, транскрипция, русское, основа для сложения (полная / без последней гласной), русская основа
+const NUM_T = { 20:['venti','вЭнти','двадцать','venti','vent','вэнти','вэнт'], 30:['trenta','трЭнта','тридцать','trenta','trent','трэнта','трэнт'],
+  40:['quaranta','куарАнта','сорок','quaranta','quarant','куаранта','куарант'], 50:['cinquanta','чинкуАнта','пятьдесят','cinquanta','cinquant','чинкуанта','чинкуант'],
+  60:['sessanta','сэссАнта','шестьдесят','sessanta','sessant','сэссанта','сэссант'], 70:['settanta','сэттАнта','семьдесят','settanta','settant','сэттанта','сэттант'],
+  80:['ottanta','оттАнта','восемьдесят','ottanta','ottant','оттанта','оттант'], 90:['novanta','новАнта','девяносто','novanta','novant','нованта','новант'] };
+function numWord(n){
+  if (n<=20) return NUM_U[n];
+  if (n===100) return ['cento','чЭнто','сто'];
+  const t = Math.floor(n/10)*10, u = n%10, T = NUM_T[t];
+  if (u===0) return [T[0],T[1],T[2]];
+  const U = NUM_U[u];
+  const it = (u===1||u===8) ? T[4]+U[0] : (u===3 ? T[3]+'tré' : T[3]+U[0]);
+  const tr = (u===1||u===8) ? T[6]+U[1] : (u===3 ? T[5]+'трЭ' : T[5]+U[1]);
+  return [it, tr, T[2]+' '+U[2]];
+}
+let NUMTEN = 0;
+function numRows(list){ return list.map(n=>{ const [it,tr,ru]=numWord(n); return `<tr><td class="n">${n}</td><td class="w">${it}</td><td class="t">[${tr}]</td><td class="r">${ru}</td><td>${S().tts&&window.speechSynthesis?`<button class="icon" data-say="${it}">🔊</button>`:''}</td></tr>`; }).join(''); }
+function renderNumbers(){
+  const head = '<thead><tr><th></th><th>по-итальянски</th><th>читается</th><th>по-русски</th><th></th></tr></thead>';
+  $('#numTbl1').innerHTML = head + '<tbody>' + numRows([...Array(21).keys()]) + '</tbody>';
+  $('#numTbl2').innerHTML = head + '<tbody>' + numRows([30,40,50,60,70,80,90,100]) + '</tbody>';
+  $('#numTens').innerHTML = [0,20,30,40,50,60,70,80,90].map(t=>`<button class="chip ${NUMTEN===t?'on':''}" data-t="${t}">${t===0?'все':t+'–'+(t+9)}</button>`).join('');
+  $$('#numTens .chip').forEach(b=> b.onclick=()=>{ NUMTEN=+b.dataset.t; renderNumbers(); });
+  const all = []; for (let n=21;n<=99;n++) if (n%10!==0 && (NUMTEN===0 || Math.floor(n/10)*10===NUMTEN)) all.push(n);
+  $('#numTbl3').innerHTML = head + '<tbody>' + numRows(all) + '</tbody>';
+  wireSpeak($('#p-num'));
+}
+$('#numLearn').onclick = ()=> startSession(['num']);
+
+/* ---------------- настройки ---------------- */
+function bindSwitch(id, key, after){
+  const b=$(id); b.classList.toggle('on', !!S()[key]);
+  b.onclick=()=>{ S()[key]=!S()[key]; b.classList.toggle('on', !!S()[key]); save(); after&&after(); };
+}
+function syncSettingsUI(){
+  $('#setNew').value = S().newPerDay; $('#setDir').value=S().dir; $('#setRate').value=String(S().rate); $('#setFont').value=String(S().font);
+  ['#setShowTr|showTr','#setTts|tts','#setTtsAuto|ttsAuto','#setDark|dark','#setEink|eink'].forEach(x=>{ const [id,k]=x.split('|'); $(id).classList.toggle('on', !!S()[k]); });
+  $('#aboutCount').textContent = DECKS.map(d=>`${d.name} — ${CARDS.filter(c=>c.deck===d.id).length}`).join('; ') + `. Всего ${CARDS.length}.`;
+}
+function initSettings(){
+  $('#setNew').onchange = e=>{ S().newPerDay=Math.max(0,+e.target.value||0); save(); };
+  $('#setDir').onchange = e=>{ S().dir=e.target.value; save(); };
+  $('#setRate').onchange = e=>{ S().rate=parseFloat(e.target.value); save(); };
+  $('#setVoice').onchange = e=>{ S().voice=e.target.value; save(); };
+  $('#setFont').onchange = e=>{ S().font=+e.target.value; save(); applyLook(); };
+  bindSwitch('#setShowTr','showTr'); bindSwitch('#setTts','tts'); bindSwitch('#setTtsAuto','ttsAuto');
+  bindSwitch('#setDark','dark',applyLook); bindSwitch('#setEink','eink',applyLook);
+  // экспорт / импорт
+  const dump = ()=> JSON.stringify({v:1, exported:new Date().toISOString(), prog:ST.prog, days:ST.days});
+  $('#expBtn').onclick = async ()=>{
+    const s = dump(); $('#ioArea').value = s;
+    try{ await navigator.clipboard.writeText(s); $('#ioMsg').textContent='Скопировано в буфер обмена. Вставь на другом устройстве в это же поле и нажми «Загрузить из текста».'; }
+    catch(e){ $('#ioArea').select(); $('#ioMsg').textContent='Выдели текст в поле и скопируй вручную.'; }
+  };
+  $('#expFile').onclick = ()=>{
+    const blob = new Blob([dump()],{type:'application/json'}); const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='italiano-progress-'+todayStr()+'.json'; document.body.appendChild(a); a.click(); a.remove();
+  };
+  const doImport = txt=>{
+    try{
+      const o = JSON.parse(txt); if(!o.prog) throw 0;
+      let n=0;
+      Object.entries(o.prog).forEach(([k,p])=>{ const cur=ST.prog[k]; if(!cur || (p.last||0)>(cur.last||0) || (p.reps||0)>(cur.reps||0)){ ST.prog[k]=p; n++; } });
+      Object.entries(o.days||{}).forEach(([d,v])=>{ const cur=ST.days[d]||{n:0,r:0}; ST.days[d]={n:Math.max(cur.n,v.n||0), r:Math.max(cur.r,v.r||0)}; });
+      save(); $('#ioMsg').textContent=`Загружено. Обновлено карточек: ${n}.`; renderHome();
+    }catch(e){ $('#ioMsg').textContent='Не удалось прочитать: это не код прогресса.'; }
+  };
+  $('#impBtn').onclick = ()=> doImport($('#ioArea').value);
+  $('#impFile').onchange = e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>doImport(r.result); r.readAsText(f); };
+  $('#resetBtn').onclick = ()=>{ if(confirm('Стереть весь прогресс? Это нельзя отменить.')){ ST.prog={}; ST.days={}; save(); renderHome(); $('#ioMsg').textContent='Прогресс сброшен.'; } };
+}
+
+/* ---------------- старт ---------------- */
+load(); applyLook(); initSettings(); syncSettingsUI(); renderPhrases(); renderHome();
+
+if (location.hash.startsWith('#shot=')){
+  save = ()=>{};   // отладочный режим: ничего не сохранять
+  const what = location.hash.slice(6);
+  if (['phr','num','ref','set','all'].includes(what)) showPane('p-'+what);
+  else {
+    ST.set.decks = DECKS.map(d=>d.id); ST.set.tts=true; startSession();
+    const c = CARDS.find(x=>norm(x.it)==='sciarpa') || CARDS[0];
+    if (what==='intro'){ /* уже показано новое слово либо повтор — оставить как есть */ }
+    else if (what==='flash'){ renderFlash(c); $('#revealBtn').click(); }
+    else if (what==='mcru'||what==='mcit') renderMC(c, what);
+    else if (what==='trans') renderTrans(c);
+    else if (what==='type') renderType(c);
+    else if (what==='fb'){ renderMC(c,'mcru'); $$('.opt')[1].click(); }
+  }
+}
+/* ---------------- самопроверка (#selftest) — для отладки, пользователю не нужна ---------------- */
+if (location.hash.startsWith('#selftest')){
+  save = ()=>{};   // отладочный режим: ничего не сохранять
+  const log = []; const errs = [];
+  window.onerror = (m,s,l,c)=>{ errs.push(m+' @'+l+':'+c); };
+  const wide = ()=> $$('body *').filter(el=>{ const r=el.getBoundingClientRect(); return r.right>window.innerWidth+1 && r.width>0 && el.offsetParent!==null; })
+      .slice(0,8).map(el=>el.tagName+'.'+(el.className||'').toString().split(' ')[0]+'('+Math.round(el.getBoundingClientRect().right)+')');
+  try{
+  log.push('viewport '+window.innerWidth+'x'+window.innerHeight+' scrollW='+document.documentElement.scrollWidth);
+  log.push('home wide: '+wide().join(', '));
+  showPane('p-phr'); log.push('phr rows='+$$('#phrList .drow').length+' groups='+$$('#phrList .dgroup').length+' wide: '+wide().join(', '));
+  showPane('p-num'); log.push('num rows='+$$('#p-num tbody tr').length+' sample: '+[21,23,28,33,48,55,67,76,81,99].map(n=>numWord(n)[0]+' ['+numWord(n)[1]+']').join(', ')+' wide: '+wide().join(', '));
+  showPane('p-ref'); log.push('ref wide: '+wide().join(', '));
+  showPane('p-set'); log.push('set wide: '+wide().join(', '));
+  showPane('p-all'); log.push('all rows='+$$('#allList .drow').length+' groups='+$$('#allList .dgroup').length+' wide: '+wide().join(', '));
+  ALL.sort='deck'; renderAll(); log.push('all by deck rows='+$$('#allList .drow').length); ALL.sort='abc';
+  showPane('p-study');
+  // прогон сессии по всем режимам
+  ST.set.decks = DECKS.map(d=>d.id); ST.set.newPerDay = 12; ST.set.tts=false;
+  const seenModes = {};
+  startSession();
+  for (let step=0; step<80 && SES && SES.i<SES.q.length; step++){
+    const item = SES.q[SES.i];
+    if ($('#nx') && !$('.fb') && item.intro && item.introShown && !item.mode){ $('#nx').click(); continue; }
+    const mode = item.mode; if (mode) seenModes[mode]=(seenModes[mode]||0)+1;
+    if ($('#revealBtn')){ $('#revealBtn').click(); const gb=$(`.grades button[data-g="${step%4}"]`); if(!gb){ errs.push('no grades after reveal; mode='+mode+' body='+$('#sBody').innerHTML.replace(/\s+/g,' ').slice(0,400)); break; } gb.click(); continue; }
+    if ($('#ti')){ $('#ti').value = step%2? item.c.it : 'xxx'; $('#chk').click(); $('#nx').click(); continue; }
+    if ($$('.opt').length){ $$('.opt')[step%4].click(); if(!$('#nx')) errs.push('no next after opt in '+mode); else $('#nx').click(); continue; }
+    if ($('#nx')){ $('#nx').click(); continue; }
+    errs.push('stuck at step '+step+' mode='+mode); break;
+  }
+  // принудительно проверить каждый режим на 3 карточках
+  ['flash','mcru','mcit','trans','type'].forEach(m=>{
+    ST.set.mode=m; const c = CARDS[Math.floor(Math.random()*200)];
+    try{ ({flash:renderFlash, mcru:renderMC, mcit:renderMC, trans:renderTrans, type:renderType})[m](c, m); seenModes[m]=(seenModes[m]||0)+1; }
+    catch(e){ errs.push('render '+m+': '+e.message); }
+  });
+  log.push('session wide: '+wide().join(', '));
+  log.push('modes: '+JSON.stringify(seenModes));
+  log.push('stats: '+JSON.stringify(SES ? SES.stats : {}) + ' prog entries='+Object.keys(ST.prog).length);
+  // мутации транскрипции / написания — образцы
+  ['cappello','giorno','sciarpa','zucchero','famiglia'].forEach(w=>{ const c=CARDS.find(x=>norm(x.it)===w); if(c) log.push(w+' tr→ '+mutateTr(c.tr).slice(0,3).join(' | ')+'  sp→ '+mutateSpelling(c.it).slice(0,3).join(' | ')); });
+  }catch(e){ errs.push('FATAL '+e.message+' '+(e.stack||'').split(String.fromCharCode(10))[1]); }
+  try{ endSession(); startSession(['fr']); log.push('fr-only session q='+SES.q.length+' decks='+[...new Set(SES.q.map(x=>x.c.deck))].join(',')); endSession(); }catch(e){ errs.push('fr session: '+e.message); }
+  log.push('ERRORS: '+(errs.length? errs.join(' || ') : 'none'));
+  localStorage.removeItem(LS);
+  const pre = document.createElement('pre'); pre.id='testlog'; pre.textContent = log.join('\n'); document.body.appendChild(pre);
+  document.title = 'SELFTEST ' + (errs.length?'FAIL':'OK');
+}
+// ссылки внутри справочника — плавный переход к якорю в той же вкладке
+$$('#p-ref .subnav a').forEach(a=> a.onclick=e=>{ e.preventDefault(); const t=$(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); });
+</script>
+</body>
+</html>
