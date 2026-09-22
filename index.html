@@ -250,6 +250,7 @@ body.num-hide-it .numcell .w{visibility:hidden}
 .spk{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 14px;font-size:14px;align-self:center;margin-top:4px}
 .opts{display:grid;gap:9px;margin-top:14px}
 .opt{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px;text-align:left;font-size:17px;line-height:1.35;display:flex;gap:10px;align-items:center;transition:background .1s}
+.opt .ru{margin-left:auto;font-size:.82em;color:var(--muted);font-weight:400;text-align:right;padding-left:8px}
 .opt .k{flex:none;width:24px;height:24px;border-radius:50%;background:var(--line2);color:var(--muted);font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
 .opt:hover{border-color:var(--accent)}
 .opt.good{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
@@ -330,6 +331,7 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
       <button class="chip on" data-m="type">написать форму</button>
       <button class="chip on" data-m="gap">предложение с пропуском</button>
     </div>
+    <div class="chips"><button class="chip on" id="vdRu">подсказки: перевод каждой формы</button></div>
     <button class="sec" id="vdStart">▶ Серия из 20 заданий</button>
   </div>
 
@@ -663,12 +665,12 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
       <div class="tbl-wrap"><table style="margin-top:8px">
         <thead><tr><th>Кто</th><th>Окончание</th><th>parl-</th><th>Куда ударение</th></tr></thead>
         <tbody>
-          <tr><td class="sp">io</td><td class="ex"><b>-o</b></td><td class="ex">parl<b>o</b> <span class="tr">[пАрло]</span></td><td class="why">на основу</td></tr>
-          <tr><td class="sp">tu</td><td class="ex"><b>-i</b></td><td class="ex">parl<b>i</b> <span class="tr">[пАрли]</span></td><td class="why">на основу</td></tr>
-          <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>-a</b></td><td class="ex">parl<b>a</b> <span class="tr">[пАрла]</span></td><td class="why">на основу</td></tr>
-          <tr><td class="sp">noi</td><td class="ex"><b>-iamo</b></td><td class="ex">parl<b>iamo</b> <span class="tr">[парльЯмо]</span></td><td class="why">на окончание -iAmo</td></tr>
-          <tr><td class="sp">voi</td><td class="ex"><b>-ate</b></td><td class="ex">parl<b>ate</b> <span class="tr">[парлАтэ]</span></td><td class="why">на окончание -Ate</td></tr>
-          <tr><td class="sp">loro</td><td class="ex"><b>-ano</b></td><td class="ex">parl<b>ano</b> <span class="tr">[пАрлано]</span></td><td class="why">на основу — как у io, не на -ano!</td></tr>
+          <tr><td class="sp">io</td><td class="ex"><b>-o</b></td><td class="ex">parl<b>o</b> <span class="tr">[пАрло]</span><br><i>я говорю</i></td><td class="why">на основу</td></tr>
+          <tr><td class="sp">tu</td><td class="ex"><b>-i</b></td><td class="ex">parl<b>i</b> <span class="tr">[пАрли]</span><br><i>ты говоришь</i></td><td class="why">на основу</td></tr>
+          <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>-a</b></td><td class="ex">parl<b>a</b> <span class="tr">[пАрла]</span><br><i>он / она / Вы говорит</i></td><td class="why">на основу</td></tr>
+          <tr><td class="sp">noi</td><td class="ex"><b>-iamo</b></td><td class="ex">parl<b>iamo</b> <span class="tr">[парльЯмо]</span><br><i>мы говорим</i></td><td class="why">на окончание -iAmo</td></tr>
+          <tr><td class="sp">voi</td><td class="ex"><b>-ate</b></td><td class="ex">parl<b>ate</b> <span class="tr">[парлАтэ]</span><br><i>вы говорите</i></td><td class="why">на окончание -Ate</td></tr>
+          <tr><td class="sp">loro</td><td class="ex"><b>-ano</b></td><td class="ex">parl<b>ano</b> <span class="tr">[пАрлано]</span><br><i>они говорят</i></td><td class="why">на основу — как у io, не на -ano!</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -680,12 +682,12 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
     <div class="tbl-wrap"><table>
       <thead><tr><th>Кто</th><th>parlare<br><i>говорить</i></th><th>studiare<br><i>учить(ся)</i></th><th>amare<br><i>любить</i></th><th>abitare<br><i>жить</i></th></tr></thead>
       <tbody>
-        <tr><td class="sp">io</td><td class="ex">parlo <span class="tr">[пАрло]</span></td><td class="ex">studio <span class="tr">[стУдьо]</span></td><td class="ex">amo <span class="tr">[Амо]</span></td><td class="ex">abito <span class="tr">[Абито]</span></td></tr>
-        <tr><td class="sp">tu</td><td class="ex">parli <span class="tr">[пАрли]</span></td><td class="ex">studi <span class="tr">[стУди]</span></td><td class="ex">ami <span class="tr">[Ами]</span></td><td class="ex">abiti <span class="tr">[Абити]</span></td></tr>
-        <tr><td class="sp">lui / lei / Lei</td><td class="ex">parla <span class="tr">[пАрла]</span></td><td class="ex">studia <span class="tr">[стУдьа]</span></td><td class="ex">ama <span class="tr">[Ама]</span></td><td class="ex">abita <span class="tr">[Абита]</span></td></tr>
-        <tr><td class="sp">noi</td><td class="ex">parliamo <span class="tr">[парльЯмо]</span></td><td class="ex">studiamo <span class="tr">[студьЯмо]</span></td><td class="ex">amiamo <span class="tr">[амьЯмо]</span></td><td class="ex">abitiamo <span class="tr">[абитьЯмо]</span></td></tr>
-        <tr><td class="sp">voi</td><td class="ex">parlate <span class="tr">[парлАтэ]</span></td><td class="ex">studiate <span class="tr">[студьЯтэ]</span></td><td class="ex">amate <span class="tr">[амАтэ]</span></td><td class="ex">abitate <span class="tr">[абитАтэ]</span></td></tr>
-        <tr><td class="sp">loro</td><td class="ex">parlano <span class="tr">[пАрлано]</span></td><td class="ex">studiano <span class="tr">[стУдьано]</span></td><td class="ex">amano <span class="tr">[Амано]</span></td><td class="ex">abitano <span class="tr">[Абитано]</span></td></tr>
+        <tr><td class="sp">io<br><i>я</i></td><td class="ex">parlo <span class="tr">[пАрло]</span> <i>говорю</i></td><td class="ex">studio <span class="tr">[стУдьо]</span> <i>учу</i></td><td class="ex">amo <span class="tr">[Амо]</span> <i>люблю</i></td><td class="ex">abito <span class="tr">[Абито]</span> <i>живу</i></td></tr>
+        <tr><td class="sp">tu<br><i>ты</i></td><td class="ex">parli <span class="tr">[пАрли]</span> <i>говоришь</i></td><td class="ex">studi <span class="tr">[стУди]</span> <i>учишь</i></td><td class="ex">ami <span class="tr">[Ами]</span> <i>любишь</i></td><td class="ex">abiti <span class="tr">[Абити]</span> <i>живёшь</i></td></tr>
+        <tr><td class="sp">lui / lei / Lei<br><i>он / она / Вы</i></td><td class="ex">parla <span class="tr">[пАрла]</span> <i>говорит</i></td><td class="ex">studia <span class="tr">[стУдьа]</span> <i>учит</i></td><td class="ex">ama <span class="tr">[Ама]</span> <i>любит</i></td><td class="ex">abita <span class="tr">[Абита]</span> <i>живёт</i></td></tr>
+        <tr><td class="sp">noi<br><i>мы</i></td><td class="ex">parliamo <span class="tr">[парльЯмо]</span> <i>говорим</i></td><td class="ex">studiamo <span class="tr">[студьЯмо]</span> <i>учим</i></td><td class="ex">amiamo <span class="tr">[амьЯмо]</span> <i>любим</i></td><td class="ex">abitiamo <span class="tr">[абитьЯмо]</span> <i>живём</i></td></tr>
+        <tr><td class="sp">voi<br><i>вы</i></td><td class="ex">parlate <span class="tr">[парлАтэ]</span> <i>говорите</i></td><td class="ex">studiate <span class="tr">[студьЯтэ]</span> <i>учите</i></td><td class="ex">amate <span class="tr">[амАтэ]</span> <i>любите</i></td><td class="ex">abitate <span class="tr">[абитАтэ]</span> <i>живёте</i></td></tr>
+        <tr><td class="sp">loro<br><i>они</i></td><td class="ex">parlano <span class="tr">[пАрлано]</span> <i>говорят</i></td><td class="ex">studiano <span class="tr">[стУдьано]</span> <i>учат</i></td><td class="ex">amano <span class="tr">[Амано]</span> <i>любят</i></td><td class="ex">abitano <span class="tr">[Абитано]</span> <i>живут</i></td></tr>
       </tbody>
     </table></div>
 
@@ -698,12 +700,12 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
 
     <h3>Ещё четыре глагола с листа — та же схема</h3>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Глагол</th><th>io</th><th>tu</th><th>lui / lei</th><th>noi</th><th>voi</th><th>loro</th></tr></thead>
+      <thead><tr><th>Глагол</th><th>io<br><i>я</i></th><th>tu<br><i>ты</i></th><th>lui / lei<br><i>он / она</i></th><th>noi<br><i>мы</i></th><th>voi<br><i>вы</i></th><th>loro<br><i>они</i></th></tr></thead>
       <tbody>
-        <tr><td class="ex"><b>lavorare</b> <i>работать</i></td><td class="ex">lavoro</td><td class="ex">lavori</td><td class="ex">lavora</td><td class="ex">lavoriamo</td><td class="ex">lavorate</td><td class="ex">lavorano</td></tr>
-        <tr><td class="ex"><b>ascoltare</b> <i>слушать</i></td><td class="ex">ascolto</td><td class="ex">ascolti</td><td class="ex">ascolta</td><td class="ex">ascoltiamo</td><td class="ex">ascoltate</td><td class="ex">ascoltano</td></tr>
-        <tr><td class="ex"><b>mangiare</b> <i>есть</i></td><td class="ex">mangio</td><td class="ex">mangi</td><td class="ex">mangia</td><td class="ex">mangiamo</td><td class="ex">mangiate</td><td class="ex">mangiano</td></tr>
-        <tr><td class="ex"><b>pagare</b> <i>платить</i></td><td class="ex">pago</td><td class="ex">pag<b>h</b>i</td><td class="ex">paga</td><td class="ex">pag<b>h</b>iamo</td><td class="ex">pagate</td><td class="ex">pagano</td></tr>
+        <tr><td class="ex"><b>lavorare</b> <i>работать</i></td><td class="ex">lavoro<br><i>работаю</i></td><td class="ex">lavori<br><i>работаешь</i></td><td class="ex">lavora<br><i>работает</i></td><td class="ex">lavoriamo<br><i>работаем</i></td><td class="ex">lavorate<br><i>работаете</i></td><td class="ex">lavorano<br><i>работают</i></td></tr>
+        <tr><td class="ex"><b>ascoltare</b> <i>слушать</i></td><td class="ex">ascolto<br><i>слушаю</i></td><td class="ex">ascolti<br><i>слушаешь</i></td><td class="ex">ascolta<br><i>слушает</i></td><td class="ex">ascoltiamo<br><i>слушаем</i></td><td class="ex">ascoltate<br><i>слушаете</i></td><td class="ex">ascoltano<br><i>слушают</i></td></tr>
+        <tr><td class="ex"><b>mangiare</b> <i>есть</i></td><td class="ex">mangio<br><i>ем</i></td><td class="ex">mangi<br><i>ешь</i></td><td class="ex">mangia<br><i>ест</i></td><td class="ex">mangiamo<br><i>едим</i></td><td class="ex">mangiate<br><i>едите</i></td><td class="ex">mangiano<br><i>едят</i></td></tr>
+        <tr><td class="ex"><b>pagare</b> <i>платить</i></td><td class="ex">pago<br><i>плачу</i></td><td class="ex">pag<b>h</b>i<br><i>платишь</i></td><td class="ex">paga<br><i>платит</i></td><td class="ex">pag<b>h</b>iamo<br><i>платим</i></td><td class="ex">pagate<br><i>платите</i></td><td class="ex">pagano<br><i>платят</i></td></tr>
       </tbody>
     </table></div>
 
@@ -732,16 +734,6 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
     <div class="box"><span class="ttl">Шесть вопросов к тексту — и к любому человеку</span>
       <span class="it">Come si chiama? · Quanti anni ha? · Di dov'è? · Dove abita? · Perché studia l'italiano? · Che lingue parla?</span><br>
       На «ты»: <span class="it">Come ti chiami? · Quanti anni hai? · Di dove sei? · Dove abiti? · Perché studi l'italiano? · Che lingue parli?</span></div>
-
-    <h3>Домашка: «E voi, perché studiate l'italiano?»</h3>
-    <div class="box key"><span class="ttl">Что написать после «Studio l'italiano perché…»</span>
-      Нужно закончить предложение «Я учу итальянский, потому что…». Варианты из уже известных слов, выбери или соедини:<br>
-      <span class="it">Studio l'italiano perché <b>amo l'Italia e l'arte italiana</b>.</span> — люблю Италию и итальянское искусство (прямо из текста про Кэти).<br>
-      <span class="it">Studio l'italiano perché <b>voglio abitare in Italia</b>.</span> — хочу жить в Италии.<br>
-      <span class="it">Studio l'italiano perché <b>ho voglia di studiare in Italia, a Catania</b>.</span> — хочу учиться в Италии, в Катании.<br>
-      <span class="it">Studio l'italiano perché <b>la mia ragazza e io amiamo l'Italia</b>.</span> — моя девушка и я любим Италию.<br>
-      Полный ответ на две строки: <span class="it">Studio l'italiano perché amo l'Italia e l'arte italiana. Voglio abitare e studiare in Italia, a Catania.</span></div>
-  </div>
 
   <div class="card" id="g6" data-sec="Грамматика">
     <h2><span class="no">L2</span>Артикли il / lo / la / l' — i / gli / le и «мой, твой, Ваш»</h2>
@@ -3843,17 +3835,18 @@ function stepTopic(d){ const i = REF.topics.findIndex(t=>t.id===REF.cur); const 
 
 /* ---------------- тренажёр глаголов ---------------- */
 const PRON = ['io','tu','lui / lei / Lei','noi','voi','loro'];
+const PRON_RU = ['я','ты','он / она / Вы','мы','вы','они'];
 const VERBS = {
-  essere:  {ru:'быть',        g:'ea',  f:['sono','sei','è','siamo','siete','sono'],            tr:['сОно','сЭй','э','сьЯмо','сьЭтэ','сОно']},
-  avere:   {ru:'иметь',       g:'ea',  f:['ho','hai','ha','abbiamo','avete','hanno'],           tr:['о','ай','а','аббьЯмо','авЭтэ','Анно']},
-  parlare: {ru:'говорить',    g:'are', f:['parlo','parli','parla','parliamo','parlate','parlano'], tr:['пАрло','пАрли','пАрла','парльЯмо','парлАтэ','пАрлано']},
-  studiare:{ru:'учить(ся)',   g:'are', f:['studio','studi','studia','studiamo','studiate','studiano'], tr:['стУдьо','стУди','стУдьа','студьЯмо','студьЯтэ','стУдьано']},
-  amare:   {ru:'любить',      g:'are', f:['amo','ami','ama','amiamo','amate','amano'],           tr:['Амо','Ами','Ама','амьЯмо','амАтэ','Амано']},
-  abitare: {ru:'жить',        g:'are', f:['abito','abiti','abita','abitiamo','abitate','abitano'], tr:['Абито','Абити','Абита','абитьЯмо','абитАтэ','Абитано']},
-  lavorare:{ru:'работать',    g:'are', f:['lavoro','lavori','lavora','lavoriamo','lavorate','lavorano'], tr:['лавОро','лавОри','лавОра','лаворьЯмо','лаворАтэ','лавОрано']},
-  ascoltare:{ru:'слушать',    g:'are', f:['ascolto','ascolti','ascolta','ascoltiamo','ascoltate','ascoltano'], tr:['аскОльто','аскОльти','аскОльта','аскольтьЯмо','аскольтАтэ','аскОльтано']},
-  mangiare:{ru:'есть, кушать',g:'are', f:['mangio','mangi','mangia','mangiamo','mangiate','mangiano'], tr:['мАнджо','мАнджи','мАнджа','манджЯмо','манджАтэ','мАнджано']},
-  pagare:  {ru:'платить',     g:'are', f:['pago','paghi','paga','paghiamo','pagate','pagano'],     tr:['пАго','пАги','пАга','пагьЯмо','пагАтэ','пАгано']},
+  essere:  {ru:'быть',        g:'ea',  f:['sono','sei','è','siamo','siete','sono'],            tr:['сОно','сЭй','э','сьЯмо','сьЭтэ','сОно'], r:['я (есть)','ты (есть)','он / она (есть)','мы (есть)','вы (есть)','они (есть)']},
+  avere:   {ru:'иметь',       g:'ea',  f:['ho','hai','ha','abbiamo','avete','hanno'],           tr:['о','ай','а','аббьЯмо','авЭтэ','Анно'], r:['у меня есть','у тебя есть','у него / у неё есть','у нас есть','у вас есть','у них есть']},
+  parlare: {ru:'говорить',    g:'are', f:['parlo','parli','parla','parliamo','parlate','parlano'], tr:['пАрло','пАрли','пАрла','парльЯмо','парлАтэ','пАрлано'], r:['я говорю','ты говоришь','он говорит','мы говорим','вы говорите','они говорят']},
+  studiare:{ru:'учить(ся)',   g:'are', f:['studio','studi','studia','studiamo','studiate','studiano'], tr:['стУдьо','стУди','стУдьа','студьЯмо','студьЯтэ','стУдьано'], r:['я учу','ты учишь','он учит','мы учим','вы учите','они учат']},
+  amare:   {ru:'любить',      g:'are', f:['amo','ami','ama','amiamo','amate','amano'],           tr:['Амо','Ами','Ама','амьЯмо','амАтэ','Амано'], r:['я люблю','ты любишь','он любит','мы любим','вы любите','они любят']},
+  abitare: {ru:'жить',        g:'are', f:['abito','abiti','abita','abitiamo','abitate','abitano'], tr:['Абито','Абити','Абита','абитьЯмо','абитАтэ','Абитано'], r:['я живу','ты живёшь','он живёт','мы живём','вы живёте','они живут']},
+  lavorare:{ru:'работать',    g:'are', f:['lavoro','lavori','lavora','lavoriamo','lavorate','lavorano'], tr:['лавОро','лавОри','лавОра','лаворьЯмо','лаворАтэ','лавОрано'], r:['я работаю','ты работаешь','он работает','мы работаем','вы работаете','они работают']},
+  ascoltare:{ru:'слушать',    g:'are', f:['ascolto','ascolti','ascolta','ascoltiamo','ascoltate','ascoltano'], tr:['аскОльто','аскОльти','аскОльта','аскольтьЯмо','аскольтАтэ','аскОльтано'], r:['я слушаю','ты слушаешь','он слушает','мы слушаем','вы слушаете','они слушают']},
+  mangiare:{ru:'есть, кушать',g:'are', f:['mangio','mangi','mangia','mangiamo','mangiate','mangiano'], tr:['мАнджо','мАнджи','мАнджа','манджЯмо','манджАтэ','мАнджано'], r:['я ем','ты ешь','он ест','мы едим','вы едите','они едят']},
+  pagare:  {ru:'платить',     g:'are', f:['pago','paghi','paga','paghiamo','pagate','pagano'],     tr:['пАго','пАги','пАга','пагьЯмо','пагАтэ','пАгано'], r:['я плачу','ты платишь','он платит','мы платим','вы платите','они платят']},
 };
 // предложения с пропуском: [текст с ___, глагол, индекс лица, перевод]
 const GAPS = [
@@ -3890,7 +3883,8 @@ const GAPS = [
  ['Io (mangiare) ___ una pizza.','mangiare',0,'Я ем пиццу.'],
  ['Noi (pagare) ___ il caffè.','pagare',3,'Мы платим за кофе.'],
 ];
-const VD = { verbs:'all', modes:['pick','type','gap'] };
+const VD = { verbs:'all', modes:['pick','type','gap'], ru:true };
+$('#vdRu').onclick = ()=>{ VD.ru=!VD.ru; $('#vdRu').classList.toggle('on', VD.ru); };
 $$('#vdVerbs .chip').forEach(b=> b.onclick=()=>{ VD.verbs=b.dataset.v; $$('#vdVerbs .chip').forEach(x=>x.classList.toggle('on',x===b)); });
 $$('#vdModes .chip').forEach(b=> b.onclick=()=>{ b.classList.toggle('on'); VD.modes=$$('#vdModes .chip.on').map(x=>x.dataset.m); });
 function vdVerbList(){ return Object.keys(VERBS).filter(v=> VD.verbs==='all' || VERBS[v].g===VD.verbs); }
@@ -3920,7 +3914,7 @@ function vdStep(){
   }
   const t = SES.q[SES.i], V = VERBS[t.v], ans = V.f[t.p]; SES.answered=false;
   const head = `<div class="mode"><span>${VD_NAME[t.m]}</span><span class="tag">${t.v} — ${esc(V.ru)}</span></div>`;
-  const fbHTML = ok => `<div>${ok?'✅ Верно':'❌ Неверно'}</div><div class="ans">${esc(PRON[t.p])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[t.p])}]</span></div>
+  const fbHTML = ok => `<div>${ok?'✅ Верно':'❌ Неверно'}</div><div class="ans">${esc(PRON[t.p])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[t.p])}]</span> — ${esc(V.r[t.p])}</div>
      ${t.m==='gap'?`<div class="it">${esc(t.text.replace('___', ans).replace(/\((\w+)\)\s*/g,''))}</div><div class="muted">${esc(t.ru)}</div>`:`<div class="muted">${esc(t.v)} — ${esc(V.ru)}</div>`}`;
   const finish = ok => { if(ok) SES.stats.ok++; else SES.stats.bad++; const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
     el.innerHTML = fbHTML(ok) + `<div style="margin-top:6px"><button class="spk" data-say="${esc(t.m==='gap' ? t.text.replace('___',ans).replace(/\((\w+)\)\s*/g,'') : ans)}">🔊 послушать</button></div><button class="pri next" id="nx">Дальше</button>`;
@@ -3930,14 +3924,14 @@ function vdStep(){
     const opts = shuffle([ans, ...others]);
     const q = t.m==='gap'
       ? `<div class="q"><div class="mid it">${esc(t.text).replace('___','<b style="color:var(--accent)">___</b>')}</div><div class="note">${esc(t.ru)}</div></div>`
-      : `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])}</span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)} — какая форма?</div></div>`;
-    body.innerHTML = head + q + `<div class="opts">${opts.map((f,k)=>`<button class="opt" data-f="${esc(f)}"><span class="k">${k+1}</span><span class="it">${esc(f)}</span></button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
+      : `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])} <small>(${esc(PRON_RU[t.p])})</small></span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)} — какая форма?${VD.ru?` Нужно сказать «${esc(V.r[t.p])}».`:''}</div></div>`;
+    body.innerHTML = head + q + `<div class="opts">${opts.map((f,k)=>`<button class="opt" data-f="${esc(f)}"><span class="k">${k+1}</span><span class="it">${esc(f)}</span>${VD.ru?`<span class="ru">${esc(V.r[V.f.indexOf(f)])}</span>`:''}</button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
     $$('.opt').forEach(b=> b.onclick=()=>{ if(SES.answered) return; SES.answered=true; const ok = b.dataset.f===ans;
       $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.f===ans) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); }); finish(ok); });
     SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
     return;
   }
-  body.innerHTML = head + `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])}</span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)} — напиши форму</div></div>
+  body.innerHTML = head + `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])} <small>(${esc(PRON_RU[t.p])})</small></span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)} — напиши форму${VD.ru?`: «${esc(V.r[t.p])}»`:''}</div></div>
     <div class="typing"><input id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" lang="it" placeholder="…"><button class="sec" id="chk" style="width:auto">Проверить</button></div><div class="kbd">Enter — проверить</div>`;
   const inp=$('#ti'); inp.focus();
   const check=()=>{ if(SES.answered) return; SES.answered=true; const v=norm(inp.value); const ok = v===norm(ans) || stripAcc(v)===stripAcc(norm(ans)); inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor= ok?'var(--ok)':'var(--bad)'; finish(ok); };
@@ -3997,6 +3991,7 @@ if (location.hash.startsWith('#shot=')){
   if (['phr','num','ref','set','all'].includes(what)) showPane('p-'+what);
   else if (what==='numtable'){ showPane('p-num'); $$('#numSeg button')[1].click(); }
   else if (what==='refview'){ showPane('p-ref'); openTopic('g5', true); }
+  else if (what.startsWith('topic:')){ showPane('p-ref'); openTopic(what.slice(6), true); }
   else if (what==='nd'){ ND.modes=['n2w']; ND.range='100'; startNumDrill(); }
   else if (what==='vd'){ VD.modes=['gap']; startVerbDrill(); }
   else if (what==='dict'){ startSession(['fr']); renderDictation(CARDS.find(x=>x.deck==='fr' && /\s/.test(x.it))); }
