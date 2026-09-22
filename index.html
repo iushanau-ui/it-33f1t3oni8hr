@@ -509,6 +509,32 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
   <!-- Источник тем: карточки ниже скрыты, JS показывает по одной -->
   <div id="refSrc" class="hidden">
 
+  <div class="card" id="g8" data-sec="Разговор">
+    <h2><span class="no">Я</span>Рассказ о себе — десять фраз без подготовки</h2>
+    <div class="lead">То, о чём тебя спросит любой итальянец в первые две минуты. Цель — говорить это не думая. Каждая фраза — ответ на конкретный вопрос.</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Вопрос</th><th>Мой ответ</th><th>Читается</th><th>Перевод</th></tr></thead>
+      <tbody>
+        <tr><td class="ex"><i>Come ti chiami?</i></td><td class="ex"><b>Ciao! Mi chiamo Ilia.</b></td><td class="tr">[чАо! ми кьЯмо илИя]</td><td class="why">Привет! Меня зовут Илья.</td></tr>
+        <tr><td class="ex"><i>Di dove sei?</i></td><td class="ex"><b>Sono bielorusso, sono di Minsk.</b></td><td class="tr">[сОно бьелорУссо, сОно ди мИнск]</td><td class="why">Я белорус, я из Минска.</td></tr>
+        <tr><td class="ex"><i>Dove abiti?</i></td><td class="ex"><b>Abito a Minsk, in corso Dzeržinskij.</b></td><td class="tr">[Абито а мИнск, ин кОрсо дзержИнский]</td><td class="why">Живу в Минске, на проспекте Дзержинского.</td></tr>
+        <tr><td class="ex"><i>Quanti anni hai?</i></td><td class="ex"><b>Ho … anni.</b></td><td class="tr">[о … Анни]</td><td class="why">Мне … лет. Число — из таблицы чисел, например <span class="it">trentadue</span>.</td></tr>
+        <tr><td class="ex"><i>Che lingue parli?</i></td><td class="ex"><b>Parlo russo e un po' di italiano.</b></td><td class="tr">[пАрло рУссо э ун пО ди итальЯно]</td><td class="why">Говорю по-русски и немного по-итальянски.</td></tr>
+        <tr><td class="ex"><i>Perché studi l'italiano?</i></td><td class="ex"><b>Studio l'italiano perché voglio studiare e abitare in Italia, in Sicilia.</b></td><td class="tr">[стУдьо литальЯно пэркЭ вОльо студьЯрэ э абитАрэ ин итАлья, ин сичИлья]</td><td class="why">Учу итальянский, потому что хочу учиться и жить в Италии, на Сицилии.</td></tr>
+        <tr><td class="ex"><i>Ami l'Italia?</i></td><td class="ex"><b>Sì, amo l'Italia e l'arte italiana.</b></td><td class="tr">[си, Амо литАлья э лАртэ итальЯна]</td><td class="why">Да, люблю Италию и итальянское искусство.</td></tr>
+        <tr><td class="ex"><i>Hai una ragazza?</i></td><td class="ex"><b>Sì, la mia ragazza è un'artista.</b></td><td class="tr">[си, ла мИа рагАцца э унартИста]</td><td class="why">Да, моя девушка — художница.</td></tr>
+        <tr><td class="ex"><i>Studi o lavori?</i></td><td class="ex"><b>Lavoro e studio: ho molto da fare tutta la settimana.</b></td><td class="tr">[лавОро э стУдьо: о мОльто да фАрэ тУтта ла сэттимАна]</td><td class="why">Работаю и учусь: много дел всю неделю.</td></tr>
+        <tr><td class="ex"><i>Sei pronto?</i></td><td class="ex"><b>Sì, sono pronto per studiare! Piacere di conoscerti!</b></td><td class="tr">[си, сОно прОнто пэр студьЯрэ! пьячЭрэ ди конОшэрти]</td><td class="why">Да, я готов учиться! Рад познакомиться!</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box key"><span class="ttl">Как учить</span>
+      Раздел «О себе» во «Фразах» — это те же десять реплик с озвучкой. Порядок: 1) прочитать вслух три раза с транскрипцией; 2) скрыть транскрипцию, прочитать; 3) скрыть итальянское, сказать по русскому переводу; 4) прогнать в занятии в режиме «Диктант».
+      Когда десять фраз идут подряд без запинки, весь рассказ занимает 25 секунд.</div>
+    <div class="box"><span class="ttl">Про Сицилию и предлоги</span>
+      Города — <b>a</b>: <span class="it">a Minsk, a Catania, a Roma</span>. Страны и регионы, острова — <b>in</b>: <span class="it">in Italia, in Sicilia, in Bielorussia</span>.
+      Поэтому «жить в Италии, на Сицилии» — <span class="it">abitare in Italia, in Sicilia</span>, а «учиться в Катании» — <span class="it">studiare a Catania</span>.</div>
+  </div>
+
   <div class="card" id="g5" data-sec="Грамматика">
     <h2><span class="no">ГЛАГОЛ</span>essere и avere — как устроены</h2>
     <div class="lead">Два главных глагола языка. На них держится половина фраз уровня A1, и оба — неправильные, поэтому формы заучиваются, а не выводятся.</div>
@@ -2428,6 +2454,18 @@ const LEX = [
 ["fr","D'accordo? — D'accordo!","даккОрдо — даккОрдо","Согласен? — Согласен!",""],
 ["fr","Sai…? — Lo so. / Non lo so.","сАй — ло сО / нон ло сО","Знаешь…? — Знаю. / Не знаю.","lo = «это»"],
 
+["fr","#","","О себе"],
+["fr","Ciao! Mi chiamo Ilia.","чАо! ми кьЯмо илИя","Привет! Меня зовут Илья.","ответ на Come ti chiami?"],
+["fr","Sono bielorusso, sono di Minsk.","сОно бьелорУссо, сОно ди мИнск","Я белорус, я из Минска.","ответ на Di dove sei?"],
+["fr","Abito a Minsk, in corso Dzeržinskij.","Абито а мИнск, ин кОрсо дзержИнский","Я живу в Минске, на проспекте Дзержинского.","ответ на Dove abiti?"],
+["fr","Parlo russo e un po' di italiano.","пАрло рУссо э ун пО ди итальЯно","Я говорю по-русски и немного по-итальянски.","ответ на Che lingue parli?"],
+["fr","Studio l'italiano perché voglio studiare e abitare in Italia, in Sicilia.","стУдьо литальЯно пэркЭ вОльо студьЯрэ э абитАрэ ин итАлья, ин сичИлья","Я учу итальянский, потому что хочу учиться и жить в Италии, на Сицилии.","домашка 17.09; voglio + два глагола"],
+["fr","Amo l'Italia e l'arte italiana.","Амо литАлья э лАртэ итальЯна","Я люблю Италию и итальянское искусство.",""],
+["fr","La mia ragazza è un'artista.","ла мИа рагАцца э унартИста","Моя девушка — художница.","un'artista — артикль una с апострофом перед гласной"],
+["fr","Lavoro e studio: ho molto da fare tutta la settimana.","лавОро э стУдьо: о мОльто да фАрэ тУтта ла сэттимАна","Я работаю и учусь: у меня много дел всю неделю.",""],
+["fr","Sono pronto per studiare!","сОно прОнто пэр студьЯрэ","Я готов учиться!",""],
+["fr","Piacere di conoscerti!","пьячЭрэ ди конОшэрти","Рад познакомиться с тобой!","conoscere — знать, знакомиться (новое слово)"],
+
 ["fr","#","","Состояния"],
 ["fr","Sono felice","сОно фэлИчэ","Я счастлив(а)",""],
 ["fr","Sono contento / contenta","сОно контЭнто","Я доволен / довольна, рад(а)",""],
@@ -3206,7 +3244,7 @@ function applyLook(){
 /* ---------------- главная ---------------- */
 const MODES = [
   ['mix','Смешанный'],['flash','Карточки'],['mcru','Выбор перевода'],['mcit','Выбор слова'],
-  ['trans','Транскрипция'],['type','Написание'],['listen','На слух']
+  ['trans','Транскрипция'],['type','Написание'],['listen','На слух'],['dict','Диктант']
 ];
 const MODE_NAME = Object.fromEntries(MODES);
 function activeCards(){ const on = new Set(S().decks); return CARDS.filter(c=> on.has(c.deck) && !(P(c.key)||{}).sus); }
@@ -3286,17 +3324,18 @@ function progressUI(){
   $('#sCnt').textContent = `${SES.i} / ${total}`;
 }
 function applicableModes(c, isNew){
-  let m = S().modes.slice();
+  let m = ['flash','mcru','mcit','trans','type','listen','dict'];
   if (!c.tr || c.deck==='alfa') m = m.filter(x=>x!=='trans');
+  if (!canListen() || c.deck!=='fr' || !/\s/.test(c.it) || c.it.length>75 || /[…\/]/.test(c.it)) m = m.filter(x=>x!=='dict');
   if (c.deck==='alfa' || c.it.length>26 || /[…—]/.test(c.it)) m = m.filter(x=>x!=='type');
   if (!canListen() || c.deck==='alfa') m = m.filter(x=>x!=='listen');
-  if (isNew) m = m.filter(x=>x!=='type' && x!=='listen');   // первое тестирование — узнавание, не воспроизведение
+  if (isNew) m = m.filter(x=>x!=='type' && x!=='listen' && x!=='dict');   // первое тестирование — узнавание, не воспроизведение
   if (m.length===0) m=['flash'];
   return m;
 }
 function chooseMode(c, isNew){
   const ap = applicableModes(c, isNew);
-  if (S().mode!=='mix') return ap.includes(S().mode) ? S().mode : (S().mode==='listen'||S().mode==='trans'||S().mode==='type' ? 'flash' : ap[0]);
+  if (S().mode!=='mix') return ap.includes(S().mode) ? S().mode : (['listen','trans','type','dict'].includes(S().mode) ? 'flash' : ap[0]);
   return pick(ap);
 }
 function cardHTML(c, {showIt=true, showTr=true, showRu=true, big=true}={}){
@@ -3351,7 +3390,7 @@ function renderStep(){
   }
   const mode = chooseMode(c, isNew);
   item.mode = mode;
-  ({flash:renderFlash, mcru:renderMC, mcit:renderMC, trans:renderTrans, type:renderType, listen:renderListen})[mode](c, mode);
+  ({flash:renderFlash, mcru:renderMC, mcit:renderMC, trans:renderTrans, type:renderType, listen:renderListen, dict:renderDictation})[mode](c, mode);
 }
 function head(mode, c){ return `<div class="mode"><span>${MODE_NAME[mode]}</span><span class="tag">${esc(DECK[c.deck].name)}</span></div>`; }
 
@@ -3541,6 +3580,29 @@ function renderListen(c){
     answered(c, ok, ok?2:0); feedback(c, ok);
   });
   SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+}
+/* --- режим: диктант (фраза на слух → набрать целиком) --- */
+function lev(a,b){ const m=a.length,n=b.length; if(!m) return n; if(!n) return m; let prev=[...Array(n+1).keys()], cur=[];
+  for(let i=1;i<=m;i++){ cur=[i]; for(let j=1;j<=n;j++) cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+(a[i-1]===b[j-1]?0:1)); prev=cur; } return prev[n]; }
+const dictNorm = s => stripAcc(norm(s)).replace(/['’]/g,"'").replace(/\s+/g,' ').trim();
+function renderDictation(c){
+  const body = $('#sBody');
+  body.innerHTML = head('dict',c) + `<div class="q"><div class="big">🎧</div><div class="note">Послушай фразу и напиши её целиком по-итальянски</div><button class="spk" data-say="${esc(ttsText(c))}">🔊 ещё раз</button></div>
+    <div class="typing"><input id="ti" autocomplete="off" autocapitalize="sentences" spellcheck="false" lang="it" placeholder="…"></div>
+    <button class="sec" id="chk" style="margin-top:8px">Проверить</button>
+    <div class="kbd">Enter — проверить. Знаки препинания и ударения не считаются; одна-две опечатки — «с трудом».</div>`;
+  wireSpeak(body); setTimeout(()=> speak(ttsText(c)), 150);
+  const inp=$('#ti'); inp.focus();
+  const check=()=>{ if(SES.answered) return; SES.answered=true;
+    const a=dictNorm(inp.value), b=dictNorm(c.it), d=lev(a,b);
+    const g = d===0 ? 3 : (d<=2 ? 1 : 0); const ok = g>0;
+    inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor = ok?'var(--ok)':'var(--bad)';
+    answered(c, ok, ok?(d===0?2:1):0); feedback(c, ok);
+    if (ok && d>0) $('.fb div').textContent = '✅ Почти: '+d+(d===1?' опечатка':' опечатки')+', сравни с образцом';
+    if (!ok && a) $('.fb').insertAdjacentHTML('afterbegin', `<div class="muted" style="font-size:13px">Ты написал: <span class="it">${esc(inp.value)}</span></div>`);
+  };
+  $('#chk').onclick=check; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); if(!SES.answered) check(); else $('#nx')?.click(); } };
+  SES.keys = k=>{ if (k==='Enter' && SES.answered) $('#nx')?.click(); };
 }
 document.addEventListener('keydown', e=>{
   if (!SES) return;
@@ -3937,6 +3999,7 @@ if (location.hash.startsWith('#shot=')){
   else if (what==='refview'){ showPane('p-ref'); openTopic('g5', true); }
   else if (what==='nd'){ ND.modes=['n2w']; ND.range='100'; startNumDrill(); }
   else if (what==='vd'){ VD.modes=['gap']; startVerbDrill(); }
+  else if (what==='dict'){ startSession(['fr']); renderDictation(CARDS.find(x=>x.deck==='fr' && /\s/.test(x.it))); }
   else {
     ST.set.decks = DECKS.map(d=>d.id); ST.set.tts=true; startSession();
     const c = CARDS.find(x=>norm(x.it)==='sciarpa') || CARDS[0];
@@ -3982,9 +4045,9 @@ if (location.hash.startsWith('#selftest')){
     errs.push('stuck at step '+step+' mode='+mode); break;
   }
   // принудительно проверить каждый режим на 3 карточках
-  ['flash','mcru','mcit','trans','type'].forEach(m=>{
-    ST.set.mode=m; const c = CARDS[Math.floor(Math.random()*200)];
-    try{ ({flash:renderFlash, mcru:renderMC, mcit:renderMC, trans:renderTrans, type:renderType})[m](c, m); seenModes[m]=(seenModes[m]||0)+1; }
+  ['flash','mcru','mcit','trans','type','dict'].forEach(m=>{
+    ST.set.mode=m; const c = m==='dict' ? CARDS.find(x=>x.deck==='fr' && /\s/.test(x.it)) : CARDS[Math.floor(Math.random()*200)];
+    try{ ({flash:renderFlash, mcru:renderMC, mcit:renderMC, trans:renderTrans, type:renderType, dict:renderDictation})[m](c, m); seenModes[m]=(seenModes[m]||0)+1; }
     catch(e){ errs.push('render '+m+': '+e.message); }
   });
   log.push('session wide: '+wide().join(', '));
