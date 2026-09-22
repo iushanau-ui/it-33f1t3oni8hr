@@ -318,6 +318,22 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
   <div class="muted" id="startHint" style="font-size:13px;text-align:center;margin-bottom:8px"></div>
 
   <div class="card">
+    <h2>Тренажёр глаголов</h2>
+    <div class="lead">Быстрая серия на формы: местоимение + глагол → форма, или предложение с пропуском. Отдельно от карточек, результат сразу.</div>
+    <div class="chips" id="vdVerbs">
+      <button class="chip on" data-v="all">все глаголы</button>
+      <button class="chip" data-v="are">только -are</button>
+      <button class="chip" data-v="ea">essere и avere</button>
+    </div>
+    <div class="chips" id="vdModes">
+      <button class="chip on" data-m="pick">выбрать форму</button>
+      <button class="chip on" data-m="type">написать форму</button>
+      <button class="chip on" data-m="gap">предложение с пропуском</button>
+    </div>
+    <button class="sec" id="vdStart">▶ Серия из 20 заданий</button>
+  </div>
+
+  <div class="card">
     <h2>Режим</h2>
     <div class="chips" id="modeChips"></div>
   </div>
@@ -610,6 +626,97 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
       Потом «Фразы» → раздел «Урок 15.09» вслух.</div>
   </div>
 
+  <div class="card" id="g7" data-sec="Грамматика">
+    <h2><span class="no">-ARE</span>Правильные глаголы на -are: parlare, studiare, amare, abitare</h2>
+    <div class="lead">Урок 17.09. Первая большая группа глаголов, где формы не заучиваются, а собираются по одному правилу. Выучил одно окончание — знаешь тысячи глаголов.</div>
+
+    <h3>Как собирается форма</h3>
+    <div class="box key"><span class="ttl">Основа + окончание</span>
+      Отрезаешь <b>-are</b> от инфинитива — остаётся основа: <span class="it">parl-</span>, <span class="it">studi-</span>, <span class="it">am-</span>, <span class="it">abit-</span>.
+      Прибавляешь окончание лица:
+      <div class="tbl-wrap"><table style="margin-top:8px">
+        <thead><tr><th>Кто</th><th>Окончание</th><th>parl-</th><th>Куда ударение</th></tr></thead>
+        <tbody>
+          <tr><td class="sp">io</td><td class="ex"><b>-o</b></td><td class="ex">parl<b>o</b> <span class="tr">[пАрло]</span></td><td class="why">на основу</td></tr>
+          <tr><td class="sp">tu</td><td class="ex"><b>-i</b></td><td class="ex">parl<b>i</b> <span class="tr">[пАрли]</span></td><td class="why">на основу</td></tr>
+          <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>-a</b></td><td class="ex">parl<b>a</b> <span class="tr">[пАрла]</span></td><td class="why">на основу</td></tr>
+          <tr><td class="sp">noi</td><td class="ex"><b>-iamo</b></td><td class="ex">parl<b>iamo</b> <span class="tr">[парльЯмо]</span></td><td class="why">на окончание -iAmo</td></tr>
+          <tr><td class="sp">voi</td><td class="ex"><b>-ate</b></td><td class="ex">parl<b>ate</b> <span class="tr">[парлАтэ]</span></td><td class="why">на окончание -Ate</td></tr>
+          <tr><td class="sp">loro</td><td class="ex"><b>-ano</b></td><td class="ex">parl<b>ano</b> <span class="tr">[пАрлано]</span></td><td class="why">на основу — как у io, не на -ano!</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="box"><span class="ttl">Запомнить ритмом</span>
+      Четыре формы «короткие» с ударением на основе: <span class="it">pArlo · pArli · pArla · pArlano</span>. Две формы «длинные» с ударением на окончании: <span class="it">parliAmo · parlAte</span>.
+      Самая частая ошибка русских — сказать [парлАно] по аналогии с noi/voi. Правильно [пАрлано].</div>
+
+    <h3>Четыре глагола урока</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Кто</th><th>parlare<br><i>говорить</i></th><th>studiare<br><i>учить(ся)</i></th><th>amare<br><i>любить</i></th><th>abitare<br><i>жить</i></th></tr></thead>
+      <tbody>
+        <tr><td class="sp">io</td><td class="ex">parlo <span class="tr">[пАрло]</span></td><td class="ex">studio <span class="tr">[стУдьо]</span></td><td class="ex">amo <span class="tr">[Амо]</span></td><td class="ex">abito <span class="tr">[Абито]</span></td></tr>
+        <tr><td class="sp">tu</td><td class="ex">parli <span class="tr">[пАрли]</span></td><td class="ex">studi <span class="tr">[стУди]</span></td><td class="ex">ami <span class="tr">[Ами]</span></td><td class="ex">abiti <span class="tr">[Абити]</span></td></tr>
+        <tr><td class="sp">lui / lei / Lei</td><td class="ex">parla <span class="tr">[пАрла]</span></td><td class="ex">studia <span class="tr">[стУдьа]</span></td><td class="ex">ama <span class="tr">[Ама]</span></td><td class="ex">abita <span class="tr">[Абита]</span></td></tr>
+        <tr><td class="sp">noi</td><td class="ex">parliamo <span class="tr">[парльЯмо]</span></td><td class="ex">studiamo <span class="tr">[студьЯмо]</span></td><td class="ex">amiamo <span class="tr">[амьЯмо]</span></td><td class="ex">abitiamo <span class="tr">[абитьЯмо]</span></td></tr>
+        <tr><td class="sp">voi</td><td class="ex">parlate <span class="tr">[парлАтэ]</span></td><td class="ex">studiate <span class="tr">[студьЯтэ]</span></td><td class="ex">amate <span class="tr">[амАтэ]</span></td><td class="ex">abitate <span class="tr">[абитАтэ]</span></td></tr>
+        <tr><td class="sp">loro</td><td class="ex">parlano <span class="tr">[пАрлано]</span></td><td class="ex">studiano <span class="tr">[стУдьано]</span></td><td class="ex">amano <span class="tr">[Амано]</span></td><td class="ex">abitano <span class="tr">[Абитано]</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Три орфографические мелочи</h3>
+    <div class="box exc">
+      <p><b>1. Основа на -i (studiare, mangiare):</b> в формах tu и noi две i сливаются в одну: <span class="it">studi</span> (не studii), <span class="it">studiamo</span>; <span class="it">mangi, mangiamo</span>.</p>
+      <p><b>2. Основа на -g / -c (pagare, cercare):</b> перед -i и -iamo вставляют <b>h</b>, чтобы звук остался твёрдым: <span class="it">paghi</span> [пАги], <span class="it">paghiamo</span>; <span class="it">cerchi, cerchiamo</span>. Без h читалось бы [пАджи].</p>
+      <p><b>3. Отрицание и вопрос — как у essere/avere:</b> <span class="it">Non parlo tedesco. Parli tedesco?</span> — порядок слов тот же, только non перед глаголом или интонация вверх.</p>
+    </div>
+
+    <h3>Ещё четыре глагола с листа — та же схема</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Глагол</th><th>io</th><th>tu</th><th>lui / lei</th><th>noi</th><th>voi</th><th>loro</th></tr></thead>
+      <tbody>
+        <tr><td class="ex"><b>lavorare</b> <i>работать</i></td><td class="ex">lavoro</td><td class="ex">lavori</td><td class="ex">lavora</td><td class="ex">lavoriamo</td><td class="ex">lavorate</td><td class="ex">lavorano</td></tr>
+        <tr><td class="ex"><b>ascoltare</b> <i>слушать</i></td><td class="ex">ascolto</td><td class="ex">ascolti</td><td class="ex">ascolta</td><td class="ex">ascoltiamo</td><td class="ex">ascoltate</td><td class="ex">ascoltano</td></tr>
+        <tr><td class="ex"><b>mangiare</b> <i>есть</i></td><td class="ex">mangio</td><td class="ex">mangi</td><td class="ex">mangia</td><td class="ex">mangiamo</td><td class="ex">mangiate</td><td class="ex">mangiano</td></tr>
+        <tr><td class="ex"><b>pagare</b> <i>платить</i></td><td class="ex">pago</td><td class="ex">pag<b>h</b>i</td><td class="ex">paga</td><td class="ex">pag<b>h</b>iamo</td><td class="ex">pagate</td><td class="ex">pagano</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Что с чем сочетается</h3>
+    <div class="tbl-wrap"><table>
+      <tbody>
+        <tr><td class="sp">parlare + язык</td><td class="ex"><span class="it">Parlo italiano.</span> — без артикля, когда «говорю на языке». С артиклем, когда язык — предмет разговора: <span class="it">Parli il greco?</span> Оба варианта верны.</td></tr>
+        <tr><td class="sp">studiare + предмет</td><td class="ex"><span class="it">Studio l'italiano. Studiano l'arte.</span> — предмет с артиклем</td></tr>
+        <tr><td class="sp">abitare a / in</td><td class="ex"><span class="it">Abito <b>a</b> Minsk</span> (город) · <span class="it">abita <b>in</b> Italia</span> (страна) · <span class="it">in corso Dzeržinskij</span> (улица)</td></tr>
+        <tr><td class="sp">amare + что</td><td class="ex"><span class="it">Amo l'Italia, la musica, il caffè.</span> — с артиклем</td></tr>
+        <tr><td class="sp">perché</td><td class="ex">и «почему», и «потому что»: <span class="it">Perché studi l'italiano? — Perché amo l'Italia.</span></td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Текст урока: Tre studenti</h3>
+    <div class="tbl-wrap"><table>
+      <tbody>
+        <tr><td class="ex">Questo è Juan, un ragazzo spagnolo. <b>Ha</b> 26 anni e <b>studia</b> l'italiano in una scuola di Madrid. Juan <b>è</b> un interprete. <b>Parla</b> spagnolo, inglese e tedesco.</td>
+            <td class="why">Это Хуан, испанский парень. Ему 26 лет, он учит итальянский в школе в Мадриде. Хуан переводчик. Говорит по-испански, по-английски и по-немецки.</td></tr>
+        <tr><td class="ex">Questa è Katy, una ragazza americana. <b>Ha</b> 31 anni. Katy <b>è</b> di Boston ma <b>abita</b> in Italia, a Firenze. <b>Studia</b> l'italiano perché <b>ama</b> l'Italia e l'arte italiana.</td>
+            <td class="why">Это Кэти, американская девушка. Ей 31 год. Кэти из Бостона, но живёт в Италии, во Флоренции. Учит итальянский, потому что любит Италию и итальянское искусство.</td></tr>
+        <tr><td class="ex">Questa è Mei, una signora cinese. Mei <b>ha</b> 53 anni e <b>abita</b> a Shangai. <b>Studia</b> l'italiano perché <b>è</b> una cantante d'opera. Il cane di Mei <b>si chiama</b> Figaro e <b>ha</b> 6 anni.</td>
+            <td class="why">Это Мэй, китайская синьора. Мэй 53 года, она живёт в Шанхае. Учит итальянский, потому что она оперная певица. Собаку Мэй зовут Фигаро, ей 6 лет.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box"><span class="ttl">Шесть вопросов к тексту — и к любому человеку</span>
+      <span class="it">Come si chiama? · Quanti anni ha? · Di dov'è? · Dove abita? · Perché studia l'italiano? · Che lingue parla?</span><br>
+      На «ты»: <span class="it">Come ti chiami? · Quanti anni hai? · Di dove sei? · Dove abiti? · Perché studi l'italiano? · Che lingue parli?</span></div>
+
+    <h3>Домашка: «E voi, perché studiate l'italiano?»</h3>
+    <div class="box key"><span class="ttl">Что написать после «Studio l'italiano perché…»</span>
+      Нужно закончить предложение «Я учу итальянский, потому что…». Варианты из уже известных слов, выбери или соедини:<br>
+      <span class="it">Studio l'italiano perché <b>amo l'Italia e l'arte italiana</b>.</span> — люблю Италию и итальянское искусство (прямо из текста про Кэти).<br>
+      <span class="it">Studio l'italiano perché <b>voglio abitare in Italia</b>.</span> — хочу жить в Италии.<br>
+      <span class="it">Studio l'italiano perché <b>ho voglia di studiare in Italia, a Catania</b>.</span> — хочу учиться в Италии, в Катании.<br>
+      <span class="it">Studio l'italiano perché <b>la mia ragazza e io amiamo l'Italia</b>.</span> — моя девушка и я любим Италию.<br>
+      Полный ответ на две строки: <span class="it">Studio l'italiano perché amo l'Italia e l'arte italiana. Voglio abitare e studiare in Italia, a Catania.</span></div>
+  </div>
+
   <div class="card" id="g6" data-sec="Грамматика">
     <h2><span class="no">L2</span>Артикли il / lo / la / l' — i / gli / le и «мой, твой, Ваш»</h2>
     <div class="lead">С уроков 10.09 и 15.09: <span class="it">la borsa, lo zaino, le matite, gli appunti, gli studi, il lavoro, i tuoi amici, i ragazzi, gli italiani, il mio numero</span>.</div>
@@ -734,6 +841,8 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
     <div class="tbl-wrap"><table>
       <thead><tr><th>В тетради</th><th>Правильно</th><th>Пояснение</th></tr></thead>
       <tbody>
+        <tr><td class="ex">Portpoppo</td><td class="ex"><b>Purtroppo</b></td><td>к сожалению (17.09)</td></tr>
+        <tr><td class="ex">amiricana</td><td class="ex"><b>americana</b></td><td>американка (лист 17.09)</td></tr>
         <tr><td class="ex">Ho paura di buio</td><td class="ex"><b>Ho paura del buio</b></td><td>di + il = del (15.09)</td></tr>
         <tr><td class="ex">Ho febbre</td><td class="ex"><b>Ho la febbre</b></td><td>болезни — с артиклем (15.09)</td></tr>
         <tr><td class="ex">celesto</td><td class="ex"><b>celeste</b></td><td>небесно-голубой; на -e для обоих родов (10.09)</td></tr>
@@ -2175,7 +2284,7 @@ const DATA = [
 const DECKS = [
   {id:"fr",   name:"Фразы для жизни",              prio:1, def:true,  desc:"Приветствия, знакомство, как дела, состояния, разговорные выражения — всё, что уже прошли."},
   {id:"lex",  name:"Слова уроков",                 prio:2, def:true,  desc:"Тетрадь + учебник Nuovo Espresso 1, Lezione 1–2 + домашки."},
-  {id:"gram", name:"Формы глаголов и местоимения", prio:3, def:true,  desc:"essere, avere, chiamarsi, stare; io/tu/lui…; артикли il/lo/la/l — i/gli/le."},
+  {id:"gram", name:"Формы глаголов и местоимения", prio:3, def:true,  desc:"essere, avere, stare, chiamarsi, parlare, studiare, amare, abitare; местоимения; артикли."},
   {id:"num",  name:"Числа 0–100",                  prio:4, def:true,  desc:"0–20, десятки, 100 и составные по правилу. Полная таблица — во вкладке «Числа»."},
   {id:"alfa", name:"Алфавит: названия букв",       prio:5, def:true,  desc:"Чтобы диктовать имя и фамилию по буквам (come si scrive?)."},
   {id:"fon",  name:"Чтение: слова из упражнений",  prio:6, def:true,  desc:"691 слово из фонетических упражнений 1–26. Тренируют правила чтения, много редких слов."},
@@ -2210,6 +2319,7 @@ const LEX = [
 ["fr","Non c'è male","нон чЭ мАлэ","Неплохо","букв. «нет ничего плохого»"],
 ["fr","Sto bene","сто бЭнэ","Я в порядке, мне хорошо","stare — о состоянии"],
 ["fr","Sto male","сто мАлэ","Мне плохо",""],
+["fr","Sto alla grande, ma ho un po' di sonno","сто Алла грАндэ, ма о ун пО ди сОнно","Всё отлично, но немного хочу спать",""],
 
 ["fr","#","","Прощания"],
 ["fr","Arrivederci!","арривэдЭрчи","До свидания!","универсально"],
@@ -2260,76 +2370,17 @@ const LEX = [
 ["fr","Via Garibaldi, 22","вИа гарибАльди вэнтидУэ","улица Гарибальди, 22","адрес: сначала улица, потом номер"],
 ["fr","Però ho anche il cellulare","пэрО о Анкэ иль чэллулАрэ","Но у меня есть и мобильный",""],
 ["fr","Primi contatti","прИми контАтти","Первые контакты, первое знакомство","название Lezione 1"],
+["fr","Ti presento Massimo.","ти прэзЭнто мАссимо","Познакомься, это Массимо.","на «ты»: ti presento"],
+["fr","Le presento la signora Rossi.","лэ прэзЭнто ла синьОра рОсси","Позвольте представить синьору Росси.","на «Вы»: Le presento"],
+["fr","Questo è Massimo, un mio amico.","куЭсто э мАссимо, ун мИо амИко","Это Массимо, мой друг.","un mio amico — один из моих друзей"],
+["fr","Questa è Suzanna, una mia amica.","куЭста э судзАнна, Уна мИа амИка","Это Сюзанна, моя подруга.","questa — про женщину"],
+["fr","Questo ragazzo a sinistra si chiama Massimo.","куЭсто рагАццо а синИстра си кьЯма мАссимо","Этого парня слева зовут Массимо.","a sinistra — слева"],
+["fr","Come si chiama questo ragazzo in centro?","кОмэ си кьЯма куЭсто рагАццо ин чЭнтро","Как зовут этого парня в центре?",""],
+["fr","Questo è Juan, un ragazzo spagnolo.","куЭсто э хуАн, ун рагАццо спаньОло","Это Хуан, испанский парень.","из текста Tre studenti"],
+["fr","Questa è Katy, una ragazza americana.","куЭста э кЭти, Уна рагАцца амэрикАна","Это Кэти, американская девушка.","на листе «amiricana» — правильно americana"],
+["fr","Il cane di Mei si chiama Figaro e ha 6 anni.","иль кАнэ ди мЭй си кьЯма фИгаро э а сЭй Анни","Собаку Мэй зовут Фигаро, ей 6 лет.",""],
 
-["fr","#","","Состояния с essere"],
-["fr","Sono felice","сОно фэлИчэ","Я счастлив(а)",""],
-["fr","Sono contento / contenta","сОно контЭнто","Я доволен / довольна, рад(а)",""],
-["fr","Sono lieto / lieta","сОно льЭто","Я рад / рада","более элегантно"],
-["fr","Sono stanco / stanca","сОно стАнко","Я устал / устала",""],
-["fr","Non sono stanco","нон сОно стАнко","Я не устал","отрицание: non перед глаголом"],
-["fr","Sono triste","сОно трИстэ","Мне грустно",""],
-["fr","Sono arrabbiato / arrabbiata","сОно арраббьЯто","Я злой / злая, я злюсь","в тетради arabbiato — правильно с rr и bb"],
-["fr","Sono preoccupato / preoccupata","сОно прэоккупАто","Я обеспокоен(а), волнуюсь",""],
-["fr","Sono stupito / stupita","сОно ступИто","Я удивлён / удивлена",""],
-["fr","Sono annoiato / annoiata","сОно анноЯто","Мне скучно",""],
-["fr","Sono innamorato / innamorata","сОно иннаморАто","Я влюблён / влюблена",""],
-["fr","Sono ubriaco / ubriaca","сОно убрьЯко","Я пьян(а)",""],
-["fr","Sono malato / malata","сОно малАто","Я болен / больна",""],
-["fr","Non sono malato","нон сОно малАто","Я не болен",""],
-["fr","Sono pieno / piena di energia","сОно пьЭно ди энэрджИа","Я полон / полна энергии",""],
-["fr","Non sono pieno di energia","нон сОно пьЭно ди энэрджИа","Я не полон энергии",""],
-["fr","Io invece sono felice","Ио инвЭчэ сОно фэлИчэ","А я, наоборот, счастлив","invece — противопоставление"],
-["fr","Anch'io","анкИо","Я тоже",""],
-["fr","Anche tu sei…","Анкэ ту сЭй","Ты тоже…",""],
-["fr","È assente","э ассЭнтэ","Он(а) отсутствует",""],
-
-["fr","#","","Состояния с avere"],
-["fr","Ho fame","о фАмэ","Я голоден","букв. «имею голод» — с avere, не с essere!"],
-["fr","Ho un po' di fame","о ун пО ди фАмэ","Я немного голоден","в тетради «un po' fame» — нужно di"],
-["fr","Ho sete","о сЭтэ","Я хочу пить",""],
-["fr","Ho sonno","о сОнно","Я хочу спать",""],
-["fr","Ho freddo","о фрЭддо","Мне холодно",""],
-["fr","Ho paura","о паУра","Мне страшно",""],
-["fr","Ho fretta","о фрЭтта","Я спешу",""],
-["fr","Ho la febbre","о ла фЭббрэ","У меня температура",""],
-["fr","Ho il raffreddore","о иль раффрэддОрэ","У меня простуда, насморк",""],
-["fr","Ho dei soldi","о дЭй сОльди","У меня есть деньги",""],
-
-["fr","#","","Разговорные"],
-["fr","In bocca al lupo!","ин бОкка аль лУпо","Ни пуха ни пера!","букв. «в пасть волку»"],
-["fr","Crepi!","крЭпи","К чёрту! (ответ на in bocca al lupo)","букв. «пусть сдохнет (волк)»"],
-["fr","In culo alla balena!","ин кУло Алла балЭна","Ни пуха! (грубоватый вариант)","букв. «в зад киту»; в тетради записано неверно"],
-["fr","Che peccato!","кэ пэккАто","Как жаль!",""],
-["fr","Che tristezza!","кэ тристЭцца","Какая грусть! / Как грустно!",""],
-["fr","Che cosa vuoi?","кэ кОза вуОй","Что ты хочешь?","che cosa = cosa = che — все три значат «что»"],
-["fr","Chissà","киссА","Кто знает…","chi + sa"],
-["fr","Tutto a posto","тУтто а пОсто","Всё в порядке",""],
-["fr","A proposito","а пропОзито","Кстати",""],
-["fr","Mi sento a mio agio","ми сЭнто а мИо Аджо","Мне комфортно, я в своей тарелке",""],
-["fr","Beato te!","бэАто тЭ","Повезло тебе! / Счастливчик!",""],
-["fr","Buone notizie","буОнэ нотИцьэ","Хорошие новости",""],
-["fr","Benvenuto / Benvenuta!","бэнвэнУто","Добро пожаловать!",""],
-["fr","Una tazza di caffè","Уна тАцца ди каффЭ","Чашка кофе",""],
-["fr","Voglio mangiare","вОльо манджАрэ","Я хочу есть",""],
-["fr","Ho perso…","о пЭрсо","Я потерял(а)…",""],
-["fr","Pronto!","прОнто","Алло! (по телефону)","также «готов(о)»"],
-["fr","Può spiegare?","пуО спьегАрэ","Можете объяснить?",""],
-["fr","Vuole…?","вуОлэ","Хотите…?","вежливое «Вы»"],
-["fr","Dove sono?","дОвэ сОно","Где они? / Где они находятся?","в тетради «Dove sone» — правильно sono"],
-["fr","Sono in aeroporto","сОно ин аэропОрто","Они в аэропорту / Я в аэропорту",""],
-["fr","Piove","пьОвэ","Идёт дождь",""],
-["fr","Tuona","туОна","Гремит гром",""],
-["fr","Lampeggia","лампЭджджа","Сверкает молния","в тетради «sempre — сверкает», но sempre = всегда"],
-["fr","Non è facile!","нон э фАчилэ","Это нелегко!","урок 10.09"],
-["fr","Davvero?","даввЭро","Правда? / Да ладно?","удивление; урок 10.09"],
-["fr","Ma dai!","ма дАй","Да ладно! / Ну брось!","недоверие, удивление; урок 10.09"],
-["fr","Sto alla grande","сто Алла грАндэ","У меня всё отлично","ответ на come stai; урок 10.09"],
-["fr","Sono pronto per studiare","сОно прОнто пэр студьЯрэ","Я готов учиться","pronto per + глагол; урок 10.09"],
-["fr","Sono pronto per il lavoro","сОно прОнто пэр иль лавОро","Я готов к работе","pronto per + существительное с артиклем"],
-["fr","Sono pronto per gli studi","сОно прОнто пэр льи стУди","Я готов к учёбе","gli — артикль мн. ч. перед s+согласная"],
-["fr","Ho una domanda","о Уна домАнда","У меня вопрос","на уроке; урок 10.09"],
-
-["fr","#","","Вопросы для общения — и как на них ответить"],
+["fr","#","","Вопрос — ответ"],
 ["fr","Come ti chiami? — Mi chiamo Ilia.","кОмэ ти кьЯми — ми кьЯмо илИя","Как тебя зовут? — Меня зовут Илья.",""],
 ["fr","Come si chiama? — Mi chiamo Ilia Ushanau.","кОмэ си кьЯма — ми кьЯмо илИя ушАнау","Как Вас зовут? — Меня зовут Илья Ушанов.","на «Вы»"],
 ["fr","Di dove sei? — Sono di Minsk, sono bielorusso.","ди дОвэ сЭй — сОно ди мИнск, сОно бьелорУссо","Откуда ты? — Я из Минска, я белорус.","bielorusso / bielorussa"],
@@ -2365,32 +2416,173 @@ const LEX = [
 ["fr","Avete fame? — Sì, abbiamo fame.","авЭтэ фАмэ — сИ, аббьЯмо фАмэ","Вы голодны? — Да, мы голодны.","voi → avete, noi → abbiamo"],
 ["fr","Chi sono loro? — Sono i ragazzi francesi.","ки сОно лОро — сОно и рагАцци франчЭзи","Кто они? — Это французские ребята.",""],
 ["fr","Dove sono i tuoi amici? — Sono a Roma.","дОвэ сОно и туОй амИчи — сОно а рОма","Где твои друзья? — Они в Риме.","a + город = «в городе»"],
+["fr","Dove abiti? — Abito a Minsk.","дОвэ Абити — Абито а мИнск","Где ты живёшь? — Я живу в Минске.","abitare a + город"],
+["fr","Dove abita? — Abita a Firenze.","дОвэ Абита — Абита а фирЭнцэ","Где он/она живёт? — Во Флоренции.","и вопрос на «Вы»"],
+["fr","Che lingue parli? — Parlo russo e un po' di italiano.","кэ лИнгуэ пАрли — пАрло рУссо э ун пО ди итальЯно","На каких языках ты говоришь? — На русском и немного по-итальянски.",""],
+["fr","Parli il greco? — No, non parlo il greco.","пАрли иль грЭко — но, нон пАрло иль грЭко","Ты говоришь по-гречески? — Нет.","язык с артиклем: il greco"],
+["fr","Perché studi l'italiano? — Perché amo l'Italia.","пэркЭ стУди литальЯно — пэркЭ Амо литАлья","Почему ты учишь итальянский? — Потому что люблю Италию.","perché = и «почему», и «потому что»"],
+["fr","Studi o lavori? — Studio e lavoro.","стУди о лавОри — стУдьо э лавОро","Ты учишься или работаешь? — И учусь, и работаю.",""],
+["fr","Sei di qui? — No, non sono di qui.","сЭй ди куИ — но, нон сОно ди куИ","Ты отсюда? — Нет, я не отсюда.",""],
+["fr","Sei ancora studentessa? — Sì, ancora.","сЭй анкОра студэнтЭсса — сИ, анкОра","Ты ещё студентка? — Да, ещё.","ancora — ещё"],
+["fr","Quanti anni ha Figaro? — Ha 6 anni.","куАнти Анни а фИгаро — а сЭй Анни","Сколько лет Фигаро? — Шесть.",""],
+["fr","D'accordo? — D'accordo!","даккОрдо — даккОрдо","Согласен? — Согласен!",""],
+["fr","Sai…? — Lo so. / Non lo so.","сАй — ло сО / нон ло сО","Знаешь…? — Знаю. / Не знаю.","lo = «это»"],
 
-["fr","#","","Урок 15.09 — ощущения, планы, мнение"],
+["fr","#","","Состояния"],
+["fr","Sono felice","сОно фэлИчэ","Я счастлив(а)",""],
+["fr","Sono contento / contenta","сОно контЭнто","Я доволен / довольна, рад(а)",""],
+["fr","Sono lieto / lieta","сОно льЭто","Я рад / рада","более элегантно"],
+["fr","Sono stanco / stanca","сОно стАнко","Я устал / устала",""],
+["fr","Non sono stanco","нон сОно стАнко","Я не устал","отрицание: non перед глаголом"],
+["fr","Sono triste","сОно трИстэ","Мне грустно",""],
+["fr","Sono arrabbiato / arrabbiata","сОно арраббьЯто","Я злой / злая, я злюсь","в тетради arabbiato — правильно с rr и bb"],
+["fr","Sono preoccupato / preoccupata","сОно прэоккупАто","Я обеспокоен(а), волнуюсь",""],
+["fr","Sono stupito / stupita","сОно ступИто","Я удивлён / удивлена",""],
+["fr","Sono annoiato / annoiata","сОно анноЯто","Мне скучно",""],
+["fr","Sono innamorato / innamorata","сОно иннаморАто","Я влюблён / влюблена",""],
+["fr","Sono ubriaco / ubriaca","сОно убрьЯко","Я пьян(а)",""],
+["fr","Sono malato / malata","сОно малАто","Я болен / больна",""],
+["fr","Non sono malato","нон сОно малАто","Я не болен",""],
+["fr","Sono pieno / piena di energia","сОно пьЭно ди энэрджИа","Я полон / полна энергии",""],
+["fr","Non sono pieno di energia","нон сОно пьЭно ди энэрджИа","Я не полон энергии",""],
+["fr","Io invece sono felice","Ио инвЭчэ сОно фэлИчэ","А я, наоборот, счастлив","invece — противопоставление"],
+["fr","Anch'io","анкИо","Я тоже",""],
+["fr","Anche tu sei…","Анкэ ту сЭй","Ты тоже…",""],
+["fr","È assente","э ассЭнтэ","Он(а) отсутствует",""],
+
+["fr","#","","Ощущения"],
+["fr","Ho fame","о фАмэ","Я голоден","букв. «имею голод» — с avere, не с essere!"],
+["fr","Ho un po' di fame","о ун пО ди фАмэ","Я немного голоден","в тетради «un po' fame» — нужно di"],
+["fr","Ho sete","о сЭтэ","Я хочу пить",""],
+["fr","Ho sonno","о сОнно","Я хочу спать",""],
+["fr","Ho freddo","о фрЭддо","Мне холодно",""],
+["fr","Ho paura","о паУра","Мне страшно",""],
+["fr","Ho fretta","о фрЭтта","Я спешу",""],
+["fr","Ho la febbre","о ла фЭббрэ","У меня температура",""],
+["fr","Ho il raffreddore","о иль раффрэддОрэ","У меня простуда, насморк",""],
+["fr","Ho dei soldi","о дЭй сОльди","У меня есть деньги",""],
+["fr","Ho fame, e tu? — Anch'io ho fame.","о фАмэ, э тУ — анкИо о фАмэ","Я голоден, а ты? — Я тоже.",""],
+["fr","Non ho sete, grazie.","нонО сЭтэ, грАцьэ","Я не хочу пить, спасибо.",""],
+["fr","Hai sonno? — Sì, ho molto sonno, è tardi.","ай сОнно — сИ, о мОльто сОнно, э тАрди","Хочешь спать? — Да, очень, уже поздно.","è tardi — поздно (essere!)"],
+["fr","Ha freddo, signora? — No, ho caldo!","а фрЭддо, синьОра — но, о кАльдо","Вам холодно, синьора? — Нет, мне жарко!",""],
+["fr","Abbiamo fretta, scusa!","аббьЯмо фрЭтта, скУза","Мы спешим, извини!",""],
+["fr","Avete paura? — No, non abbiamo paura.","авЭтэ паУра — но, нон аббьЯмо паУра","Вам страшно? — Нет, нам не страшно.",""],
+["fr","I bambini hanno paura del buio.","и бамбИни Анно паУра дэль бУйо","Дети боятся темноты.","paura di + il = del"],
+["fr","Marta ha la febbre e il raffreddore.","мАрта а ла фЭббрэ э иль раффрэддОрэ","У Марты температура и простуда.","болезни — с артиклем"],
+["fr","Ho voglia di un caffè.","о вОльа ди ун каффЭ","Мне хочется кофе.","voglia di + существительное"],
+["fr","Hai voglia di studiare? — No, ho voglia di mangiare!","ай вОльа ди студьЯрэ — но, о вОльа ди манджАрэ","Хочешь поучиться? — Нет, хочу поесть!","voglia di + глагол"],
+["fr","Non ho voglia di lavorare oggi.","нонО вОльа ди лаворАрэ Оджджи","Мне сегодня не хочется работать.","lavorare — работать"],
+["fr","Ho bisogno di aiuto.","о бизОньо ди айЮто","Мне нужна помощь.","avere bisogno di — нуждаться в"],
+["fr","Hai ragione!","ай раджОнэ","Ты прав!","avere ragione — быть правым; букв. «иметь резон»"],
+["fr","Non ho tempo, ho molto da fare.","нонО тЭмпо, о мОльто да фАрэ","У меня нет времени, много дел.",""],
+["fr","Avete fame? — Sì, abbiamo molta fame!","авЭтэ фАмэ — сИ, аббьЯмо мОльта фАмэ","Вы голодны? — Да, очень!","fame ж. р. → molta"],
 ["fr","Ho molto sonno","о мОльто сОнно","Я очень хочу спать","questa mattina ho molto sonno"],
 ["fr","Ho caldo","о кАльдо","Мне жарко",""],
 ["fr","Non ho freddo","нонО фрЭддо","Мне не холодно","читать слитно"],
 ["fr","Ho paura del buio","о паУра дэль бУйо","Я боюсь темноты","paura di + il buio = del buio; в тетради «di buio» — неверно"],
-["fr","Ho la febbre","о ла фЭббрэ","У меня температура","с артиклем la; в тетради без артикля"],
 ["fr","Ho voglia di andare a Roma","о вОльа ди андАрэ а рОма","Мне хочется поехать в Рим","avere voglia di + глагол"],
-["fr","Ho molto da fare tutta la settimana","о мОльто да фАрэ тУтта ла сэттимАна","У меня много дел всю неделю","avere da fare — иметь дела"],
-["fr","Sto alla grande, ma ho un po' di sonno","сто Алла грАндэ, ма о ун пО ди сОнно","Всё отлично, но немного хочу спать",""],
+
+["fr","#","","Разговорные"],
+["fr","In bocca al lupo!","ин бОкка аль лУпо","Ни пуха ни пера!","букв. «в пасть волку»"],
+["fr","Crepi!","крЭпи","К чёрту! (ответ на in bocca al lupo)","букв. «пусть сдохнет (волк)»"],
+["fr","In culo alla balena!","ин кУло Алла балЭна","Ни пуха! (грубоватый вариант)","букв. «в зад киту»; в тетради записано неверно"],
+["fr","Che peccato!","кэ пэккАто","Как жаль!",""],
+["fr","Che tristezza!","кэ тристЭцца","Какая грусть! / Как грустно!",""],
+["fr","Che cosa vuoi?","кэ кОза вуОй","Что ты хочешь?","che cosa = cosa = che — все три значат «что»"],
+["fr","Chissà","киссА","Кто знает…","chi + sa"],
+["fr","Tutto a posto","тУтто а пОсто","Всё в порядке",""],
+["fr","A proposito","а пропОзито","Кстати",""],
+["fr","Mi sento a mio agio","ми сЭнто а мИо Аджо","Мне комфортно, я в своей тарелке",""],
+["fr","Beato te!","бэАто тЭ","Повезло тебе! / Счастливчик!",""],
+["fr","Buone notizie","буОнэ нотИцьэ","Хорошие новости",""],
+["fr","Benvenuto / Benvenuta!","бэнвэнУто","Добро пожаловать!",""],
+["fr","Una tazza di caffè","Уна тАцца ди каффЭ","Чашка кофе",""],
+["fr","Voglio mangiare","вОльо манджАрэ","Я хочу есть",""],
+["fr","Ho perso…","о пЭрсо","Я потерял(а)…",""],
+["fr","Pronto!","прОнто","Алло! (по телефону)","также «готов(о)»"],
+["fr","Può spiegare?","пуО спьегАрэ","Можете объяснить?",""],
+["fr","Vuole…?","вуОлэ","Хотите…?","вежливое «Вы»"],
+["fr","Dove sono?","дОвэ сОно","Где они? / Где они находятся?","в тетради «Dove sone» — правильно sono"],
+["fr","Sono in aeroporto","сОно ин аэропОрто","Они в аэропорту / Я в аэропорту",""],
+["fr","Piove","пьОвэ","Идёт дождь",""],
+["fr","Tuona","туОна","Гремит гром",""],
+["fr","Lampeggia","лампЭджджа","Сверкает молния","в тетради «sempre — сверкает», но sempre = всегда"],
+["fr","Non è facile!","нон э фАчилэ","Это нелегко!","урок 10.09"],
+["fr","Davvero?","даввЭро","Правда? / Да ладно?","удивление; урок 10.09"],
+["fr","Ma dai!","ма дАй","Да ладно! / Ну брось!","недоверие, удивление; урок 10.09"],
+["fr","Sto alla grande","сто Алла грАндэ","У меня всё отлично","ответ на come stai; урок 10.09"],
+["fr","Sono pronto per studiare","сОно прОнто пэр студьЯрэ","Я готов учиться","pronto per + глагол; урок 10.09"],
+["fr","Sono pronto per il lavoro","сОно прОнто пэр иль лавОро","Я готов к работе","pronto per + существительное с артиклем"],
+["fr","Sono pronto per gli studi","сОно прОнто пэр льи стУди","Я готов к учёбе","gli — артикль мн. ч. перед s+согласная"],
+["fr","Ho una domanda","о Уна домАнда","У меня вопрос","на уроке; урок 10.09"],
 ["fr","Io invece sono stanco","Ио инвЭчэ сОно стАнко","А я, наоборот, устал",""],
 ["fr","Secondo me…","сэкОндо мЭ","По-моему… / Я считаю…",""],
 ["fr","Per me…","пэр мЭ","Для меня… / По мне…",""],
 ["fr","Purtroppo","пуртрОппо","К сожалению",""],
-["fr","Ha la barba","а ла бАрба","У него борода",""],
-["fr","Mio fratello ha 23 anni","мИо фратЭлло а вэнтитрЭ Анни","Моему брату 23 года",""],
-["fr","Carlo ha una casa grande","кАрло а Уна кАза грАндэ","У Карло большой дом","прилагательное после существительного"],
-["fr","Loro hanno molti soldi","лОро Анно мОльти сОльди","У них много денег",""],
-["fr","Luca è di Torino","лУка э ди торИно","Лука из Турина",""],
-["fr","Noi siamo di Rimini","ной сьЯмо ди рИмини","Мы из Римини",""],
+["fr","Nonostante la pioggia","ноностАнтэ ла пьОджджа","Несмотря на дождь",""],
+["fr","Nonostante il tempo","ноностАнтэ иль тЭмпо","Несмотря на погоду","tempo — и «погода», и «время»"],
+["fr","La nostra insegnante è giovane.","ла нОстра инсэньЯнтэ э джОванэ","Наша преподавательница молодая.","la nostra — наша"],
+["fr","Io, invece, sono stanca.","Ио, инвЭчэ, сОно стАнка","А я, наоборот, устала.","говорит женщина: stanca"],
+["fr","Oggi è lunedì.","Оджджи э лунэдИ","Сегодня понедельник.","дни недели — без артикля"],
+["fr","Domani è sabato!","домАни э сАбато","Завтра суббота!",""],
+
+["fr","#","","Глаголы -are: примеры"],
+["fr","Parlo italiano e russo.","пАрло итальЯно э рУссо","Я говорю по-итальянски и по-русски.","io → parlo"],
+["fr","Parli inglese? — Sì, un po'.","пАрли инглЭзэ — сИ, ун пО","Ты говоришь по-английски? — Да, немного.","tu → parli"],
+["fr","Juan parla spagnolo, inglese e tedesco.","хуАн пАрла спаньОло, инглЭзэ э тэдЭско","Хуан говорит по-испански, по-английски и по-немецки.","lui → parla"],
+["fr","Lei parla il greco, signora?","лЭй пАрла иль грЭко, синьОра","Вы говорите по-гречески, синьора?","Lei → parla"],
+["fr","Parliamo italiano in classe.","парльЯмо итальЯно ин клАссэ","В классе мы говорим по-итальянски.","noi → parliamo"],
+["fr","Voi parlate bene l'italiano!","вой парлАтэ бЭнэ литальЯно","Вы хорошо говорите по-итальянски!","voi → parlate"],
+["fr","I ragazzi parlano molto.","и рагАцци пАрлано мОльто","Ребята много говорят.","loro → parlano, ударение на pAr-"],
+["fr","Studio l'italiano perché amo l'Italia.","стУдьо литальЯно пэркЭ Амо литАлья","Я учу итальянский, потому что люблю Италию.","io → studio, amo"],
+["fr","Tu studi già l'italiano?","ту стУди джа литальЯно","Ты уже учишь итальянский?","tu → studi (не studii)"],
+["fr","Anna studia l'italiano in una scuola di lingue.","Анна стУдьа литальЯно ин Уна скуОла ди лИнгуэ","Анна учит итальянский в языковой школе.","lei → studia"],
+["fr","Studiamo insieme?","студьЯмо инсьЭмэ","Поучимся вместе?","noi → studiamo"],
+["fr","Voi studiate l'italiano a Minsk?","вой студьЯтэ литальЯно а мИнск","Вы учите итальянский в Минске?","voi → studiate"],
+["fr","Marta e Carlo studiano l'arte.","мАрта э кАрло стУдьано лАртэ","Марта и Карло изучают искусство.","loro → studiano"],
+["fr","Amo l'Italia e l'arte italiana.","Амо литАлья э лАртэ итальЯна","Я люблю Италию и итальянское искусство.","io → amo"],
+["fr","Ami la musica?","Ами ла мУзика","Ты любишь музыку?","tu → ami"],
+["fr","Katy ama l'Italia.","кЭти Ама литАлья","Кэти любит Италию.","lei → ama"],
+["fr","Amiamo la pizza!","амьЯмо ла пИцца","Мы любим пиццу!","noi → amiamo"],
+["fr","Amate il caffè italiano?","амАтэ иль каффЭ итальЯно","Вы любите итальянский кофе?","voi → amate"],
+["fr","Gli italiani amano il calcio.","льи итальЯни Амано иль кАльчо","Итальянцы любят футбол.","loro → amano"],
+["fr","Abito a Minsk, in corso Dzeržinskij.","Абито а мИнск, ин кОрсо дзержИнский","Я живу в Минске, на проспекте Дзержинского.","io → abito; a + город, in + улица"],
+["fr","Dove abiti?","дОвэ Абити","Где ты живёшь?","tu → abiti"],
+["fr","Katy abita in Italia, a Firenze.","кЭти Абита ин итАлья, а фирЭнцэ","Кэти живёт в Италии, во Флоренции.","in + страна, a + город"],
+["fr","Noi abitiamo a Minsk.","ной абитьЯмо а мИнск","Мы живём в Минске.","noi → abitiamo"],
+["fr","Voi abitate qui?","вой абитАтэ куИ","Вы живёте здесь?","voi → abitate"],
+["fr","Mei e Figaro abitano a Shangai.","мЭй э фИгаро Абитано а шангАй","Мэй и Фигаро живут в Шанхае.","loro → abitano"],
+["fr","Marco lavora in un ufficio.","мАрко лавОра ин ун уффИчо","Марко работает в офисе.","lavorare → lavora"],
+["fr","Io lavoro e studio.","Ио лавОро э стУдьо","Я работаю и учусь.",""],
+["fr","Noi ascoltiamo le canzoni italiane.","ной аскольтьЯмо лэ канцОни итальЯнэ","Мы слушаем итальянские песни.","ascoltare → ascoltiamo"],
+["fr","Voi mangiate una buonissima pizza.","вой манджАтэ Уна буонИссима пИцца","Вы едите очень вкусную пиццу.","mangiare → mangiate"],
+["fr","Oggi loro pagano il conto.","Оджджи лОро пАгано иль кОнто","Сегодня они платят по счёту.","pagare → pagano"],
+
+["fr","#","","Essere: примеры"],
+["fr","Sono Ilia, sono di Minsk.","сОно илИя, сОно ди мИнск","Я Илья, я из Минска.","кто + откуда"],
+["fr","Sono stanco ma sono contento.","сОно стАнко ма сОно контЭнто","Я устал, но доволен.","ma — но"],
+["fr","Non sono italiano, sono bielorusso.","нон сОно итальЯно, сОно бьелорУссо","Я не итальянец, я белорус.",""],
+["fr","Sei pronto? — Sì, sono pronto.","сЭй прОнто — сИ, сОно прОнто","Ты готов? — Да, готов.",""],
+["fr","Sei di Roma? — No, sono di Torino.","сЭй ди рОма — но, сОно ди торИно","Ты из Рима? — Нет, из Турина.",""],
+["fr","Tu sei molto gentile.","ту сЭй мОльто джэнтИлэ","Ты очень любезен.",""],
+["fr","Lei è il professore? — Sì, sono io.","лЭй э иль профэссОрэ — сИ, сОно Ио","Вы преподаватель? — Да, это я.","sono io — «это я»"],
+["fr","Marta è a casa.","мАрта э а кАза","Марта дома.","a casa — дома"],
+["fr","La lezione è facile. — No, non è facile!","ла лецьОнэ э фАчилэ — но, нон э фАчилэ","Урок лёгкий. — Нет, не лёгкий!",""],
+["fr","Il caffè è buono.","иль каффЭ э буОно","Кофе вкусный.",""],
+["fr","Siamo studenti.","сьЯмо студЭнти","Мы студенты.","профессия/роль — без артикля"],
+["fr","Siamo a Roma per una settimana.","сьЯмо а рОма пэр Уна сэттимАна","Мы в Риме на неделю.",""],
+["fr","Non siamo stanchi.","нон сьЯмо стАнки","Мы не устали.","stanco → stanchi: h сохраняет звук [к]"],
+["fr","Siete pronti? — Sì, siamo pronti!","сьЭтэ прОнти — сИ, сьЯмо прОнти","Вы готовы? — Да, готовы!","pronto → pronti"],
+["fr","Voi siete di Minsk? — Sì, siamo di Minsk.","вой сьЭтэ ди мИнск — сИ, сьЯмо ди мИнск","Вы из Минска? — Да, из Минска.",""],
+["fr","I ragazzi sono simpatici e gentili.","и рагАцци сОно симпАтичи э джэнтИли","Ребята симпатичные и любезные.",""],
+["fr","Marta e Carlo sono a casa.","мАрта э кАрло сОно а кАза","Марта и Карло дома.",""],
+["fr","Dove sono le matite? — Sono qui.","дОвэ сОно лэ матИтэ — сОно куИ","Где карандаши? — Они здесь.",""],
+["fr","Le lezioni sono interessanti.","лэ лецьОни сОно интэрэссАнти","Уроки интересные.","lezione → lezioni; interessante → interessanti"],
 ["fr","Voi siete stranieri?","вой сьЭтэ страньЭри","Вы иностранцы?",""],
 ["fr","La stazione è vicino al mare","ла стацьОнэ э вичИно аль мАрэ","Вокзал рядом с морем","vicino a + il mare = al mare"],
-["fr","La lezione è molto interessante","ла лецьОнэ э мОльто интэрэссАнтэ","Урок очень интересный",""],
 ["fr","Gli italiani sono simpatici","льи итальЯни сОно симпАтичи","Итальянцы симпатичные","gli перед гласной; simpatico → simpatici"],
 
-["fr","#","","Avere — «иметь»: примеры на каждое лицо"],
+["fr","#","","Avere: примеры"],
 ["fr","Ho un gatto e un cane.","о ун гАтто э ун кАнэ","У меня есть кот и собака.","io → ho"],
 ["fr","Ho una domanda per il professore.","о Уна домАнда пэр иль профэссОрэ","У меня вопрос к преподавателю.","per — «для, к»"],
 ["fr","Non ho il cellulare con me.","нонО иль чэллулАрэ кон мЭ","У меня нет с собой мобильного.","con me — со мной"],
@@ -2412,46 +2604,11 @@ const LEX = [
 ["fr","Gli studenti hanno molto da fare.","льи студЭнти Анно мОльто да фАрэ","У студентов много дел.",""],
 ["fr","Loro hanno una casa vicino al mare.","лОро Анно Уна кАза вичИно аль мАрэ","У них дом у моря.",""],
 ["fr","Marta e Carlo hanno 20 anni.","мАрта э кАрло Анно вЭнти Анни","Марте и Карло по 20 лет.","два человека → hanno"],
+["fr","Ho molto da fare tutta la settimana","о мОльто да фАрэ тУтта ла сэттимАна","У меня много дел всю неделю","avere da fare — иметь дела"],
+["fr","Ha la barba","а ла бАрба","У него борода",""],
+["fr","Mio fratello ha 23 anni","мИо фратЭлло а вэнтитрЭ Анни","Моему брату 23 года",""],
 
-["fr","#","","Avere — ощущения и состояния во всех лицах"],
-["fr","Ho fame, e tu? — Anch'io ho fame.","о фАмэ, э тУ — анкИо о фАмэ","Я голоден, а ты? — Я тоже.",""],
-["fr","Non ho sete, grazie.","нонО сЭтэ, грАцьэ","Я не хочу пить, спасибо.",""],
-["fr","Hai sonno? — Sì, ho molto sonno, è tardi.","ай сОнно — сИ, о мОльто сОнно, э тАрди","Хочешь спать? — Да, очень, уже поздно.","è tardi — поздно (essere!)"],
-["fr","Ha freddo, signora? — No, ho caldo!","а фрЭддо, синьОра — но, о кАльдо","Вам холодно, синьора? — Нет, мне жарко!",""],
-["fr","Abbiamo fretta, scusa!","аббьЯмо фрЭтта, скУза","Мы спешим, извини!",""],
-["fr","Avete paura? — No, non abbiamo paura.","авЭтэ паУра — но, нон аббьЯмо паУра","Вам страшно? — Нет, нам не страшно.",""],
-["fr","I bambini hanno paura del buio.","и бамбИни Анно паУра дэль бУйо","Дети боятся темноты.","paura di + il = del"],
-["fr","Marta ha la febbre e il raffreddore.","мАрта а ла фЭббрэ э иль раффрэддОрэ","У Марты температура и простуда.","болезни — с артиклем"],
-["fr","Ho voglia di un caffè.","о вОльа ди ун каффЭ","Мне хочется кофе.","voglia di + существительное"],
-["fr","Hai voglia di studiare? — No, ho voglia di mangiare!","ай вОльа ди студьЯрэ — но, о вОльа ди манджАрэ","Хочешь поучиться? — Нет, хочу поесть!","voglia di + глагол"],
-["fr","Non ho voglia di lavorare oggi.","нонО вОльа ди лаворАрэ Оджджи","Мне сегодня не хочется работать.","lavorare — работать"],
-["fr","Ho bisogno di aiuto.","о бизОньо ди айЮто","Мне нужна помощь.","avere bisogno di — нуждаться в"],
-["fr","Hai ragione!","ай раджОнэ","Ты прав!","avere ragione — быть правым; букв. «иметь резон»"],
-["fr","Non ho tempo, ho molto da fare.","нонО тЭмпо, о мОльто да фАрэ","У меня нет времени, много дел.",""],
-["fr","Avete fame? — Sì, abbiamo molta fame!","авЭтэ фАмэ — сИ, аббьЯмо мОльта фАмэ","Вы голодны? — Да, очень!","fame ж. р. → molta"],
-
-["fr","#","","Essere — «быть»: примеры на каждое лицо"],
-["fr","Sono Ilia, sono di Minsk.","сОно илИя, сОно ди мИнск","Я Илья, я из Минска.","кто + откуда"],
-["fr","Sono stanco ma sono contento.","сОно стАнко ма сОно контЭнто","Я устал, но доволен.","ma — но"],
-["fr","Non sono italiano, sono bielorusso.","нон сОно итальЯно, сОно бьелорУссо","Я не итальянец, я белорус.",""],
-["fr","Sei pronto? — Sì, sono pronto.","сЭй прОнто — сИ, сОно прОнто","Ты готов? — Да, готов.",""],
-["fr","Sei di Roma? — No, sono di Torino.","сЭй ди рОма — но, сОно ди торИно","Ты из Рима? — Нет, из Турина.",""],
-["fr","Tu sei molto gentile.","ту сЭй мОльто джэнтИлэ","Ты очень любезен.",""],
-["fr","Lei è il professore? — Sì, sono io.","лЭй э иль профэссОрэ — сИ, сОно Ио","Вы преподаватель? — Да, это я.","sono io — «это я»"],
-["fr","Marta è a casa.","мАрта э а кАза","Марта дома.","a casa — дома"],
-["fr","La lezione è facile. — No, non è facile!","ла лецьОнэ э фАчилэ — но, нон э фАчилэ","Урок лёгкий. — Нет, не лёгкий!",""],
-["fr","Il caffè è buono.","иль каффЭ э буОно","Кофе вкусный.",""],
-["fr","Siamo studenti.","сьЯмо студЭнти","Мы студенты.","профессия/роль — без артикля"],
-["fr","Siamo a Roma per una settimana.","сьЯмо а рОма пэр Уна сэттимАна","Мы в Риме на неделю.",""],
-["fr","Non siamo stanchi.","нон сьЯмо стАнки","Мы не устали.","stanco → stanchi: h сохраняет звук [к]"],
-["fr","Siete pronti? — Sì, siamo pronti!","сьЭтэ прОнти — сИ, сьЯмо прОнти","Вы готовы? — Да, готовы!","pronto → pronti"],
-["fr","Voi siete di Minsk? — Sì, siamo di Minsk.","вой сьЭтэ ди мИнск — сИ, сьЯмо ди мИнск","Вы из Минска? — Да, из Минска.",""],
-["fr","I ragazzi sono simpatici e gentili.","и рагАцци сОно симпАтичи э джэнтИли","Ребята симпатичные и любезные.",""],
-["fr","Marta e Carlo sono a casa.","мАрта э кАрло сОно а кАза","Марта и Карло дома.",""],
-["fr","Dove sono le matite? — Sono qui.","дОвэ сОно лэ матИтэ — сОно куИ","Где карандаши? — Они здесь.",""],
-["fr","Le lezioni sono interessanti.","лэ лецьОни сОно интэрэссАнти","Уроки интересные.","lezione → lezioni; interessante → interessanti"],
-
-["fr","#","","Essere или avere — пары для сравнения"],
+["fr","#","","Essere или avere"],
 ["fr","Sono stanco. / Ho sonno.","сОно стАнко / о сОнно","Я устал. / Я хочу спать.","качество → essere; ощущение → avere"],
 ["fr","Il caffè è freddo. / Ho freddo.","иль каффЭ э фрЭддо / о фрЭддо","Кофе холодный. / Мне холодно.","предмет какой → è; мне холодно → ho"],
 ["fr","Sono pronto. / Ho fretta.","сОно прОнто / о фрЭтта","Я готов. / Я спешу.",""],
@@ -2473,7 +2630,7 @@ const LEX = [
 ["bonus","Per favore","пэр фавОрэ","Пожалуйста (просьба)",""],
 ["bonus","Più lentamente, per favore","пью лентамЭнтэ пэр фавОрэ","Помедленнее, пожалуйста",""],
 
-["lex","#","","Тетрадь"],
+["lex","#","","Тетрадь: первые уроки"],
 ["lex","oggi","Оджджи","сегодня",""],
 ["lex","sempre","сЭмпрэ","всегда",""],
 ["lex","ma","ма","но",""],
@@ -2576,7 +2733,7 @@ const LEX = [
 ["lex","svedese","звэдЭзэ","шведский; швед","в тетради svedest — правильно svedese"],
 ["lex","sbrigare","збригАрэ","быстро справиться","sbrigarsi — торопиться"],
 
-["lex","#","","Домашка 20.08"],
+["lex","#","","Домашка: чтение"],
 ["lex","cena","чЭна","ужин",""],
 ["lex","chiesa","кьЭза","церковь",""],
 ["lex","consolato","консолАто","консульство",""],
@@ -2603,7 +2760,7 @@ const LEX = [
 ["lex","schiena","скьЭна","спина",""],
 ["lex","chiosco","кьОско","киоск",""],
 
-["lex","#","","Учебник, lezione 1"],
+["lex","#","","Учебник: урок 1"],
 ["lex","dottore","доттОрэ","доктор (обращение к человеку с высшим образованием)","с фамилией: dottor Rossi"],
 ["lex","professore","профэссОрэ","преподаватель, профессор","с фамилией: professor Visconti"],
 ["lex","signore","синьОрэ","синьор, господин","перед фамилией: signor Muti"],
@@ -2674,7 +2831,7 @@ const LEX = [
 ["lex","Berna","бЭрна","Берн",""],
 ["lex","Lisbona","лизбОна","Лиссабон",""],
 
-["lex","#","","Тетрадь 10.09 (Lezione 2)"],
+["lex","#","","Тетрадь: телефон, школа"],
 ["lex","fisso","фИссо","стационарный (telefono fisso — домашний телефон)",""],
 ["lex","con","кон","с (предлог)",""],
 ["lex","davvero","даввЭро","правда, действительно",""],
@@ -2703,7 +2860,7 @@ const LEX = [
 ["lex","Bielorussia","бьелорУссья","Беларусь",""],
 ["lex","Minsk","мИнск","Минск",""],
 
-["lex","#","","Тетрадь 15.09"],
+["lex","#","","Тетрадь: ощущения, семья"],
 ["lex","caldo","кАльдо","жара; жаркий, горячий","ho caldo — мне жарко"],
 ["lex","buio","бУйо","темнота; тёмный","ho paura del buio"],
 ["lex","settimana","сэттимАна","неделя","tutta la settimana — всю неделю"],
@@ -2732,6 +2889,60 @@ const LEX = [
 ["lex","secondo","сэкОндо","по мнению; второй; секунда","secondo me — по-моему"],
 ["lex","fare","фАрэ","делать","molto da fare — много дел"],
 ["lex","molto / molti","мОльто","много; очень / многие","molti soldi, molto sonno"],
+
+["lex","#","","Тетрадь: знакомство, глаголы -are"],
+["lex","parlare","парлАрэ","говорить","parlo, parli, parla, parliamo, parlate, parlano"],
+["lex","studiare","студьЯрэ","учить, изучать; учиться","studio, studi, studia, studiamo, studiate, studiano"],
+["lex","amare","амАрэ","любить","amo, ami, ama, amiamo, amate, amano"],
+["lex","abitare","абитАрэ","жить, проживать","abito, abiti, abita, abitiamo, abitate, abitano"],
+["lex","lavorare","лаворАрэ","работать","lavoro, lavori, lavora…"],
+["lex","pagare","пагАрэ","платить","pago, paghi, paga, paghiamo… — h сохраняет [г]"],
+["lex","ascoltare","аскольтАрэ","слушать","ascolto, ascolti, ascolta…"],
+["lex","mangiare","манджАрэ","есть, кушать","mangio, mangi (одна i), mangia…"],
+["lex","nonostante","ноностАнтэ","несмотря на",""],
+["lex","pioggia","пьОджджа","дождь","la pioggia"],
+["lex","tempo","тЭмпо","погода; время","il tempo"],
+["lex","ancora","анкОра","ещё; всё ещё","ударение на о; Ancora — якорь"],
+["lex","studentessa","студэнтЭсса","студентка","studente — студент"],
+["lex","nostro / nostra","нОстро / нОстра","наш / наша","la nostra insegnante"],
+["lex","giovane","джОванэ","молодой; молодая",""],
+["lex","presentare","прэзэнтАрэ","представлять, знакомить","ti presento / Le presento"],
+["lex","a sinistra","а синИстра","слева","a destra — справа"],
+["lex","in centro","ин чЭнтро","в центре",""],
+["lex","d'accordo","даккОрдо","согласен; договорились",""],
+["lex","sai","сАй","ты знаешь","от sapere"],
+["lex","lo so","ло сО","я знаю (это)","non lo so — не знаю"],
+["lex","interprete","интЭрпрэтэ","устный переводчик","ударение на тЭ"],
+["lex","cantante","кантАнтэ","певец, певица","cantante d'opera"],
+["lex","arte","Артэ","искусство","l'arte italiana"],
+["lex","ragazza","рагАцца","девушка","ragazzo — парень"],
+["lex","americano / americana","амэрикАно","американский; американец / американка",""],
+["lex","cinese","чинЭзэ","китайский; китаец / китаянка","одна форма для м. и ж. р."],
+["lex","olandese","оландЭзэ","голландский; голландец",""],
+["lex","greco / greca","грЭко","греческий; грек / гречанка",""],
+["lex","russo / russa","рУссо","русский; русский / русская","il russo — русский язык"],
+["lex","corso","кОрсо","проспект; курс","in corso Dzeržinskij; il corso d'italiano"],
+["lex","ufficio","уффИчо","офис","in un ufficio"],
+["lex","pizza","пИцца","пицца",""],
+["lex","buonissimo","буонИссимо","очень вкусный, отличный","buono + -issimo"],
+["lex","conto","кОнто","счёт (в ресторане)","pagare il conto"],
+["lex","già","джа","уже",""],
+["lex","insieme","инсьЭмэ","вместе",""],
+["lex","Firenze","фирЭнцэ","Флоренция",""],
+["lex","Madrid","мадрИд","Мадрид",""],
+["lex","Shangai","шангАй","Шанхай","в учебнике такое написание; обычно Shanghai"],
+
+["lex","#","","Дни недели"],
+["lex","lunedì","лунэдИ","понедельник","дни на -dì — ударение на последний слог"],
+["lex","martedì","мартэдИ","вторник",""],
+["lex","mercoledì","мэрколэдИ","среда",""],
+["lex","giovedì","джовэдИ","четверг",""],
+["lex","venerdì","вэнэрдИ","пятница",""],
+["lex","sabato","сАбато","суббота","ударение на первый слог"],
+["lex","domenica","домЭника","воскресенье","ударение на второй слог"],
+["lex","settimana","сэттимАна","неделя",""],
+["lex","oggi","Оджджи","сегодня",""],
+["lex","domani","домАни","завтра",""],
 
 ["num","#","","Числа 0–20"],
 ["num","zero","дзЭро","0 — ноль",""],
@@ -2815,6 +3026,32 @@ const LEX = [
 ["gram","i","и","артикль м. р. мн. ч.","i numeri, i gatti"],
 ["gram","gli","льи","артикль м. р. мн. ч. перед z, s+согл., гласной","gli appunti, gli studi, gli zaini, gli amici"],
 ["gram","le","лэ","артикль ж. р. мн. ч.","le matite, le borse"],
+
+["gram","#","","Глаголы на -are"],
+["gram","io parlo","Ио пАрло","я говорю (parlare)",""],
+["gram","tu parli","ту пАрли","ты говоришь (parlare)",""],
+["gram","lui / lei parla","луй / лэй пАрла","он / она говорит (parlare)",""],
+["gram","noi parliamo","ной парльЯмо","мы говорим (parlare)","ударение на -iAmo"],
+["gram","voi parlate","вой парлАтэ","вы говорите (parlare)","ударение на -Ate"],
+["gram","loro parlano","лОро пАрлано","они говорят (parlare)","ударение на основу: пАрлано"],
+["gram","io studio","Ио стУдьо","я учу (studiare)",""],
+["gram","tu studi","ту стУди","ты учишь (studiare)","одна i, не studii"],
+["gram","lui / lei studia","луй / лэй стУдьа","он / она учит (studiare)",""],
+["gram","noi studiamo","ной студьЯмо","мы учим (studiare)",""],
+["gram","voi studiate","вой студьЯтэ","вы учите (studiare)",""],
+["gram","loro studiano","лОро стУдьано","они учат (studiare)",""],
+["gram","io amo","Ио Амо","я люблю (amare)",""],
+["gram","tu ami","ту Ами","ты любишь (amare)",""],
+["gram","lui / lei ama","луй / лэй Ама","он / она любит (amare)",""],
+["gram","noi amiamo","ной амьЯмо","мы любим (amare)",""],
+["gram","voi amate","вой амАтэ","вы любите (amare)",""],
+["gram","loro amano","лОро Амано","они любят (amare)",""],
+["gram","io abito","Ио Абито","я живу (abitare)",""],
+["gram","tu abiti","ту Абити","ты живёшь (abitare)",""],
+["gram","lui / lei abita","луй / лэй Абита","он / она живёт (abitare)",""],
+["gram","noi abitiamo","ной абитьЯмо","мы живём (abitare)",""],
+["gram","voi abitate","вой абитАтэ","вы живёте (abitare)",""],
+["gram","loro abitano","лОро Абитано","они живут (abitare)","ударение: Абитано"],
 
 ["alfa","#","","Названия букв"],
 ["alfa","A","а","буква A",""],
@@ -3542,6 +3779,110 @@ function openTopic(id, userClick){
 function stepTopic(d){ const i = REF.topics.findIndex(t=>t.id===REF.cur); const t = REF.topics[i+d]; if (t) openTopic(t.id, true); }
 
 
+/* ---------------- тренажёр глаголов ---------------- */
+const PRON = ['io','tu','lui / lei / Lei','noi','voi','loro'];
+const VERBS = {
+  essere:  {ru:'быть',        g:'ea',  f:['sono','sei','è','siamo','siete','sono'],            tr:['сОно','сЭй','э','сьЯмо','сьЭтэ','сОно']},
+  avere:   {ru:'иметь',       g:'ea',  f:['ho','hai','ha','abbiamo','avete','hanno'],           tr:['о','ай','а','аббьЯмо','авЭтэ','Анно']},
+  parlare: {ru:'говорить',    g:'are', f:['parlo','parli','parla','parliamo','parlate','parlano'], tr:['пАрло','пАрли','пАрла','парльЯмо','парлАтэ','пАрлано']},
+  studiare:{ru:'учить(ся)',   g:'are', f:['studio','studi','studia','studiamo','studiate','studiano'], tr:['стУдьо','стУди','стУдьа','студьЯмо','студьЯтэ','стУдьано']},
+  amare:   {ru:'любить',      g:'are', f:['amo','ami','ama','amiamo','amate','amano'],           tr:['Амо','Ами','Ама','амьЯмо','амАтэ','Амано']},
+  abitare: {ru:'жить',        g:'are', f:['abito','abiti','abita','abitiamo','abitate','abitano'], tr:['Абито','Абити','Абита','абитьЯмо','абитАтэ','Абитано']},
+  lavorare:{ru:'работать',    g:'are', f:['lavoro','lavori','lavora','lavoriamo','lavorate','lavorano'], tr:['лавОро','лавОри','лавОра','лаворьЯмо','лаворАтэ','лавОрано']},
+  ascoltare:{ru:'слушать',    g:'are', f:['ascolto','ascolti','ascolta','ascoltiamo','ascoltate','ascoltano'], tr:['аскОльто','аскОльти','аскОльта','аскольтьЯмо','аскольтАтэ','аскОльтано']},
+  mangiare:{ru:'есть, кушать',g:'are', f:['mangio','mangi','mangia','mangiamo','mangiate','mangiano'], tr:['мАнджо','мАнджи','мАнджа','манджЯмо','манджАтэ','мАнджано']},
+  pagare:  {ru:'платить',     g:'are', f:['pago','paghi','paga','paghiamo','pagate','pagano'],     tr:['пАго','пАги','пАга','пагьЯмо','пагАтэ','пАгано']},
+};
+// предложения с пропуском: [текст с ___, глагол, индекс лица, перевод]
+const GAPS = [
+ ['Io (abitare) ___ a Minsk, in corso Dzeržinskij.','abitare',0,'Я живу в Минске, на проспекте Дзержинского.'],
+ ['Tu (parlare) ___ già bene l\'italiano!','parlare',1,'Ты уже хорошо говоришь по-итальянски!'],
+ ['Marco (lavorare) ___ in un ufficio.','lavorare',2,'Марко работает в офисе.'],
+ ['Anna (studiare) ___ l\'italiano in una scuola di lingue.','studiare',2,'Анна учит итальянский в языковой школе.'],
+ ['Noi (ascoltare) ___ le canzoni italiane.','ascoltare',3,'Мы слушаем итальянские песни.'],
+ ['Voi (mangiare) ___ una buonissima pizza.','mangiare',4,'Вы едите очень вкусную пиццу.'],
+ ['Oggi loro (pagare) ___ il conto.','pagare',5,'Сегодня они платят по счёту.'],
+ ['Noi (avere) ___ molta fame.','avere',3,'Мы очень голодны.'],
+ ['Voi (essere) ___ di Roma?','essere',4,'Вы из Рима?'],
+ ['Juan (studiare) ___ l\'italiano a Madrid.','studiare',2,'Хуан учит итальянский в Мадриде.'],
+ ['Katy (abitare) ___ in Italia, a Firenze.','abitare',2,'Кэти живёт в Италии, во Флоренции.'],
+ ['Katy (amare) ___ l\'Italia e l\'arte italiana.','amare',2,'Кэти любит Италию и итальянское искусство.'],
+ ['Juan (parlare) ___ spagnolo, inglese e tedesco.','parlare',2,'Хуан говорит по-испански, по-английски и по-немецки.'],
+ ['Il cane di Mei (avere) ___ 6 anni.','avere',2,'Собаке Мэй 6 лет.'],
+ ['Noi (abitare) ___ a Minsk.','abitare',3,'Мы живём в Минске.'],
+ ['Io (studiare) ___ l\'italiano perché (amare) l\'Italia.','studiare',0,'Я учу итальянский, потому что люблю Италию.'],
+ ['Tu (amare) ___ la musica italiana?','amare',1,'Ты любишь итальянскую музыку?'],
+ ['Voi (parlare) ___ il russo?','parlare',4,'Вы говорите по-русски?'],
+ ['Loro (abitare) ___ in Italia.','abitare',5,'Они живут в Италии.'],
+ ['Lei (parlare) ___ il greco, signora?','parlare',2,'Вы говорите по-гречески, синьора?'],
+ ['Noi (parlare) ___ italiano e russo.','parlare',3,'Мы говорим по-итальянски и по-русски.'],
+ ['Marta e Carlo (studiare) ___ l\'arte.','studiare',5,'Марта и Карло изучают искусство.'],
+ ['Voi (abitare) ___ a Roma?','abitare',4,'Вы живёте в Риме?'],
+ ['Io (lavorare) ___ e (studiare).','lavorare',0,'Я работаю и учусь.'],
+ ['Tu (lavorare) ___ in un ufficio?','lavorare',1,'Ты работаешь в офисе?'],
+ ['Gli italiani (amare) ___ il calcio.','amare',5,'Итальянцы любят футбол.'],
+ ['Mio fratello (avere) ___ 23 anni.','avere',2,'Моему брату 23 года.'],
+ ['Chi (essere) ___ loro? — (essere) i ragazzi francesi.','essere',5,'Кто они? — Французские ребята.'],
+ ['La lezione (essere) ___ molto interessante.','essere',2,'Урок очень интересный.'],
+ ['(Tu) (essere) ___ stanco?','essere',1,'Ты устал?'],
+ ['Io (mangiare) ___ una pizza.','mangiare',0,'Я ем пиццу.'],
+ ['Noi (pagare) ___ il caffè.','pagare',3,'Мы платим за кофе.'],
+];
+const VD = { verbs:'all', modes:['pick','type','gap'] };
+$$('#vdVerbs .chip').forEach(b=> b.onclick=()=>{ VD.verbs=b.dataset.v; $$('#vdVerbs .chip').forEach(x=>x.classList.toggle('on',x===b)); });
+$$('#vdModes .chip').forEach(b=> b.onclick=()=>{ b.classList.toggle('on'); VD.modes=$$('#vdModes .chip.on').map(x=>x.dataset.m); });
+function vdVerbList(){ return Object.keys(VERBS).filter(v=> VD.verbs==='all' || VERBS[v].g===VD.verbs); }
+function startVerbDrill(){
+  const modes = VD.modes.length ? VD.modes : ['pick'];
+  const verbs = vdVerbList();
+  const gaps = shuffle(GAPS.filter(g=> verbs.includes(g[1])));
+  const tasks = []; let gi=0;
+  for (let i=0;i<20;i++){
+    const m = modes[i%modes.length];
+    if (m==='gap' && gi<gaps.length){ const g=gaps[gi++]; tasks.push({m:'gap', v:g[1], p:g[2], text:g[0], ru:g[3]}); }
+    else tasks.push({m: m==='gap'?'pick':m, v:pick(verbs), p:Math.floor(Math.random()*6)});
+  }
+  SES = { nd:true, q:shuffle(tasks), i:0, stats:{ok:0,bad:0}, t0:now(), keys:null, verb:true };
+  $('#sMore').classList.add('hidden'); $('#session').classList.add('on'); vdStep();
+}
+$('#vdStart').onclick = startVerbDrill;
+const VD_NAME = {pick:'Выбери форму', type:'Напиши форму', gap:'Заполни пропуск'};
+function vdStep(){
+  progressUI();
+  const body = $('#sBody');
+  if (SES.i >= SES.q.length){
+    const s=SES.stats, sec=Math.round((now()-SES.t0)/1000);
+    body.innerHTML = `<div class="done"><div class="big">${s.bad===0?'🏆':'📝'}</div><h2>Серия закончена</h2><p>Верно <b>${s.ok}</b> из <b>${s.ok+s.bad}</b> · ${sec} секунд</p>
+      <button class="pri" id="dAgain">Ещё серию</button><button class="sec" id="dClose">Закрыть</button></div>`;
+    $('#dAgain').onclick = startVerbDrill; $('#dClose').onclick = endSession; return;
+  }
+  const t = SES.q[SES.i], V = VERBS[t.v], ans = V.f[t.p]; SES.answered=false;
+  const head = `<div class="mode"><span>${VD_NAME[t.m]}</span><span class="tag">${t.v} — ${esc(V.ru)}</span></div>`;
+  const fbHTML = ok => `<div>${ok?'✅ Верно':'❌ Неверно'}</div><div class="ans">${esc(PRON[t.p])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[t.p])}]</span></div>
+     ${t.m==='gap'?`<div class="it">${esc(t.text.replace('___', ans).replace(/\((\w+)\)\s*/g,''))}</div><div class="muted">${esc(t.ru)}</div>`:`<div class="muted">${esc(t.v)} — ${esc(V.ru)}</div>`}`;
+  const finish = ok => { if(ok) SES.stats.ok++; else SES.stats.bad++; const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
+    el.innerHTML = fbHTML(ok) + `<div style="margin-top:6px"><button class="spk" data-say="${esc(t.m==='gap' ? t.text.replace('___',ans).replace(/\((\w+)\)\s*/g,'') : ans)}">🔊 послушать</button></div><button class="pri next" id="nx">Дальше</button>`;
+    body.appendChild(el); wireSpeak(el); $('#nx').onclick=()=>{ SES.i++; vdStep(); }; $('#nx').focus(); };
+  if (t.m==='pick' || t.m==='gap'){
+    const others = shuffle([...new Set(V.f.filter(f=> f!==ans))]).slice(0,3);
+    const opts = shuffle([ans, ...others]);
+    const q = t.m==='gap'
+      ? `<div class="q"><div class="mid it">${esc(t.text).replace('___','<b style="color:var(--accent)">___</b>')}</div><div class="note">${esc(t.ru)}</div></div>`
+      : `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])}</span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)} — какая форма?</div></div>`;
+    body.innerHTML = head + q + `<div class="opts">${opts.map((f,k)=>`<button class="opt" data-f="${esc(f)}"><span class="k">${k+1}</span><span class="it">${esc(f)}</span></button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
+    $$('.opt').forEach(b=> b.onclick=()=>{ if(SES.answered) return; SES.answered=true; const ok = b.dataset.f===ans;
+      $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.f===ans) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); }); finish(ok); });
+    SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+    return;
+  }
+  body.innerHTML = head + `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])}</span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)} — напиши форму</div></div>
+    <div class="typing"><input id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" lang="it" placeholder="…"><button class="sec" id="chk" style="width:auto">Проверить</button></div><div class="kbd">Enter — проверить</div>`;
+  const inp=$('#ti'); inp.focus();
+  const check=()=>{ if(SES.answered) return; SES.answered=true; const v=norm(inp.value); const ok = v===norm(ans) || stripAcc(v)===stripAcc(norm(ans)); inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor= ok?'var(--ok)':'var(--bad)'; finish(ok); };
+  $('#chk').onclick=check; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); if(!SES.answered) check(); else $('#nx')?.click(); } };
+  SES.keys = k=>{ if (k==='Enter' && SES.answered) $('#nx')?.click(); };
+}
+
 /* ---------------- настройки ---------------- */
 function bindSwitch(id, key, after){
   const b=$(id); b.classList.toggle('on', !!S()[key]);
@@ -3595,6 +3936,7 @@ if (location.hash.startsWith('#shot=')){
   else if (what==='numtable'){ showPane('p-num'); $$('#numSeg button')[1].click(); }
   else if (what==='refview'){ showPane('p-ref'); openTopic('g5', true); }
   else if (what==='nd'){ ND.modes=['n2w']; ND.range='100'; startNumDrill(); }
+  else if (what==='vd'){ VD.modes=['gap']; startVerbDrill(); }
   else {
     ST.set.decks = DECKS.map(d=>d.id); ST.set.tts=true; startSession();
     const c = CARDS.find(x=>norm(x.it)==='sciarpa') || CARDS[0];
@@ -3655,7 +3997,10 @@ if (location.hash.startsWith('#selftest')){
   try{ ND.modes=['n2w','w2n']; ND.range='100'; ND.count=8; startNumDrill(); let steps=0;
     while (SES && SES.i<SES.q.length && steps<40){ steps++; if($('#ti')){ $('#ti').value=String(SES.q[SES.i].n); $('#chk').click(); } else { $$('.opt')[0].click(); } $('#nx').click(); }
     log.push('num drill done: '+JSON.stringify(SES.stats)+' hist='+(ST.nd||[]).length); endSession(); }catch(e){ errs.push('num drill: '+e.message); }
-  log.push('phrase groups: '+phrGroups().length+' | select opts='+$('#phrGroup').options.length);
+  log.push('phrase groups: '+phrGroups().length+' | select opts='+$('#phrGroup').options.length+' | '+phrGroups().join(' · '));
+  try{ VD.modes=['pick','type','gap']; startVerbDrill(); let steps=0;
+    while (SES && SES.i<SES.q.length && steps<40){ steps++; const t=SES.q[SES.i]; if($('#ti')){ $('#ti').value=VERBS[t.v].f[t.p]; $('#chk').click(); } else { $$('.opt')[0].click(); } $('#nx').click(); }
+    log.push('verb drill done: '+JSON.stringify(SES.stats)+' gaps='+GAPS.length); endSession(); }catch(e){ errs.push('verb drill: '+e.message); }
   log.push('ERRORS: '+(errs.length? errs.join(' || ') : 'none'));
   localStorage.removeItem(LS);
   const pre = document.createElement('pre'); pre.id='testlog'; pre.textContent = log.join('\n'); document.body.appendChild(pre);
