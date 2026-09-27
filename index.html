@@ -385,6 +385,12 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
   #refContent table.stack td[data-h]::before{content:attr(data-h) " · ";color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;font-family:-apple-system,system-ui,sans-serif;font-weight:700}
   #refContent table.stack td.sp{font-size:16px}
 }
+#refContent h3.acc{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--bg);margin:10px 0 0;text-transform:none;letter-spacing:0;font-size:15px;color:var(--ink)}
+#refContent h3.acc::after{content:"+";color:var(--muted);font-weight:400;font-size:18px}
+#refContent h3.acc.open::after{content:"–"}
+#refContent h3.acc:hover{border-color:var(--accent)}
+#refContent .acc-hide{display:none !important}
+.pager,.pgdots{display:none !important}
 /* Ещё */
 .more{display:grid;gap:10px;grid-template-columns:1fr 1fr}
 .more button{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:18px 10px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:var(--shadow)}
@@ -692,11 +698,11 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
 
 <!-- ======================= ПРАВИЛА ======================= -->
 <div class="pane" id="p-ref"><div class="wrap">
-  <div class="pane-head"><h2>Правила</h2><span class="sub">одна тема — один экран</span></div>
+  <div class="pane-head"><h2>Правила</h2><span class="sub">всё пройденное, по темам; внутри темы разделы раскрываются</span></div>
   <div class="ref list-mode" id="ref">
     <div class="topics" id="topics"></div>
     <div class="refview" id="refview">
-      <div class="refopts"><button class="refback" id="refBack">← Все темы</button><span style="flex:1"></span><button class="chip" id="refAll">показать всё</button></div>
+      <div class="refopts"><button class="refback" id="refBack">← Все темы</button><span style="flex:1"></span><button class="chip" id="refAll">развернуть всё</button></div>
       <div id="refContent"></div>
       <div class="pgdots" id="pgDots"></div>
       <div class="pager"><button id="pgPrev"></button><span class="pc" id="pgCnt"></span><button id="pgNext"></button></div>
@@ -706,34 +712,62 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
 
   <!-- Источник тем: карточки ниже скрыты, JS показывает по одной -->
   <div id="refSrc" class="hidden">
-
-  <div class="card" id="g8" data-sec="Разговор">
-    <h2><span class="no">Я</span>Рассказ о себе — десять фраз без подготовки</h2>
-    <div class="lead">То, о чём тебя спросит любой итальянец в первые две минуты. Цель — говорить это не думая. Каждая фраза — ответ на конкретный вопрос.</div>
+  <div class="card" id="g3" data-sec="Глаголы">
+    <h2><span class="no">Глагол</span>Как образуется любая форма глагола — общее правило</h2>
+    <div class="lead">Одно правило на все правильные глаголы. Словарная форма (инфинитив) кончается на -are, -ere или -ire. Отрезаешь окончание — получаешь основу. К основе прибавляешь окончание нужного лица. Всё.</div>
+    <div class="flow">
+      <div class="fnode key">инфинитив = основа + -are / -ere / -ire<small>parl-are · viv-ere · dorm-ire</small></div>
+      <div class="fbranch">
+        <div class="fnode"><small>1. отрезаю окончание</small><b>parl-</b><i>parl<s>are</s></i></div>
+        <div class="fnode"><small>2. смотрю, кто действует</small><b>io · tu · lui · noi · voi · loro</b><i>я · ты · он · мы · вы · они</i></div>
+        <div class="fnode"><small>3. прибавляю окончание лица</small><b>parl + o = parlo</b><i>я говорю</i></div></div></div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Вопрос</th><th>Мой ответ</th><th>Читается</th><th>Перевод</th></tr></thead>
+      <thead><tr><th>Кто</th><th>-are · parlare</th><th>-ere · vivere</th><th>-ire · dormire</th></tr></thead>
       <tbody>
-        <tr><td class="ex"><i>Come ti chiami?</i></td><td class="ex"><b>Ciao! Mi chiamo Ilia.</b></td><td class="tr">[чАо! ми кьЯмо илИя]</td><td class="why">Привет! Меня зовут Илья.</td></tr>
-        <tr><td class="ex"><i>Di dove sei?</i></td><td class="ex"><b>Sono bielorusso, sono di Minsk.</b></td><td class="tr">[сОно бьелорУссо, сОно ди мИнск]</td><td class="why">Я белорус, я из Минска.</td></tr>
-        <tr><td class="ex"><i>Dove abiti?</i></td><td class="ex"><b>Abito a Minsk, in corso Dzeržinskij.</b></td><td class="tr">[Абито а мИнск, ин кОрсо дзержИнский]</td><td class="why">Живу в Минске, на проспекте Дзержинского.</td></tr>
-        <tr><td class="ex"><i>Quanti anni hai?</i></td><td class="ex"><b>Ho … anni.</b></td><td class="tr">[о … Анни]</td><td class="why">Мне … лет. Число — из таблицы чисел, например <span class="it">trentadue</span>.</td></tr>
-        <tr><td class="ex"><i>Che lingue parli?</i></td><td class="ex"><b>Parlo russo e un po' di italiano.</b></td><td class="tr">[пАрло рУссо э ун пО ди итальЯно]</td><td class="why">Говорю по-русски и немного по-итальянски.</td></tr>
-        <tr><td class="ex"><i>Perché studi l'italiano?</i></td><td class="ex"><b>Studio l'italiano perché voglio studiare e abitare in Italia, in Sicilia.</b></td><td class="tr">[стУдьо литальЯно пэркЭ вОльо студьЯрэ э абитАрэ ин итАлья, ин сичИлья]</td><td class="why">Учу итальянский, потому что хочу учиться и жить в Италии, на Сицилии.</td></tr>
-        <tr><td class="ex"><i>Ami l'Italia?</i></td><td class="ex"><b>Sì, amo l'Italia e l'arte italiana.</b></td><td class="tr">[си, Амо литАлья э лАртэ итальЯна]</td><td class="why">Да, люблю Италию и итальянское искусство.</td></tr>
-        <tr><td class="ex"><i>Hai una ragazza?</i></td><td class="ex"><b>Sì, la mia ragazza è un'artista.</b></td><td class="tr">[си, ла мИа рагАцца э унартИста]</td><td class="why">Да, моя девушка — художница.</td></tr>
-        <tr><td class="ex"><i>Studi o lavori?</i></td><td class="ex"><b>Lavoro e studio: ho molto da fare tutta la settimana.</b></td><td class="tr">[лавОро э стУдьо: о мОльто да фАрэ тУтта ла сэттимАна]</td><td class="why">Работаю и учусь: много дел всю неделю.</td></tr>
-        <tr><td class="ex"><i>Sei pronto?</i></td><td class="ex"><b>Sì, sono pronto per studiare! Piacere di conoscerti!</b></td><td class="tr">[си, сОно прОнто пэр студьЯрэ! пьячЭрэ ди конОшэрти]</td><td class="why">Да, я готов учиться! Рад познакомиться!</td></tr>
+        <tr><td class="sp">io<br><i>я</i></td><td class="ex"><b>-o</b> parlo <span class="tr">[пАрло]</span></td><td class="ex"><b>-o</b> vivo <span class="tr">[вИво]</span></td><td class="ex"><b>-o</b> dormo <span class="tr">[дОрмо]</span></td></tr>
+        <tr><td class="sp">tu<br><i>ты</i></td><td class="ex"><b>-i</b> parli <span class="tr">[пАрли]</span></td><td class="ex"><b>-i</b> vivi <span class="tr">[вИви]</span></td><td class="ex"><b>-i</b> dormi <span class="tr">[дОрми]</span></td></tr>
+        <tr><td class="sp">lui / lei / Lei<br><i>он / она / Вы</i></td><td class="ex"><b>-a</b> parla <span class="tr">[пАрла]</span></td><td class="ex"><b>-e</b> vive <span class="tr">[вИвэ]</span></td><td class="ex"><b>-e</b> dorme <span class="tr">[дОрмэ]</span></td></tr>
+        <tr><td class="sp">noi<br><i>мы</i></td><td class="ex"><b>-iamo</b> parliamo <span class="tr">[парльЯмо]</span></td><td class="ex"><b>-iamo</b> viviamo <span class="tr">[вивьЯмо]</span></td><td class="ex"><b>-iamo</b> dormiamo <span class="tr">[дормьЯмо]</span></td></tr>
+        <tr><td class="sp">voi<br><i>вы</i></td><td class="ex"><b>-ate</b> parlate <span class="tr">[парлАтэ]</span></td><td class="ex"><b>-ete</b> vivete <span class="tr">[вивЭтэ]</span></td><td class="ex"><b>-ite</b> dormite <span class="tr">[дормИтэ]</span></td></tr>
+        <tr><td class="sp">loro<br><i>они</i></td><td class="ex"><b>-ano</b> parlano <span class="tr">[пАрлано]</span></td><td class="ex"><b>-ono</b> vivono <span class="tr">[вИвоно]</span></td><td class="ex"><b>-ono</b> dormono <span class="tr">[дОрмоно]</span></td></tr>
       </tbody>
     </table></div>
-    <div class="box key"><span class="ttl">Как учить</span>
-      Раздел «О себе» во «Фразах» — это те же десять реплик с озвучкой. Порядок: 1) прочитать вслух три раза с транскрипцией; 2) скрыть транскрипцию, прочитать; 3) скрыть итальянское, сказать по русскому переводу; 4) прогнать в занятии в режиме «Диктант».
-      Когда десять фраз идут подряд без запинки, весь рассказ занимает 25 секунд.</div>
-    <div class="box"><span class="ttl">Про Сицилию и предлоги</span>
-      Города — <b>a</b>: <span class="it">a Minsk, a Catania, a Roma</span>. Страны и регионы, острова — <b>in</b>: <span class="it">in Italia, in Sicilia, in Bielorussia</span>.
-      Поэтому «жить в Италии, на Сицилии» — <span class="it">abitare in Italia, in Sicilia</span>, а «учиться в Катании» — <span class="it">studiare a Catania</span>.</div>
+    <div class="fnote">Три группы различаются только в трёх клетках: <b>lui</b> (-a / -e / -e), <b>voi</b> (-ate / -ete / -ite) и <b>loro</b> (-ano / -ono / -ono). io, tu, noi — одинаковые у всех.</div>
+
+    <h3>Куда падает ударение</h3>
+    <div class="flow"><div class="fbranch">
+      <div class="fnode"><small>io · tu · lui · loro — «короткие»</small><b>на основу</b><i>pArlo · pArli · pArla · pArlano<br>vIvo · vIvi · vIve · vIvono</i></div>
+      <div class="fnode"><small>noi · voi — «длинные»</small><b>на окончание</b><i>parliAmo · parlAte<br>viviAmo · vivEte · dormIte</i></div></div></div>
+    <div class="box exc"><span class="ttl">Главная ошибка русских</span> Форма loro читается с ударением на основу: <span class="it">pArlano</span> [пАрлано], <span class="it">vIvono</span> [вИвоно], <span class="it">dOrmono</span> [дОрмоно]. Не [парлАно]. Проверка: loro звучит как io, только с хвостиком -no.</div>
+
+    <h3>Мелочи на письме</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Случай</th><th>Что происходит</th><th>Примеры</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">-care, -gare</td><td>перед -i и -iamo вставляется <b>h</b>, чтобы звук остался [к], [г]</td><td class="ex">pagare → pag<b>h</b>i, pag<b>h</b>iamo · cercare → cerc<b>h</b>i · giocare → gioc<b>h</b>i</td></tr>
+        <tr><td class="sp">-iare</td><td>две i сливаются в одну в формах tu и noi</td><td class="ex">studiare → stud<b>i</b>, stud<b>iamo</b> · mangiare → mang<b>i</b> · passeggiare → passegg<b>i</b></td></tr>
+        <tr><td class="sp">-ire с -isc-</td><td>в формах io, tu, lui, loro перед окончанием вставка <b>-isc-</b>; у noi и voi её нет</td><td class="ex">capire → cap<b>isc</b>o, cap<b>isc</b>i, cap<b>isc</b>e, capiamo, capite, cap<b>isc</b>ono · finire, preferire, pulire</td></tr>
+        <tr><td class="sp">-ere с g</td><td>звук меняется сам собой по правилу чтения: g + o = [г], g + i/e = [дж]</td><td class="ex">leggere → leggo [лЭгго], leggi [лЭджи], legge [лЭдже], leggono [лЭггоно]</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Отрицание, вопрос, местоимение</h3>
+    <div class="flow"><div class="fbranch">
+      <div class="fnode"><small>отрицание</small><b>non + глагол</b><i>Non parlo tedesco.<br>Non capisco.</i></div>
+      <div class="fnode"><small>вопрос</small><b>тот же порядок + интонация вверх</b><i>Parli italiano?<br>Vivi a Roma?</i></div>
+      <div class="fnode"><small>местоимение</small><b>обычно опускают</b><i>Parlo = я говорю<br>Io parlo = именно я</i></div></div></div>
+    <div class="box">Окончание уже показывает, кто действует, поэтому <span class="it">io, tu, noi</span> говорят только для контраста или ясности: <span class="it">Io sono di Minsk, e tu?</span> Имена и существительные, конечно, остаются: <span class="it">Marco parla. La mia ragazza dipinge.</span></div>
+
+    <h3>Какие глаголы не по правилу</h3>
+    <div class="box key"><span class="ttl">Неправильные — учить целиком</span>
+      <span class="it">essere</span> (sono, sei, è…), <span class="it">avere</span> (ho, hai, ha…), <span class="it">fare</span> (faccio…), <span class="it">andare</span> (vado…), <span class="it">stare</span> (sto…), <span class="it">bere</span> (bevo…), <span class="it">venire</span> (vengo…), <span class="it">uscire</span> (esco…), <span class="it">dire</span> (dico…), <span class="it">dare</span> (do…), <span class="it">sapere</span> (so…), <span class="it">volere</span> (voglio…), <span class="it">potere</span> (posso…), <span class="it">dovere</span> (devo…).
+      Полные таблицы — в темах «essere и avere» и «Глаголы на -ere, -ire и главные неправильные». Всё остальное, что ты прошёл, — правильные глаголы по схеме выше.</div>
+
+    <h3>Два глагола подряд</h3>
+    <div class="box">Если первый — <span class="it">voglio / posso / devo</span> (хочу / могу / должен), второй стоит в инфинитиве, как в словаре: <span class="it">Voglio <b>mangiare</b>. Devo <b>lavorare</b>. Vogliamo <b>abitare</b> in Italia.</span> Спрягается только первый. Подробнее — тема «Предлоги места и хочу, могу, должен».</div>
   </div>
 
-  <div class="card" id="g5" data-sec="Грамматика">
+  <div class="card" id="g5" data-sec="Глаголы">
     <h2><span class="no">ГЛАГОЛ</span>essere и avere — как устроены</h2>
     <div class="lead">Два главных глагола языка. На них держится половина фраз уровня A1, и оба — неправильные, поэтому формы заучиваются, а не выводятся.</div>
 
@@ -868,8 +902,8 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
       Потом «Фразы» → раздел «Урок 15.09» вслух.</div>
   </div>
 
-  <div class="card" id="g7" data-sec="Грамматика">
-    <h2><span class="no">-ARE</span>Правильные глаголы на -are: parlare, studiare, amare, abitare</h2>
+  <div class="card" id="g7" data-sec="Глаголы">
+    <h2><span class="no">-ARE</span>Глаголы на -are: parlare, studiare, amare, abitare и ещё 24</h2>
     <div class="lead">Урок 17.09. Первая большая группа глаголов, где формы не заучиваются, а собираются по одному правилу. Выучил одно окончание — знаешь тысячи глаголов.</div>
 
     <div class="flow"><div class="fnode key">parl<span style="opacity:.6">are</span> → parl-<small>отрезаем -are, к основе прибавляем окончание</small></div></div>
@@ -953,9 +987,10 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
     <div class="box"><span class="ttl">Шесть вопросов к тексту — и к любому человеку</span>
       <span class="it">Come si chiama? · Quanti anni ha? · Di dov'è? · Dove abita? · Perché studia l'italiano? · Che lingue parla?</span><br>
       На «ты»: <span class="it">Come ti chiami? · Quanti anni hai? · Di dove sei? · Dove abiti? · Perché studi l'italiano? · Che lingue parli?</span></div>
+  </div>
 
-  <div class="card" id="g10" data-sec="Грамматика">
-    <h2><span class="no">-ERE -IRE</span>Глаголы на -ere, -ire и главные неправильные</h2>
+  <div class="card" id="g10" data-sec="Глаголы">
+    <h2><span class="no">Таблицы</span>Спряжения: -ere, -ire, -isc- и все неправильные</h2>
     <div class="lead">Глаголы для жизни: жить, читать, писать, пить, спать, понимать, идти, делать. Три группы окончаний и десять неправильных, которые нужны каждый день.</div>
     <div class="flow"><div class="fbranch">
       <div class="fcol"><div class="fhead">-are<small>parlare</small></div><div class="fnode"><b style="font-size:18px">-o · -i · -a<br>-iamo · -ate · -ano</b><i>parlo, parli, parla, parliamo, parlate, parlano</i></div></div>
@@ -985,49 +1020,7 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
     <div class="box">После них — инфинитив без предлога: <span class="it">Voglio <b>mangiare</b>. Posso <b>entrare</b>? Devo <b>lavorare</b>.</span> Подробнее — тема «Хочу, могу, должен».</div>
   </div>
 
-  <div class="card" id="g11" data-sec="Грамматика">
-    <h2><span class="no">di a in</span>Предлоги места и «хочу, могу, должен»</h2>
-    <div class="lead">Две схемы, без которых не составить своё предложение: куда ставить di / a / in и как сказать «хочу что-то сделать».</div>
-    <div class="flow"><div class="fbranch">
-      <div class="fnode"><small>откуда · город</small><b>di</b><i>Sono di Minsk<br>Sono di Roma</i></div>
-      <div class="fnode"><small>где, куда · город</small><b>a</b><i>Abito a Minsk<br>Vado a Roma</i></div>
-      <div class="fnode"><small>где, куда · страна, остров, улица, помещение</small><b>in</b><i>in Italia · in Sicilia<br>in corso Dzeržinskij · in un ufficio</i></div></div></div>
-    <div class="fnote">Запомни парой из текста про Кэти: <span class="it">Sono <b>di</b> Boston ma abito <b>a</b> Firenze, <b>in</b> Italia.</span></div>
-    <div class="flow" style="margin-top:12px"><div class="fbranch">
-      <div class="fnode"><small>a + место с артиклем</small><b>al · alla</b><i>al mare · al bar · alla stazione</i></div>
-      <div class="fnode"><small>in + помещение</small><b>in casa · in classe</b><i>без артикля</i></div>
-      <div class="fnode"><small>con · per · da</small><b>с · для · от</b><i>con la mia ragazza · per Roma · da Minsk</i></div></div></div>
-    <h3>Хочу, могу, должен + что сделать</h3>
-    <div class="flow">
-      <div class="fbranch">
-        <div class="fnode"><small>хочу</small><b>voglio</b><i>[вОльо]</i></div>
-        <div class="fnode"><small>могу</small><b>posso</b><i>[пОссо]</i></div>
-        <div class="fnode"><small>должен</small><b>devo</b><i>[дЭво]</i></div></div>
-      <div class="fnode key">+ инфинитив<small>глагол в словарной форме, без предлога</small></div>
-      <div class="fbranch">
-        <div class="fnode"><b style="font-size:17px">Voglio mangiare una pizza.</b><i>Хочу съесть пиццу.</i></div>
-        <div class="fnode"><b style="font-size:17px">Posso entrare?</b><i>Можно войти?</i></div>
-        <div class="fnode"><b style="font-size:17px">Devo lavorare.</b><i>Я должен работать.</i></div></div></div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>Кто</th><th>volere — хотеть</th><th>potere — мочь</th><th>dovere — быть должным</th></tr></thead>
-      <tbody>
-        <tr><td class="sp">io</td><td class="ex"><b>voglio</b> <span class="tr">[вОльо]</span></td><td class="ex"><b>posso</b> <span class="tr">[пОссо]</span></td><td class="ex"><b>devo</b> <span class="tr">[дЭво]</span></td></tr>
-        <tr><td class="sp">tu</td><td class="ex"><b>vuoi</b> <span class="tr">[вуОй]</span></td><td class="ex"><b>puoi</b> <span class="tr">[пуОй]</span></td><td class="ex"><b>devi</b> <span class="tr">[дЭви]</span></td></tr>
-        <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>vuole</b> <span class="tr">[вуОлэ]</span></td><td class="ex"><b>può</b> <span class="tr">[пуО]</span></td><td class="ex"><b>deve</b> <span class="tr">[дЭвэ]</span></td></tr>
-        <tr><td class="sp">noi</td><td class="ex"><b>vogliamo</b> <span class="tr">[вольЯмо]</span></td><td class="ex"><b>possiamo</b> <span class="tr">[поссьЯмо]</span></td><td class="ex"><b>dobbiamo</b> <span class="tr">[доббьЯмо]</span></td></tr>
-        <tr><td class="sp">voi</td><td class="ex"><b>volete</b> <span class="tr">[волЭтэ]</span></td><td class="ex"><b>potete</b> <span class="tr">[потЭтэ]</span></td><td class="ex"><b>dovete</b> <span class="tr">[довЭтэ]</span></td></tr>
-        <tr><td class="sp">loro</td><td class="ex"><b>vogliono</b> <span class="tr">[вОльоно]</span></td><td class="ex"><b>possono</b> <span class="tr">[пОссоно]</span></td><td class="ex"><b>devono</b> <span class="tr">[дЭвоно]</span></td></tr>
-      </tbody>
-    </table></div>
-    <h3>Мне нравится — mi piace</h3>
-    <div class="flow"><div class="fbranch">
-      <div class="fnode"><small>одна вещь или действие</small><b>mi piace</b><i>Mi piace la pizza.<br>Mi piace viaggiare.</i></div>
-      <div class="fnode"><small>много вещей</small><b>mi piacciono</b><i>Mi piacciono i gatti.<br>Mi piacciono le canzoni italiane.</i></div>
-      <div class="fnode"><small>тебе · ему · ей</small><b>ti · gli · le piace</b><i>Ti piace l'Italia?<br>Le piace dipingere.</i></div></div></div>
-    <div class="fnote">Буквально «мне нравится пицца» = «пицца нравится мне»: глагол согласуется с тем, что нравится, а не с «я». Отрицание: <span class="it">Non mi piace.</span></div>
-  </div>
-
-  <div class="card" id="g6" data-sec="Грамматика">
+  <div class="card" id="g6" data-sec="Существительные и артикли">
     <h2><span class="no">L2</span>Артикли il / lo / la / l' — i / gli / le и «мой, твой, Ваш»</h2>
     <div class="lead">Артикль — маленькое слово перед существительным, которого нет в русском. Показывает род и число. Урок 24.09 — единственное число; с уроков 10.09 и 15.09 — <span class="it">la borsa, lo zaino, le matite, gli appunti, il lavoro, i tuoi amici, gli italiani, il mio numero</span>.</div>
     <div class="flow">
@@ -1087,7 +1080,99 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
     <div class="box">Это не отдельные артикли. Предлоги <b>a</b> и <b>di</b> сливаются с артиклем: a + il = <b>al</b> (<span class="it">vicino al mare</span>, «al singolare» на распечатке = «в единственном числе»), di + il = <b>del</b> (<span class="it">paura del buio</span>), a + la = <b>alla</b> (<span class="it">sto alla grande, in culo alla balena</span>). Пока запоминай как готовые формы, полная таблица слияний будет позже.</div>
   </div>
 
-  <div class="card" id="g9" data-sec="Грамматика">
+  <div class="card" id="g12" data-sec="Существительные и артикли">
+    <h2><span class="no">-o -a -e</span>Существительные: род, множественное число, questo / questa, прилагательные</h2>
+    <div class="lead">Три окончания решают всё: род слова, форму множественного числа, артикль и окончание прилагательного при нём.</div>
+    <div class="flow"><div class="fbranch">
+      <div class="fnode"><small>мужской род · -o</small><b>-o → -i</b><i>il ragazzo → i ragazzi<br>il libro → i libri<br>lo zaino → gli zaini</i></div>
+      <div class="fnode"><small>женский род · -a</small><b>-a → -e</b><i>la ragazza → le ragazze<br>la matita → le matite<br>la borsa → le borse</i></div>
+      <div class="fnode"><small>м. или ж. · -e</small><b>-e → -i</b><i>lo studente → gli studenti<br>la lezione → le lezioni<br>il cane → i cani</i></div></div></div>
+    <div class="fnote">Слова на <b>-e</b> бывают и мужского, и женского рода: <span class="it">il nome, il cane, il caffè</span> — м.; <span class="it">la lezione, la stazione, la notte</span> — ж. Их род запоминается вместе со словом (по артиклю).</div>
+
+    <h3>Неопределённый артикль un / una — «какой-то, один»</h3>
+    <div class="flow"><div class="fbranch">
+      <div class="fcol"><div class="fhead">мужской род</div>
+        <div class="fnode"><small>обычно</small><b>un</b><i>un ragazzo, un amico, un caffè</i></div>
+        <div class="fnode"><small>перед s+согласная, z</small><b>uno</b><i>uno studente, uno zaino</i></div></div>
+      <div class="fcol"><div class="fhead">женский род</div>
+        <div class="fnode"><small>перед согласной</small><b>una</b><i>una ragazza, una domanda</i></div>
+        <div class="fnode"><small>перед гласной</small><b>un'</b><i>un'amica, un'artista</i></div></div></div></div>
+    <div class="box">Определённый артикль (<span class="it">il, la…</span>) — «тот самый, известный». Неопределённый (<span class="it">un, una</span>) — «какой-то, один из». <span class="it">Questo è <b>un</b> ragazzo spagnolo</span> — просто некий испанский парень. <span class="it"><b>Il</b> ragazzo a sinistra si chiama Massimo</span> — вот тот, конкретный.</div>
+
+    <h3>Прилагательное подстраивается под существительное</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Тип</th><th>м. ед.</th><th>ж. ед.</th><th>м. мн.</th><th>ж. мн.</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">на -o</td><td class="ex">italian<b>o</b> · stanc<b>o</b></td><td class="ex">italian<b>a</b> · stanc<b>a</b></td><td class="ex">italian<b>i</b> · stanc<b>hi</b></td><td class="ex">italian<b>e</b> · stanc<b>he</b></td></tr>
+        <tr><td class="sp">на -e</td><td class="ex">frances<b>e</b> · felic<b>e</b></td><td class="ex">frances<b>e</b> · felic<b>e</b></td><td class="ex">frances<b>i</b> · felic<b>i</b></td><td class="ex">frances<b>i</b> · felic<b>i</b></td></tr>
+      </tbody>
+    </table></div>
+    <div class="box"><span class="ttl">Примеры из твоих текстов</span>
+      <span class="it">un ragazzo spagnol<b>o</b> · una ragazza american<b>a</b> · i ragazzi frances<b>i</b> · le canzoni italian<b>e</b> · una buonissim<b>a</b> pizza · l'arte italian<b>a</b></span>.
+      Прилагательное обычно стоит <b>после</b> существительного: не «italiana arte», а <span class="it">arte italiana</span>. Исключения (buono, bello, grande…) могут стоять и перед.</div>
+
+    <h3>questo / questa — «это, этот, эта»</h3>
+    <div class="flow"><div class="fbranch">
+      <div class="fnode"><small>м. род</small><b>questo</b><i>Questo è Juan.<br>questo ragazzo</i></div>
+      <div class="fnode"><small>ж. род</small><b>questa</b><i>Questa è Katy.<br>questa mattina</i></div>
+      <div class="fnode"><small>мн. число</small><b>questi · queste</b><i>questi ragazzi<br>queste ragazze</i></div></div></div>
+    <div class="box">Представить кого-то: <span class="it">Questo è Massimo, un mio amico. Questa è Suzanna, una mia amica.</span> Про мужчину — questo, про женщину — questa, независимо от того, кто говорит.</div>
+
+    <h3>Мой, твой, Ваш</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th></th><th>м. р.</th><th>ж. р.</th><th>мн. ч.</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">мой</td><td class="ex"><b>il mio</b> numero</td><td class="ex"><b>la mia</b> ragazza</td><td class="ex">i miei amici / le mie amiche</td></tr>
+        <tr><td class="sp">твой</td><td class="ex"><b>il tuo</b> cellulare</td><td class="ex"><b>la tua</b> borsa</td><td class="ex">i tuoi amici / le tue amiche</td></tr>
+        <tr><td class="sp">Ваш</td><td class="ex"><b>il Suo</b> indirizzo</td><td class="ex"><b>la Sua</b> domanda</td><td class="ex">i Suoi / le Sue</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box">Перед притяжательным стоит артикль: <span class="it">il mio numero</span>, а не «mio numero». Без артикля — только близкие родственники в единственном числе: <span class="it">mio fratello, mia madre</span>. «Один из моих» — <span class="it">un mio amico, una mia amica</span>.</div>
+  </div>
+
+  <div class="card" id="g11" data-sec="Предлоги и связки">
+    <h2><span class="no">di a in</span>Предлоги места и «хочу, могу, должен»</h2>
+    <div class="lead">Две схемы, без которых не составить своё предложение: куда ставить di / a / in и как сказать «хочу что-то сделать».</div>
+    <div class="flow"><div class="fbranch">
+      <div class="fnode"><small>откуда · город</small><b>di</b><i>Sono di Minsk<br>Sono di Roma</i></div>
+      <div class="fnode"><small>где, куда · город</small><b>a</b><i>Abito a Minsk<br>Vado a Roma</i></div>
+      <div class="fnode"><small>где, куда · страна, остров, улица, помещение</small><b>in</b><i>in Italia · in Sicilia<br>in corso Dzeržinskij · in un ufficio</i></div></div></div>
+    <div class="fnote">Запомни парой из текста про Кэти: <span class="it">Sono <b>di</b> Boston ma abito <b>a</b> Firenze, <b>in</b> Italia.</span></div>
+    <div class="flow" style="margin-top:12px"><div class="fbranch">
+      <div class="fnode"><small>a + место с артиклем</small><b>al · alla</b><i>al mare · al bar · alla stazione</i></div>
+      <div class="fnode"><small>in + помещение</small><b>in casa · in classe</b><i>без артикля</i></div>
+      <div class="fnode"><small>con · per · da</small><b>с · для · от</b><i>con la mia ragazza · per Roma · da Minsk</i></div></div></div>
+    <h3>Хочу, могу, должен + что сделать</h3>
+    <div class="flow">
+      <div class="fbranch">
+        <div class="fnode"><small>хочу</small><b>voglio</b><i>[вОльо]</i></div>
+        <div class="fnode"><small>могу</small><b>posso</b><i>[пОссо]</i></div>
+        <div class="fnode"><small>должен</small><b>devo</b><i>[дЭво]</i></div></div>
+      <div class="fnode key">+ инфинитив<small>глагол в словарной форме, без предлога</small></div>
+      <div class="fbranch">
+        <div class="fnode"><b style="font-size:17px">Voglio mangiare una pizza.</b><i>Хочу съесть пиццу.</i></div>
+        <div class="fnode"><b style="font-size:17px">Posso entrare?</b><i>Можно войти?</i></div>
+        <div class="fnode"><b style="font-size:17px">Devo lavorare.</b><i>Я должен работать.</i></div></div></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Кто</th><th>volere — хотеть</th><th>potere — мочь</th><th>dovere — быть должным</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">io</td><td class="ex"><b>voglio</b> <span class="tr">[вОльо]</span></td><td class="ex"><b>posso</b> <span class="tr">[пОссо]</span></td><td class="ex"><b>devo</b> <span class="tr">[дЭво]</span></td></tr>
+        <tr><td class="sp">tu</td><td class="ex"><b>vuoi</b> <span class="tr">[вуОй]</span></td><td class="ex"><b>puoi</b> <span class="tr">[пуОй]</span></td><td class="ex"><b>devi</b> <span class="tr">[дЭви]</span></td></tr>
+        <tr><td class="sp">lui / lei / Lei</td><td class="ex"><b>vuole</b> <span class="tr">[вуОлэ]</span></td><td class="ex"><b>può</b> <span class="tr">[пуО]</span></td><td class="ex"><b>deve</b> <span class="tr">[дЭвэ]</span></td></tr>
+        <tr><td class="sp">noi</td><td class="ex"><b>vogliamo</b> <span class="tr">[вольЯмо]</span></td><td class="ex"><b>possiamo</b> <span class="tr">[поссьЯмо]</span></td><td class="ex"><b>dobbiamo</b> <span class="tr">[доббьЯмо]</span></td></tr>
+        <tr><td class="sp">voi</td><td class="ex"><b>volete</b> <span class="tr">[волЭтэ]</span></td><td class="ex"><b>potete</b> <span class="tr">[потЭтэ]</span></td><td class="ex"><b>dovete</b> <span class="tr">[довЭтэ]</span></td></tr>
+        <tr><td class="sp">loro</td><td class="ex"><b>vogliono</b> <span class="tr">[вОльоно]</span></td><td class="ex"><b>possono</b> <span class="tr">[пОссоно]</span></td><td class="ex"><b>devono</b> <span class="tr">[дЭвоно]</span></td></tr>
+      </tbody>
+    </table></div>
+    <h3>Мне нравится — mi piace</h3>
+    <div class="flow"><div class="fbranch">
+      <div class="fnode"><small>одна вещь или действие</small><b>mi piace</b><i>Mi piace la pizza.<br>Mi piace viaggiare.</i></div>
+      <div class="fnode"><small>много вещей</small><b>mi piacciono</b><i>Mi piacciono i gatti.<br>Mi piacciono le canzoni italiane.</i></div>
+      <div class="fnode"><small>тебе · ему · ей</small><b>ti · gli · le piace</b><i>Ti piace l'Italia?<br>Le piace dipingere.</i></div></div></div>
+    <div class="fnote">Буквально «мне нравится пицца» = «пицца нравится мне»: глагол согласуется с тем, что нравится, а не с «я». Отрицание: <span class="it">Non mi piace.</span></div>
+  </div>
+
+  <div class="card" id="g9" data-sec="Предлоги и связки">
     <h2><span class="no">e ma</span>Служебные слова: союзы, предлоги, частицы</h2>
     <div class="lead">Слова, которые соединяют и уточняют. Здесь всё, что встречалось на распечатках и в тетради, по группам. Как называются: союзы соединяют предложения и слова; предлоги ставятся перед существительным; частицы и наречия уточняют глагол.</div>
     <h3>Союзы — соединяют</h3>
@@ -1141,7 +1226,33 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
     </tbody></table></div>
   </div>
 
-  <div class="card" id="g1" data-sec="Грамматика">
+  <div class="card" id="g8" data-sec="Разговор">
+    <h2><span class="no">Я</span>Рассказ о себе — десять фраз без подготовки</h2>
+    <div class="lead">То, о чём тебя спросит любой итальянец в первые две минуты. Цель — говорить это не думая. Каждая фраза — ответ на конкретный вопрос.</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Вопрос</th><th>Мой ответ</th><th>Читается</th><th>Перевод</th></tr></thead>
+      <tbody>
+        <tr><td class="ex"><i>Come ti chiami?</i></td><td class="ex"><b>Ciao! Mi chiamo Ilia.</b></td><td class="tr">[чАо! ми кьЯмо илИя]</td><td class="why">Привет! Меня зовут Илья.</td></tr>
+        <tr><td class="ex"><i>Di dove sei?</i></td><td class="ex"><b>Sono bielorusso, sono di Minsk.</b></td><td class="tr">[сОно бьелорУссо, сОно ди мИнск]</td><td class="why">Я белорус, я из Минска.</td></tr>
+        <tr><td class="ex"><i>Dove abiti?</i></td><td class="ex"><b>Abito a Minsk, in corso Dzeržinskij.</b></td><td class="tr">[Абито а мИнск, ин кОрсо дзержИнский]</td><td class="why">Живу в Минске, на проспекте Дзержинского.</td></tr>
+        <tr><td class="ex"><i>Quanti anni hai?</i></td><td class="ex"><b>Ho … anni.</b></td><td class="tr">[о … Анни]</td><td class="why">Мне … лет. Число — из таблицы чисел, например <span class="it">trentadue</span>.</td></tr>
+        <tr><td class="ex"><i>Che lingue parli?</i></td><td class="ex"><b>Parlo russo e un po' di italiano.</b></td><td class="tr">[пАрло рУссо э ун пО ди итальЯно]</td><td class="why">Говорю по-русски и немного по-итальянски.</td></tr>
+        <tr><td class="ex"><i>Perché studi l'italiano?</i></td><td class="ex"><b>Studio l'italiano perché voglio studiare e abitare in Italia, in Sicilia.</b></td><td class="tr">[стУдьо литальЯно пэркЭ вОльо студьЯрэ э абитАрэ ин итАлья, ин сичИлья]</td><td class="why">Учу итальянский, потому что хочу учиться и жить в Италии, на Сицилии.</td></tr>
+        <tr><td class="ex"><i>Ami l'Italia?</i></td><td class="ex"><b>Sì, amo l'Italia e l'arte italiana.</b></td><td class="tr">[си, Амо литАлья э лАртэ итальЯна]</td><td class="why">Да, люблю Италию и итальянское искусство.</td></tr>
+        <tr><td class="ex"><i>Hai una ragazza?</i></td><td class="ex"><b>Sì, la mia ragazza è un'artista.</b></td><td class="tr">[си, ла мИа рагАцца э унартИста]</td><td class="why">Да, моя девушка — художница.</td></tr>
+        <tr><td class="ex"><i>Studi o lavori?</i></td><td class="ex"><b>Lavoro e studio: ho molto da fare tutta la settimana.</b></td><td class="tr">[лавОро э стУдьо: о мОльто да фАрэ тУтта ла сэттимАна]</td><td class="why">Работаю и учусь: много дел всю неделю.</td></tr>
+        <tr><td class="ex"><i>Sei pronto?</i></td><td class="ex"><b>Sì, sono pronto per studiare! Piacere di conoscerti!</b></td><td class="tr">[си, сОно прОнто пэр студьЯрэ! пьячЭрэ ди конОшэрти]</td><td class="why">Да, я готов учиться! Рад познакомиться!</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box key"><span class="ttl">Как учить</span>
+      Раздел «О себе» во «Фразах» — это те же десять реплик с озвучкой. Порядок: 1) прочитать вслух три раза с транскрипцией; 2) скрыть транскрипцию, прочитать; 3) скрыть итальянское, сказать по русскому переводу; 4) прогнать в занятии в режиме «Диктант».
+      Когда десять фраз идут подряд без запинки, весь рассказ занимает 25 секунд.</div>
+    <div class="box"><span class="ttl">Про Сицилию и предлоги</span>
+      Города — <b>a</b>: <span class="it">a Minsk, a Catania, a Roma</span>. Страны и регионы, острова — <b>in</b>: <span class="it">in Italia, in Sicilia, in Bielorussia</span>.
+      Поэтому «жить в Италии, на Сицилии» — <span class="it">abitare in Italia, in Sicilia</span>, а «учиться в Катании» — <span class="it">studiare a Catania</span>.</div>
+  </div>
+
+  <div class="card" id="g1" data-sec="Разговор">
     <h2><span class="no">L1</span>Lezione 1: tu и Lei, национальности, chiamarsi, stare</h2>
     <div class="lead">Остальная грамматика первого урока учебника.</div>
     <h3>chiamarsi и stare</h3>
@@ -1204,7 +1315,40 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
     </tbody></table></div>
   </div>
 
-  <div class="card" id="g2" data-sec="Грамматика">
+  <div class="card" id="g13" data-sec="Числа и дни">
+    <h2><span class="no">0–100</span>Числа: три правила и счёт</h2>
+    <div class="lead">Запомнить нужно 29 слов (0–20, десятки, 100), остальное собирается. Тренажёр и таблицы — во вкладке «Числа».</div>
+    <div class="flow"><div class="fbranch">
+      <div class="fnode"><small>1. десяток + единица одним словом</small><b>venti + due = ventidue</b><i>[вэнтидУэ] — ударение на единице</i></div>
+      <div class="fnode"><small>2. перед uno и otto гласная выпадает</small><b>vent<s>i</s>uno = ventuno</b><i>trent<s>a</s>otto = trentotto</i></div>
+      <div class="fnode"><small>3. tre на конце — со знаком</small><b>ventitré · trentatré</b><i>[вэнтитрЭ] — ударение на последний слог</i></div></div></div>
+    <div data-clone="ns-rules"></div>
+  </div>
+
+  <div class="card" id="g14" data-sec="Числа и дни">
+    <h2><span class="no">Lun–Dom</span>Дни недели</h2>
+    <div class="lead">Семь слов, два правила ударения и одна ловушка с артиклем.</div>
+    <div class="flow"><div class="fbranch">
+      <div class="fnode"><small>пн</small><b>lunedì</b><i>[лунэдИ]</i></div>
+      <div class="fnode"><small>вт</small><b>martedì</b><i>[мартэдИ]</i></div>
+      <div class="fnode"><small>ср</small><b>mercoledì</b><i>[мэрколэдИ]</i></div>
+      <div class="fnode"><small>чт</small><b>giovedì</b><i>[джовэдИ]</i></div>
+      <div class="fnode"><small>пт</small><b>venerdì</b><i>[вэнэрдИ]</i></div>
+      <div class="fnode"><small>сб</small><b>sabato</b><i>[сАбато]</i></div>
+      <div class="fnode"><small>вс</small><b>domenica</b><i>[домЭника]</i></div></div></div>
+    <h3>Правила</h3>
+    <div class="tbl-wrap"><table>
+      <tbody>
+        <tr><td class="sp">ударение</td><td class="ex">пять дней на <b>-dì</b> — ударение на последний слог, и это отмечено знаком: lunedì. <span class="it">sAbato</span> — на первый, <span class="it">domEnica</span> — на второй.</td></tr>
+        <tr><td class="sp">маленькая буква</td><td class="ex">дни недели, месяцы и национальности пишутся с маленькой: <span class="it">lunedì, italiano</span>. С большой — только страны и имена.</td></tr>
+        <tr><td class="sp">род</td><td class="ex">все дни — мужского рода (<span class="it">il lunedì</span>), кроме <span class="it"><b>la</b> domenica</span>.</td></tr>
+        <tr><td class="sp">с артиклем = «по …»</td><td class="ex"><span class="it">Lunedì lavoro</span> — в (этот) понедельник работаю. <span class="it"><b>Il</b> lunedì lavoro</span> — по понедельникам, каждый понедельник.</td></tr>
+        <tr><td class="sp">спросить</td><td class="ex"><span class="it">Che giorno è oggi? — Oggi è lunedì.</span> · <span class="it">oggi</span> сегодня · <span class="it">domani</span> завтра · <span class="it">tutta la settimana</span> всю неделю</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card" id="g2" data-sec="Алфавит и тетрадь">
     <h2><span class="no">ABC</span>Алфавит — 21 буква + 5 иностранных</h2>
     <div class="lead">Названия нужны, чтобы диктовать имя: <span class="it">Come si scrive? — I - ELLE - I - A</span>.</div>
     <div class="tbl-wrap"><table>
@@ -1227,7 +1371,7 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
       <b>J</b> [и лУнга] · <b>K</b> [кАппа] · <b>W</b> [дОппья ву] · <b>X</b> [икс] · <b>Y</b> [Ипсилон] или [и грЭка]. Знак @ — <span class="it">chiocciola</span> [кьОччола], точка — <span class="it">punto</span>.</div>
   </div>
 
-  <div class="card" id="g4" data-sec="Грамматика">
+  <div class="card" id="g4" data-sec="Алфавит и тетрадь">
     <h2><span class="no">✎</span>Что в тетради записано с ошибкой</h2>
     <div class="lead">В приложении везде правильные варианты. Стоит исправить и в тетради.</div>
     <div class="tbl-wrap"><table>
@@ -4622,6 +4766,7 @@ function openTopic(id, userClick){
   REF.cur = id; S().refTopic = id; save();
   const src = document.getElementById(id); if (!src) return;
   const clone = src.cloneNode(true); clone.removeAttribute('id');
+  $$('[data-clone]', clone).forEach(el=>{ const srcEl = document.getElementById(el.dataset.clone); if(!srcEl) return; const c = srcEl.cloneNode(true); $$('.card', c).forEach(cd=>{ const h2=cd.querySelector('h2'); if(h2){ const h3=document.createElement('h3'); h3.textContent=h2.textContent; h2.replaceWith(h3); } cd.replaceWith(...cd.childNodes); }); el.replaceWith(...c.childNodes); });
   $$('[data-conj]', clone).forEach(el=>{ el.innerHTML = el.dataset.conj.split(',').map(v=>{ const V=VERBS[v.trim()]; if(!V) return ''; return `<table><thead><tr><th colspan="2">${esc(v.trim())} — ${esc(V.ru)}</th></tr></thead><tbody>${PRON.map((p,i)=>`<tr><td class="sp">${esc(p)}</td><td class="ex"><b>${esc(V.f[i])}</b> <span class="tr">[${esc(V.tr[i])}]</span><br><i>${esc(V.r[i])}</i></td></tr>`).join('')}</tbody></table>`; }).join(''); el.className='conj'; });
   $('#refContent').innerHTML=''; $('#refContent').appendChild(clone); REF.page=0; paginateTopic();
   $$('#topics .tp').forEach(b=> b.classList.toggle('on', b.dataset.t===id));
@@ -5342,25 +5487,16 @@ function paginateTopic(){
   const card = $('#refContent .card'); if (!card) return;
   if (!card.dataset.stacked){ card.dataset.stacked='1'; $$('table', card).forEach(t=>{ const hs=$$('thead th',t).map(x=>x.textContent.trim()); if (hs.length>=3){ t.classList.add('stack'); $$('tbody tr',t).forEach(r=> $$('td',r).forEach((td,i)=>{ if(hs[i]) td.dataset.h=hs[i]; })); } }); }
   const kids = Array.from(card.children).filter(el=> !(el.tagName==='H2' || el.classList.contains('lead')));
-  const pages = []; let cur = {title:'Начало', els:[]};
-  kids.forEach(el=>{ if (el.tagName==='H3'){ if (cur.els.length) pages.push(cur); cur = {title:el.textContent.trim(), els:[]}; } cur.els.push(el); });
-  if (cur.els.length) pages.push(cur);
-  REF.pages = pages; REF.page = Math.min(REF.page||0, pages.length-1);
-  const all = !!S().refAll || pages.length<=1;
-  card.classList.toggle('paged', !all); card.classList.toggle('all', all);
-  $('#refAll').classList.toggle('on', !!S().refAll);
-  $('.pager').style.display = all ? 'none' : ''; $('#pgDots').style.display = all ? 'none' : '';
-  if (all) return;
-  kids.forEach(el=> el.classList.remove('pg-on'));
-  pages[REF.page].els.forEach(el=> el.classList.add('pg-on'));
-  $('#pgDots').innerHTML = pages.map((p,i)=>`<i class="${i===REF.page?'on':''}" title="${esc(p.title)}"></i>`).join('');
-  $('#pgCnt').textContent = `${REF.page+1} / ${pages.length}`;
-  const prev = pages[REF.page-1], nxt = pages[REF.page+1];
-  $('#pgPrev').textContent = prev ? '← '+prev.title : ''; $('#pgPrev').disabled = !prev;
-  $('#pgNext').textContent = nxt ? nxt.title+' →' : ''; $('#pgNext').disabled = !nxt;
+  const secs = []; let cur = null;
+  kids.forEach(el=>{ if (el.tagName==='H3'){ cur={h:el, els:[]}; secs.push(cur); } else if (cur) cur.els.push(el); });
+  REF.secs = secs;
+  const all = !!S().refAll;
+  const setOpen = (s,o)=>{ s.h.classList.toggle('open', o); s.els.forEach(el=> el.classList.toggle('acc-hide', !o)); };
+  secs.forEach((s,i)=>{ s.h.classList.add('acc'); setOpen(s, all || i===0);
+    s.h.onclick = ()=>{ const o = !s.h.classList.contains('open'); setOpen(s,o); if (o) setTimeout(()=> s.h.scrollIntoView({block:'start', behavior:'smooth'}), 30); }; });
+  $('#refAll').classList.toggle('on', all); $('#refAll').textContent = all ? 'свернуть разделы' : 'развернуть всё';
+  $('#refAll').style.display = secs.length ? '' : 'none';
 }
-$('#pgPrev').onclick = ()=>{ REF.page=Math.max(0,(REF.page||0)-1); paginateTopic(); $('#refContent').scrollIntoView({block:'start'}); };
-$('#pgNext').onclick = ()=>{ REF.page=Math.min(REF.pages.length-1,(REF.page||0)+1); paginateTopic(); $('#refContent').scrollIntoView({block:'start'}); };
 $('#refAll').onclick = ()=>{ S().refAll = !S().refAll; save(); paginateTopic(); };
 
 /* ---------------- главная: сегодня ---------------- */
@@ -5458,7 +5594,7 @@ if (location.hash.startsWith('#selftest')){
     log.push('build: '+JSON.stringify(SES.stats)+' pool='+buildPool('all').length+' short='+buildPool('short').length+' verbs='+buildPool('verbs').length+' me='+buildPool('me').length); endSession(); }catch(e){ errs.push('build: '+e.message); }
   try{ showPane('p-build'); const samples=[]; [[0,'parlare',0,false,false],[2,'essere',4,true,false],[5,'avere',0,false,true],[10,'essere',5,false,false],[12,'abitare',1,false,false],[4,'studiare',0,false,true]].forEach(([si,v,ci,neg,q])=>{ CMP.s=si; CMP.v=v; CMP.c=ci; CMP.neg=neg; CMP.q=q; CMP.two=false; renderComposer(); samples.push(compose().it+' = '+compose().ru); });
     CMP.two=true; CMP.conj=2; CMP.s2=0; CMP.v2='amare'; CMP.c2=0; renderComposer(); samples.push(compose().it); $('#cSave').click(); log.push('composer: '+samples.join(' || ')+' | mine='+(ST.mine||[]).length+' cards mine='+CARDS.filter(c=>c.deck==='mine').length+' wide: '+wide().join(', ')); }catch(e){ errs.push('composer: '+e.message); }
-  try{ showPane('p-ref'); openTopic('g5', true); const n=REF.pages.length; $('#pgNext').click(); log.push('ref pages g5='+n+' page='+REF.page+' shown='+$$('#refContent .card > .pg-on').length+' wide: '+wide().join(', ')); openTopic('g9', true); log.push('g9 pages='+REF.pages.length); }catch(e){ errs.push('pager: '+e.message); }
+  try{ showPane('p-ref'); openTopic('g3', true); const n=REF.secs.length; REF.secs[1].h.click(); log.push('ref g3 secs='+n+' open='+$$('#refContent h3.acc.open').length+' hidden='+$$('#refContent .acc-hide').length+' wide: '+wide().join(', ')); openTopic('g13', true); log.push('g13 secs='+REF.secs.length+' cloned h3='+$$('#refContent h3').length+' topics='+REF.topics.length+' secs: '+[...new Set(REF.topics.map(t=>t.sec))].join(' / ')); openTopic('g10', true); log.push('g10 conj tables='+$$('#refContent .conj table').length); }catch(e){ errs.push('accordion: '+e.message); }
   try{ showPane('p-les'); log.push('lesson list='+$$('#lessonList .lesson').length+' wide: '+wide().join(', ')); showPane('p-study'); log.push('today wide: '+wide().join(', ')); }catch(e){ errs.push('les pane: '+e.message); }
   log.push('phrase groups: '+phrGroups().length+' | select opts='+$('#phrGroup').options.length+' | '+phrGroups().join(' · '));
   try{ VD.modes=['pick','type','gap']; startVerbDrill(); let steps=0;
