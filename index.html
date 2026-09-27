@@ -281,6 +281,114 @@ body.num-hide-it .numcell .w{visibility:hidden}
 textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:monospace;font-size:12px;background:var(--bg);color:var(--ink)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .footer{color:var(--muted);font-size:12.5px;margin:26px 0 10px;text-align:center}
+
+/* ============ Сегодня ============ */
+.today{display:grid;gap:10px;margin:4px 0 14px}
+.act{display:flex;align-items:center;gap:14px;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);text-align:left;width:100%}
+.act .ic{font-size:30px;flex:none;width:44px;text-align:center}
+.act .tx{flex:1;min-width:0} .act .tx b{display:block;font-size:17px} .act .tx small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.act .go{flex:none;color:var(--accent);font-weight:700;font-size:14px;white-space:nowrap}
+.act.main{background:var(--accent);border-color:var(--accent);color:#fff} .act.main .tx small,.act.main .go{color:rgba(255,255,255,.85)}
+.act:hover{border-color:var(--accent)}
+.games{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}
+.games button{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 6px;font-size:13.5px;line-height:1.25;display:flex;flex-direction:column;align-items:center;gap:4px}
+.games button .ic{font-size:22px}
+.streakline{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0 10px;color:var(--muted);font-size:13.5px}
+.streakline b{color:var(--ink);font-size:15px}
+@media (min-width:640px){ .today{grid-template-columns:1fr 1fr} .today .act.main{grid-column:1 / -1} }
+
+/* ============ Уроки ============ */
+.lesson{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:13px 16px;margin:8px 0;box-shadow:var(--shadow)}
+.lesson .ic{font-size:26px;flex:none;width:36px;text-align:center}
+.lesson .tx{flex:1;min-width:0} .lesson .tx b{display:block;font-size:16px} .lesson .tx small{display:block;color:var(--muted);font-size:13px}
+.lesson .st{flex:none;font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
+.lesson .st.done{color:var(--ok);font-weight:700}
+.lesson.next{border-color:var(--accent)}
+.lesson.next .st{color:var(--accent);font-weight:700}
+.lesson:hover{border-color:var(--accent)}
+
+/* слайды урока */
+.slide{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow)}
+.slide h2{font-family:Georgia,serif;font-size:23px;margin:0 0 10px;line-height:1.2}
+.slide .body{font-size:16px;line-height:1.55}
+.exl{margin:14px 0 0;display:grid;gap:6px}
+.exl .ex{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;border:1px solid var(--line2);border-radius:10px;padding:8px 12px;background:var(--bg)}
+.exl .ex .i{font-family:Georgia,serif;font-size:17px;font-weight:700} .exl .ex .t{color:var(--accent);font-size:13.5px} .exl .ex .r{color:var(--muted);font-size:13.5px}
+.exl .ex .i,.exl .ex .t,.exl .ex .r{grid-column:1}
+.exl .ex .sp{grid-column:2;grid-row:1 / span 3;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 10px;font-size:14px;align-self:center}
+.exl .ex .sp:empty{display:none}
+.flow{display:grid;gap:10px;justify-items:center}
+.fbranch{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));width:100%}
+.fcol{display:grid;gap:8px;align-content:start}
+.fhead{text-align:center;font-weight:700;padding:8px;border-radius:10px;background:var(--line2)} .fhead small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.fnode{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);text-align:center;min-width:120px}
+.fnode.key{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;font-size:17px;padding:12px 22px}
+.fnode.key small{color:rgba(255,255,255,.85)}
+.fnode small{display:block;color:var(--muted);font-size:12px;line-height:1.3}
+.fnode b{display:block;font-family:Georgia,serif;font-size:24px;color:var(--accent);line-height:1.2;margin:3px 0}
+.fnode i{display:block;font-style:normal;font-family:Georgia,serif;font-size:13.5px;color:var(--ink2)}
+.fnote{margin-top:12px;font-size:14px;color:var(--ink2);background:var(--hl);border:1px solid #e8d9a0;border-radius:10px;padding:9px 12px}
+html[data-theme="dark"] .fnote{border-color:#5a5030}
+.ring{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.rn{border:1px solid var(--line);border-radius:12px;padding:9px 12px;background:var(--bg)}
+.rn span{display:block;font-family:"Courier New",monospace;font-size:12.5px;color:var(--muted)}
+.rn b{font-family:Georgia,serif;font-size:22px;color:var(--accent)} .rn i{font-style:normal;color:var(--accent);font-size:13.5px;margin-left:6px}
+.rn em{display:block;font-style:normal;color:var(--muted);font-size:13px}
+@media (min-width:640px){ .ring{grid-template-columns:repeat(3,1fr)} }
+.arts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.arts .opt{justify-content:center;font-family:Georgia,serif;font-size:22px;padding:16px 6px}
+
+/* конструктор: собери из слов */
+.answer{min-height:58px;border:2px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;background:var(--card)}
+.answer.ok{border-color:var(--ok);border-style:solid} .answer.no{border-color:var(--bad);border-style:solid}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center}
+.tile{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 13px;font-family:Georgia,serif;font-size:18px;box-shadow:var(--shadow);line-height:1.2}
+.tile:hover{border-color:var(--accent)} .tile.used{visibility:hidden}
+.answer .tile{background:var(--accent-bg);border-color:var(--accent)}
+.brow{display:flex;gap:8px;margin-top:12px}
+.brow button{flex:1}
+
+/* конструктор: составь своё */
+.cmp{display:grid;gap:10px}
+.cmp label{display:block;font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:4px}
+.cmp select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);font-size:16px;font-family:Georgia,serif}
+.cmp .row3{display:grid;grid-template-columns:1fr;gap:10px}
+@media (min-width:640px){ .cmp .row3{grid-template-columns:1fr 1fr 1fr} }
+.cmp .tog{display:flex;flex-wrap:wrap;gap:7px}
+.out{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--card);box-shadow:var(--shadow);margin-top:6px}
+.out .it{font-size:24px;font-weight:700;line-height:1.3} .out .tr{display:block;font-size:16px;margin-top:4px} .out .ru{color:var(--ink2);margin-top:6px;font-size:16px}
+.out .note{color:var(--muted);font-size:13px;margin-top:4px}
+.out .btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap} .out .btns button{width:auto;flex:1}
+.mine .drow .w{font-size:16px}
+
+/* Правила: постраничный показ темы */
+.pager{display:flex;align-items:center;gap:8px;margin:10px 0 0}
+.pager button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:11px;padding:11px;font-size:14px;text-align:left}
+.pager button:last-child{text-align:right}
+.pager button:disabled{visibility:hidden}
+.pager .pc{flex:none;color:var(--muted);font-size:13px;white-space:nowrap}
+.pgdots{display:flex;gap:5px;justify-content:center;margin:10px 0 0;flex-wrap:wrap}
+.pgdots i{width:8px;height:8px;border-radius:50%;background:var(--line);display:block} .pgdots i.on{background:var(--accent)}
+#refContent .card.paged > *{display:none}
+#refContent .card.paged > .pg-on, #refContent .card.paged > h2, #refContent .card.paged > .lead{display:block}
+#refContent .card.paged > h2{display:flex}
+#refContent .card.paged.all > *{display:block} #refContent .card.paged.all > h2{display:flex}
+.refopts{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+
+@media (max-width:640px){
+  #refContent table.stack, #refContent table.stack tbody, #refContent table.stack tr, #refContent table.stack td{display:block;width:100%}
+  #refContent table.stack thead{display:none}
+  #refContent table.stack tr{border-bottom:1px solid var(--line);padding:7px 0}
+  #refContent table.stack tr:last-child{border-bottom:none}
+  #refContent table.stack td{border:none;padding:2px 12px;white-space:normal}
+  #refContent table.stack td:empty{display:none}
+  #refContent table.stack td[data-h]::before{content:attr(data-h) " · ";color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;font-family:-apple-system,system-ui,sans-serif;font-weight:700}
+  #refContent table.stack td.sp{font-size:16px}
+}
+/* Ещё */
+.more{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.more button{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:18px 10px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:var(--shadow)}
+.more button .ic{font-size:26px}
 @media print{ .top,nav.bottom,.side,.toolbar,.chips,.abc,.drow .btns,.seg,.refback,.refnext,button.pri{display:none !important} body{padding:0} .pane{display:none} .pane.on{display:block} .dl{border:none} .drow{break-inside:avoid} .refview,.topics{display:block !important} }
 </style>
 </head>
@@ -289,7 +397,9 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
 
 <aside class="side">
   <div class="brand">Итальянский<small>тренажёр · A1</small></div>
-  <button class="nb on" data-p="p-study"><span class="ic">🎯</span>Учить</button>
+  <button class="nb on" data-p="p-study"><span class="ic">🎯</span>Сегодня</button>
+  <button class="nb" data-p="p-les"><span class="ic">📚</span>Уроки</button>
+  <button class="nb" data-p="p-build"><span class="ic">🧩</span>Собрать фразу</button>
   <button class="nb" data-p="p-phr"><span class="ic">💬</span>Фразы</button>
   <button class="nb" data-p="p-num"><span class="ic">🔢</span>Числа</button>
   <button class="nb" data-p="p-all"><span class="ic">🔤</span>Слова</button>
@@ -307,47 +417,129 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
   <button class="icon" data-p="p-set" title="Настройки">⚙️</button>
 </div></div>
 
-<!-- ======================= УЧИТЬ ======================= -->
+<!-- ======================= СЕГОДНЯ ======================= -->
 <div class="pane on" id="p-study"><div class="wrap">
-  <div class="stats">
-    <div class="stat"><b id="stDue">0</b><span>к повторению</span></div>
-    <div class="stat"><b id="stNew">0</b><span>новых сегодня</span></div>
-    <div class="stat"><b id="stKnown">0</b><span>выучено</span></div>
-    <div class="stat"><b id="stStreak">0</b><span>дней подряд</span></div>
+  <div class="pane-head"><h2>Сегодня</h2><span class="sub" id="todayDate"></span></div>
+  <div class="streakline"><span>Дней подряд: <b id="stStreak">0</b></span><span>Выучено: <b id="stKnown">0</b></span><span>К повторению: <b id="stDue">0</b></span></div>
+  <div class="today">
+    <button class="act main" id="startBtn"><span class="ic">🔁</span><span class="tx"><b id="startTitle">Повторить</b><small id="startHint"></small></span><span class="go">Начать ›</span></button>
+    <button class="act" id="lessonBtn"><span class="ic" id="lessonIc">📚</span><span class="tx"><b id="lessonTitle">Урок</b><small id="lessonHint"></small></span><span class="go">Открыть ›</span></button>
+    <button class="act" id="buildBtn"><span class="ic">🧩</span><span class="tx"><b>Собрать 10 фраз</b><small>из перемешанных слов — так учатся строить свои</small></span><span class="go">Играть ›</span></button>
   </div>
-  <button class="pri" id="startBtn">Начать занятие</button>
-  <div class="muted" id="startHint" style="font-size:13px;text-align:center;margin-bottom:8px"></div>
-
-  <div class="card">
-    <h2>Тренажёр глаголов</h2>
-    <div class="lead">Быстрая серия на формы: местоимение + глагол → форма, или предложение с пропуском. Отдельно от карточек, результат сразу.</div>
-    <div class="chips" id="vdVerbs">
-      <button class="chip on" data-v="all">все глаголы</button>
-      <button class="chip" data-v="are">только -are</button>
-      <button class="chip" data-v="ea">essere и avere</button>
-    </div>
-    <div class="chips" id="vdModes">
-      <button class="chip on" data-m="pick">выбрать форму</button>
-      <button class="chip on" data-m="type">написать форму</button>
-      <button class="chip on" data-m="gap">предложение с пропуском</button>
-    </div>
-    <div class="chips"><button class="chip on" id="vdRu">подсказки: перевод каждой формы</button></div>
-    <button class="sec" id="vdStart">▶ Серия из 20 заданий</button>
+  <h3>Быстрые тренажёры</h3>
+  <div class="games">
+    <button id="gVerb"><span class="ic">⚙️</span>Формы глаголов</button>
+    <button id="gNum"><span class="ic">🔢</span>Числа на слух</button>
+    <button id="gPhr"><span class="ic">💬</span>Только фразы</button>
   </div>
 
-  <div class="card">
-    <h2>Режим</h2>
-    <div class="chips" id="modeChips"></div>
-  </div>
-  <div class="card">
-    <h2>Колоды</h2>
-    <div id="deckList"></div>
-  </div>
-  <details class="more"><summary>Как это работает</summary>
-    <div class="muted" style="font-size:14px">Каждое слово — карточка. После верного ответа она возвращается через 1 → 3 → 7 → 14 → 30 дней, после ошибки — через 10 минут.
-      Занятие можно прервать в любой момент, прогресс сохраняется после каждого ответа. Сначала идут просроченные повторы, потом новые слова
-      (лимит в настройках; кнопка «+10» в занятии его обходит). «Смешанный» режим чередует все типы заданий — так запоминается лучше всего.</div>
+  <details class="more" id="studySettings"><summary>Настройка занятия: режим, колоды, тренажёр глаголов</summary>
+    <div class="card" style="box-shadow:none">
+      <h2>Режим заданий</h2>
+      <div class="chips" id="modeChips"></div>
+    </div>
+    <div class="card" style="box-shadow:none">
+      <h2>Колоды</h2>
+      <div id="deckList"></div>
+    </div>
+    <div class="card" style="box-shadow:none">
+      <h2>Тренажёр глаголов</h2>
+      <div class="lead">Серия из 20 заданий: местоимение + глагол → форма, или предложение с пропуском.</div>
+      <div class="chips" id="vdVerbs">
+        <button class="chip on" data-v="all">все глаголы</button>
+        <button class="chip" data-v="are">только -are</button>
+        <button class="chip" data-v="ea">essere и avere</button>
+      </div>
+      <div class="chips" id="vdModes">
+        <button class="chip on" data-m="pick">выбрать форму</button>
+        <button class="chip on" data-m="type">написать форму</button>
+        <button class="chip on" data-m="gap">предложение с пропуском</button>
+      </div>
+      <div class="chips"><button class="chip on" id="vdRu">подсказки: перевод каждой формы</button></div>
+      <button class="sec" id="vdStart">▶ Серия из 20 заданий</button>
+    </div>
+    <div class="muted" style="font-size:13.5px;padding:0 4px">Каждое слово — карточка. После верного ответа она возвращается через 1 → 3 → 7 → 14 → 30 дней, после ошибки — через 10 минут.
+      Сначала идут просроченные повторы, потом новые слова (лимит в настройках). «Смешанный» режим чередует все типы заданий — так запоминается лучше всего.</div>
   </details>
+</div></div>
+
+<!-- ======================= УРОКИ ======================= -->
+<div class="pane" id="p-les"><div class="wrap">
+  <div class="pane-head"><h2>Уроки</h2><span class="sub">идея → схема → задания, 5–10 минут каждый</span></div>
+  <div id="lessonList"></div>
+  <div class="muted" style="font-size:13.5px;margin-top:12px">Урок можно проходить сколько угодно раз. Ошибки внутри урока не влияют на карточки. Подробные таблицы по каждой теме — в «Правилах».</div>
+</div></div>
+
+<!-- ======================= СОБРАТЬ ФРАЗУ ======================= -->
+<div class="pane" id="p-build"><div class="wrap">
+  <div class="pane-head"><h2>Собрать фразу</h2><span class="sub">из готовых слов и по своему выбору</span></div>
+  <div class="seg" id="buildSeg">
+    <button class="on" data-s="bs-words">Из слов</button>
+    <button data-s="bs-own">Составь своё</button>
+    <button data-s="bs-mine">Мои фразы</button>
+  </div>
+  <div class="sub on" id="bs-words">
+    <div class="card">
+      <h2>Собери из слов</h2>
+      <div class="lead">Русская фраза → выбери итальянские слова в правильном порядке. Лишние слова есть. Так тренируется порядок слов, артикли и предлоги — то, что нужно, чтобы строить свои фразы.</div>
+      <div class="chips" id="buildSrc">
+        <button class="chip on" data-src="all">все фразы</button>
+        <button class="chip" data-src="short">короткие (до 4 слов)</button>
+        <button class="chip" data-src="verbs">с глаголами -are</button>
+        <button class="chip" data-src="me">о себе</button>
+      </div>
+      <button class="pri" id="buildStart">▶ 10 фраз</button>
+      <div class="muted" style="font-size:13px" id="buildBest"></div>
+    </div>
+  </div>
+  <div class="sub" id="bs-own">
+    <div class="card">
+      <h2>Составь своё предложение</h2>
+      <div class="lead">Выбери, кто, что делает и что / где — тренажёр соберёт правильную форму, покажет чтение и перевод. Всё из пройденных слов, ошибиться нельзя.</div>
+      <div class="cmp">
+        <div class="row3">
+          <div><label>Кто</label><select id="cSubj"></select></div>
+          <div><label>Глагол</label><select id="cVerb"></select></div>
+          <div><label>Что / где</label><select id="cComp"></select></div>
+        </div>
+        <div class="tog">
+          <button class="chip" id="cNeg">не (non)</button>
+          <button class="chip" id="cQ">вопрос?</button>
+          <button class="chip" id="cPron">с местоимением</button>
+          <button class="chip" id="cTwo">+ второе предложение</button>
+        </div>
+        <div id="cSecond" class="hidden">
+          <div class="row3" style="margin-top:4px">
+            <div><label>Связка</label><select id="cConj"></select></div>
+            <div><label>Кто</label><select id="cSubj2"></select></div>
+            <div><label>Глагол</label><select id="cVerb2"></select></div>
+          </div>
+          <div class="row3" style="margin-top:10px"><div><label>Что / где</label><select id="cComp2"></select></div>
+            <div class="tog" style="align-self:end"><button class="chip" id="cNeg2">не (non)</button></div></div>
+        </div>
+      </div>
+      <div class="out" id="cOut"></div>
+    </div>
+  </div>
+  <div class="sub" id="bs-mine">
+    <div class="card mine">
+      <h2>Мои фразы</h2>
+      <div class="lead">То, что ты собрал сам и сохранил. Учатся как обычные карточки в колоде «Мои фразы» и попадают в диктант.</div>
+      <div class="dl" id="mineList"></div>
+      <button class="sec" id="mineLearn" style="margin-top:10px">▶ Учить мои фразы</button>
+    </div>
+  </div>
+</div></div>
+
+<!-- ======================= ЕЩЁ ======================= -->
+<div class="pane" id="p-more"><div class="wrap">
+  <div class="pane-head"><h2>Ещё</h2></div>
+  <div class="more">
+    <button data-p="p-num"><span class="ic">🔢</span>Числа</button>
+    <button data-p="p-all"><span class="ic">🔤</span>Все слова</button>
+    <button data-p="p-ref"><span class="ic">📐</span>Правила</button>
+    <button data-p="p-set"><span class="ic">⚙️</span>Настройки</button>
+  </div>
 </div></div>
 
 <!-- ======================= ФРАЗЫ ======================= -->
@@ -502,8 +694,10 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
   <div class="ref list-mode" id="ref">
     <div class="topics" id="topics"></div>
     <div class="refview" id="refview">
-      <button class="refback" id="refBack">← Все темы</button>
+      <div class="refopts"><button class="refback" id="refBack">← Все темы</button><span style="flex:1"></span><button class="chip" id="refAll">показать всё</button></div>
       <div id="refContent"></div>
+      <div class="pgdots" id="pgDots"></div>
+      <div class="pager"><button id="pgPrev"></button><span class="pc" id="pgCnt"></span><button id="pgNext"></button></div>
       <div class="refnext"><button id="refPrev"></button><button id="refNext"></button></div>
     </div>
   </div>
@@ -737,7 +931,20 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
 
   <div class="card" id="g6" data-sec="Грамматика">
     <h2><span class="no">L2</span>Артикли il / lo / la / l' — i / gli / le и «мой, твой, Ваш»</h2>
-    <div class="lead">С уроков 10.09 и 15.09: <span class="it">la borsa, lo zaino, le matite, gli appunti, gli studi, il lavoro, i tuoi amici, i ragazzi, gli italiani, il mio numero</span>.</div>
+    <div class="lead">Артикль — маленькое слово перед существительным, которого нет в русском. Показывает род и число. Урок 24.09 — единственное число; с уроков 10.09 и 15.09 — <span class="it">la borsa, lo zaino, le matite, gli appunti, il lavoro, i tuoi amici, gli italiani, il mio numero</span>.</div>
+    <h3>Единственное число — таблица с распечатки 24.09</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Перед чем</th><th>мужской</th><th>женский</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">согласная</td><td class="ex"><b>il</b> signore <span class="tr">[иль синьОрэ]</span></td><td class="ex"><b>la</b> signora <span class="tr">[ла синьОра]</span></td></tr>
+        <tr><td class="sp">гласная</td><td class="ex"><b>l'</b>amico <span class="tr">[лАмико]</span></td><td class="ex"><b>l'</b>amica <span class="tr">[лАмика]</span></td></tr>
+        <tr><td class="sp">s + согласная, z</td><td class="ex"><b>lo</b> straniero <span class="tr">[ло страньЕро]</span></td><td class="ex"><b>la</b> straniera <span class="tr">[ла страньЕра]</span> — у женского lo нет</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box key"><span class="ttl">Языки — мужского рода, поэтому il / lo / l'</span>
+      <span class="it">l'italiano · l'inglese · l'olandese · il russo · il francese · il greco · il tedesco · il portoghese · il giapponese · il bielorusso · lo spagnolo · lo svedese</span>.
+      В тетради: «Parli il greco? — No, purtroppo, non parlo il greco. — Sì, giusto! Hai indovinato!» (игра «угадай язык»).</div>
+    <h3>Единственное и множественное</h3>
     <div class="tbl-wrap"><table>
       <thead><tr><th>Род</th><th>ед. ч.</th><th>мн. ч.</th><th>Когда</th><th>Примеры</th></tr></thead>
       <tbody>
@@ -763,8 +970,62 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
     </table></div>
     <div class="box">Артикль перед притяжательным обязателен: не «mio numero», а <span class="it">il mio numero</span>. Исключение — близкие родственники в единственном числе: <span class="it">mio fratello</span>, без артикля.
       Suo/Sua с большой буквы, когда это вежливое «Ваш».</div>
-    <h3>Слияние предлога с артиклем</h3>
-    <div class="box">Предлоги <b>a</b> и <b>di</b> сливаются с артиклем: a + il = <b>al</b> (<span class="it">vicino al mare</span>), di + il = <b>del</b> (<span class="it">paura del buio</span>), a + la = <b>alla</b> (<span class="it">sto alla grande, in culo alla balena</span>). Пока запоминай как готовые формы.</div>
+    <h3>al, alla, del — предлог + артикль одним словом</h3>
+    <div class="box">Это не отдельные артикли. Предлоги <b>a</b> и <b>di</b> сливаются с артиклем: a + il = <b>al</b> (<span class="it">vicino al mare</span>, «al singolare» на распечатке = «в единственном числе»), di + il = <b>del</b> (<span class="it">paura del buio</span>), a + la = <b>alla</b> (<span class="it">sto alla grande, in culo alla balena</span>). Пока запоминай как готовые формы, полная таблица слияний будет позже.</div>
+  </div>
+
+  <div class="card" id="g9" data-sec="Грамматика">
+    <h2><span class="no">e ma</span>Служебные слова: союзы, предлоги, частицы</h2>
+    <div class="lead">Слова, которые соединяют и уточняют. Здесь всё, что встречалось на распечатках и в тетради, по группам. Как называются: союзы соединяют предложения и слова; предлоги ставятся перед существительным; частицы и наречия уточняют глагол.</div>
+    <h3>Союзы — соединяют</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Слово</th><th>Читается</th><th>Значение</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">e</td><td class="tr">[э]</td><td>и</td><td class="ex">Parlo russo <b>e</b> un po' di italiano. <i>Не путать с è — «есть».</i></td></tr>
+        <tr><td class="sp">ma</td><td class="tr">[ма]</td><td>но</td><td class="ex">Sto alla grande, <b>ma</b> ho un po' di sonno.</td></tr>
+        <tr><td class="sp">o</td><td class="tr">[о]</td><td>или</td><td class="ex">Tè <b>o</b> caffè? <i>Не путать с ho — «имею».</i></td></tr>
+        <tr><td class="sp">perché</td><td class="tr">[пэркЭ]</td><td>почему? · потому что</td><td class="ex"><b>Perché</b> studi l'italiano? — <b>Perché</b> amo l'Italia.</td></tr>
+        <tr><td class="sp">nonostante</td><td class="tr">[ноностАнтэ]</td><td>несмотря на</td><td class="ex"><b>Nonostante</b> la pioggia… — из тетради 17.09</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Предлоги — перед существительным</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Слово</th><th>Читается</th><th>Значение</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">di</td><td class="tr">[ди]</td><td>откуда; чей; «немного чего»</td><td class="ex">Sono <b>di</b> Minsk · il cane <b>di</b> Mei · un po' <b>di</b> fame · piacere <b>di</b> conoscerti</td></tr>
+        <tr><td class="sp">a</td><td class="tr">[а]</td><td>в (город); к</td><td class="ex">Abito <b>a</b> Minsk · Sono <b>a</b> Roma · <b>a</b> presto, <b>a</b> domani</td></tr>
+        <tr><td class="sp">in</td><td class="tr">[ин]</td><td>в (страна, остров, улица, помещение)</td><td class="ex"><b>in</b> Italia · <b>in</b> Sicilia · <b>in</b> corso Dzeržinskij · <b>in</b> un ufficio</td></tr>
+        <tr><td class="sp">con</td><td class="tr">[кон]</td><td>с</td><td class="ex">caffè <b>con</b> latte</td></tr>
+        <tr><td class="sp">per</td><td class="tr">[пэр]</td><td>для; чтобы</td><td class="ex">Sono pronto <b>per</b> studiare.</td></tr>
+        <tr><td class="sp">da</td><td class="tr">[да]</td><td>от; «что надо сделать»</td><td class="ex">Ho molto <b>da</b> fare — много дел (букв. «много, что делать»)</td></tr>
+        <tr><td class="sp">al · alla · del</td><td class="tr">[аль · Алла · дэль]</td><td>a + il · a + la · di + il</td><td class="ex">vicino <b>al</b> mare · sto <b>alla</b> grande · paura <b>del</b> buio</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Частицы и наречия — уточняют глагол</h3>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Слово</th><th>Читается</th><th>Значение</th><th>Пример</th></tr></thead>
+      <tbody>
+        <tr><td class="sp">non</td><td class="tr">[нон]</td><td>не — всегда перед глаголом</td><td class="ex"><b>Non</b> parlo tedesco. <b>Non</b> c'è male.</td></tr>
+        <tr><td class="sp">sì / no</td><td class="tr">[си / но]</td><td>да / нет</td><td class="ex"><b>Sì</b>, un po'. — <b>No</b>, purtroppo.</td></tr>
+        <tr><td class="sp">anche</td><td class="tr">[Анкэ]</td><td>тоже, также</td><td class="ex"><b>Anch'io</b>! · Hai <b>anche</b> il fisso?</td></tr>
+        <tr><td class="sp">molto</td><td class="tr">[мОльто]</td><td>очень; много</td><td class="ex"><b>molto</b> bene · <b>molta</b> fame (с существительным меняет окончание)</td></tr>
+        <tr><td class="sp">un po'</td><td class="tr">[ун пО]</td><td>немного</td><td class="ex">Parlo <b>un po'</b> di italiano. — перед существительным нужен di</td></tr>
+        <tr><td class="sp">già</td><td class="tr">[джа]</td><td>уже</td><td class="ex">Parli <b>già</b> bene l'italiano!</td></tr>
+        <tr><td class="sp">ancora</td><td class="tr">[анкОра]</td><td>ещё, всё ещё</td><td class="ex">Sei <b>ancora</b> studentessa?</td></tr>
+        <tr><td class="sp">purtroppo</td><td class="tr">[пуртрОппо]</td><td>к сожалению</td><td class="ex"><b>Purtroppo</b> non parlo il greco.</td></tr>
+        <tr><td class="sp">bene / male</td><td class="tr">[бЭнэ / мАлэ]</td><td>хорошо / плохо</td><td class="ex">Sto <b>bene</b>. Parli <b>bene</b> l'italiano.</td></tr>
+        <tr><td class="sp">d'accordo</td><td class="tr">[даккОрдо]</td><td>договорились, согласен</td><td class="ex"><b>D'accordo</b>!</td></tr>
+      </tbody>
+    </table></div>
+    <h3>Вопросительные слова</h3>
+    <div class="tbl-wrap"><table><tbody>
+      <tr><td class="sp">come</td><td class="ex">как — <span class="it">Come stai? Come ti chiami?</span></td></tr>
+      <tr><td class="sp">dove · di dove</td><td class="ex">где · откуда — <span class="it">Dove abiti? Di dove sei?</span></td></tr>
+      <tr><td class="sp">chi · che · che cosa</td><td class="ex">кто · какой, что · что — <span class="it">Chi è? Che lingue parli? Che cosa fai?</span></td></tr>
+      <tr><td class="sp">quanti · quante</td><td class="ex">сколько — <span class="it">Quanti anni hai?</span></td></tr>
+      <tr><td class="sp">qual è</td><td class="ex">какой (из) — <span class="it">Qual è il tuo numero?</span></td></tr>
+      <tr><td class="sp">perché</td><td class="ex">почему — <span class="it">Perché studi l'italiano?</span></td></tr>
+    </tbody></table></div>
   </div>
 
   <div class="card" id="g1" data-sec="Грамматика">
@@ -859,6 +1120,8 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
     <div class="tbl-wrap"><table>
       <thead><tr><th>В тетради</th><th>Правильно</th><th>Пояснение</th></tr></thead>
       <tbody>
+        <tr><td class="ex">Portrapo</td><td class="ex"><b>Purtroppo</b></td><td>к сожалению (24.09; 17.09 было Portpoppo)</td></tr>
+        <tr><td class="ex">Sì giusto indovinato</td><td class="ex"><b>Sì, giusto! Hai indovinato!</b></td><td>«ты угадал» — нужен глагол hai (24.09)</td></tr>
         <tr><td class="ex">Portpoppo</td><td class="ex"><b>Purtroppo</b></td><td>к сожалению (17.09)</td></tr>
         <tr><td class="ex">amiricana</td><td class="ex"><b>americana</b></td><td>американка (лист 17.09)</td></tr>
         <tr><td class="ex">Ho paura di buio</td><td class="ex"><b>Ho paura del buio</b></td><td>di + il = del (15.09)</td></tr>
@@ -1360,7 +1623,7 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
 
 
   </div><!-- /refSrc -->
-  <div class="footer">Источники: тетрадь, распечатка FORMITALIA (упр. 1–27), Nuovo Espresso 1 — Lezione 1–2, листы и домашки 20.08 – 15.09. Обновлено 17.09.2026.</div>
+  <div class="footer">Источники: тетрадь, распечатка FORMITALIA (упр. 1–27), Nuovo Espresso 1 — Lezione 1–2, листы и домашки 20.08 – 24.09. Обновлено 27.09.2026.</div>
 </div></div>
 
 <!-- ======================= НАСТРОЙКИ ======================= -->
@@ -1428,11 +1691,11 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:1
 </div>
 
 <nav class="bottom">
-  <button class="on" data-p="p-study"><span class="ic">🎯</span>Учить</button>
+  <button class="on" data-p="p-study"><span class="ic">🎯</span>Сегодня</button>
+  <button data-p="p-les"><span class="ic">📚</span>Уроки</button>
+  <button data-p="p-build"><span class="ic">🧩</span>Собрать</button>
   <button data-p="p-phr"><span class="ic">💬</span>Фразы</button>
-  <button data-p="p-num"><span class="ic">🔢</span>Числа</button>
-  <button data-p="p-all"><span class="ic">🔤</span>Слова</button>
-  <button data-p="p-ref"><span class="ic">📐</span>Правила</button>
+  <button data-p="p-more"><span class="ic">☰</span>Ещё</button>
 </nav>
 
 <script>
@@ -2446,6 +2709,12 @@ const LEX = [
 ["fr","D'accordo? — D'accordo!","даккОрдо — даккОрдо","Согласен? — Согласен!",""],
 ["fr","Sai…? — Lo so. / Non lo so.","сАй — ло сО / нон ло сО","Знаешь…? — Знаю. / Не знаю.","lo = «это»"],
 
+["fr","#","","Угадай язык"],
+["fr","Parli il greco?","пАрли иль грЭко","Ты говоришь по-гречески?","игра с урока 24.09: язык с артиклем"],
+["fr","No, purtroppo, non parlo il greco.","но, пуртрОппо, нон пАрло иль грЭко","Нет, к сожалению, я не говорю по-гречески.","в тетради Portrapo → purtroppo"],
+["fr","Sì, giusto! Hai indovinato!","си, джУсто! ай индовинАто","Да, верно! Ты угадал!","в тетради «Sì giusto indovinato» — нужен глагол hai"],
+["fr","Ciao a tutti!","чАо а тУтти","Всем привет!","начало письменного задания 24.09"],
+["fr","Questa è una mia amica.","куЭста э Уна мИа амИка","Это моя подруга.","una mia amica — букв. «одна моя подруга»"],
 ["fr","#","","О себе"],
 ["fr","Ciao! Mi chiamo Ilia.","чАо! ми кьЯмо илИя","Привет! Меня зовут Илья.","ответ на Come ti chiami?"],
 ["fr","Sono bielorusso, sono di Minsk.","сОно бьелорУссо, сОно ди мИнск","Я белорус, я из Минска.","ответ на Di dove sei?"],
@@ -3057,6 +3326,19 @@ const LEX = [
 ["gram","gli","льи","артикль м. р. мн. ч. перед z, s+согл., гласной","gli appunti, gli studi, gli zaini, gli amici"],
 ["gram","le","лэ","артикль ж. р. мн. ч.","le matite, le borse"],
 
+["gram","#","","Языки с артиклем"],
+["gram","l'italiano","литальЯно","итальянский (язык)","гласная → l'"],
+["gram","l'inglese","линглЭзэ","английский (язык)","гласная → l'"],
+["gram","l'olandese","лоландЭзэ","голландский (язык)","гласная → l'"],
+["gram","il russo","иль рУссо","русский (язык)",""],
+["gram","il francese","иль франчЭзэ","французский (язык)",""],
+["gram","il greco","иль грЭко","греческий (язык)",""],
+["gram","il tedesco","иль тэдЭско","немецкий (язык)",""],
+["gram","il portoghese","иль портогЭзэ","португальский (язык)",""],
+["gram","il giapponese","иль джаппонЭзэ","японский (язык)",""],
+["gram","il bielorusso","иль бьелорУссо","белорусский (язык)",""],
+["gram","lo spagnolo","ло спаньОло","испанский (язык)","s + согласная → lo"],
+["gram","lo svedese","ло звэдЭзэ","шведский (язык)","s + согласная → lo"],
 ["gram","#","","Глаголы на -are"],
 ["gram","io parlo","Ио пАрло","я говорю (parlare)",""],
 ["gram","tu parli","ту пАрли","ты говоришь (parlare)",""],
@@ -3112,6 +3394,266 @@ const LEX = [
 ["alfa","Y","Ипсилон / и грЭка","буква Y (только в иностранных словах)",""]
 ];
 
+/* ====================================================================
+   УРОКИ (пошаговые: идея → схема → задания) и КОНСТРУКТОР ФРАЗ
+   Только материал, который был на распечатках и в тетради.
+   Типы шагов:
+     idea   — одна мысль на экран: h, body (html), ex [[it,tr,ru],...]
+     scheme — визуальная схема: h, html
+     mc     — выбор ответа: q (html), opts [..], a (индекс верного), why
+     art    — какой артикль: w, ru, a ('il'|'lo'|"l'"|'la'), why
+     gap    — предложение с пропуском из GAPS: verb
+     form   — написать форму: verb, p (0..5)
+     build  — собрать фразу из слов: it, ru, tr
+     card   — карточка из колод в заданном режиме: key, mode (trans|mcru|mcit)
+     num    — число → слово: n
+   ==================================================================== */
+const LESSONS = [
+{ id:'read', icon:'🔤', title:'Чтение: c, g, sc', sub:'мягко перед e, i — твёрдо перед a, o, u', steps:[
+  { t:'idea', h:'Одно правило на три буквы', body:'<b>c</b>, <b>g</b> и <b>sc</b> читаются мягко перед <b>e</b> и <b>i</b>, твёрдо перед <b>a, o, u</b> и согласными. Буква <b>h</b> ничего не произносит — она делает звук твёрдым там, где иначе он был бы мягким.',
+    ex:[['ciao','чАо','привет'],['cena','чЭна','ужин'],['casa','кАза','дом'],['chiave','кьЯвэ','ключ'],['gelato','джелАто','мороженое'],['gatto','гАтто','кот'],['spaghetti','спагЭтти','спагетти'],['sciarpa','шАрпа','шарф'],['scuola','скуОла','школа']] },
+  { t:'scheme', h:'Схема', html:`<div class="flow">
+      <div class="fnode key">c · g · sc</div>
+      <div class="fbranch"><div class="fnode">+ e, i<small>мягко</small><b>ч · дж · ш</b><i>ciao, gelato, sciarpa</i></div>
+        <div class="fnode">+ a, o, u<small>твёрдо</small><b>к · г · ск</b><i>casa, gatto, scuola</i></div>
+        <div class="fnode">+ h + e, i<small>h = «твёрдо!»</small><b>к · г · ск</b><i>chiave, spaghetti, schema</i></div></div></div>` },
+  { t:'card', key:'cappello', mode:'trans' }, { t:'card', key:'giorno', mode:'trans' }, { t:'card', key:'sciarpa', mode:'trans' },
+  { t:'card', key:'chiave', mode:'trans' }, { t:'card', key:'zucchero', mode:'trans' }, { t:'card', key:'famiglia', mode:'trans' },
+  { t:'mc', q:'Как читается <span class="it">ghiaccio</span> (лёд)?', opts:['[гьЯччо]','[джьЯччо]','[гиАкио]','[гьЯкко]'], a:0, why:'gh перед i — твёрдое [г]; cci перед o — [чч].' },
+  { t:'mc', q:'Где буква h делает звук твёрдым?', opts:['chiave','ciao','gelato','sciarpa'], a:0, why:'ch + i = [кь]. В остальных словах h нет, звук мягкий.' },
+]},
+
+{ id:'essere', icon:'👤', title:'Essere — быть', sub:'кто я, откуда, какой', steps:[
+  { t:'idea', h:'Форма глагола сама говорит, кто', body:'В итальянском окончание глагола показывает лицо, поэтому местоимение обычно опускают. <span class="it">Sono di Minsk</span> — уже понятно, что «я». Местоимение добавляют для контраста: <span class="it">Io sono di Minsk, e tu?</span>',
+    ex:[['Sono di Minsk.','сОно ди минск','(Я) из Минска.'],['Sei stanco?','сЭй стАнко','(Ты) устал?'],['È di Roma.','э ди рОма','(Он/она) из Рима.']] },
+  { t:'scheme', h:'Шесть форм', html:`<div class="ring">
+      <div class="rn"><span>io</span><b>sono</b><i>[сОно]</i><em>я (есть)</em></div>
+      <div class="rn"><span>tu</span><b>sei</b><i>[сЭй]</i><em>ты</em></div>
+      <div class="rn"><span>lui / lei / Lei</span><b>è</b><i>[э]</i><em>он / она / Вы</em></div>
+      <div class="rn"><span>noi</span><b>siamo</b><i>[сьЯмо]</i><em>мы</em></div>
+      <div class="rn"><span>voi</span><b>siete</b><i>[сьЭтэ]</i><em>вы</em></div>
+      <div class="rn"><span>loro</span><b>sono</b><i>[сОно]</i><em>они</em></div></div>
+      <div class="fnote"><b>è</b> со знаком — «есть». <b>e</b> без знака — «и». <b>sono</b> — и «я», и «они»: смотри на контекст.</div>` },
+  { t:'idea', h:'Когда нужен essere', body:'Кто ты, откуда, какой, где находишься, какой национальности. Всё, что по-русски говорится без глагола: «я — Илья», «я из Минска», «я устал».',
+    ex:[['Sono Ilia.','сОно илИя','Я — Илья.'],['Sono bielorusso.','сОно бьелорУссо','Я белорус.'],['Sono stanco.','сОно стАнко','Я устал.'],['Siamo a Roma.','сьЯмо а рОма','Мы в Риме.'],['Sono i ragazzi francesi.','сОно и рагАцци франчЭзи','Это французские ребята.']] },
+  { t:'mc', q:'<span class="it">Sei stanco?</span> — к кому обращаются?', opts:['к тебе (ты)','к нему (он)','к вам (все)','ко мне (я)'], a:0, why:'sei — форма tu.' },
+  { t:'mc', q:'<span class="it">Marco ___ Anna sono stanchi.</span> Что вставить?', opts:['e','è','ed è','sono'], a:0, why:'«Марко и Анна» — союз e без знака. è со знаком — глагол «есть».' },
+  { t:'gap', verb:'essere' }, { t:'gap', verb:'essere' },
+  { t:'build', it:'Sono di Minsk.', ru:'Я из Минска.', tr:'сОно ди минск' },
+  { t:'build', it:'Non sono italiano, sono bielorusso.', ru:'Я не итальянец, я белорус.', tr:'нон сОно итальЯно, сОно бьелорУссо' },
+  { t:'build', it:'Siete di Roma?', ru:'Вы из Рима?', tr:'сьЭтэ ди рОма' },
+  { t:'form', verb:'essere', p:3 }, { t:'form', verb:'essere', p:4 },
+]},
+
+{ id:'avere', icon:'🤲', title:'Avere — иметь', sub:'у меня есть; голод, жажда, возраст', steps:[
+  { t:'idea', h:'«У меня есть» = «я имею»', body:'Там, где русский говорит «у меня есть», итальянец говорит «я имею»: <span class="it">Ho un cane</span>. Буква <b>h</b> в формах не читается — она только отличает <span class="it">ho</span> от <span class="it">o</span> («или») и <span class="it">ha</span> от <span class="it">a</span> («в»).',
+    ex:[['Ho un cane.','о ун кАнэ','У меня есть собака.'],['Hai un gatto?','ай ун гАтто','У тебя есть кот?'],['Abbiamo una domanda.','аббьЯмо Уна домАнда','У нас есть вопрос.']] },
+  { t:'scheme', h:'Шесть форм', html:`<div class="ring">
+      <div class="rn"><span>io</span><b>ho</b><i>[о]</i><em>у меня есть</em></div>
+      <div class="rn"><span>tu</span><b>hai</b><i>[ай]</i><em>у тебя есть</em></div>
+      <div class="rn"><span>lui / lei / Lei</span><b>ha</b><i>[а]</i><em>у него / у неё есть</em></div>
+      <div class="rn"><span>noi</span><b>abbiamo</b><i>[аббьЯмо]</i><em>у нас есть</em></div>
+      <div class="rn"><span>voi</span><b>avete</b><i>[авЭтэ]</i><em>у вас есть</em></div>
+      <div class="rn"><span>loro</span><b>hanno</b><i>[Анно]</i><em>у них есть</em></div></div>
+      <div class="fnote">Две формы с двойной согласной: a<b>bb</b>iamo, ha<b>nn</b>o. Остальные — коротышки в одну-две буквы.</div>` },
+  { t:'idea', h:'Где русский чувствует, итальянец «имеет»', body:'Голод, жажда, сон, холод, страх и возраст — всё это по-итальянски «имеют». Учи целиком, как одно слово.',
+    ex:[['Ho fame.','о фАмэ','Я голоден. (имею голод)'],['Ho sete.','о сЭтэ','Хочу пить.'],['Ho sonno.','о сОнно','Хочу спать.'],['Ho freddo.','о фрЭддо','Мне холодно.'],['Ho 23 anni.','о вэнтитрЭ Анни','Мне 23 года.'],['Ho paura del buio.','о паУра дэль бУйо','Я боюсь темноты.'],['Ho molto da fare.','о мОльто да фАрэ','У меня много дел.']] },
+  { t:'mc', q:'«Мне 30 лет» — как сказать?', opts:['Ho trenta anni.','Sono trenta anni.','Sono trenta.','Ho trenta.'], a:0, why:'Возраст «имеют»: ho + число + anni.' },
+  { t:'mc', q:'«Ты голоден?»', opts:['Hai fame?','Sei fame?','Hai fama?','Sei affamato?'], a:0, why:'avere + fame. sei — это essere, не подходит; fama — «слава».' },
+  { t:'gap', verb:'avere' }, { t:'gap', verb:'avere' },
+  { t:'build', it:'Ho un po\' di fame.', ru:'Я немного голоден.', tr:'о ун пО ди фАмэ' },
+  { t:'build', it:'Hai un po\' di tempo?', ru:'У тебя есть немного времени?', tr:'ай ун пО ди тЭмпо' },
+  { t:'build', it:'Noi abbiamo molta fame.', ru:'Мы очень голодны.', tr:'ной аббьЯмо мОльта фАмэ' },
+  { t:'form', verb:'avere', p:5 }, { t:'form', verb:'avere', p:3 },
+]},
+
+{ id:'art', icon:'🏷️', title:'Артикли il, lo, l\', la', sub:'урок 24.09: маленькое слово перед существительным', steps:[
+  { t:'idea', h:'Что такое артикль', body:'Маленькое слово перед существительным. По-русски его нет, по-итальянски он стоит почти всегда: не «signore», а <span class="it">il signore</span>. Он показывает <b>род</b> (мужской / женский) и <b>число</b>. Выбор зависит всего от двух вещей: род слова и его первая буква.',
+    ex:[['il signore','иль синьОрэ','синьор (м.)'],['la signora','ла синьОра','синьора (ж.)'],['l\'amico','лАмико','друг'],['l\'amica','лАмика','подруга'],['lo straniero','ло страньЕро','иностранец'],['la straniera','ла страньЕра','иностранка']] },
+  { t:'scheme', h:'Как выбрать — две проверки', html:`<div class="flow">
+      <div class="fnode key">Существительное<small>в единственном числе</small></div>
+      <div class="fbranch">
+        <div class="fcol"><div class="fhead">мужской род<small>обычно на -o</small></div>
+          <div class="fnode"><small>перед гласной</small><b>l'</b><i>l'amico, l'italiano</i></div>
+          <div class="fnode"><small>перед s+согласная, z</small><b>lo</b><i>lo studente, lo zaino, lo spagnolo</i></div>
+          <div class="fnode"><small>перед остальными</small><b>il</b><i>il signore, il russo</i></div></div>
+        <div class="fcol"><div class="fhead">женский род<small>обычно на -a</small></div>
+          <div class="fnode"><small>перед гласной</small><b>l'</b><i>l'amica</i></div>
+          <div class="fnode"><small>перед любой согласной</small><b>la</b><i>la signora, la borsa, la studentessa</i></div></div>
+      </div></div>
+      <div class="fnote">Множественное число будет позже: il → i, lo и l' → gli, la и l' → le.</div>` },
+  { t:'idea', h:'Языки — мужского рода и с артиклем', body:'Все названия языков — мужского рода. Поэтому только три варианта: <b>il</b>, <b>lo</b> (перед s+согласная) или <b>l\'</b> (перед гласной). Это упражнение с распечатки 24.09.',
+    ex:[['l\'italiano','литальЯно','итальянский'],['l\'inglese','линглЭзэ','английский'],['l\'olandese','лоландЭзэ','голландский'],['il russo','иль рУссо','русский'],['il francese','иль франчЭзэ','французский'],['il greco','иль грЭко','греческий'],['il tedesco','иль тэдЭско','немецкий'],['il portoghese','иль портогЭзэ','португальский'],['il giapponese','иль джаппонЭзэ','японский'],['il bielorusso','иль бьелорУссо','белорусский'],['lo spagnolo','ло спаньОло','испанский'],['lo svedese','ло звэдЭзэ','шведский']] },
+  { t:'art', w:'italiano', ru:'итальянский', a:"l'", why:'начинается с гласной' },
+  { t:'art', w:'spagnolo', ru:'испанский', a:'lo', why:'s + согласная (sp)' },
+  { t:'art', w:'russo', ru:'русский', a:'il', why:'мужской род, обычная согласная' },
+  { t:'art', w:'signora', ru:'синьора', a:'la', why:'женский род, согласная' },
+  { t:'art', w:'studente', ru:'студент', a:'lo', why:'s + согласная (st)' },
+  { t:'art', w:'amica', ru:'подруга', a:"l'", why:'женский род, но гласная — l\'' },
+  { t:'art', w:'zaino', ru:'рюкзак', a:'lo', why:'перед z — lo' },
+  { t:'art', w:'tedesco', ru:'немецкий', a:'il', why:'обычная согласная t' },
+  { t:'art', w:'borsa', ru:'сумка', a:'la', why:'женский род на -a' },
+  { t:'art', w:'inglese', ru:'английский', a:"l'", why:'гласная i' },
+  { t:'art', w:'svedese', ru:'шведский', a:'lo', why:'s + согласная (sv)' },
+  { t:'art', w:'francese', ru:'французский', a:'il', why:'обычная согласная f' },
+  { t:'mc', q:'Почему <span class="it">lo</span> spagnolo, а не <span class="it">il</span>?', opts:['слово начинается на s + согласная','слово начинается на гласную','так короче','spagnolo — женского рода'], a:0, why:'Перед s+согласная и z мужской артикль — lo. Так легче произнести: «ло спаньоло», а не «иль спаньоло».' },
+  { t:'mc', q:'<span class="it">Studio ___ italiano.</span> — учу итальянский', opts:["l'",'il','lo','без артикля'], a:0, why:'Язык как предмет изучения — с артиклем; italiano начинается с гласной → l\'. А вот «говорю по-итальянски» можно без артикля: Parlo italiano.' },
+  { t:'idea', h:'al — это не артикль, а a + il', body:'На распечатке написано «L\'articolo determinativo (<b>al</b> singolare)» — «определённый артикль <b>в</b> единственном числе». Здесь <span class="it">al</span> = предлог <span class="it">a</span> + артикль <span class="it">il</span>, слитые в одно слово. Так же <span class="it">a + la = alla</span>, <span class="it">di + il = del</span>. Пока запоминай готовые сочетания, правило слияния будет отдельным уроком.',
+    ex:[['al singolare','аль синголАрэ','в единственном числе'],['vicino al mare','вичИно аль мАрэ','рядом с морем'],['paura del buio','паУра дэль бУйо','страх темноты'],['in culo alla balena','ин кУло Алла балЭна','ни пуха ни пера (букв.)']] },
+  { t:'build', it:'Parli il greco?', ru:'Ты говоришь по-гречески?', tr:'пАрли иль грЭко' },
+  { t:'build', it:'No, purtroppo non parlo il greco.', ru:'Нет, к сожалению, я не говорю по-гречески.', tr:'но, пуртрОппо нон пАрло иль грЭко' },
+  { t:'build', it:'Sì, giusto! Hai indovinato!', ru:'Да, верно! Ты угадал!', tr:'си, джУсто! ай индовинАто' },
+]},
+
+{ id:'are', icon:'⚙️', title:'Глаголы на -are', sub:'одно правило — тысячи глаголов', steps:[
+  { t:'idea', h:'Отрежь -are, добавь окончание', body:'<span class="it">parl<b>are</b></span> → основа <span class="it">parl-</span>. К ней прибавляется окончание лица. Выучил шесть окончаний — спрягаешь любой глагол на -are: parlare, studiare, amare, abitare, lavorare, ascoltare, mangiare, pagare.',
+    ex:[['parlo','пАрло','я говорю'],['abito','Абито','я живу'],['studiamo','студьЯмо','мы учим'],['lavorano','лавОрано','они работают']] },
+  { t:'scheme', h:'Шесть окончаний', html:`<div class="ring">
+      <div class="rn"><span>io</span><b>-o</b><i>parlo</i><em>я говорю</em></div>
+      <div class="rn"><span>tu</span><b>-i</b><i>parli</i><em>ты говоришь</em></div>
+      <div class="rn"><span>lui / lei / Lei</span><b>-a</b><i>parla</i><em>он говорит</em></div>
+      <div class="rn"><span>noi</span><b>-iamo</b><i>parliamo</i><em>мы говорим</em></div>
+      <div class="rn"><span>voi</span><b>-ate</b><i>parlate</i><em>вы говорите</em></div>
+      <div class="rn"><span>loro</span><b>-ano</b><i>parlano</i><em>они говорят</em></div></div>
+      <div class="fnote">Ударение: четыре формы на основу — <b>pA</b>rlo, <b>pA</b>rli, <b>pA</b>rla, <b>pA</b>rlano. Две на окончание — parli<b>A</b>mo, parl<b>A</b>te.</div>` },
+  { t:'idea', h:'Три мелочи на письме', body:'1. Основа на -i (studi-, mangi-): в формах tu и noi две i сливаются — <span class="it">studi, studiamo; mangi, mangiamo</span>.<br>2. Основа на -g (pag-): перед i вставляется <b>h</b>, чтобы звук остался твёрдым — <span class="it">paghi, paghiamo</span>.<br>3. Отрицание — <b>non</b> перед глаголом: <span class="it">Non parlo tedesco.</span>',
+    ex:[['studi','стУди','ты учишь'],['mangiamo','манджЯмо','мы едим'],['paghi','пАги','ты платишь'],['Non parlo tedesco.','нон пАрло тэдЭско','Я не говорю по-немецки.']] },
+  { t:'mc', q:'Как читается <span class="it">loro parlano</span>?', opts:['[пАрлано]','[парлАно]','[парланО]','[пАрланно]'], a:0, why:'В форме loro ударение на основу, как у io. Самая частая ошибка русских — [парлАно].' },
+  { t:'gap', verb:'parlare' }, { t:'gap', verb:'abitare' }, { t:'gap', verb:'studiare' }, { t:'gap', verb:'lavorare' }, { t:'gap', verb:'mangiare' },
+  { t:'form', verb:'parlare', p:3 }, { t:'form', verb:'studiare', p:1 }, { t:'form', verb:'pagare', p:1 }, { t:'form', verb:'abitare', p:5 },
+  { t:'build', it:'Abito a Minsk.', ru:'Я живу в Минске.', tr:'Абито а минск' },
+  { t:'build', it:'Studio l\'italiano perché amo l\'Italia.', ru:'Я учу итальянский, потому что люблю Италию.', tr:'стУдьо литальЯно пэркЭ Амо литАлья' },
+  { t:'build', it:'Noi ascoltiamo le canzoni italiane.', ru:'Мы слушаем итальянские песни.', tr:'ной аскольтьЯмо лэ канцОни итальЯнэ' },
+  { t:'build', it:'Voi mangiate una buonissima pizza.', ru:'Вы едите очень вкусную пиццу.', tr:'вой манджЯтэ Уна буонИссима пИцца' },
+]},
+
+{ id:'prep', icon:'📍', title:'Предлоги места: di, a, in', sub:'откуда, в городе, в стране', steps:[
+  { t:'idea', h:'Три предлога — три вопроса', body:'<b>di</b> — откуда (с городом): <span class="it">Sono di Minsk</span>.<br><b>a</b> — в каком городе: <span class="it">Abito a Minsk, a Catania</span>.<br><b>in</b> — в какой стране, регионе, на каком острове, на какой улице, в каком помещении: <span class="it">in Italia, in Sicilia, in corso Dzeržinskij, in un ufficio</span>.',
+    ex:[['Sono di Minsk.','сОно ди минск','Я из Минска.'],['Abito a Minsk.','Абито а минск','Я живу в Минске.'],['Abito in Italia.','Абито ин итАлья','Я живу в Италии.'],['Voglio abitare in Sicilia, a Catania.','вОльо абитАрэ ин сичИлья, а катАнья','Хочу жить на Сицилии, в Катании.']] },
+  { t:'scheme', h:'Схема', html:`<div class="flow"><div class="fbranch">
+      <div class="fnode"><small>откуда · город</small><b>di</b><i>di Minsk, di Roma, di Boston</i></div>
+      <div class="fnode"><small>где · город</small><b>a</b><i>a Minsk, a Firenze, a Catania</i></div>
+      <div class="fnode"><small>где · страна, остров, улица, здание</small><b>in</b><i>in Italia, in Sicilia, in corso…, in un ufficio</i></div></div></div>
+      <div class="fnote">Запомни парой: <span class="it">Sono <b>di</b> Boston ma abito <b>a</b> Firenze, <b>in</b> Italia.</span> — из текста про Кэти.</div>` },
+  { t:'mc', q:'«Живу в Италии»', opts:['Abito in Italia.','Abito a Italia.','Abito di Italia.','Abito Italia.'], a:0, why:'Страна — in.' },
+  { t:'mc', q:'«Я из Минска»', opts:['Sono di Minsk.','Sono a Minsk.','Sono in Minsk.','Sono da Minsk.'], a:0, why:'Откуда — di. «Sono a Minsk» значило бы «я (нахожусь) в Минске».' },
+  { t:'mc', q:'«в Катании»', opts:['a Catania','in Catania','di Catania','al Catania'], a:0, why:'Город — a.' },
+  { t:'mc', q:'«на Сицилии»', opts:['in Sicilia','a Sicilia','su Sicilia','di Sicilia'], a:0, why:'Остров, как и страна — in.' },
+  { t:'build', it:'Abito a Minsk, in corso Dzeržinskij.', ru:'Я живу в Минске, на проспекте Дзержинского.', tr:'Абито а минск, ин кОрсо дзержИнский' },
+  { t:'build', it:'Katy abita in Italia, a Firenze.', ru:'Кэти живёт в Италии, во Флоренции.', tr:'кЭти Абита ин итАлья, а фирЭнцэ' },
+  { t:'build', it:'Voglio abitare in Italia, in Sicilia.', ru:'Хочу жить в Италии, на Сицилии.', tr:'вОльо абитАрэ ин итАлья, ин сичИлья' },
+]},
+
+{ id:'conj', icon:'🔗', title:'Связки: e, ma, o, non, anche, perché', sub:'из слов — предложение', steps:[
+  { t:'idea', h:'Шесть слов, которые соединяют', body:'Без них можно только называть слова. С ними — говорить.',
+    ex:[['e','э','и'],['ma','ма','но'],['o','о','или'],['non','нон','не (перед глаголом)'],['anche','Анкэ','тоже, также'],['perché','пэркЭ','почему? · потому что']] },
+  { t:'idea', h:'Как они работают', body:'<b>non</b> всегда прямо перед глаголом: <span class="it">Non parlo tedesco</span>.<br><b>anche</b> перед тем, к чему относится: <span class="it">Anche io</span> → сливается в <span class="it">anch\'io</span> — «я тоже».<br><b>perché</b> — один и тот же вопрос и ответ: <span class="it">Perché studi l\'italiano? — Perché amo l\'Italia.</span>',
+    ex:[['Parlo russo e un po\' di italiano.','пАрло рУссо э ун пО ди итальЯно','Говорю по-русски и немного по-итальянски.'],['Sto alla grande, ma ho un po\' di sonno.','сто Алла грАндэ, ма о ун пО ди сОнно','Всё отлично, но немного хочу спать.'],['Tè o caffè?','тэ о каффЭ','Чай или кофе?'],['Non sono stanco.','нон сОно стАнко','Я не устал.'],['Anch\'io!','анкИо','Я тоже!']] },
+  { t:'mc', q:'«Я говорю по-русски <b>и</b> немного по-итальянски»', opts:['e','è','ma','o'], a:0, why:'«и» — e без знака.' },
+  { t:'mc', q:'«Всё отлично, <b>но</b> хочу спать»', opts:['ma','e','o','perché'], a:0, why:'ma — «но».' },
+  { t:'mc', q:'<span class="it">Anch\'io</span> — это…', opts:['я тоже','и я не','только я','а я?'], a:0, why:'anche + io = anch\'io.' },
+  { t:'mc', q:'Куда поставить <span class="it">non</span>: «Я не говорю по-немецки»', opts:['Non parlo tedesco.','Parlo non tedesco.','Parlo tedesco non.','Io non tedesco parlo.'], a:0, why:'non — прямо перед глаголом.' },
+  { t:'build', it:'Parlo russo e un po\' di italiano.', ru:'Я говорю по-русски и немного по-итальянски.', tr:'пАрло рУссо э ун пО ди итальЯно' },
+  { t:'build', it:'Sto alla grande, ma ho un po\' di sonno.', ru:'Всё отлично, но я немного хочу спать.', tr:'сто Алла грАндэ, ма о ун пО ди сОнно' },
+  { t:'build', it:'Non parlo tedesco.', ru:'Я не говорю по-немецки.', tr:'нон пАрло тэдЭско' },
+  { t:'build', it:'Perché amo l\'Italia e l\'arte italiana.', ru:'Потому что люблю Италию и итальянское искусство.', tr:'пэркЭ Амо литАлья э лАртэ итальЯна' },
+]},
+
+{ id:'num', icon:'🔢', title:'Числа до 100', sub:'29 слов и три правила', steps:[
+  { t:'idea', h:'Запомнить 29 слов, остальное собрать', body:'0–20, десятки 30–90 и 100 — заучиваются. Всё между — по правилу: десяток + единица одним словом, ударение на единице: <span class="it">venti + due = ventidue</span> [вэнтидУэ].',
+    ex:[['ventidue','вэнтидУэ','22'],['trentacinque','трэнтачИнкуэ','35'],['novantanove','новантанОвэ','99']] },
+  { t:'idea', h:'Два исключения', body:'Перед <b>uno</b> и <b>otto</b> гласная десятка выпадает: <span class="it">vent<s>i</s>uno → ventuno, trent<s>a</s>otto → trentotto</span>.<br><b>tre</b> на конце получает ударение и знак: <span class="it">ventitré, trentatré</span>.',
+    ex:[['ventuno','вэнтУно','21'],['trentotto','трэнтОтто','38'],['quarantatré','куарантатрЭ','43']] },
+  { t:'num', n:17 }, { t:'num', n:21 }, { t:'num', n:33 }, { t:'num', n:48 }, { t:'num', n:15 }, { t:'num', n:76 }, { t:'num', n:88 }, { t:'num', n:99 },
+  { t:'mc', q:'27 + 26 = 53. Как сказать «равно»?', opts:['fa','è','uguale','più'], a:0, why:'ventisette più ventisei fa cinquantatré — букв. «делает».' },
+]},
+
+{ id:'me', icon:'🙋', title:'О себе', sub:'десять фраз без подготовки', steps:[
+  { t:'idea', h:'Что спросит любой итальянец в первые две минуты', body:'Имя, откуда, где живёшь, сколько лет, какие языки, зачем итальянский. Цель — отвечать не думая. Сначала собери каждую фразу из слов, потом проговори вслух.',
+    ex:[['Come ti chiami?','кОмэ ти кьЯми','Как тебя зовут?'],['Di dove sei?','ди дОвэ сЭй','Откуда ты?'],['Dove abiti?','дОвэ Абити','Где живёшь?'],['Quanti anni hai?','куАнти Анни ай','Сколько тебе лет?'],['Che lingue parli?','кэ лИнгуэ пАрли','На каких языках говоришь?'],['Perché studi l\'italiano?','пэркЭ стУди литальЯно','Зачем учишь итальянский?']] },
+  { t:'build', it:'Ciao! Mi chiamo Ilia.', ru:'Привет! Меня зовут Илья.', tr:'чАо! ми кьЯмо илИя' },
+  { t:'build', it:'Sono bielorusso, sono di Minsk.', ru:'Я белорус, я из Минска.', tr:'сОно бьелорУссо, сОно ди минск' },
+  { t:'build', it:'Abito a Minsk, in corso Dzeržinskij.', ru:'Живу в Минске, на проспекте Дзержинского.', tr:'Абито а минск, ин кОрсо дзержИнский' },
+  { t:'build', it:'Parlo russo e un po\' di italiano.', ru:'Говорю по-русски и немного по-итальянски.', tr:'пАрло рУссо э ун пО ди итальЯно' },
+  { t:'build', it:'Studio l\'italiano perché voglio studiare e abitare in Italia, in Sicilia.', ru:'Учу итальянский, потому что хочу учиться и жить в Италии, на Сицилии.', tr:'стУдьо литальЯно пэркЭ вОльо студьЯрэ э абитАрэ ин итАлья, ин сичИлья' },
+  { t:'build', it:'Sì, amo l\'Italia e l\'arte italiana.', ru:'Да, я люблю Италию и итальянское искусство.', tr:'си, Амо литАлья э лАртэ итальЯна' },
+  { t:'build', it:'La mia ragazza è un\'artista.', ru:'Моя девушка — художница.', tr:'ла мИа рагАцца э унартИста' },
+  { t:'build', it:'Lavoro e studio: ho molto da fare tutta la settimana.', ru:'Работаю и учусь: у меня много дел всю неделю.', tr:'лавОро э стУдьо: о мОльто да фАрэ тУтта ла сэттимАна' },
+  { t:'build', it:'Piacere di conoscerti!', ru:'Приятно познакомиться!', tr:'пьячЭрэ ди конОшэрти' },
+]},
+];
+
+/* ---------------- конструктор: «Составь своё» ----------------
+   Каждая часть — [it, tr, ru]. Персона p: 0 io, 1 tu, 2 lui/lei/Lei, 3 noi, 4 voi, 5 loro.
+   rp — какая русская форма глагола (для Lei — «вы» = 4). av — русское «у меня» для avere. pl — множественное число. */
+const SUBJ = [
+  {it:'io', tr:'Ио', ru:'я', p:0, rp:0, av:'у меня', opt:true},
+  {it:'tu', tr:'ту', ru:'ты', p:1, rp:1, av:'у тебя', opt:true},
+  {it:'lui', tr:'лУй', ru:'он', p:2, rp:2, av:'у него', opt:true},
+  {it:'lei', tr:'лЭй', ru:'она', p:2, rp:2, av:'у неё', opt:true},
+  {it:'Lei', tr:'лЭй', ru:'Вы', p:2, rp:4, av:'у Вас', opt:true, note:'вежливое «Вы» одному человеку — глагол как для он/она'},
+  {it:'noi', tr:'нОй', ru:'мы', p:3, rp:3, av:'у нас', opt:true, pl:true},
+  {it:'voi', tr:'вОй', ru:'вы', p:4, rp:4, av:'у вас', opt:true, pl:true},
+  {it:'loro', tr:'лОро', ru:'они', p:5, rp:5, av:'у них', opt:true, pl:true},
+  {it:'Marco', tr:'мАрко', ru:'Марко', p:2, rp:2, av:'у Марко'},
+  {it:'Anna', tr:'Анна', ru:'Анна', p:2, rp:2, av:'у Анны'},
+  {it:'la mia ragazza', tr:'ла мИа рагАцца', ru:'моя девушка', p:2, rp:2, av:'у моей девушки', f:true},
+  {it:'i miei amici', tr:'и мьЕй амИчи', ru:'мои друзья', p:5, rp:5, av:'у моих друзей', pl:true},
+  {it:'Marco e Anna', tr:'мАрко э Анна', ru:'Марко и Анна', p:5, rp:5, av:'у Марко и Анны', pl:true},
+];
+const VRU = {   // русские формы глагола без местоимения
+  parlare:['говорю','говоришь','говорит','говорим','говорите','говорят'],
+  studiare:['учу','учишь','учит','учим','учите','учат'],
+  amare:['люблю','любишь','любит','любим','любите','любят'],
+  abitare:['живу','живёшь','живёт','живём','живёте','живут'],
+  lavorare:['работаю','работаешь','работает','работаем','работаете','работают'],
+  ascoltare:['слушаю','слушаешь','слушает','слушаем','слушаете','слушают'],
+  mangiare:['ем','ешь','ест','едим','едите','едят'],
+  pagare:['плачу','платишь','платит','платим','платите','платят'],
+};
+const COMP = {
+  essere: [
+    ['di Minsk','ди минск','из Минска'], ['di Roma','ди рОма','из Рима'], ['a Roma','а рОма','в Риме'], ['a casa','а кАза','дома'],
+    ['bielorusso','бьелорУссо','белорус', {pl:['bielorussi','бьелорУсси','белорусы'], f:['bielorussa','бьелорУсса','белоруска']}],
+    ['italiano','итальЯно','итальянец', {pl:['italiani','итальЯни','итальянцы'], f:['italiana','итальЯна','итальянка']}],
+    ['stanco','стАнко','усталый', {pl:['stanchi','стАнки','усталые'], f:['stanca','стАнка','усталая']}],
+    ['felice','фэлИчэ','счастливый', {pl:['felici','фэлИчи','счастливые']}],
+    ['pronto','прОнто','готов', {pl:['pronti','прОнти','готовы'], f:['pronta','прОнта','готова']}],
+    ['un artista','ун артИста','художник', {pl:['artisti','артИсти','художники'], f:["un'artista",'унартИста','художница']}],
+    ['uno studente','Уно студЭнтэ','студент', {pl:['studenti','студЭнти','студенты'], f:['una studentessa','Уна студэнтЭсса','студентка']}],
+  ],
+  avere: [
+    ['fame','фАмэ','голод', {n:'= голоден'}], ['sete','сЭтэ','жажда', {n:'= хочу пить'}], ['sonno','сОнно','сон', {n:'= хочу спать'}],
+    ['freddo','фрЭддо','холод', {n:'= холодно'}], ['caldo','кАльдо','жара', {n:'= жарко'}], ['paura del buio','паУра дэль бУйо','страх темноты', {n:'= боюсь темноты'}],
+    ['la febbre','ла фЭббрэ','температура'], ['un po\' di fame','ун пО ди фАмэ','немного голода', {n:'= немного голоден'}],
+    ['18 anni','дичОтто Анни','18 лет', {n:'= мне 18'}], ['23 anni','вэнтитрЭ Анни','23 года', {n:'= мне 23'}], ['30 anni','трЭнта Анни','30 лет', {n:'= мне 30'}],
+    ['un cane','ун кАнэ','собака'], ['un gatto','ун гАтто','кот'], ['una domanda','Уна домАнда','вопрос'],
+    ['molto da fare','мОльто да фАрэ','много дел'], ['voglia di studiare','вОлья ди студьЯрэ','желание учиться', {n:'= хочу учиться'}], ['un po\' di tempo','ун пО ди тЭмпо','немного времени'],
+  ],
+  parlare: [
+    ['italiano','итальЯно','по-итальянски'], ['russo','рУссо','по-русски'], ['inglese','инглЭзэ','по-английски'], ['spagnolo','спаньОло','по-испански'], ['tedesco','тэдЭско','по-немецки'],
+    ['francese','франчЭзэ','по-французски'], ['bielorusso','бьелорУссо','по-белорусски'], ['un po\' di italiano','ун пО ди итальЯно','немного по-итальянски'], ['il greco','иль грЭко','по-гречески'],
+    ['bene l\'italiano','бЭнэ литальЯно','хорошо по-итальянски'], ['russo e un po\' di italiano','рУссо э ун пО ди итальЯно','по-русски и немного по-итальянски'],
+  ],
+  studiare: [
+    ['l\'italiano','литальЯно','итальянский'], ['l\'arte','лАртэ','искусство'], ['l\'inglese','линглЭзэ','английский'], ['l\'italiano a Minsk','литальЯно а минск','итальянский в Минске'],
+    ['in Italia','ин итАлья','в Италии'], ['in una scuola di lingue','ин Уна скуОла ди лИнгуэ','в языковой школе'],
+  ],
+  amare: [
+    ['l\'Italia','литАлья','Италию'], ['l\'arte italiana','лАртэ итальЯна','итальянское искусство'], ['la musica italiana','ла мУзика итальЯна','итальянскую музыку'],
+    ['il caffè','иль каффЭ','кофе'], ['la pizza','ла пИцца','пиццу'], ['il calcio','иль кАльчо','футбол'],
+  ],
+  abitare: [
+    ['a Minsk','а минск','в Минске'], ['in Italia','ин итАлья','в Италии'], ['a Catania','а катАнья','в Катании'], ['in Sicilia','ин сичИлья','на Сицилии'],
+    ['a Roma','а рОма','в Риме'], ['a Firenze','а фирЭнцэ','во Флоренции'], ['in corso Dzeržinskij','ин кОрсо дзержИнский','на проспекте Дзержинского'], ['a Minsk, in Bielorussia','а минск, ин бьелорУссья','в Минске, в Беларуси'],
+  ],
+  lavorare: [ ['in un ufficio','ин ун уффИчо','в офисе'], ['a Minsk','а минск','в Минске'], ['molto','мОльто','много'], ['tutta la settimana','тУтта ла сэттимАна','всю неделю'], ['in Italia','ин итАлья','в Италии'] ],
+  ascoltare: [ ['la musica italiana','ла мУзика итальЯна','итальянскую музыку'], ['le canzoni italiane','лэ канцОни итальЯнэ','итальянские песни'], ['l\'italiano','литальЯно','итальянскую речь'] ],
+  mangiare: [ ['una pizza','Уна пИцца','пиццу'], ['la pasta','ла пАста','пасту'], ['una buonissima pizza','Уна буонИссима пИцца','очень вкусную пиццу'], ['a casa','а кАза','дома'] ],
+  pagare: [ ['il conto','иль кОнто','по счёту'], ['il caffè','иль каффЭ','за кофе'], ['la pizza','ла пИцца','за пиццу'] ],
+};
+const CONJ = [ ['e','э','и', ''], ['ma','ма','но', ','], ['perché','пэркЭ','потому что', ''], ['o','о','или', ''] ];
+
 
 /* ====================================================================
    ТРЕНАЖЁР — логика
@@ -3128,6 +3670,7 @@ const norm = s => s.toLowerCase().replace(/[!?…,.:;«»"()]/g,'').replace(/\s+
 const stripAcc = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’]/g,"'");
 
 /* ---------------- карточки ---------------- */
+DECKS.push({id:'mine', name:'Мои фразы', prio:0, def:true, desc:'Предложения, собранные в конструкторе «Составь своё».'});
 const DECK = Object.fromEntries(DECKS.map(d=>[d.id,d]));
 const CARDS = [];
 const GROUPS = {};            // deck -> [{title, from}]
@@ -3221,6 +3764,8 @@ function showPane(id){
   if (id==='p-num') renderNumbers();
   if (id==='p-all') renderAll();
   if (id==='p-ref') renderRef();
+  if (id==='p-les') renderLessons();
+  if (id==='p-build') renderBuild();
 }
 $$('[data-p]').forEach(b=> b.onclick = ()=> showPane(b.dataset.p));
 function applyLook(){
@@ -3253,24 +3798,26 @@ function renderHome(){
   const pool = activeCards();
   const due = dueCards(pool).length, fresh = freshCards(pool).length;
   const known = CARDS.filter(c=>isKnown(P(c.key))).length;
-  $('#stDue').textContent = due;
-  $('#stNew').textContent = today().n + ' / ' + S().newPerDay;
-  $('#stKnown').textContent = known;
-  $('#stStreak').textContent = streak();
+  $('#stDue').textContent = due; $('#stKnown').textContent = known; $('#stStreak').textContent = streak();
+  $('#todayDate').textContent = new Date().toLocaleDateString('ru-RU',{weekday:'long', day:'numeric', month:'long'});
   const newLeft = Math.max(0, S().newPerDay - today().n);
   const planned = due + Math.min(newLeft, fresh);
-  $('#startBtn').textContent = planned>0 ? `Начать занятие · ${planned} карточек` : 'Начать занятие';
+  $('#startTitle').textContent = planned>0 ? `Повторить · ${planned} карточек` : 'Повторение';
   $('#startHint').textContent = planned>0
-    ? `${due} повторов + ${Math.min(newLeft,fresh)} новых. Можно остановиться в любой момент.`
-    : (fresh>0 ? 'На сегодня всё повторено. Нажми «Начать» — добавлю новых слов сверх лимита.' : 'Всё выучено и повторено. Отдыхай!');
+    ? `${due} повторов и ${Math.min(newLeft,fresh)} новых слов. Остановиться можно в любой момент.`
+    : (fresh>0 ? 'На сегодня всё повторено. Нажми — добавлю новых слов сверх лимита.' : 'Всё выучено и повторено.');
+  const nx = nextLesson(); const done = LESSONS.filter(l=>lessonState(l.id)).length;
+  $('#lessonIc').textContent = nx ? nx.icon : '🏆';
+  $('#lessonTitle').textContent = nx ? 'Урок: '+nx.title : 'Все уроки пройдены';
+  $('#lessonHint').textContent = nx ? `${nx.sub} · пройдено ${done} из ${LESSONS.length}` : 'Повтори любой из вкладки «Уроки»';
   $('#modeChips').innerHTML = MODES.map(([id,nm])=>`<button class="chip ${S().mode===id?'on':''}" data-m="${id}">${nm}</button>`).join('');
   $$('#modeChips .chip').forEach(b=> b.onclick=()=>{ S().mode=b.dataset.m; save(); renderHome(); });
   $('#deckList').innerHTML = DECKS.map(d=>{
-    const cs = CARDS.filter(c=>c.deck===d.id);
+    const cs = CARDS.filter(c=>c.deck===d.id); const tot = Math.max(1, cs.length);
     const k = cs.filter(c=>isKnown(P(c.key))).length, l = cs.filter(c=>isLearning(P(c.key))).length;
     const on = S().decks.includes(d.id);
     return `<div class="deckrow"><div class="nm"><b>${d.name}</b> <span class="muted" style="font-size:12.5px">· ${cs.length}</span><small>${d.desc}</small>
-      <div class="bar"><i class="k" style="width:${100*k/cs.length}%"></i><i class="l" style="width:${100*l/cs.length}%"></i></div></div>
+      <div class="bar"><i class="k" style="width:${100*k/tot}%"></i><i class="l" style="width:${100*l/tot}%"></i></div></div>
       <button class="sw ${on?'on':''}" data-d="${d.id}" aria-label="вкл/выкл"></button></div>`;
   }).join('');
   $$('#deckList .sw').forEach(b=> b.onclick=()=>{
@@ -3309,7 +3856,7 @@ function addFresh(n){
   if (more.length===0) alert('Новых слов в выбранных колодах больше нет.');
   renderStep();
 }
-function endSession(){ $('#session').classList.remove('on'); SES=null; if(window.speechSynthesis) speechSynthesis.cancel(); renderHome(); }
+function endSession(){ $('#session').classList.remove('on'); SES=null; if(window.speechSynthesis) speechSynthesis.cancel(); renderHome(); if ($('#p-les').classList.contains('on')) renderLessons(); if ($('#p-build').classList.contains('on')) renderBuild(); }
 function progressUI(){
   const total = SES.q.length, left = total - SES.i;
   $('#sProg').style.width = (100*SES.i/Math.max(1,total))+'%';
@@ -3343,6 +3890,8 @@ const spkBtn = c => (S().tts && window.speechSynthesis) ? `<button class="spk" d
 function wireSpeak(root){ $$('[data-say]', root).forEach(b=> b.onclick = e=>{ e.stopPropagation(); speak(b.dataset.say); }); }
 
 function renderStep(){
+  if (SES && SES.ls) return lsStep();
+  if (SES && SES.bd) return bdStep();
   progressUI();
   const body = $('#sBody');
   if (SES.i >= SES.q.length){
@@ -3822,7 +4371,7 @@ function openTopic(id, userClick){
   REF.cur = id; S().refTopic = id; save();
   const src = document.getElementById(id); if (!src) return;
   const clone = src.cloneNode(true); clone.removeAttribute('id');
-  $('#refContent').innerHTML=''; $('#refContent').appendChild(clone);
+  $('#refContent').innerHTML=''; $('#refContent').appendChild(clone); REF.page=0; paginateTopic();
   $$('#topics .tp').forEach(b=> b.classList.toggle('on', b.dataset.t===id));
   const i = REF.topics.findIndex(t=>t.id===id);
   const prev = REF.topics[i-1], next = REF.topics[i+1];
@@ -3982,13 +4531,370 @@ function initSettings(){
   $('#resetBtn').onclick = ()=>{ if(confirm('Стереть весь прогресс? Это нельзя отменить.')){ ST.prog={}; ST.days={}; save(); renderHome(); $('#ioMsg').textContent='Прогресс сброшен.'; } };
 }
 
+
+/* ====================================================================
+   УРОКИ · СОБРАТЬ ФРАЗУ · СОСТАВЬ СВОЁ · МОИ ФРАЗЫ · ПОСТРАНИЧНЫЕ ПРАВИЛА
+   (вставляется в app.js перед блоком «старт»)
+   ==================================================================== */
+
+/* ---------------- общие кирпичики заданий внутри #session ---------------- */
+function lsHead(name, tag){ return `<div class="mode"><span>${name}</span><span class="tag">${esc(tag)}</span></div>`; }
+function lsNext(label='Дальше'){ return `<button class="pri next" id="nx">${label}</button>`; }
+// задание с выбором из вариантов. opts: [{h: html, v: value}], ans: value; fb(ok) → html
+function lsChoice({head, q, opts, ans, fb, say, cls='opts', kbd='Клавиши 1–4'}, onDone){
+  const body = $('#sBody');
+  body.innerHTML = head + q + `<div class="${cls}">${opts.map((o,i)=>`<button class="opt" data-v="${esc(o.v)}">${cls==='opts'?`<span class="k">${i+1}</span>`:''}<span class="it">${o.h}</span>${o.x||''}</button>`).join('')}</div><div class="kbd">${kbd}</div>`;
+  wireSpeak(body); SES.answered=false;
+  $$('.opt').forEach(b=> b.onclick=()=>{
+    if (SES.answered) return; SES.answered=true;
+    const ok = b.dataset.v===String(ans);
+    $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.v===String(ans)) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    if (ok) SES.stats.ok++; else SES.stats.bad++;
+    const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
+    el.innerHTML = `<div>${ok?'✅ Верно':'❌ Неверно'}</div>` + fb(ok) + (say && S().tts && window.speechSynthesis ? `<div style="margin-top:6px"><button class="spk" data-say="${esc(say)}">🔊 послушать</button></div>` : '') + lsNext();
+    body.appendChild(el); wireSpeak(el); if (say && S().ttsAuto) speak(say);
+    $('#nx').onclick=()=>{ SES.i++; onDone(ok); }; $('#nx').focus(); el.scrollIntoView({block:'nearest'});
+  });
+  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+}
+// задание с вводом. check(value) → {ok, g?}; fb(ok, value) → html
+function lsInput({head, q, placeholder='…', check, fb, say, kbd='Enter — проверить'}, onDone){
+  const body = $('#sBody');
+  body.innerHTML = head + q + `<div class="typing"><input id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" lang="it" placeholder="${esc(placeholder)}"><button class="sec" id="chk" style="width:auto">Проверить</button></div><div class="kbd">${kbd}</div>`;
+  wireSpeak(body); SES.answered=false;
+  const inp=$('#ti'); inp.focus();
+  const doCheck=()=>{ if(SES.answered) return; SES.answered=true;
+    const r = check(inp.value); const ok = !!r.ok;
+    inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor = ok?'var(--ok)':'var(--bad)';
+    if (ok) SES.stats.ok++; else SES.stats.bad++;
+    const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
+    el.innerHTML = `<div>${ok?(r.almost?'✅ Почти: '+r.almost:'✅ Верно'):'❌ Неверно'}</div>` + fb(ok, inp.value) + (say && S().tts && window.speechSynthesis ? `<div style="margin-top:6px"><button class="spk" data-say="${esc(say)}">🔊 послушать</button></div>` : '') + lsNext();
+    body.appendChild(el); wireSpeak(el); if (say && S().ttsAuto) speak(say);
+    $('#nx').onclick=()=>{ SES.i++; onDone(ok); }; $('#nx').focus(); el.scrollIntoView({block:'nearest'});
+  };
+  $('#chk').onclick=doCheck; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); if(!SES.answered) doCheck(); else $('#nx')?.click(); } };
+  SES.keys = k=>{ if (k==='Enter' && SES.answered) $('#nx')?.click(); };
+}
+
+/* ---------------- собери из слов ---------------- */
+const bTok = s => s.replace(/[!?…,.:;«»"()]/g,' ').split(/\s+/).filter(Boolean);
+const bNorm = w => stripAcc(w.toLowerCase());
+const ARTS = ['il','lo','la',"l'",'i','gli','le','un','una','uno',"un'"], PREPS = ['a','in','di','da','con','per'];
+function buildDistractors(words, n=3){
+  const have = new Set(words.map(bNorm)); const out=[]; const add = w=>{ const k=bNorm(w); if(!have.has(k) && !out.some(x=>bNorm(x)===k) && out.length<n) out.push(w); };
+  words.forEach(w=>{
+    const k = bNorm(w);
+    for (const v of Object.values(VERBS)){ const i=v.f.indexOf(k); if(i>=0){ shuffle(v.f.filter(f=>f!==k)).slice(0,2).forEach(add); } }
+    if (ARTS.includes(k)) shuffle(['il','lo','la',"l'"].filter(a=>a!==k)).slice(0,1).forEach(add);
+    if (PREPS.includes(k)) shuffle(['a','in','di'].filter(a=>a!==k)).slice(0,1).forEach(add);
+    if (k==='e') add('è'); if (k==='è') add('e'); if (k==='o') add('ho'); if (k==='ho') add('o');
+  });
+  const pool = BUILD_POOL.length ? BUILD_POOL : [];
+  let guard=0; while (out.length<n && guard++<60 && pool.length){ const w = pick(bTok(pick(pool).it)); if (w.length>1) add(w); }
+  return out;
+}
+let BUILD_POOL = [];
+function buildPool(src='all'){
+  const fr = CARDS.filter(c=> (c.deck==='fr'||c.deck==='mine') && !/[\/—…()]/.test(c.it) && bTok(c.it).length>=2 && bTok(c.it).length<=10).map(c=>({it:c.it, ru:c.ru, tr:c.tr}));
+  const gaps = GAPS.filter(g=>!/\(\w+\)\s*[^_]/.test(g[0].replace(/\(\w+\)\s*___/,''))).map(g=>({it:g[0].replace('___', VERBS[g[1]].f[g[2]]).replace(/\((\w+)\)\s*/g,''), ru:g[3], tr:''}))
+    .filter(x=>!/\(/.test(x.it));
+  let all = fr.concat(gaps);
+  const seen=new Set(); all = all.filter(x=>{ const k=norm(x.it); if(seen.has(k)) return false; seen.add(k); return true; });
+  if (src==='short') all = all.filter(x=> bTok(x.it).length<=4);
+  if (src==='verbs'){ const forms = new Set(Object.values(VERBS).filter(v=>v.g==='are').flatMap(v=>v.f)); all = all.filter(x=> bTok(x.it).some(w=>forms.has(bNorm(w)))); }
+  if (src==='me'){ const me = LESSONS.find(l=>l.id==='me').steps.filter(s=>s.t==='build'); all = me.map(s=>({it:s.it, ru:s.ru, tr:s.tr})); }
+  return all;
+}
+BUILD_POOL = buildPool('all');
+// экран задания «собери»: task {it, ru, tr}; onDone(ok)
+function renderBuildTask(task, head, onDone){
+  const words = bTok(task.it);
+  const tiles = shuffle(words.map((w,i)=>({w, id:'w'+i})).concat(buildDistractors(words).map((w,i)=>({w, id:'d'+i}))));
+  const body = $('#sBody'); let ans = [];
+  body.innerHTML = head + `<div class="q"><div class="mid">${esc(task.ru)}</div><div class="note">Собери фразу по-итальянски. Лишние слова есть.</div></div>
+    <div class="answer" id="bAns"></div>
+    <div class="bank" id="bBank">${tiles.map(t=>`<button class="tile" data-id="${t.id}">${esc(t.w)}</button>`).join('')}</div>
+    <div class="brow"><button class="sec" id="bClear">Сбросить</button><button class="pri" id="chk" style="margin:0">Проверить</button></div>
+    <div class="kbd">Нажимай слова по порядку. Нажми слово в ответе, чтобы вернуть его.</div>`;
+  const draw = ()=>{
+    $('#bAns').innerHTML = ans.map(t=>`<button class="tile" data-id="${t.id}">${esc(t.w)}</button>`).join('');
+    $$('#bBank .tile').forEach(b=> b.classList.toggle('used', ans.some(t=>t.id===b.dataset.id)));
+    $$('#bAns .tile').forEach(b=> b.onclick=()=>{ if(SES.answered) return; ans = ans.filter(t=>t.id!==b.dataset.id); draw(); });
+  };
+  $$('#bBank .tile').forEach(b=> b.onclick=()=>{ if(SES.answered || ans.some(t=>t.id===b.dataset.id)) return; ans.push(tiles.find(t=>t.id===b.dataset.id)); draw(); });
+  $('#bClear').onclick=()=>{ if(SES.answered) return; ans=[]; draw(); };
+  SES.answered=false;
+  const check=()=>{ if(SES.answered) return; SES.answered=true;
+    const got = ans.map(t=>bNorm(t.w)).join(' '), want = words.map(bNorm).join(' ');
+    const ok = got===want;
+    if (ok) SES.stats.ok++; else SES.stats.bad++;
+    $('#bAns').classList.add(ok?'ok':'no'); $('#chk').disabled=true; $('#bClear').disabled=true;
+    const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
+    el.innerHTML = `<div>${ok?'✅ Верно':'❌ Неверно'}</div><div class="ans it">${esc(task.it)}</div>${task.tr?`<div class="tr">[${esc(task.tr)}]</div>`:''}<div>${esc(task.ru)}</div>
+      ${!ok && ans.length ? `<div class="muted" style="font-size:13.5px;margin-top:4px">Ты собрал: <span class="it">${esc(ans.map(t=>t.w).join(' '))}</span></div>`:''}
+      <div style="margin-top:6px">${S().tts&&window.speechSynthesis?`<button class="spk" data-say="${esc(task.it)}">🔊 послушать</button>`:''}</div>` + lsNext();
+    body.appendChild(el); wireSpeak(el); if (S().ttsAuto) speak(task.it);
+    $('#nx').onclick=()=>{ SES.i++; onDone(ok); }; $('#nx').focus(); el.scrollIntoView({block:'nearest'});
+  };
+  $('#chk').onclick=check;
+  SES.keys = k=>{ if (k==='Enter'){ if(!SES.answered) check(); else $('#nx')?.click(); } else if (k==='Backspace' && !SES.answered){ ans.pop(); draw(); } };
+}
+let BD = { src:'all' };
+$$('#buildSrc .chip').forEach(b=> b.onclick=()=>{ BD.src=b.dataset.src; $$('#buildSrc .chip').forEach(x=>x.classList.toggle('on',x===b)); });
+function startBuild(src, n=10){
+  const pool = buildPool(src || BD.src);
+  if (!pool.length){ alert('Нет фраз для этого набора.'); return; }
+  const q = shuffle(pool.slice()).slice(0, n);
+  SES = { bd:true, nd:true, q, i:0, stats:{ok:0,bad:0}, t0:now(), keys:null };
+  $('#sMore').classList.add('hidden'); $('#session').classList.add('on'); bdStep();
+}
+function bdStep(){
+  progressUI();
+  const body = $('#sBody');
+  if (SES.i >= SES.q.length){
+    const s=SES.stats, sec=Math.round((now()-SES.t0)/1000);
+    (ST.bd ||= []).push({d:new Date().toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}), ok:s.ok, n:s.ok+s.bad, sec}); if (ST.bd.length>30) ST.bd.shift(); save();
+    body.innerHTML = `<div class="done"><div class="big">${s.bad===0?'🏆':'🧩'}</div><h2>Серия закончена</h2><p>Собрано верно <b>${s.ok}</b> из <b>${s.ok+s.bad}</b> · ${sec} секунд</p>
+      <button class="pri" id="dAgain">Ещё серию</button><button class="sec" id="dClose">Закрыть</button></div>`;
+    $('#dAgain').onclick = ()=> startBuild(); $('#dClose').onclick = endSession; return;
+  }
+  renderBuildTask(SES.q[SES.i], lsHead('Собери фразу', 'Из слов'), ()=> bdStep());
+}
+$('#buildStart').onclick = ()=> startBuild();
+$('#buildBtn').onclick = ()=> startBuild('all', 10);
+function renderBuild(){
+  const h = (ST.bd||[]).slice(-5).reverse();
+  $('#buildBest').textContent = h.length ? 'Последние серии: ' + h.map(r=>`${r.ok}/${r.n}`).join(' · ') : `В наборе ${buildPool(BD.src).length} фраз.`;
+  renderMine(); renderComposer();
+}
+$$('#buildSeg button').forEach(b=> b.onclick=()=>{ $$('#buildSeg button').forEach(x=>x.classList.toggle('on',x===b)); $$('#p-build .sub').forEach(s=>s.classList.toggle('on', s.id===b.dataset.s)); });
+
+/* ---------------- составь своё ---------------- */
+const CV = ['essere','avere','parlare','studiare','amare','abitare','lavorare','ascoltare','mangiare','pagare'];
+const CMP = { s:0, v:'parlare', c:0, neg:false, q:false, pron:false, two:false, conj:0, s2:0, v2:'amare', c2:0, neg2:false };
+const capFirst = s => s.charAt(0).toUpperCase()+s.slice(1);
+const subjIsF = s => s.f || s.it==='lei' || s.it==='Anna';
+function compVariant(c, subj){
+  const o = c[3]||{};
+  if (subj.pl && o.pl) return o.pl;
+  if (subjIsF(subj) && o.f) return o.f;
+  return c;
+}
+function compList(verb, subj){ return COMP[verb].map(c=> compVariant(c, subj)); }
+function clause(si, verb, ci, neg, pron){
+  const subj = SUBJ[si], V = VERBS[verb], comps = compList(verb, subj), comp = comps[Math.min(ci, comps.length-1)];
+  const showPron = pron || !subj.opt;
+  const it = [showPron?subj.it:'', neg?'non':'', V.f[subj.p], comp[0]].filter(Boolean).join(' ');
+  const tr = [showPron?subj.tr:'', neg?'нон':'', V.tr[subj.p], comp[1]].filter(Boolean).join(' ');
+  let ru;
+  if (verb==='essere') ru = subj.ru + (neg?' не ':' ') + comp[2];
+  else if (verb==='avere') ru = subj.av + (neg?' нет: ':' есть ') + comp[2];
+  else ru = subj.ru + (neg?' не ':' ') + VRU[verb][subj.rp] + ' ' + comp[2];
+  const note = (COMP[verb][Math.min(ci, COMP[verb].length-1)][3]||{}).n || '';
+  return {it, tr, ru, note};
+}
+function compose(){
+  const a = clause(CMP.s, CMP.v, CMP.c, CMP.neg, CMP.pron);
+  let it=a.it, tr=a.tr, ru=a.ru, note=a.note;
+  if (CMP.two){
+    const cj = CONJ[CMP.conj], b = clause(CMP.s2, CMP.v2, CMP.c2, CMP.neg2, CMP.pron);
+    it += cj[3] + ' ' + cj[0] + ' ' + b.it; tr += cj[3] + ' ' + cj[1] + ' ' + b.tr; ru += cj[3] + ' ' + cj[2] + ' ' + b.ru;
+    if (b.note) note = [note, b.note].filter(Boolean).join(' · ');
+  }
+  const end = CMP.q ? '?' : '.';
+  return { it: capFirst(it)+end, tr, ru: capFirst(ru)+end, note };
+}
+function fillSel(sel, items, cur){ sel.innerHTML = items.map((o,i)=>`<option value="${i}" ${i===cur?'selected':''}>${esc(o)}</option>`).join(''); }
+function renderComposer(){
+  const vl = CV.map(v=> `${v} — ${VERBS[v].ru}`);
+  const sl = SUBJ.map(s=> `${s.it} — ${s.ru}`);
+  fillSel($('#cSubj'), sl, CMP.s); fillSel($('#cSubj2'), sl, CMP.s2);
+  $('#cVerb').innerHTML = CV.map(v=>`<option value="${v}" ${v===CMP.v?'selected':''}>${esc(v)} — ${esc(VERBS[v].ru)}</option>`).join('');
+  $('#cVerb2').innerHTML = CV.map(v=>`<option value="${v}" ${v===CMP.v2?'selected':''}>${esc(v)} — ${esc(VERBS[v].ru)}</option>`).join('');
+  const cl = compList(CMP.v, SUBJ[CMP.s]).map(c=>`${c[0]} — ${c[2]}`); CMP.c = Math.min(CMP.c, cl.length-1); fillSel($('#cComp'), cl, CMP.c);
+  const cl2 = compList(CMP.v2, SUBJ[CMP.s2]).map(c=>`${c[0]} — ${c[2]}`); CMP.c2 = Math.min(CMP.c2, cl2.length-1); fillSel($('#cComp2'), cl2, CMP.c2);
+  fillSel($('#cConj'), CONJ.map(c=>`${c[0]} — ${c[2]}`), CMP.conj);
+  $('#cNeg').classList.toggle('on', CMP.neg); $('#cQ').classList.toggle('on', CMP.q); $('#cPron').classList.toggle('on', CMP.pron); $('#cTwo').classList.toggle('on', CMP.two); $('#cNeg2').classList.toggle('on', CMP.neg2);
+  $('#cSecond').classList.toggle('hidden', !CMP.two);
+  const r = compose();
+  const subj = SUBJ[CMP.s];
+  $('#cOut').innerHTML = `<div class="it">${esc(r.it)}</div><span class="tr">[${esc(r.tr)}]</span><div class="ru">${esc(r.ru)}</div>
+    ${r.note?`<div class="note">${esc(r.note)}</div>`:''}${subj.note?`<div class="note">${esc(subj.note)}</div>`:''}
+    ${!CMP.pron && subj.opt ? '<div class="note">Местоимение опущено — форма глагола сама показывает, кто. Включи «с местоимением», чтобы увидеть его.</div>':''}
+    <div class="btns">${S().tts&&window.speechSynthesis?`<button class="sec" data-say="${esc(r.it)}">🔊 Послушать</button>`:''}<button class="sec" id="cSave">＋ В мои фразы</button><button class="sec" id="cRand">🎲 Случайно</button></div>`;
+  wireSpeak($('#cOut'));
+  $('#cSave').onclick = ()=>{ addMine(r); $('#cSave').textContent='✓ Сохранено'; $('#cSave').disabled=true; };
+  $('#cRand').onclick = ()=>{ CMP.s = Math.floor(Math.random()*SUBJ.length); CMP.v = pick(CV); CMP.c = Math.floor(Math.random()*COMP[CMP.v].length); CMP.neg = Math.random()<.2; CMP.q = Math.random()<.25; renderComposer(); };
+}
+function initComposer(){
+  $('#cSubj').onchange = e=>{ CMP.s=+e.target.value; renderComposer(); };
+  $('#cVerb').onchange = e=>{ CMP.v=e.target.value; CMP.c=0; renderComposer(); };
+  $('#cComp').onchange = e=>{ CMP.c=+e.target.value; renderComposer(); };
+  $('#cSubj2').onchange = e=>{ CMP.s2=+e.target.value; renderComposer(); };
+  $('#cVerb2').onchange = e=>{ CMP.v2=e.target.value; CMP.c2=0; renderComposer(); };
+  $('#cComp2').onchange = e=>{ CMP.c2=+e.target.value; renderComposer(); };
+  $('#cConj').onchange = e=>{ CMP.conj=+e.target.value; renderComposer(); };
+  $('#cNeg').onclick = ()=>{ CMP.neg=!CMP.neg; renderComposer(); };
+  $('#cQ').onclick = ()=>{ CMP.q=!CMP.q; renderComposer(); };
+  $('#cPron').onclick = ()=>{ CMP.pron=!CMP.pron; renderComposer(); };
+  $('#cTwo').onclick = ()=>{ CMP.two=!CMP.two; renderComposer(); };
+  $('#cNeg2').onclick = ()=>{ CMP.neg2=!CMP.neg2; renderComposer(); };
+}
+
+/* ---------------- мои фразы: колода mine ---------------- */
+function mountMine(){
+  ST.mine ||= [];
+  if (!S().decks.includes('mine')) S().decks.push('mine');
+  ST.mine.forEach(m=> addMineCard(m));
+}
+function addMineCard(m){
+  const key = norm(m.it); if (BYKEY[key]) return null;
+  const c = {key, deck:'mine', it:m.it, tr:m.tr, ru:m.ru, note:'моя фраза', grp:'Мои фразы', src:'', idx:CARDS.length};
+  CARDS.push(c); BYKEY[key]=c; return c;
+}
+function addMine(r){
+  ST.mine ||= [];
+  if (ST.mine.some(m=>norm(m.it)===norm(r.it))) return;
+  ST.mine.push({it:r.it, tr:r.tr, ru:r.ru}); addMineCard(r); save(); renderMine();
+}
+function renderMine(){
+  const list = CARDS.filter(c=>c.deck==='mine');
+  $('#mineList').innerHTML = list.length ? list.map(c=>`<div class="drow"><span class="dot ${statusOf(c)==='known'?'k':statusOf(c)==='learn'?'l':''}"></span>
+    <div class="txt"><span class="w">${esc(c.it)}</span> <span class="tr">[${esc(c.tr)}]</span><span class="m">${esc(c.ru)}</span></div>
+    <div class="btns">${S().tts&&window.speechSynthesis?`<button data-say="${esc(c.it)}">🔊</button>`:''}<button data-del="${esc(c.key)}" title="удалить">✕</button></div></div>`).join('')
+    : '<div class="dgroup">Пока пусто. Собери предложение во вкладке «Составь своё» и нажми «В мои фразы».</div>';
+  wireSpeak($('#mineList'));
+  $$('#mineList [data-del]').forEach(b=> b.onclick=()=>{ const k=b.dataset.del; ST.mine = (ST.mine||[]).filter(m=>norm(m.it)!==k); const i=CARDS.findIndex(c=>c.key===k && c.deck==='mine'); if(i>=0) CARDS.splice(i,1); delete BYKEY[k]; save(); renderMine(); });
+  $('#mineLearn').disabled = !list.length;
+}
+$('#mineLearn').onclick = ()=> startSession(['mine']);
+
+/* ---------------- уроки ---------------- */
+function lessonState(id){ return (ST.ls||{})[id]; }
+function nextLesson(){ return LESSONS.find(l=> !lessonState(l.id)) || null; }
+function renderLessons(){
+  const nx = nextLesson();
+  $('#lessonList').innerHTML = LESSONS.map(l=>{ const st=lessonState(l.id);
+    return `<button class="lesson ${nx&&nx.id===l.id?'next':''}" data-l="${l.id}"><span class="ic">${l.icon}</span><span class="tx"><b>${esc(l.title)}</b><small>${esc(l.sub)} · ${l.steps.filter(s=>!['idea','scheme'].includes(s.t)).length} заданий</small></span>
+      <span class="st ${st?'done':''}">${st ? '✓ '+st.ok+'/'+st.n : (nx&&nx.id===l.id ? 'следующий' : '')}</span></button>`; }).join('');
+  $$('#lessonList .lesson').forEach(b=> b.onclick=()=> startLesson(b.dataset.l));
+}
+function startLesson(id){
+  const L = LESSONS.find(l=>l.id===id); if (!L) return;
+  const steps = L.steps.map(s=>({...s}));
+  SES = { ls:true, nd:true, lesson:L, q:steps, i:0, stats:{ok:0,bad:0}, failed:new Set(), usedGaps:new Set(), t0:now(), keys:null };
+  $('#sMore').classList.add('hidden'); $('#session').classList.add('on'); lsStep();
+}
+function lsStep(){
+  progressUI();
+  const body = $('#sBody'); const L = SES.lesson;
+  if (SES.i >= SES.q.length){
+    const s=SES.stats, n=s.ok+s.bad;
+    (ST.ls ||= {})[L.id] = {ok:s.ok, n, at:now()}; save();
+    const nx = nextLesson();
+    body.innerHTML = `<div class="done"><div class="big">${s.bad===0?'🏆':'📚'}</div><h2>Урок пройден</h2><p>${esc(L.title)}: верно <b>${s.ok}</b> из <b>${n}</b></p>
+      ${nx ? `<button class="pri" id="dNext">Следующий: ${esc(nx.title)}</button>` : ''}<button class="sec" id="dAgain">Пройти ещё раз</button><button class="sec" id="dClose">Закрыть</button></div>`;
+    if (nx) $('#dNext').onclick = ()=> startLesson(nx.id);
+    $('#dAgain').onclick = ()=> startLesson(L.id); $('#dClose').onclick = ()=>{ endSession(); renderLessons(); }; return;
+  }
+  let st = SES.q[SES.i];
+  if (st.c) st = {t:'card', key:st.c.key, mode:'mcru'};      // повтор проваленной карточки
+  const head = lsHead(L.title, `${SES.i+1} из ${SES.q.length}`);
+  const next = ()=> lsStep();
+  const exList = ex => ex && ex.length ? `<div class="exl">${ex.map(([it,tr,ru])=>`<div class="ex"><span class="i">${esc(it)}</span>${S().tts&&window.speechSynthesis?`<button class="sp" data-say="${esc(it)}">🔊</button>`:'<span class="sp"></span>'}<span class="t">[${esc(tr)}]</span><span class="r">${esc(ru)}</span></div>`).join('')}</div>` : '';
+  if (st.t==='idea' || st.t==='scheme'){
+    body.innerHTML = head + `<div class="slide"><h2>${st.h}</h2>${st.t==='idea'?`<div class="body">${st.body}</div>${exList(st.ex)}`:st.html}</div>` + lsNext('Понятно, дальше') + `<div class="kbd">Enter — дальше</div>`;
+    wireSpeak(body); $('#nx').onclick=()=>{ SES.i++; next(); }; SES.answered=true;
+    SES.keys = k=>{ if (k==='Enter'||k===' ') $('#nx').click(); };
+    return;
+  }
+  if (st.t==='mc'){
+    const opts = st.opts.map((o,i)=>({h:esc(o), v:i}));
+    lsChoice({head, q:`<div class="q"><div class="mid">${st.q}</div></div>`, opts, ans:st.a, fb:()=>`<div class="ans it">${esc(st.opts[st.a])}</div><div>${st.why||''}</div>`, say: /^[A-Za-zÀ-ÿ'’ ,.!?]+$/.test(st.opts[st.a]) ? st.opts[st.a] : ''}, next);
+    return;
+  }
+  if (st.t==='art'){
+    const opts = ['il','lo',"l'",'la'].map(a=>({h:esc(a), v:a}));
+    const full = st.a==="l'" ? "l'"+st.w : st.a+' '+st.w;
+    lsChoice({head, q:`<div class="q"><div class="big it">___ ${esc(st.w)}</div><div class="note">${esc(st.ru)} — какой артикль?</div></div>`, opts, ans:st.a, cls:'arts', kbd:'Клавиши 1–4',
+      fb:()=>`<div class="ans it">${esc(full)}</div><div>${esc(st.why)}</div>`, say: full}, next);
+    return;
+  }
+  if (st.t==='gap'){
+    let cand = GAPS.filter(g=> g[1]===st.verb && !SES.usedGaps.has(g[0])); if (!cand.length) cand = GAPS.filter(g=>g[1]===st.verb);
+    const g = pick(cand); SES.usedGaps.add(g[0]);
+    const V = VERBS[g[1]], ans = V.f[g[2]];
+    const opts = shuffle([ans, ...shuffle([...new Set(V.f.filter(f=>f!==ans))]).slice(0,3)]).map(f=>({h:esc(f), x:(VD.ru?`<span class="ru">${esc(V.r[V.f.indexOf(f)])}</span>`:''), v:f}));
+    const full = g[0].replace('___', ans).replace(/\((\w+)\)\s*/g,'');
+    lsChoice({head, q:`<div class="q"><div class="mid it">${esc(g[0]).replace('___','<b style="color:var(--accent)">___</b>')}</div><div class="note">${esc(g[3])}</div></div>`, opts, ans,
+      fb:()=>`<div class="ans">${esc(PRON[g[2]])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[g[2]])}]</span> — ${esc(V.r[g[2]])}</div><div class="it">${esc(full)}</div>`, say: full}, next);
+    return;
+  }
+  if (st.t==='form'){
+    const V = VERBS[st.verb], ans = V.f[st.p];
+    lsInput({head, q:`<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[st.p])} <small>(${esc(PRON_RU[st.p])})</small></span> · <span class="it">${esc(st.verb)}</span></div><div class="note">${esc(V.ru)} — напиши форму: «${esc(V.r[st.p])}»</div></div>`,
+      check: v=>({ok: norm(v)===norm(ans) || stripAcc(norm(v))===stripAcc(norm(ans))}),
+      fb:()=>`<div class="ans">${esc(PRON[st.p])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[st.p])}]</span> — ${esc(V.r[st.p])}</div>`, say: ans}, next);
+    return;
+  }
+  if (st.t==='num'){
+    const opts = shuffle([st.n, ...ndDistract(st.n, [...Array(101).keys()])]).map(n=>({h:esc(numWord(n)[0]), v:n}));
+    lsChoice({head, q:`<div class="q"><div class="huge">${st.n}</div><div class="note">Как это по-итальянски?</div></div>`, opts, ans:st.n,
+      fb:()=>`<div class="ans">${st.n} — <span class="it">${numWord(st.n)[0]}</span> <span class="tr">[${numWord(st.n)[1]}]</span></div><div class="muted">${numWord(st.n)[2]}</div>`, say:numWord(st.n)[0]}, next);
+    return;
+  }
+  if (st.t==='build'){ renderBuildTask(st, head, next); return; }
+  if (st.t==='card'){
+    const c = st.c || CARDS.find(x=>norm(x.it)===norm(st.key)) || CARDS[0];
+    const mode = st.mode || 'mcru';
+    ({trans:renderTrans, mcru:renderMC, mcit:renderMC, flash:renderFlash, type:renderType})[mode](c, mode);
+    return;
+  }
+  SES.i++; next();
+}
+$('#lessonBtn').onclick = ()=>{ const nx = nextLesson(); startLesson(nx ? nx.id : LESSONS[0].id); };
+
+/* ---------------- правила: одна мысль — один экран ---------------- */
+function paginateTopic(){
+  const card = $('#refContent .card'); if (!card) return;
+  if (!card.dataset.stacked){ card.dataset.stacked='1'; $$('table', card).forEach(t=>{ const hs=$$('thead th',t).map(x=>x.textContent.trim()); if (hs.length>=3){ t.classList.add('stack'); $$('tbody tr',t).forEach(r=> $$('td',r).forEach((td,i)=>{ if(hs[i]) td.dataset.h=hs[i]; })); } }); }
+  const kids = Array.from(card.children).filter(el=> !(el.tagName==='H2' || el.classList.contains('lead')));
+  const pages = []; let cur = {title:'Начало', els:[]};
+  kids.forEach(el=>{ if (el.tagName==='H3'){ if (cur.els.length) pages.push(cur); cur = {title:el.textContent.trim(), els:[]}; } cur.els.push(el); });
+  if (cur.els.length) pages.push(cur);
+  REF.pages = pages; REF.page = Math.min(REF.page||0, pages.length-1);
+  const all = !!S().refAll || pages.length<=1;
+  card.classList.toggle('paged', !all); card.classList.toggle('all', all);
+  $('#refAll').classList.toggle('on', !!S().refAll);
+  $('.pager').style.display = all ? 'none' : ''; $('#pgDots').style.display = all ? 'none' : '';
+  if (all) return;
+  kids.forEach(el=> el.classList.remove('pg-on'));
+  pages[REF.page].els.forEach(el=> el.classList.add('pg-on'));
+  $('#pgDots').innerHTML = pages.map((p,i)=>`<i class="${i===REF.page?'on':''}" title="${esc(p.title)}"></i>`).join('');
+  $('#pgCnt').textContent = `${REF.page+1} / ${pages.length}`;
+  const prev = pages[REF.page-1], nxt = pages[REF.page+1];
+  $('#pgPrev').textContent = prev ? '← '+prev.title : ''; $('#pgPrev').disabled = !prev;
+  $('#pgNext').textContent = nxt ? nxt.title+' →' : ''; $('#pgNext').disabled = !nxt;
+}
+$('#pgPrev').onclick = ()=>{ REF.page=Math.max(0,(REF.page||0)-1); paginateTopic(); $('#refContent').scrollIntoView({block:'start'}); };
+$('#pgNext').onclick = ()=>{ REF.page=Math.min(REF.pages.length-1,(REF.page||0)+1); paginateTopic(); $('#refContent').scrollIntoView({block:'start'}); };
+$('#refAll').onclick = ()=>{ S().refAll = !S().refAll; save(); paginateTopic(); };
+
+/* ---------------- главная: сегодня ---------------- */
+$('#gVerb').onclick = ()=> startVerbDrill();
+$('#gNum').onclick = ()=>{ ND.modes = canListen() ? ['hear','n2w'] : ['n2w','w2n']; ND.range='100'; ND.count=20; startNumDrill(); };
+$('#gPhr').onclick = ()=> startSession(['fr']);
+
 /* ---------------- старт ---------------- */
-load(); applyLook(); initSettings(); syncSettingsUI(); renderHome();
+load(); mountMine(); applyLook(); initSettings(); initComposer(); syncSettingsUI(); renderHome();
 
 if (location.hash.startsWith('#shot=')){
   save = ()=>{};   // отладочный режим: ничего не сохранять
   const what = location.hash.slice(6);
-  if (['phr','num','ref','set','all'].includes(what)) showPane('p-'+what);
+  if (['phr','num','ref','set','all','les','build','more','study'].includes(what)) showPane('p-'+what);
+  else if (what==='own'){ showPane('p-build'); $$('#buildSeg button')[1].click(); CMP.two=true; renderComposer(); }
+  else if (what.startsWith('lesson:')){ const [id,n] = what.slice(7).split('/'); startLesson(id); for (let k=0;k<(+n||0);k++){ SES.i++; } lsStep(); }
+  else if (what==='bd'){ startBuild('all',5); }
   else if (what==='numtable'){ showPane('p-num'); $$('#numSeg button')[1].click(); }
   else if (what==='refview'){ showPane('p-ref'); openTopic('g5', true); }
   else if (what.startsWith('topic:')){ showPane('p-ref'); openTopic(what.slice(6), true); }
@@ -4055,6 +4961,22 @@ if (location.hash.startsWith('#selftest')){
   try{ ND.modes=['n2w','w2n']; ND.range='100'; ND.count=8; startNumDrill(); let steps=0;
     while (SES && SES.i<SES.q.length && steps<40){ steps++; if($('#ti')){ $('#ti').value=String(SES.q[SES.i].n); $('#chk').click(); } else { $$('.opt')[0].click(); } $('#nx').click(); }
     log.push('num drill done: '+JSON.stringify(SES.stats)+' hist='+(ST.nd||[]).length); endSession(); }catch(e){ errs.push('num drill: '+e.message); }
+  try{ const res=[]; LESSONS.forEach(L=>{ startLesson(L.id); let steps=0;
+      while (SES && SES.i<SES.q.length && steps<200){ steps++;
+        if ($('#bBank')){ const st=SES.q[SES.i]; const words=bTok(st.it); words.forEach(w=>{ const b=$$('#bBank .tile').find(t=>!t.classList.contains('used') && t.textContent===w); if(b) b.click(); }); $('#chk').click(); $('#nx').click(); continue; }
+        if ($('#ti')){ const st=SES.q[SES.i]; $('#ti').value = st.t==='form' ? VERBS[st.verb].f[st.p] : 'x'; $('#chk').click(); $('#nx').click(); continue; }
+        if ($('#revealBtn')){ $('#revealBtn').click(); $('.grades button[data-g=\"2\"]').click(); continue; }
+        if ($$('.opt').length){ $$('.opt')[0].click(); if(!$('#nx')){ errs.push('lesson '+L.id+' no next'); break; } $('#nx').click(); continue; }
+        if ($('#nx')){ $('#nx').click(); continue; }
+        errs.push('lesson '+L.id+' stuck at '+SES.i); break; }
+      res.push(L.id+':'+SES.stats.ok+'/'+(SES.stats.ok+SES.stats.bad)); endSession(); });
+    log.push('lessons: '+res.join(' ')+' | next='+(nextLesson()?nextLesson().id:'none')+' done='+Object.keys(ST.ls||{}).length); }catch(e){ errs.push('lessons: '+e.message+' '+(e.stack||'').split(String.fromCharCode(10))[1]); }
+  try{ startBuild('all',6); let steps=0; while (SES && SES.i<SES.q.length && steps<20){ steps++; const st=SES.q[SES.i]; bTok(st.it).forEach(w=>{ const b=$$('#bBank .tile').find(t=>!t.classList.contains('used') && t.textContent===w); if(b) b.click(); }); $('#chk').click(); $('#nx').click(); }
+    log.push('build: '+JSON.stringify(SES.stats)+' pool='+buildPool('all').length+' short='+buildPool('short').length+' verbs='+buildPool('verbs').length+' me='+buildPool('me').length); endSession(); }catch(e){ errs.push('build: '+e.message); }
+  try{ showPane('p-build'); const samples=[]; [[0,'parlare',0,false,false],[2,'essere',4,true,false],[5,'avere',0,false,true],[10,'essere',5,false,false],[12,'abitare',1,false,false],[4,'studiare',0,false,true]].forEach(([si,v,ci,neg,q])=>{ CMP.s=si; CMP.v=v; CMP.c=ci; CMP.neg=neg; CMP.q=q; CMP.two=false; renderComposer(); samples.push(compose().it+' = '+compose().ru); });
+    CMP.two=true; CMP.conj=2; CMP.s2=0; CMP.v2='amare'; CMP.c2=0; renderComposer(); samples.push(compose().it); $('#cSave').click(); log.push('composer: '+samples.join(' || ')+' | mine='+(ST.mine||[]).length+' cards mine='+CARDS.filter(c=>c.deck==='mine').length+' wide: '+wide().join(', ')); }catch(e){ errs.push('composer: '+e.message); }
+  try{ showPane('p-ref'); openTopic('g5', true); const n=REF.pages.length; $('#pgNext').click(); log.push('ref pages g5='+n+' page='+REF.page+' shown='+$$('#refContent .card > .pg-on').length+' wide: '+wide().join(', ')); openTopic('g9', true); log.push('g9 pages='+REF.pages.length); }catch(e){ errs.push('pager: '+e.message); }
+  try{ showPane('p-les'); log.push('lesson list='+$$('#lessonList .lesson').length+' wide: '+wide().join(', ')); showPane('p-study'); log.push('today wide: '+wide().join(', ')); }catch(e){ errs.push('les pane: '+e.message); }
   log.push('phrase groups: '+phrGroups().length+' | select opts='+$('#phrGroup').options.length+' | '+phrGroups().join(' · '));
   try{ VD.modes=['pick','type','gap']; startVerbDrill(); let steps=0;
     while (SES && SES.i<SES.q.length && steps<40){ steps++; const t=SES.q[SES.i]; if($('#ti')){ $('#ti').value=VERBS[t.v].f[t.p]; $('#chk').click(); } else { $$('.opt')[0].click(); } $('#nx').click(); }
