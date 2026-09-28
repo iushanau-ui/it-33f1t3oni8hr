@@ -261,7 +261,7 @@ button.sec:hover{border-color:var(--accent)}
 .vrow .vb .ring{margin-top:8px}
 .vrow .vb .exs{margin-top:10px;font-size:14.5px} .vrow .vb .exs .it{font-size:16px}
 .vrow .vb .bt{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap} .vrow .vb .bt button{width:auto;padding:8px 14px;font-size:14px}
-@media (min-width:960px){ .vrow .vh{grid-template-columns:260px 1fr auto;gap:12px} .vrow .vh .ru{grid-column:2} .vrow .vh .g{grid-column:3;grid-row:1} .vrow .vb .ring{grid-template-columns:repeat(6,1fr)} }
+@media (min-width:960px){ .vrow .vh{grid-template-columns:260px 1fr auto;gap:12px} .vrow .vh .ru{grid-column:2} .vrow .vh .g{grid-column:3;grid-row:1} .vrow .vb .ring{grid-template-columns:repeat(3,1fr)} }
 .vcount{color:var(--muted);font-size:13.5px;margin:0 0 10px}
 
 /* ============ списки слов / фраз ============ */
@@ -426,6 +426,18 @@ body.num-hide-it .numcell .w{visibility:hidden}
 .out .btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap} .out .btns button{width:auto;flex:1;background:var(--card)}
 .mine .drow .w{font-size:16px}
 
+span.acc{display:inline !important;position:relative;font:inherit;color:inherit;margin:0;padding:0}
+.acc::after{content:"";position:absolute;left:50%;bottom:-.12em;width:.28em;height:.28em;border-radius:50%;background:var(--accent);transform:translateX(-50%)}
+.trainers{grid-template-columns:repeat(2,1fr)} @media (min-width:960px){ .trainers{grid-template-columns:repeat(4,1fr)} }
+.trainers button{flex-direction:column;align-items:flex-start;gap:4px;padding:14px 16px}
+.trainers button small{color:var(--muted);font-size:12.5px;font-weight:400}
+.trainers button svg.i{color:var(--accent)}
+#sRu{font-size:12px;font-weight:700;letter-spacing:.5px} #sRu.off{color:var(--muted);text-decoration:line-through}
+body.no-ru .ruhide{display:none !important}
+.lesson.special{background:var(--accent-bg);border-color:var(--accent)}
+.lesson.special .no{color:var(--accent-ink)}
+.endq{font-family:var(--serif);font-size:24px;line-height:1.4}
+.endq .stem{border-bottom:2px solid var(--accent)} .endq input{width:5.5ch;font:inherit;border:none;border-bottom:2px solid var(--accent);background:var(--hl);color:var(--ink);text-align:center;padding:0 2px;outline:none}
 /* ============ Ещё ============ */
 .moregrid{display:grid;gap:10px;grid-template-columns:1fr 1fr}
 .moregrid button{border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:20px 12px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink)}
@@ -504,33 +516,11 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
         <button class="act" id="buildBtn"><span class="tx"><b>Собрать 10 фраз</b><small>из перемешанных слов</small></span><svg class="i"><use href="#i-chev"/></svg></button>
       </div>
       <div class="games">
+        <button id="gCards"><svg class="i"><use href="#i-words"/></svg>Запомнить глаголы</button>
+        <button id="gEnd"><svg class="i"><use href="#i-pen"/></svg>Окончания</button>
         <button id="gVerb"><svg class="i"><use href="#i-verbs"/></svg>Формы глаголов</button>
         <button id="gNum"><svg class="i"><use href="#i-numbers"/></svg>Числа на слух</button>
-        <button id="gPhr"><svg class="i"><use href="#i-phrases"/></svg>Фразы</button>
-        <button id="gDict"><svg class="i"><use href="#i-ear"/></svg>Диктант</button>
       </div>
-      <details class="more" id="studySettings"><summary>Настройки занятия</summary>
-        <h3>Тип заданий</h3>
-        <div class="chips" id="modeChips"></div>
-        <h3>Колоды</h3>
-        <div id="deckList"></div>
-        <h3>Тренажёр глаголов</h3>
-        <div class="chips" id="vdVerbs">
-          <button class="chip on" data-v="all">все</button>
-          <button class="chip" data-v="are">-are</button>
-          <button class="chip" data-v="ereire">-ere, -ire</button>
-          <button class="chip" data-v="irr">неправильные</button>
-          <button class="chip" data-v="rfl">возвратные</button>
-          <button class="chip" data-v="ea">essere, avere</button>
-        </div>
-        <div class="chips" id="vdModes">
-          <button class="chip on" data-m="pick">выбрать форму</button>
-          <button class="chip on" data-m="type">написать форму</button>
-          <button class="chip on" data-m="gap">предложение с пропуском</button>
-        </div>
-        <div class="chips"><button class="chip on" id="vdRu">перевод каждой формы</button></div>
-        <button class="sec" id="vdStart">Серия из 20 заданий</button>
-      </details>
     </div>
     <div>
       <div class="course" id="courseList"></div>
@@ -547,6 +537,30 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
 <!-- ======================= ГЛАГОЛЫ ======================= -->
 <div class="pane" id="p-verbs"><div class="wrap">
   <div class="pane-head"><h2>Глаголы</h2><span class="sub" id="vCount"></span></div>
+  <div class="games trainers">
+    <button id="vCards"><svg class="i"><use href="#i-words"/></svg>Запомнить глаголы<small>карточки, все 150</small></button>
+    <button id="vEnd"><svg class="i"><use href="#i-pen"/></svg>Окончания<small>вписать окончание во фразе</small></button>
+    <button id="vForms"><svg class="i"><use href="#i-verbs"/></svg>Формы<small>выбрать и написать форму</small></button>
+    <button id="vGap"><svg class="i"><use href="#i-build"/></svg>Пропуски<small>подставить форму во фразу</small></button>
+  </div>
+  <details class="more" id="vdSettings"><summary>Настроить серию</summary>
+    <div class="chips" id="vdVerbs">
+      <button class="chip on" data-v="all">все</button>
+      <button class="chip" data-v="are">-are</button>
+      <button class="chip" data-v="ereire">-ere, -ire</button>
+      <button class="chip" data-v="irr">неправильные</button>
+      <button class="chip" data-v="rfl">возвратные</button>
+      <button class="chip" data-v="ea">essere, avere</button>
+    </div>
+    <div class="chips" id="vdModes">
+      <button class="chip on" data-m="pick">выбрать форму</button>
+      <button class="chip on" data-m="type">написать форму</button>
+      <button class="chip on" data-m="gap">пропуск во фразе</button>
+      <button class="chip on" data-m="end">окончание</button>
+    </div>
+    <div class="chips"><button class="chip on" id="vdRu">перевод форм в вариантах</button></div>
+    <button class="sec" id="vdStart">Серия из 20 заданий</button>
+  </details>
   <div class="vtools">
     <input type="search" id="vq" placeholder="Поиск: по-итальянски или по-русски">
   </div>
@@ -1971,7 +1985,11 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
   <div class="pane-head"><h2>Настройки</h2></div>
   <div class="card">
     <h2>Занятие</h2>
-    <div class="set"><div class="lbl">Новых карточек в день<small>Повторы показываются всегда, лимит только на новые.</small></div>
+    <h3>Тип заданий</h3>
+    <div class="chips" id="modeChips"></div>
+    <h3>Колоды</h3>
+    <div id="deckList"></div>
+    <div class="set" style="margin-top:8px"><div class="lbl">Новых карточек в день<small>Повторы показываются всегда, лимит только на новые.</small></div>
       <input type="number" id="setNew" min="0" max="200" step="5"></div>
     <div class="set"><div class="lbl">Направление карточек<small>Для режима «Карточки»</small></div>
       <select id="setDir"><option value="it">итальянское → перевод</option><option value="ru">перевод → итальянское</option><option value="mix">вперемешку</option></select></div>
@@ -2025,6 +2043,7 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
     <button class="icon" id="sClose"><svg class="i"><use href="#i-close"/></svg></button>
     <div class="prog"><i id="sProg" style="width:0%"></i></div>
     <div class="cnt" id="sCnt"></div>
+    <button class="icon" id="sRu" title="Показывать перевод">RU</button>
     <button class="icon" id="sMore" title="Ещё 10 новых слов"><svg class="i"><use href="#i-plus"/></svg></button>
   </div>
   <div class="s-body"><div class="wrap" id="sBody"></div></div>
@@ -4244,6 +4263,106 @@ const CONJ = [ ['e','э','и', ''], ['ma','ма','но', ','], ['perché','пэ�
 
 
 /* ====================================================================
+   Транслитерация итальянского в русское чтение.
+   Вход: слово латиницей, ударная гласная ЗАГЛАВНАЯ (parlAre → парлАрэ).
+   Выход: русское чтение с заглавной ударной гласной.
+   ==================================================================== */
+function tl(word){
+  const src = word;
+  const w = word.toLowerCase();
+  const V = 'aeiou';
+  const isV = ch => !!ch && V.includes(ch);
+  const ru = {a:'а', e:'э', i:'и', o:'о', u:'у'};
+  const iot = {a:'я', e:'е', o:'о', u:'ю', i:'и'};   // после ь / й / ль / нь
+  const iotA = {a:'а', e:'е', o:'о', u:'у', i:'и', A:'Я', E:'Е'};
+  const iotY = {a:'я', e:'е', o:'йо', u:'ю', i:'йи'};   // после ч / дж / ш: только ударная A → Я
+  const out = []; let i = 0;
+  const up = j => src[j] && src[j] !== src[j].toLowerCase();
+  const vow = (j, alt) => { const ch = w[j]; let r; if (alt && up(j) && alt[ch.toUpperCase()]) r = alt[ch.toUpperCase()]; else { r = (alt||ru)[ch] || ch; if (up(j)) r = r.toUpperCase(); } return r; };
+  const at = j => w[j] || '';
+  const voiced = 'bdglmnrv';
+  while (i < w.length){
+    const c = at(i), n = at(i+1), n2 = at(i+2);
+    // ---- sc / sch ----
+    if (c==='s' && n==='c'){
+      if (n2==='h'){ out.push('ск'); i+=3; continue; }
+      if (n2==='i' && isV(at(i+3))){ out.push('ш'); i+=3; out.push(vow(i, iotA)); i++; continue; }        // sciA → шЯ
+      if (n2==='e' || n2==='i'){ out.push('ш'); i+=2; continue; }            // sce, sci
+      out.push('ск'); i+=2; continue;
+    }
+    // ---- gli / gn ----
+    if (c==='g' && n==='l' && n2==='i'){
+      if (isV(at(i+3))){ out.push('ль'); i+=3; out.push(vow(i, iot)); i++; continue; }   // glia → лья
+      out.push('льи'); i+=3; continue;                                                    // gli
+    }
+    if (c==='g' && n==='n'){ out.push('нь'); i+=2; if (at(i)==='i' && isV(at(i+1)) && !up(i)) i++; if (isV(at(i))){ out.push(vow(i, iot)); i++; } continue; }
+    // ---- ch / gh ----
+    if (c==='c' && n==='h'){ out.push('к'); i+=2; continue; }
+    if (c==='g' && n==='h'){ out.push('г'); i+=2; continue; }
+    // ---- c ----
+    if (c==='c'){
+      if (n==='c' && (n2==='e'||n2==='i')){ out.push('чч'); i+=2; if (n2==='i' && isV(at(i+1))){ i++; out.push(vow(i, iotA)); i++; } continue; }  // cce/cci(+v)
+      if (n==='i' && isV(n2)){ out.push('ч'); i+=2; out.push(vow(i, iotA)); i++; continue; }                // cia → ча, ciA → чЯ
+      if (n==='e' || n==='i'){ out.push('ч'); i+=1; continue; }
+      out.push('к'); i+=1; continue;
+    }
+    // ---- g ----
+    if (c==='g'){
+      if (n==='g' && (n2==='e'||n2==='i')){ out.push('дж'); i+=2; if (n2==='i' && isV(at(i+1))){ i++; out.push(vow(i, iotA)); i++; } continue; }
+      if (n==='i' && isV(n2)){ out.push('дж'); i+=2; out.push(vow(i, iotA)); i++; continue; }
+      if (n==='e' || n==='i'){ out.push('дж'); i+=1; continue; }
+      out.push('г'); i+=1; continue;
+    }
+    // ---- qu ----
+    if (c==='q'){ out.push('ку'); i+=2; continue; }
+    if (c==='h'){ i++; continue; }
+    if (c==='z'){ if (n==='z'){ out.push('цц'); i+=2; continue; } out.push(i===0 ? 'дз' : 'ц'); i++; continue; }
+    if (c==='s'){
+      const prev = at(i-1);
+      if (n==='s'){ out.push('сс'); i+=2; continue; }
+      if ((isV(prev) && isV(n)) || (n && voiced.includes(n))) out.push('з'); else out.push('с');
+      i++; continue;
+    }
+    if (c==='l'){ out.push((isV(n) || n==='l' || n==="'" || n==='’') ? 'л' : 'ль'); i++; continue; }
+    const cons = {b:'б', d:'д', f:'ф', m:'м', n:'н', p:'п', r:'р', t:'т', v:'в', k:'к', j:'й', w:'в', x:'кс', y:'и'};
+    if (cons[c]){ out.push(cons[c]); i++; continue; }
+    // ---- гласные ----
+    if (c==='i'){
+      const prev = at(i-1);
+      if (isV(n) && !up(i)){                       // безударное i перед гласной
+        if (i===0){ if (n==='o'){ out.push('и'); i++; continue; } out.push(vow(i+1, iot)); i+=2; continue; }
+        if (isV(prev)){ out.push(vow(i+1, iotY)); i+=2; continue; }          // aiuto → аюто, muoio → муойо
+        out.push('ь'); out.push(vow(i+1, iot)); i+=2; continue;              // studiare → студьЯрэ
+      }
+      if (isV(prev) && !isV(n) && !up(i) && !(prev==='u' && 'gq'.includes(at(i-2)))){ out.push('й'); i++; continue; }  // sei → сэй, mai → май; но gui/qui → гуи/куи
+      out.push(vow(i)); i++; continue;
+    }
+    if (isV(c)){ out.push(vow(i)); i++; continue; }
+    if (c==="'" || c==='’'){ i++; continue; }
+    out.push(c); i++;
+  }
+  return out.join('');
+}
+// ударение в словах без пометки: предпоследний слог
+function guessStress(word){
+  if (/[AEIOU]/.test(word)) return word;
+  if (/[àèéìòù]$/.test(word)) return word;
+  const m = [...word.matchAll(/[aeiou]/g)].filter(x=> !(x[0]==='u' && 'gq'.includes(word[x.index-1]||'') && /[aeiou]/.test(word[x.index+1]||'')));
+  if (m.length < 2) return word;   // односложные — без пометки
+  // предпоследняя гласная, пропуская i/u перед гласной (дифтонг)
+  let idx = m.length-2;
+  if ((word[m[idx].index]==='i' || word[m[idx].index]==='u') && idx>0 && m[idx+1].index===m[idx].index+1) idx--;
+  const p = m[idx].index;
+  return word.slice(0,p) + word[p].toUpperCase() + word.slice(p+1);
+}
+// фраза: каждое слово по отдельности, знаки препинания сохраняются
+function tlPhrase(s){
+  return s.split(/(\s+|[,.!?;:«»()]+)/).map(t=> /^[A-Za-zÀ-ÿ'’]+$/.test(t) ? tl(t.replace(/[àèìòù]/g, ch=>({'à':'A','è':'E','ì':'I','ò':'O','ù':'U'})[ch]).replace(/é/g,'E')) : t).join('');
+}
+const deStress = s => s.replace(/[AEIOU]/g, ch=>ch.toLowerCase());
+if (typeof module !== 'undefined') module.exports = { tl, tlPhrase, guessStress, deStress };
+
+/* ====================================================================
    ТРЕНАЖЁР — логика
    ==================================================================== */
 const $ = (s, r=document) => r.querySelector(s);
@@ -4255,6 +4374,46 @@ const shuffle = a => { for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.r
 const pick = a => a[Math.floor(Math.random()*a.length)];
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const norm = s => s.toLowerCase().replace(/[!?…,.:;«»"()]/g,'').replace(/\s+/g,' ').trim();
+/* ---- пометка ударения: <span class="acc">гласная</span> ---- */
+const ACC_EXC = {telefono:2,numero:2,macchina:2,camera:2,tavolo:2,medico:2,musica:2,zucchero:2,sabato:2,domenica:2,lettera:2,giovane:2,difficile:2,facile:2,subito:2,ultimo:2,unico:2,semplice:2,possibile:2,utile:2,massimo:2,ordine:2,albero:2,mobile:2,pagina:2,penisola:2,dodici:2,undici:2,tredici:2,quindici:2,sedici:2,quattordici:2,ottimo:2,pessimo:2,piccolo:2,vivere:2,leggere:2,scrivere:2,prendere:2,chiedere:2,credere:2,mettere:2,perdere:2,ridere:2,rispondere:2,vendere:2,correre:2,chiudere:2,decidere:2,ripetere:2,dipingere:2,piangere:2,spendere:2,accendere:2,discutere:2,scegliere:2,conoscere:2,spegnere:2,essere:2,ricevere:2,dividere:2,vincere:2,nascere:2,scendere:2,offendere:2,rompere:2,muovere:2,abito:2,abiti:2,abita:2,abitano:3,ordino:2,ordini:2,ordina:2,ordinano:3,visito:2,visiti:2,visita:2,visitano:3,desidero:2,desideri:2,desidera:2,desiderano:3,dimentico:2,dimentichi:2,dimentica:2,dimenticano:3,telefoni:2,telefona:2,telefonano:3,stazione:1,lezione:1,colazione:1,canzone:1,signore:1,signora:1,ragazzo:1,ragazza:1,bielorusso:1,italiano:1,cellulare:1,tutti:1,grazie:1,prego:1,scusa:1,buonasera:1,arrivederci:1,cucina:1,famiglia:1,aereo:2,cinema:2,camminare:1,chiocciola:2,facilmente:1,sciopero:2,vuotare:1,quota:1,ancora:1,ripeti:1,capisco:1};
+const RU_V = 'аэиоуяюеёыАЭИОУЯЮЕЁЫ';
+function itNuclei(w){ // позиции гласных-ядер слога
+  const s = w.toLowerCase(); const out=[]; const V='aeiouàèéìòù';
+  for (let i=0;i<s.length;i++){ const c=s[i]; if(!V.includes(c)) continue;
+    const p=s[i-1]||'', n=s[i+1]||'';
+    if (c==='u' && 'gq'.includes(p) && V.includes(n)) continue;                       // qu, gu
+    if (c==='i' && V.includes(n) && ('cg'.includes(p) || (p==='c'&&s[i-2]==='s') || (p==='l'&&s[i-2]==='g'))) continue; // cia, gio, scia, glia
+    if ((c==='i'||c==='u') && V.includes(n) && i>0) continue;                          // скользящие: piano, buono, aiuto
+    out.push(i); }
+  return out;
+}
+function stressIdx(word, tr){
+  const s = word.toLowerCase(); const nuc = itNuclei(s); if (nuc.length<2) return -1;
+  const acc = [...s].findIndex(ch=>'àèéìòù'.includes(ch)); if (acc>=0) return -1;     // уже помечено знаком
+  const base = s.replace(/[^a-z]/g,'');
+  if (ACC_EXC[base]!==undefined){ const k=nuc.length-1-ACC_EXC[base]; return nuc[k]!==undefined ? nuc[k] : nuc[nuc.length-2]; }
+  if (!tr){ buildTrMaps(); tr = VF_TR[base] || WORD_TR[base] || null; }
+  if (tr){ const tv=[...tr].filter((ch,i,arr)=> RU_V.includes(ch) && !((ch==='у'||ch==='и') && RU_V.includes(arr[i+1]||''))); const k=tv.findIndex(ch=>ch===ch.toUpperCase());
+    if (k>=0 && tv.length===nuc.length) return nuc[k]; if (k>=0 && k<nuc.length && Math.abs(tv.length-nuc.length)===1) return nuc[Math.min(k, nuc.length-1)]; }
+  return nuc[nuc.length-2];
+}
+let VF_TR = null, WORD_TR = null;
+function buildTrMaps(){ if (VF_TR) return; VF_TR={}; WORD_TR={};
+  Object.values(VERBS).forEach(V=> V.f.forEach((f,i)=>{ const w=f.split(' ').pop(), t=(V.tr[i]||'').split(' ').pop(); if (w && t && !VF_TR[w]) VF_TR[w]=t; }));
+  CARDS.forEach(c=>{ const w=c.it.toLowerCase().replace(/[^a-zàèéìòù' ]/g,'').trim(); if (w && !w.includes(' ') && c.tr && !c.tr.includes(' ')) WORD_TR[w.replace(/[^a-zàèéìòù]/g,'')]=c.tr; }); }
+function accWord(word, tr){ if (/[A-Z].*[A-Z]/.test(word)) return esc(word); const k=stressIdx(word, tr); if (k<0) return esc(word); return esc(word.slice(0,k))+'<span class="acc">'+esc(word[k])+'</span>'+esc(word.slice(k+1)); }
+function accIt(it, tr){
+  const parts = String(it).split(/(\s+)/); const trw = tr ? String(tr).replace(/[\[\]]/g,'').split(/\s+/).filter(Boolean) : [];
+  const words = parts.filter(p=>!/^\s*$/.test(p) && /[A-Za-zÀ-ÿ]/.test(p));
+  const aligned = trw.length===words.length; let wi=0;
+  return parts.map(p=>{ if (/^\s*$/.test(p) || !/[A-Za-zÀ-ÿ]/.test(p)) return esc(p);
+    const t = aligned ? trw[wi] : null; wi++;
+    const m = p.match(/^([^A-Za-zÀ-ÿ]*)([A-Za-zÀ-ÿ'’]+?)([^A-Za-zÀ-ÿ]*)$/); if (!m) return esc(p);
+    if (m[1].includes('-')) return esc(p);
+    const core = m[2]; const sub = core.split(/(['’])/);
+    if (sub.length>1){ const trs = t ? [null, null, t] : [null,null,null]; return esc(m[1]) + sub.map((x,i)=> i%2 ? esc(x) : (x ? accWord(x, i===sub.length-1 ? (t||null) : null) : '')).join('') + esc(m[3]); }
+    return esc(m[1]) + accWord(core, t) + esc(m[3]); }).join('');
+}
 const ICO = n => `<svg class="i"><use href="#i-${n}"/></svg>`;
 const stripAcc = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’]/g,"'");
 
@@ -4355,6 +4514,7 @@ function showPane(id){
   if (id==='p-ref') renderRef();
   if (id==='p-les') renderLessons();
   if (id==='p-verbs') renderVerbs();
+  if (id==='p-set') renderHome();
   if (id==='p-build') renderBuild();
 }
 $$('[data-p]').forEach(b=> b.onclick = ()=> showPane(b.dataset.p));
@@ -4421,9 +4581,10 @@ $('#startBtn').onclick = ()=> startSession();
 
 /* ---------------- сессия ---------------- */
 let SES = null;
-function startSession(onlyDecks){
+function startSession(onlyDecks, filterFn){
   // onlyDecks — список колод для занятия «только это» (кнопки «Учить фразы», «Учить числа»)
-  const pool = onlyDecks ? CARDS.filter(c=> onlyDecks.includes(c.deck) && !(P(c.key)||{}).sus) : activeCards();
+  let pool = onlyDecks ? CARDS.filter(c=> onlyDecks.includes(c.deck) && !(P(c.key)||{}).sus) : activeCards();
+  if (filterFn) pool = CARDS.filter(c=> !(P(c.key)||{}).sus && filterFn(c));
   const due = shuffle(dueCards(pool));
   const newLeft = Math.max(0, S().newPerDay - today().n);
   let fresh = freshCards(pool).slice(0, newLeft);
@@ -4438,6 +4599,8 @@ function startSession(onlyDecks){
   renderStep();
 }
 $('#sClose').onclick = ()=>{ endSession(); };
+function applyRu(){ document.body.classList.toggle('no-ru', S().exRu===false); $('#sRu').classList.toggle('off', S().exRu===false); }
+$('#sRu').onclick = ()=>{ S().exRu = S().exRu===false ? true : false; save(); applyRu(); };
 $('#sMore').onclick = ()=> addFresh(10);
 function addFresh(n){
   if (!SES || SES.nd) return;
@@ -4470,7 +4633,7 @@ function chooseMode(c, isNew){
 }
 function cardHTML(c, {showIt=true, showTr=true, showRu=true, big=true}={}){
   let h = '';
-  if (showIt) h += `<div class="${big?'big':'mid'} it">${esc(c.it)}</div>`;
+  if (showIt) h += `<div class="${big?'big':'mid'} it">${accIt(c.it, c.tr)}</div>`;
   if (showTr && c.tr) h += `<div class="tr">[${esc(c.tr)}]</div>`;
   if (showRu) h += `<div class="mid">${esc(c.ru)}</div>`;
   if (showRu && c.note) h += `<div class="note">${esc(c.note)}</div>`;
@@ -4540,7 +4703,7 @@ function feedback(c, ok, chosenText){
   const el = document.createElement('div');
   el.className = 'fb ' + (ok?'ok':'no');
   el.innerHTML = `<div>${ok?'Верно':'Неверно'}</div>
-    <div class="ans it">${esc(c.it)} <span class="tr">[${esc(c.tr)}]</span></div>
+    <div class="ans it">${accIt(c.it, c.tr)} <span class="tr">[${esc(c.tr)}]</span></div>
     <div>${esc(c.ru)}</div>${c.note?`<div class="muted" style="font-size:13.5px">${esc(c.note)}</div>`:''}
     <div style="margin-top:6px">${spkBtn(c)}</div>
     <button class="pri next" id="nx">Дальше</button>`;
@@ -4782,7 +4945,7 @@ function wireSus(root, after){ $$('[data-sus]', root).forEach(b=> b.onclick=()=>
 function rowHTML(c, showDeck){
   const s = statusOf(c);
   return `<div class="drow ${s==='sus'?'sus':''}"><span class="dot ${s==='known'?'k':s==='learn'?'l':s==='sus'?'s':''}"></span>
-    <div class="txt"><span class="w">${esc(c.it)}</span> <span class="tr">[${esc(c.tr)}]</span><span class="m">${esc(c.ru)}</span>${c.note?`<span class="n">${esc(c.note)}</span>`:''}${showDeck?`<span class="n">${esc(DECK[c.deck].name)}${c.src?' · '+esc(c.src):''}</span>`:''}</div>
+    <div class="txt"><span class="w">${accIt(c.it, c.tr)}</span> <span class="tr">[${esc(c.tr)}]</span><span class="m">${esc(c.ru)}</span>${c.note?`<span class="n">${esc(c.note)}</span>`:''}${showDeck?`<span class="n">${esc(DECK[c.deck].name)}${c.src?' · '+esc(c.src):''}</span>`:''}</div>
     <div class="btns">${S().tts&&window.speechSynthesis?`<button data-say="${esc(ttsText(c))}" title="послушать">${ICO('sound')}</button>`:''}<button data-sus="${esc(c.key)}" title="${s==='sus'?'вернуть в занятия':'уже знаю, убрать из занятий'}">${s==='sus'?ICO('repeat'):ICO('check')}</button></div></div>`;
 }
 $('#aq').addEventListener('input', e=>{ ALL.q=e.target.value; renderAll(); });
@@ -4838,13 +5001,13 @@ function numWord(n){
   return [it, tr, T[2]+' '+U[2]];
 }
 let NUMTEN = 20;
-const numCell = n => { const [it,tr,ru]=numWord(n); return `<div class="numcell"><div class="d">${n}</div><div class="w">${it}</div><div class="t">[${tr}]</div><div class="r">${ru}</div>${S().tts&&window.speechSynthesis?`<button class="icon" style="margin-top:6px" data-say="${it}">${ICO('sound')}</button>`:''}</div>`; };
+const numCell = n => { const [it,tr,ru]=numWord(n); return `<div class="numcell"><div class="d">${n}</div><div class="w">${accIt(it,tr)}</div><div class="t">[${tr}]</div><div class="r">${ru}</div>${S().tts&&window.speechSynthesis?`<button class="icon" style="margin-top:6px" data-say="${it}">${ICO('sound')}</button>`:''}</div>`; };
 function renderNumbers(){
   $('#numGrid1').innerHTML = [...Array(21).keys()].map(numCell).join('');
   $('#numGrid2').innerHTML = [30,40,50,60,70,80,90,100].map(numCell).join('');
   $('#numTens').innerHTML = [20,30,40,50,60,70,80,90].map(t=>`<button class="chip ${NUMTEN===t?'on':''}" data-t="${t}">${t}–${t+9}</button>`).join('');
   $$('#numTens .chip').forEach(b=> b.onclick=()=>{ NUMTEN=+b.dataset.t; renderNumbers(); });
-  const rows=[]; for (let n=NUMTEN+1;n<=NUMTEN+9;n++){ const [it,tr,ru]=numWord(n); rows.push(`<tr><td class="n">${n}</td><td class="w">${it}</td><td class="t">[${tr}]</td><td class="r">${ru}</td><td>${S().tts&&window.speechSynthesis?`<button class="icon" data-say="${it}">${ICO('sound')}</button>`:''}</td></tr>`); }
+  const rows=[]; for (let n=NUMTEN+1;n<=NUMTEN+9;n++){ const [it,tr,ru]=numWord(n); rows.push(`<tr><td class="n">${n}</td><td class="w">${accIt(it,tr)}</td><td class="t">[${tr}]</td><td class="r">${ru}</td><td>${S().tts&&window.speechSynthesis?`<button class="icon" data-say="${it}">${ICO('sound')}</button>`:''}</td></tr>`); }
   $('#numTbl3').innerHTML = '<thead><tr><th></th><th>по-итальянски</th><th>читается</th><th>по-русски</th><th></th></tr></thead><tbody>'+rows.join('')+'</tbody>';
   wireSpeak($('#p-num'));
   renderNdBest();
@@ -4963,6 +5126,10 @@ function openTopic(id, userClick){
   const src = document.getElementById(id); if (!src) return;
   const clone = src.cloneNode(true); clone.removeAttribute('id');
   $$('[data-clone]', clone).forEach(el=>{ const srcEl = document.getElementById(el.dataset.clone); if(!srcEl) return; const c = srcEl.cloneNode(true); $$('.card', c).forEach(cd=>{ const h2=cd.querySelector('h2'); if(h2){ const h3=document.createElement('h3'); h3.textContent=h2.textContent; h2.replaceWith(h3); } cd.replaceWith(...cd.childNodes); }); el.replaceWith(...c.childNodes); });
+  (function markStatic(root){ const sel='.it, td.ex, .fnode b, .fnode i, .rn b, .rn i, .pair .a, .ex b';
+    $$(sel, root).forEach(el=>{ if (el.dataset.acc) return; el.dataset.acc='1';
+      const walk = node=>{ Array.from(node.childNodes).forEach(ch=>{ if (ch.nodeType===3){ if (/[A-Za-zÀ-ÿ]{3,}/.test(ch.nodeValue)){ const span=document.createElement('span'); span.innerHTML=accIt(ch.nodeValue); ch.replaceWith(...span.childNodes); } } else if (ch.nodeType===1 && !ch.classList.contains('tr') && !ch.classList.contains('acc') && ch.tagName!=='SMALL' && !ch.classList.contains('why') && !ch.classList.contains('hid')) walk(ch); }); };
+      walk(el); }); })(clone);
   $$('[data-live]', clone).forEach(el=> renderLive(el));
   $$('[data-play]', clone).forEach(el=> renderPlay(el));
   $$('.fnode.more', clone).forEach(n=> n.onclick=()=> n.classList.toggle('open'));
@@ -5536,14 +5703,17 @@ function startVerbDrill(){
   const tasks = []; let gi=0;
   for (let i=0;i<20;i++){
     const m = modes[i%modes.length];
-    if (m==='gap' && gi<gaps.length){ const g=gaps[gi++]; tasks.push({m:'gap', v:g[1], p:g[2], text:g[0], ru:g[3]}); }
-    else tasks.push({m: m==='gap'?'pick':m, v:pick(verbs), p:Math.floor(Math.random()*6)});
+    if ((m==='gap'||m==='end') && gi<gaps.length){ const g=gaps[gi++]; tasks.push({m, v:g[1], p:g[2], text:g[0], ru:g[3]}); }
+    else tasks.push({m: (m==='gap'||m==='end')?'pick':m, v:pick(verbs), p:Math.floor(Math.random()*6)});
   }
   SES = { nd:true, q:shuffle(tasks), i:0, stats:{ok:0,bad:0}, t0:now(), keys:null, verb:true };
   $('#sMore').classList.add('hidden'); $('#session').classList.add('on'); vdStep();
 }
 $('#vdStart').onclick = startVerbDrill;
-const VD_NAME = {pick:'Выбери форму', type:'Напиши форму', gap:'Заполни пропуск'};
+function startVerbDrillWith(modes, verbs){ VD.modes = modes; VD.verbs = verbs || 'all'; VD.only = null; $$('#vdModes .chip').forEach(x=> x.classList.toggle('on', modes.includes(x.dataset.m))); $$('#vdVerbs .chip').forEach(x=> x.classList.toggle('on', x.dataset.v===VD.verbs)); startVerbDrill(); }
+const VD_NAME = {pick:'Выбери форму', type:'Напиши форму', gap:'Заполни пропуск', end:'Впиши окончание'};
+const VD_ENDS = { are:['o','i','a','iamo','ate','ano'], ere:['o','i','e','iamo','ete','ono'], ire:['o','i','e','iamo','ite','ono'], isc:['o','i','e','iamo','ite','ono'] };
+function splitEnding(v, p){ const V=VERBS[v], f=V.f[p], e=(VD_ENDS[V.g]||[])[p]; if (e && f.endsWith(e) && f.length>e.length) return [f.slice(0,f.length-e.length), e]; return null; }
 function vdStep(){
   progressUI();
   const body = $('#sBody');
@@ -5555,24 +5725,38 @@ function vdStep(){
   }
   const t = SES.q[SES.i], V = VERBS[t.v], ans = V.f[t.p]; SES.answered=false;
   const head = `<div class="mode"><span>${VD_NAME[t.m]}</span><span class="tag">${t.v} — ${esc(V.ru)}</span></div>`;
-  const fbHTML = ok => `<div>${ok?'Верно':'Неверно'}</div><div class="ans">${esc(PRON[t.p])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[t.p])}]</span> — ${esc(V.r[t.p])}</div>
-     ${t.m==='gap'?`<div class="it">${esc(t.text.replace('___', ans).replace(/\((\w+)\)\s*/g,''))}</div><div class="muted">${esc(t.ru)}</div>`:`<div class="muted">${esc(t.v)} — ${esc(V.ru)}</div>`}`;
+  const fbHTML = ok => `<div>${ok?'Верно':'Неверно'}</div><div class="ans">${esc(PRON[t.p])} <span class="it">${accIt(ans, V.tr[t.p])}</span> <span class="tr">[${esc(V.tr[t.p])}]</span> — ${esc(V.r[t.p])}</div>
+     ${(t.m==='gap'||t.m==='end')?`<div class="it">${accIt(t.text.replace('___', ans).replace(/\((\w+)\)\s*/g,''))}</div><div class="muted">${esc(t.ru)}</div>`:`<div class="muted">${esc(t.v)} — ${esc(V.ru)}</div>`}`;
   const finish = ok => { if(ok) SES.stats.ok++; else SES.stats.bad++; const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
-    el.innerHTML = fbHTML(ok) + `<div style="margin-top:6px"><button class="spk" data-say="${esc(t.m==='gap' ? t.text.replace('___',ans).replace(/\((\w+)\)\s*/g,'') : ans)}">🔊 послушать</button></div><button class="pri next" id="nx">Дальше</button>`.replace('🔊 послушать', ICO('sound')+' послушать');
+    el.innerHTML = fbHTML(ok) + `<div style="margin-top:6px"><button class="spk" data-say="${esc((t.m==='gap'||t.m==='end') ? t.text.replace('___',ans).replace(/\((\w+)\)\s*/g,'') : ans)}">${ICO('sound')} послушать</button></div><button class="pri next" id="nx">Дальше</button>`;
     body.appendChild(el); wireSpeak(el); $('#nx').onclick=()=>{ SES.i++; vdStep(); }; $('#nx').focus(); };
   if (t.m==='pick' || t.m==='gap'){
     const others = shuffle([...new Set(V.f.filter(f=> f!==ans))]).slice(0,3);
     const opts = shuffle([ans, ...others]);
     const q = t.m==='gap'
-      ? `<div class="q"><div class="mid it">${esc(t.text).replace('___','<b style="color:var(--accent)">___</b>')}</div><div class="note">${esc(t.ru)}</div></div>`
-      : `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])} <small>(${esc(PRON_RU[t.p])})</small></span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)} — какая форма?${VD.ru?` Нужно сказать «${esc(V.r[t.p])}».`:''}</div></div>`;
-    body.innerHTML = head + q + `<div class="opts">${opts.map((f,k)=>`<button class="opt" data-f="${esc(f)}"><span class="k">${k+1}</span><span class="it">${esc(f)}</span>${VD.ru?`<span class="ru">${esc(V.r[V.f.indexOf(f)])}</span>`:''}</button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
+      ? `<div class="q"><div class="mid it">${esc(t.text).replace('___','<b style="color:var(--accent)">___</b>')}</div><div class="note ruhide">${esc(t.ru)}</div></div>`
+      : `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])} <small>(${esc(PRON_RU[t.p])})</small></span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)}<span class="ruhide">${VD.ru?` — «${esc(V.r[t.p])}»`:''}</span></div></div>`;
+    body.innerHTML = head + q + `<div class="opts">${opts.map((f,k)=>`<button class="opt" data-f="${esc(f)}"><span class="k">${k+1}</span><span class="it">${esc(f)}</span>${VD.ru?`<span class="ru ruhide">${esc(V.r[V.f.indexOf(f)])}</span>`:''}</button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
     $$('.opt').forEach(b=> b.onclick=()=>{ if(SES.answered) return; SES.answered=true; const ok = b.dataset.f===ans;
       $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.f===ans) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); }); finish(ok); });
     SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
     return;
   }
-  body.innerHTML = head + `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])} <small>(${esc(PRON_RU[t.p])})</small></span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)} — напиши форму${VD.ru?`: «${esc(V.r[t.p])}»`:''}</div></div>
+  if (t.m==='end'){
+    const sp = splitEnding(t.v, t.p);
+    const [pre, post] = t.text.split('___');
+    const stem = sp ? sp[0] : '';
+    body.innerHTML = head + `<div class="q"><div class="endq">${esc(pre.replace(/\((\w+)\)\s*/g,''))}<span class="stem">${esc(stem)}</span><input id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" lang="it" placeholder="${sp?'…':t.v}" style="${sp?'':'width:9ch'}">${esc(post)}</div>
+      <div class="note">${esc(t.v)} — ${esc(V.ru)}<span class="ruhide"> · ${esc(t.ru)}</span></div></div>
+      <button class="sec" id="chk" style="margin-top:12px">Проверить</button><div class="kbd">Enter — проверить</div>`;
+    const inp=$('#ti'); inp.focus();
+    const want = sp ? sp[1] : ans;
+    const check=()=>{ if(SES.answered) return; SES.answered=true; const v=norm(inp.value); const ok = v===norm(want) || stripAcc(v)===stripAcc(norm(want)); inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor= ok?'var(--ok)':'var(--bad)'; if(!ok) inp.value = inp.value + ' → ' + want; finish(ok); };
+    $('#chk').onclick=check; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); if(!SES.answered) check(); else $('#nx')?.click(); } };
+    SES.keys = k=>{ if (k==='Enter' && SES.answered) $('#nx')?.click(); };
+    return;
+  }
+  body.innerHTML = head + `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])} <small>(${esc(PRON_RU[t.p])})</small></span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)}<span class="ruhide">${VD.ru?` — «${esc(V.r[t.p])}»`:''}</span></div></div>
     <div class="typing"><input id="ti" autocomplete="off" autocapitalize="off" spellcheck="false" lang="it" placeholder="…"><button class="sec" id="chk" style="width:auto">Проверить</button></div><div class="kbd">Enter — проверить</div>`;
   const inp=$('#ti'); inp.focus();
   const check=()=>{ if(SES.answered) return; SES.answered=true; const v=norm(inp.value); const ok = v===norm(ans) || stripAcc(v)===stripAcc(norm(ans)); inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor= ok?'var(--ok)':'var(--bad)'; finish(ok); };
@@ -5722,7 +5906,7 @@ function renderBuildTask(task, head, onDone){
     if (ok) SES.stats.ok++; else SES.stats.bad++;
     $('#bAns').classList.add(ok?'ok':'no'); $('#chk').disabled=true; $('#bClear').disabled=true;
     const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
-    el.innerHTML = `<div>${ok?'Верно':'Неверно'}</div><div class="ans it">${esc(task.it)}</div>${task.tr?`<div class="tr">[${esc(task.tr)}]</div>`:''}<div>${esc(task.ru)}</div>
+    el.innerHTML = `<div>${ok?'Верно':'Неверно'}</div><div class="ans it">${accIt(task.it, task.tr)}</div>${task.tr?`<div class="tr">[${esc(task.tr)}]</div>`:''}<div>${esc(task.ru)}</div>
       ${!ok && ans.length ? `<div class="muted" style="font-size:13.5px;margin-top:4px">Ты собрал: <span class="it">${esc(ans.map(t=>t.w).join(' '))}</span></div>`:''}
       <div style="margin-top:6px">${S().tts&&window.speechSynthesis?`<button class="spk" data-say="${esc(task.it)}">${ICO('sound')} послушать</button>`:''}</div>` + lsNext();
     body.appendChild(el); wireSpeak(el); if (S().ttsAuto) speak(task.it);
@@ -5815,7 +5999,7 @@ function renderComposer(){
   $('#cSecond').classList.toggle('hidden', !CMP.two);
   const r = compose();
   const subj = SUBJ[CMP.s];
-  $('#cOut').innerHTML = `<div class="it">${esc(r.it)}</div><span class="tr">[${esc(r.tr)}]</span><div class="ru">${esc(r.ru)}</div>
+  $('#cOut').innerHTML = `<div class="it">${accIt(r.it, r.tr)}</div><span class="tr">[${esc(r.tr)}]</span><div class="ru">${esc(r.ru)}</div>
     ${r.note?`<div class="note">${esc(r.note)}</div>`:''}${subj.note?`<div class="note">${esc(subj.note)}</div>`:''}
     <div class="btns">${S().tts&&window.speechSynthesis?`<button class="sec" data-say="${esc(r.it)}">Послушать</button>`:''}<button class="sec" id="cSave">В мои фразы</button><button class="sec" id="cRand">Случайно</button></div>`;
   wireSpeak($('#cOut'));
@@ -5856,7 +6040,7 @@ function addMine(r){
 function renderMine(){
   const list = CARDS.filter(c=>c.deck==='mine');
   $('#mineList').innerHTML = list.length ? list.map(c=>`<div class="drow"><span class="dot ${statusOf(c)==='known'?'k':statusOf(c)==='learn'?'l':''}"></span>
-    <div class="txt"><span class="w">${esc(c.it)}</span> <span class="tr">[${esc(c.tr)}]</span><span class="m">${esc(c.ru)}</span></div>
+    <div class="txt"><span class="w">${accIt(c.it, c.tr)}</span> <span class="tr">[${esc(c.tr)}]</span><span class="m">${esc(c.ru)}</span></div>
     <div class="btns">${S().tts&&window.speechSynthesis?`<button data-say="${esc(c.it)}">${ICO('sound')}</button>`:''}<button data-del="${esc(c.key)}" title="удалить">${ICO('close')}</button></div></div>`).join('')
     : '<div class="dgroup">Пока пусто</div>';
   wireSpeak($('#mineList'));
@@ -5871,9 +6055,12 @@ function nextLesson(){ return LESSONS.find(l=> !lessonState(l.id)) || null; }
 function renderLessons(){
   const nx = nextLesson(); const done = LESSONS.filter(x=>lessonState(x.id)).length;
   $('#lessonsDone').textContent = `пройдено ${done} из ${LESSONS.length}`;
-  $('#lessonList').innerHTML = LESSONS.map((l,i)=>{ const st=lessonState(l.id);
+  const special = `<button class="lesson special" data-sp="cards"><span class="top"><span class="no">Тренажёр</span></span><b>Все глаголы: запоминание</b><small>карточки со всеми 150 глаголами, интервальные повторы</small></button>
+    <button class="lesson special" data-sp="end"><span class="top"><span class="no">Тренажёр</span></span><b>Окончания глаголов</b><small>фраза с основой глагола, впиши окончание</small></button>`;
+  $('#lessonList').innerHTML = special + LESSONS.map((l,i)=>{ const st=lessonState(l.id);
     return `<button class="lesson ${nx&&nx.id===l.id?'next':''}" data-l="${l.id}"><span class="top"><span class="no">Урок ${i+1}</span><span class="st ${st?'done':''}">${st ? st.ok+' / '+st.n : (nx&&nx.id===l.id ? 'следующий' : '')}</span></span><b>${esc(l.title)}</b><small>${esc(l.sub)}</small></button>`; }).join('');
-  $$('#lessonList .lesson').forEach(b=> b.onclick=()=> startLesson(b.dataset.l));
+  $$('#lessonList .lesson[data-l]').forEach(b=> b.onclick=()=> startLesson(b.dataset.l));
+  $$('#lessonList .lesson[data-sp]').forEach(b=> b.onclick=()=> b.dataset.sp==='cards' ? startVerbCards() : startVerbDrillWith(['end']));
 }
 function startLesson(id){
   const L = LESSONS.find(l=>l.id===id); if (!L) return;
@@ -5897,7 +6084,7 @@ function lsStep(){
   if (st.c) st = {t:'card', key:st.c.key, mode:'mcru'};      // повтор проваленной карточки
   const head = lsHead(L.title, `${SES.i+1} из ${SES.q.length}`);
   const next = ()=> lsStep();
-  const exList = ex => ex && ex.length ? `<div class="exl">${ex.map(([it,tr,ru])=>`<div class="ex"><span class="i">${esc(it)}</span>${S().tts&&window.speechSynthesis?`<button class="sp" data-say="${esc(it)}">${ICO('sound')}</button>`:'<span class="sp"></span>'}<span class="t">[${esc(tr)}]</span><span class="r">${esc(ru)}</span></div>`).join('')}</div>` : '';
+  const exList = ex => ex && ex.length ? `<div class="exl">${ex.map(([it,tr,ru])=>`<div class="ex"><span class="i">${accIt(it, tr)}</span>${S().tts&&window.speechSynthesis?`<button class="sp" data-say="${esc(it)}">${ICO('sound')}</button>`:'<span class="sp"></span>'}<span class="t">[${esc(tr)}]</span><span class="r">${esc(ru)}</span></div>`).join('')}</div>` : '';
   if (st.t==='idea' || st.t==='scheme'){
     body.innerHTML = head + `<div class="slide"><h2>${st.h}</h2>${st.t==='idea'?`<div class="body">${st.body}</div>${exList(st.ex)}`:st.html}</div>` + lsNext('Понятно, дальше') + `<div class="kbd">Enter — дальше</div>`;
     wireSpeak(body); $('#nx').onclick=()=>{ SES.i++; next(); }; SES.answered=true;
@@ -5920,15 +6107,15 @@ function lsStep(){
     let cand = GAPS.filter(g=> g[1]===st.verb && !SES.usedGaps.has(g[0])); if (!cand.length) cand = GAPS.filter(g=>g[1]===st.verb);
     const g = pick(cand); SES.usedGaps.add(g[0]);
     const V = VERBS[g[1]], ans = V.f[g[2]];
-    const opts = shuffle([ans, ...shuffle([...new Set(V.f.filter(f=>f!==ans))]).slice(0,3)]).map(f=>({h:esc(f), x:(VD.ru?`<span class="ru">${esc(V.r[V.f.indexOf(f)])}</span>`:''), v:f}));
+    const opts = shuffle([ans, ...shuffle([...new Set(V.f.filter(f=>f!==ans))]).slice(0,3)]).map(f=>({h:esc(f), x:(VD.ru?`<span class="ru ruhide">${esc(V.r[V.f.indexOf(f)])}</span>`:''), v:f}));
     const full = g[0].replace('___', ans).replace(/\((\w+)\)\s*/g,'');
-    lsChoice({head, q:`<div class="q"><div class="mid it">${esc(g[0]).replace('___','<b style="color:var(--accent)">___</b>')}</div><div class="note">${esc(g[3])}</div></div>`, opts, ans,
+    lsChoice({head, q:`<div class="q"><div class="mid it">${esc(g[0]).replace('___','<b style="color:var(--accent)">___</b>')}</div><div class="note ruhide">${esc(g[3])}</div></div>`, opts, ans,
       fb:()=>`<div class="ans">${esc(PRON[g[2]])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[g[2]])}]</span> — ${esc(V.r[g[2]])}</div><div class="it">${esc(full)}</div>`, say: full}, next);
     return;
   }
   if (st.t==='form'){
     const V = VERBS[st.verb], ans = V.f[st.p];
-    lsInput({head, q:`<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[st.p])} <small>(${esc(PRON_RU[st.p])})</small></span> · <span class="it">${esc(st.verb)}</span></div><div class="note">${esc(V.ru)} — напиши форму: «${esc(V.r[st.p])}»</div></div>`,
+    lsInput({head, q:`<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[st.p])} <small>(${esc(PRON_RU[st.p])})</small></span> · <span class="it">${esc(st.verb)}</span></div><div class="note">${esc(V.ru)}<span class="ruhide"> — «${esc(V.r[st.p])}»</span></div></div>`,
       check: v=>({ok: norm(v)===norm(ans) || stripAcc(norm(v))===stripAcc(norm(ans))}),
       fb:()=>`<div class="ans">${esc(PRON[st.p])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[st.p])}]</span> — ${esc(V.r[st.p])}</div>`, say: ans}, next);
     return;
@@ -5968,16 +6155,21 @@ function paginateTopic(){
 $('#refAll').onclick = ()=>{ S().refAll = !S().refAll; save(); paginateTopic(); };
 
 /* ---------------- главная: сегодня ---------------- */
-$('#gVerb').onclick = ()=> startVerbDrill();
+$('#gVerb').onclick = ()=> startVerbDrillWith(['pick','type','gap','end']);
 $('#gNum').onclick = ()=>{ ND.modes = canListen() ? ['hear','n2w'] : ['n2w','w2n']; ND.range='100'; ND.count=20; startNumDrill(); };
-$('#gPhr').onclick = ()=> startSession(['fr']);
-$('#gDict').onclick = ()=>{ if (!canListen()){ alert('Диктант требует озвучки.'); return; } const m=S().mode; S().mode='dict'; startSession(['fr']); if (SES) SES.restoreMode=m; };
+if ($('#gPhr')) $('#gPhr').onclick = ()=> startSession(['fr']);
+if ($('#gDict')) $('#gDict').onclick = ()=>{ if (!canListen()){ alert('Диктант требует озвучки.'); return; } const m=S().mode; S().mode='dict'; startSession(['fr']); if (SES) SES.restoreMode=m; };
 
 /* ---------------- вкладка: глаголы ---------------- */
 const VB = { q:'', g:'all', open:null };
 const VG_NAME = { are:'-are', ere:'-ere', ire:'-ire', isc:'-ire (-isc-)', irr:'неправильный', rfl:'возвратный', ea:'' };
 function verbEndings(v){ const g=VERBS[v].g; return g==='are'?['o','i','a','iamo','ate','ano'] : g==='ere'?['o','i','e','iamo','ete','ono'] : (g==='ire'||g==='isc')?['o','i','e','iamo','ite','ono'] : null; }
-function formHTML(v, i){ const V=VERBS[v], f=V.f[i], e=verbEndings(v); if (e && f.endsWith(e[i]) && f.length>e[i].length){ const st=f.slice(0, f.length-e[i].length); return `${esc(st)}<em>${esc(e[i])}</em>`; } return `<em>${esc(f)}</em>`; }
+function formHTML(v, i){ const V=VERBS[v], f=V.f[i], e=verbEndings(v);
+  const words = f.split(' '); const last = words[words.length-1]; const trw = V.tr[i].split(' '); const trl = trw[trw.length-1];
+  const k = stressIdx(last, trl); const eLen = (e && last.endsWith(e[i]) && last.length>e[i].length) ? e[i].length : last.length;
+  const start = last.length - eLen;
+  let html = ''; for (let j=0;j<last.length;j++){ let ch = esc(last[j]); if (j===k) ch = `<span class="acc">${ch}</span>`; if (j===start) html += '<em>'; html += ch; } html += '</em>';
+  return (words.length>1 ? esc(words.slice(0,-1).join(' '))+' ' : '') + html; }
 function verbExamples(v){
   const gaps = GAPS.filter(g=>g[1]===v).slice(0,2).map(g=>({it:g[0].replace('___', VERBS[v].f[g[2]]).replace(/\((\w+)\)\s*/g,''), ru:g[3]}));
   if (COMP[v]) [0,1].forEach(ci=>{ if (COMP[v][ci] && gaps.length<3){ const c=clause(ci===0?0:1, v, ci, false, false); gaps.push({it:capFirst(c.it)+'.', ru:capFirst(c.ru)+'.', tr:c.tr}); } });
@@ -5992,7 +6184,7 @@ function renderVerbs(){
   $('#vCount').textContent = `${list.length} из ${all.length}`;
   $$('#vGroups .chip').forEach(b=> b.classList.toggle('on', b.dataset.g===VB.g));
   $('#vList').innerHTML = list.map(v=>{ const V=VERBS[v]; const trInf = (CARDS.find(c=>c.deck==='lex' && norm(c.it)===v)||{}).tr || '';
-    return `<div class="vrow ${VB.open===v?'open':''}" data-v="${v}"><button class="vh"><span class="inf">${esc(v)}${trInf?`<span class="tr">[${esc(trInf)}]</span>`:''}</span><span class="ru">${esc(V.ru)}</span><span class="g">${VG_NAME[V.g]||''}</span></button>
+    return `<div class="vrow ${VB.open===v?'open':''}" data-v="${v}"><button class="vh"><span class="inf">${accIt(v, trInf)}${trInf?`<span class="tr">[${esc(trInf)}]</span>`:''}</span><span class="ru">${esc(V.ru)}</span><span class="g">${VG_NAME[V.g]||''}</span></button>
       <div class="vb">${VB.open===v ? verbBody(v) : ''}</div></div>`; }).join('') || '<div class="dgroup">Ничего не найдено</div>';
   $$('#vList .vh').forEach(b=> b.onclick=()=>{ const v=b.parentElement.dataset.v; VB.open = VB.open===v ? null : v; renderVerbs(); if (VB.open){ const el=$(`#vList .vrow[data-v="${v}"]`); el && el.scrollIntoView({block:'nearest'}); } });
   wireSpeak($('#vList'));
@@ -6002,11 +6194,14 @@ function renderVerbs(){
 function verbBody(v){
   const V=VERBS[v];
   return `<div class="ring">${PRON.map((p,i)=>`<div class="rn"><span>${esc(p)} · ${esc(PRON_RU[i])}</span><b>${formHTML(v,i)}</b><i>[${esc(V.tr[i])}]</i><em>${esc(V.r[i])}</em></div>`).join('')}</div>
-    <div class="exs">${verbExamples(v).map(e=>`<div><span class="it">${esc(e.it)}</span>${e.tr?` <span class="tr">[${esc(e.tr)}]</span>`:''} <span class="muted">— ${esc(e.ru)}</span></div>`).join('')}</div>
+    <div class="exs">${verbExamples(v).map(e=>`<div><span class="it">${accIt(e.it, e.tr)}</span>${e.tr?` <span class="tr">[${esc(e.tr)}]</span>`:''} <span class="muted">— ${esc(e.ru)}</span></div>`).join('')}</div>
     <div class="bt">${S().tts&&window.speechSynthesis?`<button class="sec" data-sayall="${v}">${ICO('sound')} все формы</button>`:''}<button class="sec" data-drill="${v}">Тренировать</button></div>`;
 }
 $('#vq').addEventListener('input', e=>{ VB.q=e.target.value; renderVerbs(); });
 $$('#vGroups .chip').forEach(b=> b.onclick=()=>{ VB.g=b.dataset.g; renderVerbs(); });
+const isVerbCard = c => c.deck==='lex' && !!VERBS[norm(c.it)];
+function startVerbCards(){ startSession(null, isVerbCard); }
+[['#vCards',()=>startVerbCards()],['#gCards',()=>startVerbCards()],['#vEnd',()=>startVerbDrillWith(['end'])],['#gEnd',()=>startVerbDrillWith(['end'])],['#vForms',()=>startVerbDrillWith(['pick','type'])],['#vGap',()=>startVerbDrillWith(['gap'])]].forEach(([id,fn])=>{ const b=$(id); if(b) b.onclick=fn; });
 
 /* ---------------- живые блоки в правилах ---------------- */
 function renderLive(el){
@@ -6036,7 +6231,7 @@ function renderPlay(el){
       <select data-k="v">${verbSelHTML(st.v)}</select>
       <select data-k="c">${cl.map((c,i)=>`<option value="${i}" ${i===st.c?'selected':''}>${esc(c[0])} — ${esc(c[2])}</option>`).join('')}</select>
       <button class="chip ${st.neg?'on':''}" data-k="neg">non</button></div>
-      <div class="out"><div class="it">${esc(capFirst(r.it))}.</div><span class="tr">[${esc(r.tr)}]</span><div class="ru">${esc(capFirst(r.ru))}.${r.note?' <span class="muted">'+esc(r.note)+'</span>':''}</div>
+      <div class="out"><div class="it">${accIt(capFirst(r.it), r.tr)}.</div><span class="tr">[${esc(r.tr)}]</span><div class="ru">${esc(capFirst(r.ru))}.${r.note?' <span class="muted">'+esc(r.note)+'</span>':''}</div>
       ${S().tts&&window.speechSynthesis?`<button class="spk" data-say="${esc(r.it)}">${ICO('sound')} послушать</button>`:''}</div>`;
     $$('select', el).forEach(s=> s.onchange=()=>{ const k=s.dataset.k; if (k==='v'){ st.v=s.value; st.c=0; } else st[k]=+s.value; draw(); });
     $('[data-k="neg"]', el).onclick = ()=>{ st.neg=!st.neg; draw(); };
@@ -6046,7 +6241,7 @@ function renderPlay(el){
 }
 
 /* ---------------- старт ---------------- */
-load(); mountMine(); applyLook(); initSettings(); initComposer(); syncSettingsUI(); renderHome();
+load(); mountMine(); applyLook(); applyRu(); initSettings(); initComposer(); syncSettingsUI(); renderHome();
 
 if (location.hash.startsWith('#shot=')){
   save = ()=>{};   // отладочный режим: ничего не сохранять
@@ -6061,6 +6256,7 @@ if (location.hash.startsWith('#shot=')){
   else if (what.startsWith('topic:')){ showPane('p-ref'); openTopic(what.slice(6), true); }
   else if (what==='nd'){ ND.modes=['n2w']; ND.range='100'; startNumDrill(); }
   else if (what==='vd'){ VD.modes=['gap']; startVerbDrill(); }
+  else if (what==='vdend'){ startVerbDrillWith(['end']); }
   else if (what==='dict'){ startSession(['fr']); renderDictation(CARDS.find(x=>x.deck==='fr' && /\s/.test(x.it))); }
   else {
     ST.set.decks = DECKS.map(d=>d.id); ST.set.tts=true; startSession();
@@ -6137,6 +6333,8 @@ if (location.hash.startsWith('#selftest')){
   try{ showPane('p-build'); const samples=[]; [[0,'parlare',0,false,false],[2,'essere',4,true,false],[5,'avere',0,false,true],[10,'essere',5,false,false],[12,'abitare',1,false,false],[4,'studiare',0,false,true]].forEach(([si,v,ci,neg,q])=>{ CMP.s=si; CMP.v=v; CMP.c=ci; CMP.neg=neg; CMP.q=q; CMP.two=false; renderComposer(); samples.push(compose().it+' = '+compose().ru); });
     CMP.two=true; CMP.conj=2; CMP.s2=0; CMP.v2='amare'; CMP.c2=0; renderComposer(); samples.push(compose().it); $('#cSave').click(); log.push('composer: '+samples.join(' || ')+' | mine='+(ST.mine||[]).length+' cards mine='+CARDS.filter(c=>c.deck==='mine').length+' wide: '+wide().join(', ')); }catch(e){ errs.push('composer: '+e.message); }
   try{ showPane('p-ref'); openTopic('g3', true); const n=REF.secs.length; REF.secs[1].h.click(); log.push('ref g3 secs='+n+' open='+$$('#refContent h3.acc.open').length+' hidden='+$$('#refContent .acc-hide').length+' wide: '+wide().join(', ')); openTopic('g13', true); log.push('g13 secs='+REF.secs.length+' cloned h3='+$$('#refContent h3').length+' topics='+REF.topics.length+' secs: '+[...new Set(REF.topics.map(t=>t.sec))].join(' / ')); openTopic('g10', true); log.push('g10 conj tables='+$$('#refContent .conj table').length); }catch(e){ errs.push('accordion: '+e.message); }
+  try{ startVerbDrillWith(['end'],'all'); let steps=0; while (SES && SES.i<SES.q.length && steps<40){ steps++; const t=SES.q[SES.i]; if($('#ti')){ const sp=splitEnding(t.v,t.p); $('#ti').value = sp?sp[1]:VERBS[t.v].f[t.p]; $('#chk').click(); } else { $$('.opt')[0].click(); } $('#nx').click(); } log.push('end drill: '+JSON.stringify(SES.stats)); endSession(); }catch(e){ errs.push('end drill: '+e.message); }
+  log.push('acc: '+['telefono','parliamo','famiglia','città','Sono di Minsk.',"l'italiano",'ciao','buongiorno','studiare','capiscono'].map(w=>accIt(w).replace(/<span class="acc">(.)<\/span>/,'[$1]')).join(' '));
   try{ showPane('p-verbs'); const n=$$('#vList .vrow').length; $$('#vList .vrow')[0].querySelector('.vh').click(); VB.q='dorm'; renderVerbs(); const nq=$$('#vList .vrow').length; VB.q=''; VB.g='rfl'; renderVerbs(); const nr=$$('#vList .vrow').length; VB.g='all'; renderVerbs(); log.push('verbs='+n+' search dorm='+nq+' rfl='+nr+' open ring='+$$('#vList .vrow.open .rn').length+' total VERBS='+Object.keys(VERBS).length+' wide: '+wide().join(', ')); }catch(e){ errs.push('verbs: '+e.message); }
   try{ showPane('p-ref'); openTopic('g3', true); const lv=$('#refContent .live'); $$('.row.pr button', lv)[3].click(); $$('.row.vb button', lv)[1].click(); const pl=$('#refContent .play'); $('select', pl).value='5'; $('select', pl).dispatchEvent(new Event('change')); log.push('live: '+$('.res .f', lv).textContent+' / '+$('.res .t', lv).textContent+' | play: '+$('.out .it', pl).textContent+' wide: '+wide().join(', ')); openTopic('g6', true); $('#refContent .fnode.more').click(); log.push('fnode more open='+$$('#refContent .fnode.more.open').length); }catch(e){ errs.push('live: '+e.message+' '+(e.stack||'').split(String.fromCharCode(10))[1]); }
   try{ showPane('p-les'); log.push('lesson list='+$$('#lessonList .lesson').length+' wide: '+wide().join(', ')); showPane('p-study'); log.push('today wide: '+wide().join(', ')); }catch(e){ errs.push('les pane: '+e.message); }
