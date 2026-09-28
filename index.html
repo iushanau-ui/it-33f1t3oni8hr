@@ -12,217 +12,344 @@
 <title>Итальянский — тренажёр</title>
 <style>
 :root{
-  --bg:#f5f4f0; --card:#ffffff; --ink:#1f1d19; --ink2:#4a463f; --muted:#7f7a70;
-  --line:#e5e1d8; --line2:#efece5;
-  --hard:#1b5e9c; --hard-bg:#e8f1fa; --soft:#b4531a; --soft-bg:#fbeee3; --neu:#4a7a52; --neu-bg:#eaf3ea;
-  --accent:#0a6b5f; --accent-bg:#e3f1ee; --hl:#fff7dd; --warn:#a8341f; --warn-bg:#fdeeea;
-  --ok:#1f7a3a; --ok-bg:#e3f3e7; --bad:#b3261e; --bad-bg:#fbe7e5;
-  --shadow:0 1px 2px rgba(40,32,16,.05), 0 4px 14px rgba(40,32,16,.04);
-  --r:14px; --nav:62px; --side:232px;
+  --bg:#f6f4ef; --card:#ffffff; --ink:#1c1a17; --ink2:#3f3b35; --muted:#7b766c;
+  --line:#e6e2d9; --line2:#f0ede7;
+  --accent:#0f6f62; --accent-bg:#e3f0ec; --accent-ink:#0b5a50;
+  --hl:#faf3dc; --hl-line:#ecdfae; --warn:#a8412a; --warn-bg:#fbeae5;
+  --ok:#1f7a3a; --ok-bg:#e4f3e7; --bad:#b3261e; --bad-bg:#fbe7e5;
+  --hard:#1b5e9c; --hard-bg:#e6f0fa; --soft:#b4531a; --soft-bg:#fbeee3; --neu:#4a7a52; --neu-bg:#eaf3ea;
+  --r:12px; --rs:9px; --nav:60px; --side:236px; --gutter:40px;
+  --serif:Georgia,"Times New Roman",serif; --sans:-apple-system,"Segoe UI",Roboto,system-ui,sans-serif;
 }
 html[data-theme="dark"]{
-  --bg:#15140f; --card:#1e1c18; --ink:#ece7dc; --ink2:#cfc8ba; --muted:#968f81;
-  --line:#332f28; --line2:#282520;
-  --hard:#78b7f0; --hard-bg:#16283a; --soft:#eaa46c; --soft-bg:#3a2718; --neu:#8fc79a; --neu-bg:#1c2a1e;
-  --accent:#5fd0bd; --accent-bg:#183430; --hl:#33301c; --warn:#f08a72; --warn-bg:#38201c;
+  --bg:#171613; --card:#1f1d19; --ink:#ece7dc; --ink2:#cfc8ba; --muted:#948d80;
+  --line:#33302a; --line2:#292620;
+  --accent:#5fd0bd; --accent-bg:#183430; --accent-ink:#8fe3d3; --hl:#33301c; --hl-line:#5a5030; --warn:#f08a72; --warn-bg:#38201c;
   --ok:#7ad494; --ok-bg:#183a24; --bad:#f28b84; --bad-bg:#3d1f1c;
-  --shadow:0 1px 2px rgba(0,0,0,.3), 0 4px 14px rgba(0,0,0,.25);
+  --hard:#78b7f0; --hard-bg:#16283a; --soft:#eaa46c; --soft-bg:#3a2718; --neu:#8fc79a; --neu-bg:#1c2a1e;
 }
 html.eink{ --bg:#fff; --card:#fff; --ink:#000; --ink2:#000; --muted:#333; --line:#000; --line2:#ddd;
-  --accent:#000; --accent-bg:#eee; --hl:#eee; --ok:#000; --ok-bg:#e8e8e8; --bad:#000; --bad-bg:#fff;
-  --hard:#000; --hard-bg:#f2f2f2; --soft:#000; --soft-bg:#f2f2f2; --neu:#000; --neu-bg:#f2f2f2; --shadow:none; }
-html.eink *{transition:none !important; animation:none !important; border-radius:6px !important}
+  --accent:#000; --accent-bg:#eee; --accent-ink:#000; --hl:#eee; --hl-line:#000; --ok:#000; --ok-bg:#e8e8e8; --bad:#000; --bad-bg:#fff;
+  --hard:#000; --hard-bg:#f2f2f2; --soft:#000; --soft-bg:#f2f2f2; --neu:#000; --neu-bg:#f2f2f2; }
+html.eink *{transition:none !important; animation:none !important}
 html.eink body{font-size:18px}
 html.eink .opt{border-width:2px} html.eink .opt.bad{text-decoration:line-through} html.eink .opt.good{outline:3px solid #000}
-html.eink button.pri{background:#000;color:#fff}
 
 *{box-sizing:border-box}
 html{height:100%}
-body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);
-  font-family:-apple-system,"Segoe UI",Roboto,system-ui,sans-serif;font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
-button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;background:none;border:none;padding:0}
 button:disabled{opacity:.45;cursor:default}
 button:focus{outline:none} button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 select,input{font-family:inherit}
 a{color:var(--accent)}
-.it{font-family:Georgia,"Times New Roman",serif}
-.tr{color:var(--accent);font-size:.92em}
+h1,h2,h3{font-family:var(--sans);letter-spacing:-.01em}
+.it{font-family:var(--serif)}
+.tr{color:var(--accent-ink);font-size:.93em}
 .muted{color:var(--muted)}
 .hidden{display:none !important}
 s{color:var(--muted)}
+svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
-/* ============ каркас: сайдбар на широком, нижняя панель на узком ============ */
+/* ============ каркас ============ */
 .app{display:flex;min-height:100vh}
 .side{display:none}
 .main{flex:1;min-width:0;padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom))}
-.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
 .top{background:var(--card);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:8px;height:52px}
-.top h1{font-family:Georgia,serif;font-size:18px;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.icon{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:6px 10px;font-size:14px;line-height:1.2}
-.icon:hover{border-color:var(--accent)}
+.top .wrap{display:flex;align-items:center;gap:6px;height:52px}
+.top h1{font-size:17px;font-weight:700;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon{border:1px solid var(--line);background:var(--card);border-radius:var(--rs);width:38px;height:36px;display:inline-flex;align-items:center;justify-content:center;color:var(--ink2)}
+.icon:hover{border-color:var(--accent);color:var(--accent)}
 nav.bottom{position:fixed;left:0;right:0;bottom:0;height:calc(var(--nav) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
   background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;z-index:40}
-nav.bottom button{flex:1;max-width:150px;border:none;background:none;color:var(--muted);font-size:11.5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 0}
-nav.bottom button .ic{font-size:21px;line-height:1}
-nav.bottom button.on{color:var(--accent);font-weight:700}
-nav.bottom button:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--accent);border-radius:10px}
-@media (min-width:900px){
+nav.bottom button{flex:1;max-width:140px;color:var(--muted);font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 0}
+nav.bottom button svg.i{width:22px;height:22px}
+nav.bottom button.on{color:var(--accent);font-weight:600}
+@media (min-width:960px){
   nav.bottom{display:none}
   .top{display:none}
-  .main{padding-bottom:30px}
-  .side{display:flex;flex-direction:column;width:var(--side);flex:none;position:sticky;top:0;height:100vh;background:var(--card);border-right:1px solid var(--line);padding:22px 14px}
-  .side .brand{font-family:Georgia,serif;font-size:19px;font-weight:700;margin:0 8px 18px;line-height:1.2}
-  .side .brand small{display:block;font-family:-apple-system,system-ui,sans-serif;font-size:12px;color:var(--muted);font-weight:400;margin-top:3px}
-  .side button.nb{display:flex;align-items:center;gap:12px;width:100%;border:none;background:none;text-align:left;padding:11px 12px;border-radius:11px;color:var(--ink2);font-size:15px}
-  .side button.nb .ic{font-size:19px;width:24px;text-align:center}
+  .main{padding-bottom:40px}
+  .side{display:flex;flex-direction:column;width:var(--side);flex:none;position:sticky;top:0;height:100vh;background:var(--card);border-right:1px solid var(--line);padding:26px 16px 18px}
+  .side .brand{font-size:19px;font-weight:700;margin:0 10px 22px;line-height:1.2;letter-spacing:-.01em}
+  .side .brand small{display:block;font-size:12px;color:var(--muted);font-weight:400;margin-top:2px;letter-spacing:0}
+  .side button.nb{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border-radius:var(--rs);color:var(--ink2);font-size:15px;margin:1px 0}
   .side button.nb:hover{background:var(--bg)}
-  .side button.nb.on{background:var(--accent-bg);color:var(--accent);font-weight:700}
+  .side button.nb.on{background:var(--accent-bg);color:var(--accent-ink);font-weight:600}
+  .side .sep{height:1px;background:var(--line);margin:10px 8px}
   .side .grow{flex:1}
   .side .foot{display:flex;gap:6px;padding:0 4px}
-  .side .foot .icon{flex:1}
-  .wrap{padding:0 32px}
+  .wrap{padding:0 var(--gutter)}
 }
-.pane{display:none;padding:14px 0 26px}
+.pane{display:none;padding:22px 0 30px}
 .pane.on{display:block}
-.pane-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:6px 0 12px;flex-wrap:wrap}
-.pane-head h2{font-family:Georgia,serif;font-size:24px;margin:0}
-.pane-head .sub{color:var(--muted);font-size:13.5px}
+.pane-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 18px;flex-wrap:wrap}
+.pane-head h2{font-size:26px;font-weight:700;margin:0;letter-spacing:-.02em}
+.pane-head .sub{color:var(--muted);font-size:14px}
+.cols{display:grid;gap:20px}
+@media (min-width:960px){ .cols.c2{grid-template-columns:1fr 1fr} .cols.c21{grid-template-columns:1.4fr 1fr} .cols.c3{grid-template-columns:repeat(3,1fr)} }
 
 /* ============ общие блоки ============ */
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:12px 0;box-shadow:var(--shadow)}
-.card > h2{margin:0 0 4px;font-family:Georgia,serif;font-size:20px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.card > h2 .no{font-family:-apple-system,system-ui,sans-serif;font-size:11.5px;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:3px 8px;letter-spacing:.5px}
-.lead{color:var(--muted);font-size:14px;margin:4px 0 12px}
-h3{font-size:13.5px;margin:20px 0 8px;color:var(--ink2);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
-.box{border-radius:10px;padding:11px 14px;margin:12px 0;font-size:14.5px;border:1px solid var(--line);background:var(--bg)}
-.box.key{background:var(--hl);border-color:#e8d9a0}
-html[data-theme="dark"] .box.key{border-color:#5a5030}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;margin:0 0 16px}
+.card > h2{margin:0 0 6px;font-size:19px;font-weight:700;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.card > h2 .no{font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent-bg);border-radius:6px;padding:3px 8px;letter-spacing:.4px;text-transform:uppercase}
+.lead{color:var(--muted);font-size:14.5px;margin:2px 0 14px;max-width:70ch}
+h3{font-size:13px;margin:22px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+.box{border-radius:var(--rs);padding:12px 14px;margin:12px 0;font-size:14.5px;border:1px solid var(--line);background:var(--bg)}
+.box.key{background:var(--hl);border-color:var(--hl-line)}
 .box.exc{background:var(--warn-bg);border-color:var(--warn)}
 .box .ttl{font-weight:700;display:block;margin-bottom:4px}
 .box p{margin:6px 0}
 code{font-family:"Courier New",monospace;background:var(--line2);padding:1px 5px;border-radius:4px;font-size:.9em}
-details.more{border:1px solid var(--line);border-radius:10px;padding:0 14px;margin:12px 0;background:var(--card)}
-details.more summary{cursor:pointer;padding:11px 0;font-weight:600;color:var(--ink2);list-style:none;display:flex;justify-content:space-between}
+details.more{border-top:1px solid var(--line);margin:18px 0 0;padding:0}
+details.more summary{cursor:pointer;padding:12px 0;font-weight:600;color:var(--ink2);list-style:none;display:flex;justify-content:space-between;font-size:14.5px}
 details.more summary::after{content:"+";color:var(--muted);font-weight:400}
 details.more[open] summary::after{content:"–"}
-details.more > *:not(summary){margin-bottom:12px}
-
-/* сегменты (переключатель подразделов) */
-.seg{display:flex;gap:4px;background:var(--line2);border-radius:12px;padding:4px;margin:0 0 14px;flex-wrap:wrap}
-.seg button{flex:1;min-width:90px;border:none;background:none;border-radius:9px;padding:9px 10px;font-size:14px;color:var(--ink2);font-weight:600;white-space:nowrap}
-.seg button.on{background:var(--card);color:var(--accent);box-shadow:var(--shadow)}
+.seg{display:inline-flex;gap:2px;background:var(--line2);border-radius:var(--rs);padding:3px;margin:0 0 18px;flex-wrap:wrap}
+.seg button{border-radius:7px;padding:8px 16px;font-size:14px;color:var(--ink2);font-weight:500;white-space:nowrap}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.06)}
 .sub{display:none} .sub.on{display:block}
 
 /* таблицы */
 .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{border-collapse:separate;border-spacing:0;width:100%;font-size:14.5px;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:8px 0 4px;background:var(--card)}
-th{background:var(--line2);color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:14.5px;border:1px solid var(--line);border-radius:var(--rs);overflow:hidden;margin:8px 0 4px;background:var(--card)}
+th{background:var(--line2);color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;font-weight:700;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
 td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
 tr:last-child td{border-bottom:none}
 td.sp{font-family:"Courier New",monospace;font-weight:700;font-size:14px;white-space:nowrap}
-td.ex{font-family:Georgia,serif}
-td.ex i{color:var(--muted);font-style:normal;font-size:13.5px;font-family:-apple-system,system-ui,sans-serif}
+td.ex{font-family:var(--serif)}
+td.ex i{color:var(--muted);font-style:normal;font-size:13.5px;font-family:var(--sans)}
 td.why{color:var(--muted);font-size:13.5px}
-.b{display:inline-block;padding:2px 9px;border-radius:7px;font-weight:700;font-size:14px;white-space:nowrap;border:1px solid transparent}
+.b{display:inline-block;padding:2px 9px;border-radius:6px;font-weight:700;font-size:14px;white-space:nowrap;border:1px solid transparent}
 .hard{color:var(--hard);background:var(--hard-bg);border-color:var(--hard)}
 .soft{color:var(--soft);background:var(--soft-bg);border-color:var(--soft)}
 .neu{color:var(--neu);background:var(--neu-bg);border-color:var(--neu)}
 .pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin:10px 0}
-.pair{border:1px solid var(--line);border-radius:9px;padding:9px 12px;background:var(--bg);font-size:14px}
-.pair .a{font-family:Georgia,serif;font-weight:700}
+.pair{border:1px solid var(--line);border-radius:var(--rs);padding:9px 12px;background:var(--bg);font-size:14px}
+.pair .a{font-family:var(--serif);font-weight:700}
 .pair .m{color:var(--muted);font-size:13px}
-.conj{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.conj{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
 .conj table{margin:0} .conj th{text-align:center}
 
-/* ============ Учить ============ */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 12px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 6px;text-align:center}
-.stat b{display:block;font-size:22px;line-height:1.1}
-.stat span{font-size:11px;color:var(--muted)}
-button.pri{width:100%;border:none;background:var(--accent);color:#fff;font-size:17px;font-weight:700;padding:15px;border-radius:13px;margin:8px 0 6px}
-button.sec{width:100%;border:1px solid var(--line);background:var(--card);padding:12px;border-radius:12px;font-size:15px}
-.chips{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13.5px}
-.chip.on{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);font-weight:600}
-.deckrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2)}
+/* ============ кнопки, чипы, переключатели ============ */
+button.pri{width:100%;background:var(--accent);color:#fff;font-size:16px;font-weight:600;padding:14px;border-radius:var(--rs);margin:8px 0 6px}
+button.pri:hover{background:var(--accent-ink)}
+button.sec{width:100%;border:1px solid var(--line);background:var(--card);padding:12px;border-radius:var(--rs);font-size:15px;color:var(--ink)}
+button.sec:hover{border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:7px;padding:6px 11px;font-size:13.5px;color:var(--ink2)}
+.chip:hover{border-color:var(--accent)}
+.chip.on{background:var(--accent-bg);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.deckrow{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line2)}
 .deckrow:last-child{border-bottom:none}
-.deckrow .nm{flex:1;min-width:0} .deckrow .nm small{display:block;color:var(--muted);font-size:12.5px}
-.bar{height:7px;background:var(--line2);border-radius:4px;overflow:hidden;margin-top:5px;display:flex}
+.deckrow .nm{flex:1;min-width:0} .deckrow .nm small{display:none}
+.bar{height:6px;background:var(--line2);border-radius:3px;overflow:hidden;margin-top:6px;display:flex}
 .bar i{display:block;height:100%} .bar .k{background:var(--ok)} .bar .l{background:var(--soft)}
-.sw{width:44px;height:26px;border-radius:13px;background:var(--line);position:relative;border:none;flex:none}
-.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s}
+.sw{width:42px;height:24px;border-radius:12px;background:var(--line);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}
 .sw.on{background:var(--accent)} .sw.on::after{left:21px}
 
+/* ============ Сегодня ============ */
+.stats{display:flex;gap:22px;margin:0 0 18px;flex-wrap:wrap}
+.stats div{font-size:14px;color:var(--muted)} .stats b{display:block;font-size:26px;color:var(--ink);line-height:1.1;font-weight:700;letter-spacing:-.02em}
+.today{display:grid;gap:12px;margin:0 0 22px}
+.act{display:flex;align-items:center;gap:16px;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:18px 20px;text-align:left;width:100%}
+.act .tx{flex:1;min-width:0} .act .tx b{display:block;font-size:17px;font-weight:600} .act .tx small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.act .n{font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1;min-width:52px;color:var(--accent-ink)}
+.act svg.i{color:var(--muted)}
+.act.main{background:var(--accent);border-color:var(--accent);color:#fff} .act.main .tx small{color:rgba(255,255,255,.8)} .act.main .n,.act.main svg.i{color:#fff}
+.act:hover{border-color:var(--accent)}
+.games{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 22px}
+.games button{border:1px solid var(--line);background:var(--card);border-radius:var(--rs);padding:13px 14px;font-size:14.5px;text-align:left;display:flex;align-items:center;gap:10px}
+.games button:hover{border-color:var(--accent)}
+.games button svg.i{color:var(--muted)}
+.course{border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
+.course .crow{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line2);width:100%;text-align:left;font-size:14.5px}
+.course .crow:last-child{border-bottom:none}
+.course .crow:hover{background:var(--bg)}
+.course .crow .st{flex:none;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ok)}
+.course .crow.done .st{border-color:var(--ok);background:var(--ok-bg)}
+.course .crow.next .st{border-color:var(--accent);background:var(--accent-bg)}
+.course .crow .t{flex:1;min-width:0}
+.course .crow .sc{color:var(--muted);font-size:13px}
+.course .chead{padding:12px 16px;font-weight:600;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.course .chead span{color:var(--muted);font-weight:400;font-size:13px}
+@media (min-width:640px){ .today{grid-template-columns:1fr 1fr} .today .act.main{grid-column:1 / -1} .games{grid-template-columns:repeat(4,1fr)} }
+@media (min-width:960px){ .today{grid-template-columns:1fr} .today .act.main{grid-column:auto} .games{grid-template-columns:repeat(2,1fr)} }
+
+/* ============ Уроки ============ */
+.lessons{display:grid;gap:12px}
+@media (min-width:640px){ .lessons{grid-template-columns:1fr 1fr} }
+@media (min-width:1100px){ .lessons{grid-template-columns:repeat(3,1fr)} }
+.lesson{display:flex;flex-direction:column;gap:6px;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:16px 18px;min-height:96px}
+.lesson .top{display:flex;justify-content:space-between;align-items:center;gap:8px;background:none;border:none}
+.lesson .no{font-size:12px;color:var(--muted);font-weight:600}
+.lesson b{font-size:16px;font-weight:600;line-height:1.3}
+.lesson small{color:var(--muted);font-size:13.5px}
+.lesson .st{font-size:12.5px;color:var(--muted)}
+.lesson .st.done{color:var(--ok);font-weight:600}
+.lesson.next{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.lesson:hover{border-color:var(--accent)}
+
+/* слайды урока */
+.slide{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px 22px}
+.slide h2{font-size:22px;margin:0 0 10px;line-height:1.25;font-weight:700;letter-spacing:-.02em}
+.slide .body{font-size:16px;line-height:1.6}
+.exl{margin:16px 0 0;display:grid;gap:6px}
+.exl .ex{display:grid;grid-template-columns:1fr auto;gap:1px 10px;align-items:center;border:1px solid var(--line2);border-radius:var(--rs);padding:9px 12px;background:var(--bg)}
+.exl .ex .i{font-family:var(--serif);font-size:17px;font-weight:700} .exl .ex .t{color:var(--accent-ink);font-size:13.5px} .exl .ex .r{color:var(--muted);font-size:13.5px}
+.exl .ex .i,.exl .ex .t,.exl .ex .r{grid-column:1}
+.exl .ex .sp{grid-column:2;grid-row:1 / span 3;border:1px solid var(--line);background:var(--card);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;align-self:center;color:var(--ink2)}
+.exl .ex .sp:empty{display:none}
+.flow{display:grid;gap:10px;justify-items:center}
+.fbranch{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));width:100%}
+.fcol{display:grid;gap:8px;align-content:start}
+.fhead{text-align:center;font-weight:600;padding:8px;border-radius:var(--rs);background:var(--line2)} .fhead small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.fnode{border:1px solid var(--line);border-radius:var(--rs);padding:10px 12px;background:var(--bg);text-align:center;min-width:120px;width:100%}
+.fnode.key{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;font-size:17px;padding:12px 22px;width:auto}
+.fnode.key small{color:rgba(255,255,255,.85)}
+.fnode small{display:block;color:var(--muted);font-size:12px;line-height:1.3}
+.fnode b{display:block;font-family:var(--serif);font-size:24px;color:var(--accent-ink);line-height:1.2;margin:3px 0}
+.fnode i{display:block;font-style:normal;font-family:var(--serif);font-size:13.5px;color:var(--ink2)}
+.fnode.more{cursor:pointer} .fnode.more::after{content:"подробнее";display:block;font-size:11.5px;color:var(--accent);margin-top:6px}
+.fnode.more.open::after{content:"свернуть"} .fnode .hid{display:none;margin-top:8px;font-size:13.5px;text-align:left;color:var(--ink2);border-top:1px solid var(--line);padding-top:8px;font-family:var(--sans)} .fnode.more.open .hid{display:block}
+.fnote{margin-top:12px;font-size:14px;color:var(--ink2);background:var(--hl);border:1px solid var(--hl-line);border-radius:var(--rs);padding:9px 12px}
+.ring{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.rn{border:1px solid var(--line);border-radius:var(--rs);padding:9px 12px;background:var(--bg)}
+.rn span{display:block;font-family:"Courier New",monospace;font-size:12.5px;color:var(--muted)}
+.rn b{font-family:var(--serif);font-size:22px;color:var(--accent-ink)} .rn i{font-style:normal;color:var(--accent-ink);font-size:13.5px;margin-left:6px}
+.rn em{display:block;font-style:normal;color:var(--muted);font-size:13px}
+.rn b em{display:inline;color:var(--accent);border-bottom:2px solid var(--accent);font-size:inherit}
+@media (min-width:640px){ .ring{grid-template-columns:repeat(3,1fr)} }
+.arts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.arts .opt{justify-content:center;font-family:var(--serif);font-size:22px;padding:16px 6px}
+
+/* живой конструктор формы (в правилах) */
+.live{border:1px solid var(--line);border-radius:var(--r);background:var(--card);padding:16px;margin:12px 0}
+.live .row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.live .row button{border:1px solid var(--line);border-radius:7px;padding:6px 12px;font-size:14px;background:var(--bg);font-family:var(--serif)}
+.live .row button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.live .row.pr button{font-family:"Courier New",monospace;font-weight:700}
+.live .res{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border-top:1px solid var(--line2);padding-top:12px}
+.live .res .f{font-family:var(--serif);font-size:30px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
+.live .res .f em{font-style:normal;color:var(--accent-ink);border-bottom:3px solid var(--accent)}
+.live .res .t{color:var(--accent-ink);font-size:16px;margin-top:2px} .live .res .r{color:var(--muted);font-size:14.5px}
+.live .res .spk{margin:0}
+.live .row.st{display:flex;gap:4px;align-items:center;color:var(--muted);font-size:13px}
+
+/* пример с переключением лица */
+.play{border:1px solid var(--line);border-radius:var(--r);background:var(--bg);padding:14px 16px;margin:12px 0}
+.play .sel{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.play .sel select{padding:7px 10px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);font-size:14px;font-family:var(--serif)}
+.play .out{padding:0;border:none;background:none;margin:0}
+.play .out .it{font-size:22px} .play .out .btns{display:none}
+
+/* ============ Глаголы ============ */
+.vtools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.vtools input[type=search]{flex:1 1 220px;min-width:160px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--rs);font-size:15px;background:var(--card);color:var(--ink)}
+.vtools input[type=search]:focus{outline:none;border-color:var(--accent)}
+.vlist{border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
+.vrow{border-bottom:1px solid var(--line2)}
+.vrow:last-child{border-bottom:none}
+.vrow .vh{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:center;width:100%;text-align:left;padding:11px 16px}
+.vrow .vh:hover{background:var(--bg)}
+.vrow .vh .inf{font-family:var(--serif);font-size:18px;font-weight:700} .vrow .vh .inf .tr{font-weight:400;font-size:14px;margin-left:8px}
+.vrow .vh .ru{color:var(--muted);font-size:14px;grid-column:1}
+.vrow .vh .g{grid-column:2;grid-row:1 / span 2;font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 7px;white-space:nowrap}
+.vrow .vb{display:none;padding:4px 16px 16px;background:var(--bg);border-top:1px solid var(--line2)}
+.vrow.open .vb{display:block}
+.vrow .vb .ring{margin-top:8px}
+.vrow .vb .exs{margin-top:10px;font-size:14.5px} .vrow .vb .exs .it{font-size:16px}
+.vrow .vb .bt{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap} .vrow .vb .bt button{width:auto;padding:8px 14px;font-size:14px}
+@media (min-width:960px){ .vrow .vh{grid-template-columns:260px 1fr auto;gap:12px} .vrow .vh .ru{grid-column:2} .vrow .vh .g{grid-column:3;grid-row:1} .vrow .vb .ring{grid-template-columns:repeat(6,1fr)} }
+.vcount{color:var(--muted);font-size:13.5px;margin:0 0 10px}
+
 /* ============ списки слов / фраз ============ */
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
-.toolbar input[type=search]{flex:1 1 200px;min-width:160px;padding:10px 12px;border:1px solid var(--line);border-radius:11px;font-size:15px;background:var(--card);color:var(--ink)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.toolbar input[type=search]{flex:1 1 200px;min-width:160px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--rs);font-size:15px;background:var(--card);color:var(--ink)}
 .toolbar input[type=search]:focus{outline:none;border-color:var(--accent)}
-.toolbar select{padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-size:14px;max-width:100%}
+.toolbar select{padding:9px 10px;border:1px solid var(--line);border-radius:var(--rs);background:var(--card);color:var(--ink);font-size:14px;max-width:100%}
 .dl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.dgroup{padding:9px 14px;background:var(--line2);font-size:12.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700}
-.drow{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--line2)}
+.dgroup{padding:9px 14px;background:var(--line2);font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:700}
+.drow{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line2)}
 .drow:last-child{border-bottom:none}
-.drow .dot{flex:none;width:9px;height:9px;border-radius:50%;background:var(--line)}
+.drow .dot{flex:none;width:8px;height:8px;border-radius:50%;background:var(--line)}
 .drow .dot.l{background:var(--soft)} .drow .dot.k{background:var(--ok)} .drow .dot.s{background:transparent;border:2px solid var(--muted)}
 .drow .txt{flex:1;min-width:0}
-.drow .w{font-family:Georgia,serif;font-weight:600;font-size:16.5px}
+.drow .w{font-family:var(--serif);font-weight:600;font-size:16.5px}
 .drow .m{color:var(--muted);font-size:13.5px} .drow .m::before{content:" — "}
 .drow .n{display:block;color:var(--muted);font-size:12.5px}
 .drow .btns{display:flex;gap:6px;flex:none}
-.drow .btns button{border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:5px 8px;font-size:13px}
+.drow .btns button{border:1px solid var(--line);background:var(--bg);border-radius:7px;width:32px;height:30px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink2)}
 .drow.sus .w{text-decoration:line-through;color:var(--muted)}
 .abc{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 10px}
-.abc a{display:inline-block;min-width:28px;text-align:center;padding:4px 6px;border:1px solid var(--line);border-radius:7px;text-decoration:none;color:var(--ink2);font-size:13px;background:var(--card);font-family:Georgia,serif;font-weight:700}
+.abc a{display:inline-block;min-width:28px;text-align:center;padding:4px 6px;border:1px solid var(--line);border-radius:7px;text-decoration:none;color:var(--ink2);font-size:13px;background:var(--card);font-family:var(--serif);font-weight:700}
 .abc a.dis{opacity:.3;pointer-events:none}
 body.all-hide-tr #allList .tr, body.phr-hide-tr #phrList .tr{visibility:hidden}
 body.all-hide-ru #allList .m, body.phr-hide-ru #phrList .m{visibility:hidden}
 body.phr-hide-it #phrList .w{visibility:hidden}
 .count{color:var(--muted);font-size:12.5px;margin:4px 0 8px}
+@media (min-width:960px){ .dl.two{display:grid;grid-template-columns:1fr 1fr} .dl.two .dgroup{grid-column:1 / -1} .dl.two .drow:nth-child(odd){border-right:1px solid var(--line2)} }
 
-/* ============ Правила: обозреватель тем ============ */
+/* ============ Правила ============ */
 .ref{display:block}
-.topics .tsec{margin:14px 0 6px;font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700}
-.topics button.tp{display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 14px;margin:6px 0}
+.topics .tsec{margin:16px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700}
+.topics .tsec:first-child{margin-top:0}
+.topics button.tp{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:var(--rs);padding:10px 12px;margin:5px 0}
 .topics button.tp:hover{border-color:var(--accent)}
 .topics button.tp.on{border-color:var(--accent);background:var(--accent-bg)}
-.topics button.tp .no{flex:none;font-size:11px;font-weight:700;color:#fff;background:var(--accent);border-radius:6px;padding:3px 7px;min-width:34px;text-align:center}
-.topics button.tp .t{font-weight:600;line-height:1.3;flex:1;min-width:0;font-size:15px}
-.topics button.tp .t small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:1px}
-.topics button.tp .ar{color:var(--muted);align-self:center}
+.topics button.tp .no{display:none}
+.topics button.tp .t{font-weight:500;line-height:1.3;flex:1;min-width:0;font-size:14.5px}
+.topics button.tp .t small{display:none}
+.topics button.tp .ar{color:var(--muted)}
 .refview{display:none} .refview.on{display:block}
-.refback{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:14px;margin:0 0 10px}
+.refopts{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+.refback{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:7px;padding:7px 12px;font-size:14px}
 .refview .card{margin-top:0}
 .refnext{display:flex;gap:8px;justify-content:space-between;margin-top:14px}
-.refnext button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:11px;padding:11px;font-size:14px;text-align:left}
+.refnext button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:var(--rs);padding:11px;font-size:14px;text-align:left}
 .refnext button:last-child{text-align:right}
 .refnext button:disabled{visibility:hidden}
-@media (min-width:900px){
-  .ref{display:grid;grid-template-columns:280px 1fr;gap:18px;align-items:start}
+#refContent h3.acc{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding:14px 0 10px;margin:14px 0 0;text-transform:none;letter-spacing:-.01em;font-size:16px;color:var(--ink);font-weight:600}
+#refContent h3.acc::after{content:"+";color:var(--muted);font-weight:400;font-size:20px}
+#refContent h3.acc.open::after{content:"–"}
+#refContent .acc-hide{display:none !important}
+.pager,.pgdots{display:none !important}
+@media (min-width:960px){
+  .ref{display:grid;grid-template-columns:270px 1fr;gap:24px;align-items:start}
   .topics{position:sticky;top:20px;max-height:calc(100vh - 40px);overflow-y:auto;padding-right:4px}
-  .topics button.tp{padding:9px 12px;margin:4px 0}
   .refview{display:block}
   .refback{display:none}
   .ref.list-mode .refview{display:block}
 }
-@media (max-width:899px){
+@media (max-width:959px){
   .ref.list-mode .topics{display:block} .ref.list-mode .refview{display:none}
   .ref.view-mode .topics{display:none} .ref.view-mode .refview{display:block}
+}
+@media (max-width:640px){
+  #refContent table.stack, #refContent table.stack tbody, #refContent table.stack tr, #refContent table.stack td{display:block;width:100%}
+  #refContent table.stack thead{display:none}
+  #refContent table.stack tr{border-bottom:1px solid var(--line);padding:7px 0}
+  #refContent table.stack tr:last-child{border-bottom:none}
+  #refContent table.stack td{border:none;padding:2px 12px;white-space:normal}
+  #refContent table.stack td:empty{display:none}
+  #refContent table.stack td[data-h]::before{content:attr(data-h) " · ";color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;font-family:var(--sans);font-weight:700}
+  #refContent table.stack td.sp{font-size:16px}
 }
 
 /* ============ Числа ============ */
 table.numtbl td{padding:6px 8px}
-table.numtbl td.n{font-family:Georgia,serif;font-weight:700;font-size:18px;width:50px;text-align:center;color:var(--accent)}
-table.numtbl td.w{font-family:Georgia,serif;font-weight:700;font-size:17px}
-table.numtbl td.t{color:var(--accent);white-space:nowrap}
+table.numtbl td.n{font-family:var(--serif);font-weight:700;font-size:18px;width:50px;text-align:center;color:var(--accent-ink)}
+table.numtbl td.w{font-family:var(--serif);font-weight:700;font-size:17px}
+table.numtbl td.t{color:var(--accent-ink);white-space:nowrap}
 table.numtbl td.r{color:var(--muted)}
 body.num-hide-tr table.numtbl td.t{visibility:hidden}
 body.num-hide-it table.numtbl td.w{visibility:hidden}
 .numgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:10px 0}
-.numcell{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--card)}
-.numcell .d{font-family:Georgia,serif;font-size:22px;font-weight:700;color:var(--accent)}
-.numcell .w{font-family:Georgia,serif;font-weight:700;font-size:16px}
-.numcell .t{color:var(--accent);font-size:13px}
+.numcell{border:1px solid var(--line);border-radius:var(--rs);padding:10px 12px;background:var(--card)}
+.numcell .d{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--accent-ink)}
+.numcell .w{font-family:var(--serif);font-weight:700;font-size:16px}
+.numcell .t{color:var(--accent-ink);font-size:13px}
 .numcell .r{color:var(--muted);font-size:12.5px}
 body.num-hide-tr .numcell .t{visibility:hidden}
 body.num-hide-it .numcell .w{visibility:hidden}
@@ -232,278 +359,226 @@ body.num-hide-it .numcell .w{visibility:hidden}
 /* ============ сессия ============ */
 #session{position:fixed;inset:0;background:var(--bg);z-index:50;display:none;flex-direction:column}
 #session.on{display:flex}
-.s-top{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--card);border-bottom:1px solid var(--line)}
-.s-top .prog{flex:1;height:8px;background:var(--line2);border-radius:4px;overflow:hidden}
+.s-top{display:flex;align-items:center;gap:12px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+.s-top .prog{flex:1;height:6px;background:var(--line2);border-radius:3px;overflow:hidden}
 .s-top .prog i{display:block;height:100%;background:var(--accent);transition:width .2s}
-.s-top .cnt{font-size:13px;color:var(--muted);white-space:nowrap}
-.s-body{flex:1;overflow-y:auto;padding:14px 16px 20px}
-.s-body .wrap{max-width:620px}
-.mode{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:700;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.mode .tag{font-weight:600;text-transform:none;letter-spacing:0;color:var(--accent);background:var(--accent-bg);padding:2px 8px;border-radius:6px}
-.q{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 20px;text-align:center;box-shadow:var(--shadow);min-height:150px;display:flex;flex-direction:column;justify-content:center;gap:8px}
-.q .big{font-family:Georgia,serif;font-size:32px;line-height:1.2;font-weight:700;word-break:break-word}
-.q .huge{font-family:Georgia,serif;font-size:56px;line-height:1.1;font-weight:700;color:var(--accent)}
-.q .mid{font-size:20px;line-height:1.35}
+.s-top .cnt{font-size:13px;color:var(--muted);white-space:nowrap;min-width:48px;text-align:right}
+.s-body{flex:1;overflow-y:auto;padding:18px 16px 24px}
+.s-body .wrap{max-width:680px;padding:0}
+.mode{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.mode .tag{font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted)}
+.q{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px 22px;text-align:center;min-height:150px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.q .big{font-family:var(--serif);font-size:32px;line-height:1.2;font-weight:700;word-break:break-word}
+.q .huge{font-family:var(--serif);font-size:56px;line-height:1.1;font-weight:700;color:var(--accent-ink)}
+.q .mid{font-size:21px;line-height:1.35}
 .q .tr{font-size:18px;white-space:normal}
-.q .note{color:var(--muted);font-size:13.5px;margin-top:6px}
-.q .src{color:var(--muted);font-size:12px}
-.spk{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:6px 14px;font-size:14px;align-self:center;margin-top:4px}
-.opts{display:grid;gap:9px;margin-top:14px}
-.opt{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px;text-align:left;font-size:17px;line-height:1.35;display:flex;gap:10px;align-items:center;transition:background .1s}
+.q .note{color:var(--muted);font-size:14px;margin-top:4px}
+.q .src{display:none}
+.spk{border:1px solid var(--line);background:var(--bg);border-radius:7px;padding:6px 12px;font-size:14px;align-self:center;margin-top:6px;display:inline-flex;align-items:center;gap:6px;color:var(--ink2)}
+.opts{display:grid;gap:8px;margin-top:14px}
+.opt{border:1px solid var(--line);background:var(--card);border-radius:var(--rs);padding:14px 16px;text-align:left;font-size:17px;line-height:1.35;display:flex;gap:10px;align-items:center;transition:background .1s}
 .opt .ru{margin-left:auto;font-size:.82em;color:var(--muted);font-weight:400;text-align:right;padding-left:8px}
-.opt .k{flex:none;width:24px;height:24px;border-radius:50%;background:var(--line2);color:var(--muted);font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.opt .k{flex:none;width:22px;height:22px;border-radius:6px;border:1px solid var(--line);color:var(--muted);font-size:12px;display:flex;align-items:center;justify-content:center}
+@media (hover:none){ .opt .k{display:none} }
 .opt:hover{border-color:var(--accent)}
 .opt.good{background:var(--ok-bg);border-color:var(--ok);color:var(--ok);font-weight:700}
 .opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
-.opt.dim{opacity:.55}
+.opt.dim{opacity:.5}
 .grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
-.grades button{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 4px;font-size:14px;line-height:1.2}
+.grades button{border:1px solid var(--line);background:var(--card);border-radius:var(--rs);padding:12px 4px;font-size:14px;line-height:1.2}
 .grades button small{display:block;color:var(--muted);font-size:11px;font-weight:400}
 .grades .g0{color:var(--bad)} .grades .g3{color:var(--ok)}
 .reveal{margin-top:14px}
 .typing{display:flex;gap:8px;margin-top:14px}
-.typing input{flex:1;padding:14px;border:1px solid var(--line);border-radius:12px;font-size:20px;background:var(--card);color:var(--ink);font-family:Georgia,serif;min-width:0}
+.typing input{flex:1;padding:14px;border:1px solid var(--line);border-radius:var(--rs);font-size:20px;background:var(--card);color:var(--ink);font-family:var(--serif);min-width:0}
 .typing input:focus{outline:none;border-color:var(--accent)}
-.fb{margin-top:14px;border-radius:12px;padding:12px 14px;border:1px solid var(--line)}
-.fb.ok{background:var(--ok-bg);border-color:var(--ok)} .fb.no{background:var(--bad-bg);border-color:var(--bad)}
-.fb .ans{font-family:Georgia,serif;font-size:20px;font-weight:700}
+.fb{margin-top:14px;border-radius:var(--r);padding:14px 16px;border:1px solid var(--line);background:var(--card)}
+.fb.ok{border-color:var(--ok)} .fb.no{border-color:var(--bad)}
+.fb > div:first-child{font-weight:600}
+.fb.ok > div:first-child{color:var(--ok)} .fb.no > div:first-child{color:var(--bad)}
+.fb .ans{font-family:var(--serif);font-size:20px;font-weight:700}
 .next{margin-top:12px}
-.done{text-align:center;padding:30px 10px} .done .big{font-size:44px}
-.kbd{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+.done{text-align:center;padding:30px 10px} .done h2{font-size:24px;margin:8px 0}
+.kbd{display:none}
+@media (hover:hover){ .kbd{display:block;font-size:12px;color:var(--muted);text-align:center;margin-top:10px} }
 @media (min-width:640px){ .opts{grid-template-columns:1fr 1fr} }
 
-/* ============ настройки ============ */
-.set{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line2)}
-.set:last-child{border-bottom:none}
-.set .lbl{flex:1} .set .lbl small{display:block;color:var(--muted);font-size:12.5px}
-.set select,.set input[type=number]{padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font-size:15px}
-.set input[type=number]{width:80px}
-textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:monospace;font-size:12px;background:var(--bg);color:var(--ink)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.footer{color:var(--muted);font-size:12.5px;margin:26px 0 10px;text-align:center}
-
-/* ============ Сегодня ============ */
-.today{display:grid;gap:10px;margin:4px 0 14px}
-.act{display:flex;align-items:center;gap:14px;border:1px solid var(--line);background:var(--card);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);text-align:left;width:100%}
-.act .ic{font-size:30px;flex:none;width:44px;text-align:center}
-.act .tx{flex:1;min-width:0} .act .tx b{display:block;font-size:17px} .act .tx small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
-.act .go{flex:none;color:var(--accent);font-weight:700;font-size:14px;white-space:nowrap}
-.act.main{background:var(--accent);border-color:var(--accent);color:#fff} .act.main .tx small,.act.main .go{color:rgba(255,255,255,.85)}
-.act:hover{border-color:var(--accent)}
-.games{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}
-.games button{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 6px;font-size:13.5px;line-height:1.25;display:flex;flex-direction:column;align-items:center;gap:4px}
-.games button .ic{font-size:22px}
-.streakline{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0 10px;color:var(--muted);font-size:13.5px}
-.streakline b{color:var(--ink);font-size:15px}
-@media (min-width:640px){ .today{grid-template-columns:1fr 1fr} .today .act.main{grid-column:1 / -1} }
-
-/* ============ Уроки ============ */
-.lesson{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:13px 16px;margin:8px 0;box-shadow:var(--shadow)}
-.lesson .ic{font-size:26px;flex:none;width:36px;text-align:center}
-.lesson .tx{flex:1;min-width:0} .lesson .tx b{display:block;font-size:16px} .lesson .tx small{display:block;color:var(--muted);font-size:13px}
-.lesson .st{flex:none;font-size:12.5px;color:var(--muted);text-align:right;white-space:nowrap}
-.lesson .st.done{color:var(--ok);font-weight:700}
-.lesson.next{border-color:var(--accent)}
-.lesson.next .st{color:var(--accent);font-weight:700}
-.lesson:hover{border-color:var(--accent)}
-
-/* слайды урока */
-.slide{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow)}
-.slide h2{font-family:Georgia,serif;font-size:23px;margin:0 0 10px;line-height:1.2}
-.slide .body{font-size:16px;line-height:1.55}
-.exl{margin:14px 0 0;display:grid;gap:6px}
-.exl .ex{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;border:1px solid var(--line2);border-radius:10px;padding:8px 12px;background:var(--bg)}
-.exl .ex .i{font-family:Georgia,serif;font-size:17px;font-weight:700} .exl .ex .t{color:var(--accent);font-size:13.5px} .exl .ex .r{color:var(--muted);font-size:13.5px}
-.exl .ex .i,.exl .ex .t,.exl .ex .r{grid-column:1}
-.exl .ex .sp{grid-column:2;grid-row:1 / span 3;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 10px;font-size:14px;align-self:center}
-.exl .ex .sp:empty{display:none}
-.flow{display:grid;gap:10px;justify-items:center}
-.fbranch{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));width:100%}
-.fcol{display:grid;gap:8px;align-content:start}
-.fhead{text-align:center;font-weight:700;padding:8px;border-radius:10px;background:var(--line2)} .fhead small{display:block;font-weight:400;color:var(--muted);font-size:12px}
-.fnode{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);text-align:center;min-width:120px}
-.fnode.key{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;font-size:17px;padding:12px 22px}
-.fnode.key small{color:rgba(255,255,255,.85)}
-.fnode small{display:block;color:var(--muted);font-size:12px;line-height:1.3}
-.fnode b{display:block;font-family:Georgia,serif;font-size:24px;color:var(--accent);line-height:1.2;margin:3px 0}
-.fnode i{display:block;font-style:normal;font-family:Georgia,serif;font-size:13.5px;color:var(--ink2)}
-.fnote{margin-top:12px;font-size:14px;color:var(--ink2);background:var(--hl);border:1px solid #e8d9a0;border-radius:10px;padding:9px 12px}
-html[data-theme="dark"] .fnote{border-color:#5a5030}
-.ring{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.rn{border:1px solid var(--line);border-radius:12px;padding:9px 12px;background:var(--bg)}
-.rn span{display:block;font-family:"Courier New",monospace;font-size:12.5px;color:var(--muted)}
-.rn b{font-family:Georgia,serif;font-size:22px;color:var(--accent)} .rn i{font-style:normal;color:var(--accent);font-size:13.5px;margin-left:6px}
-.rn em{display:block;font-style:normal;color:var(--muted);font-size:13px}
-@media (min-width:640px){ .ring{grid-template-columns:repeat(3,1fr)} }
-.arts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
-.arts .opt{justify-content:center;font-family:Georgia,serif;font-size:22px;padding:16px 6px}
-
 /* конструктор: собери из слов */
-.answer{min-height:58px;border:2px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;background:var(--card)}
+.answer{min-height:60px;border:1.5px dashed var(--line);border-radius:var(--r);padding:8px;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;background:var(--card)}
 .answer.ok{border-color:var(--ok);border-style:solid} .answer.no{border-color:var(--bad);border-style:solid}
 .bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center}
-.tile{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 13px;font-family:Georgia,serif;font-size:18px;box-shadow:var(--shadow);line-height:1.2}
+.tile{border:1px solid var(--line);background:var(--card);border-radius:var(--rs);padding:9px 13px;font-family:var(--serif);font-size:18px;line-height:1.2}
 .tile:hover{border-color:var(--accent)} .tile.used{visibility:hidden}
 .answer .tile{background:var(--accent-bg);border-color:var(--accent)}
 .brow{display:flex;gap:8px;margin-top:12px}
 .brow button{flex:1}
 
 /* конструктор: составь своё */
-.cmp{display:grid;gap:10px}
-.cmp label{display:block;font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:4px}
-.cmp select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:var(--card);color:var(--ink);font-size:16px;font-family:Georgia,serif}
+.cmp{display:grid;gap:12px}
+.cmp label{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px}
+.cmp select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--rs);background:var(--card);color:var(--ink);font-size:16px;font-family:var(--serif)}
 .cmp .row3{display:grid;grid-template-columns:1fr;gap:10px}
 @media (min-width:640px){ .cmp .row3{grid-template-columns:1fr 1fr 1fr} }
-.cmp .tog{display:flex;flex-wrap:wrap;gap:7px}
-.out{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--card);box-shadow:var(--shadow);margin-top:6px}
-.out .it{font-size:24px;font-weight:700;line-height:1.3} .out .tr{display:block;font-size:16px;margin-top:4px} .out .ru{color:var(--ink2);margin-top:6px;font-size:16px}
+.cmp .tog{display:flex;flex-wrap:wrap;gap:6px}
+.out{border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;background:var(--bg);margin-top:8px}
+.out .it{font-size:26px;font-weight:700;line-height:1.3;letter-spacing:-.01em} .out .tr{display:block;font-size:16px;margin-top:4px} .out .ru{color:var(--ink2);margin-top:8px;font-size:16px}
 .out .note{color:var(--muted);font-size:13px;margin-top:4px}
-.out .btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap} .out .btns button{width:auto;flex:1}
+.out .btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap} .out .btns button{width:auto;flex:1;background:var(--card)}
 .mine .drow .w{font-size:16px}
 
-/* Правила: постраничный показ темы */
-.pager{display:flex;align-items:center;gap:8px;margin:10px 0 0}
-.pager button{flex:1;border:1px solid var(--line);background:var(--card);border-radius:11px;padding:11px;font-size:14px;text-align:left}
-.pager button:last-child{text-align:right}
-.pager button:disabled{visibility:hidden}
-.pager .pc{flex:none;color:var(--muted);font-size:13px;white-space:nowrap}
-.pgdots{display:flex;gap:5px;justify-content:center;margin:10px 0 0;flex-wrap:wrap}
-.pgdots i{width:8px;height:8px;border-radius:50%;background:var(--line);display:block} .pgdots i.on{background:var(--accent)}
-#refContent .card.paged > *{display:none}
-#refContent .card.paged > .pg-on, #refContent .card.paged > h2, #refContent .card.paged > .lead{display:block}
-#refContent .card.paged > h2{display:flex}
-#refContent .card.paged.all > *{display:block} #refContent .card.paged.all > h2{display:flex}
-.refopts{display:flex;gap:8px;align-items:center;margin:0 0 10px;flex-wrap:wrap}
+/* ============ Ещё ============ */
+.moregrid{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+.moregrid button{border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:20px 12px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink)}
+.moregrid button svg.i{width:24px;height:24px;color:var(--muted)}
 
-@media (max-width:640px){
-  #refContent table.stack, #refContent table.stack tbody, #refContent table.stack tr, #refContent table.stack td{display:block;width:100%}
-  #refContent table.stack thead{display:none}
-  #refContent table.stack tr{border-bottom:1px solid var(--line);padding:7px 0}
-  #refContent table.stack tr:last-child{border-bottom:none}
-  #refContent table.stack td{border:none;padding:2px 12px;white-space:normal}
-  #refContent table.stack td:empty{display:none}
-  #refContent table.stack td[data-h]::before{content:attr(data-h) " · ";color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;font-family:-apple-system,system-ui,sans-serif;font-weight:700}
-  #refContent table.stack td.sp{font-size:16px}
-}
-#refContent h3.acc{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--bg);margin:10px 0 0;text-transform:none;letter-spacing:0;font-size:15px;color:var(--ink)}
-#refContent h3.acc::after{content:"+";color:var(--muted);font-weight:400;font-size:18px}
-#refContent h3.acc.open::after{content:"–"}
-#refContent h3.acc:hover{border-color:var(--accent)}
-#refContent .acc-hide{display:none !important}
-.pager,.pgdots{display:none !important}
-/* Ещё */
-.more{display:grid;gap:10px;grid-template-columns:1fr 1fr}
-.more button{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:18px 10px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:var(--shadow)}
-.more button .ic{font-size:26px}
+/* ============ настройки ============ */
+.set{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line2)}
+.set:last-child{border-bottom:none}
+.set .lbl{flex:1} .set .lbl small{display:block;color:var(--muted);font-size:12.5px}
+.set select,.set input[type=number]{padding:8px 10px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font-size:15px}
+.set input[type=number]{width:80px}
+textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:var(--rs);padding:10px;font-family:monospace;font-size:12px;background:var(--bg);color:var(--ink)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.footer{color:var(--muted);font-size:12.5px;margin:26px 0 10px}
 @media print{ .top,nav.bottom,.side,.toolbar,.chips,.abc,.drow .btns,.seg,.refback,.refnext,button.pri{display:none !important} body{padding:0} .pane{display:none} .pane.on{display:block} .dl{border:none} .drow{break-inside:avoid} .refview,.topics{display:block !important} }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-today" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-lessons" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5V5.5"/><path d="M20 18v3H6.5"/></symbol>
+  <symbol id="i-verbs" viewBox="0 0 24 24"><path d="M13 3 5 14h6l-1 7 8-11h-6z"/></symbol>
+  <symbol id="i-build" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><path d="M17 14v6M14 17h6"/></symbol>
+  <symbol id="i-phrases" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-numbers" viewBox="0 0 24 24"><path d="M9 3 7 21M17 3l-2 18M3 9h18M2 15h18"/></symbol>
+  <symbol id="i-words" viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h13"/></symbol>
+  <symbol id="i-rules" viewBox="0 0 24 24"><path d="M3 17 17 3l4 4L7 21H3z"/><path d="M14 6l4 4"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6L8 10z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17.5 19 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3L4 16"/><path d="M4 20v-4h4"/></symbol>
+  <symbol id="i-ear" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 3-2 4-3 6s-1 5-4 5"/><path d="M9 10a3 3 0 0 1 6 0c0 1.5-1 2-2 3"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4L4 16z"/><path d="M13 7l4 4"/></symbol>
+</svg>
 <div class="app">
 
 <aside class="side">
-  <div class="brand">Итальянский<small>тренажёр · A1</small></div>
-  <button class="nb on" data-p="p-study"><span class="ic">🎯</span>Сегодня</button>
-  <button class="nb" data-p="p-les"><span class="ic">📚</span>Уроки</button>
-  <button class="nb" data-p="p-build"><span class="ic">🧩</span>Собрать фразу</button>
-  <button class="nb" data-p="p-phr"><span class="ic">💬</span>Фразы</button>
-  <button class="nb" data-p="p-num"><span class="ic">🔢</span>Числа</button>
-  <button class="nb" data-p="p-all"><span class="ic">🔤</span>Слова</button>
-  <button class="nb" data-p="p-ref"><span class="ic">📐</span>Правила</button>
-  <button class="nb" data-p="p-set"><span class="ic">⚙️</span>Настройки</button>
+  <div class="brand">Итальянский<small>A1 · Nuovo Espresso 1</small></div>
+  <button class="nb on" data-p="p-study"><svg class="i"><use href="#i-today"/></svg> Сегодня</button>
+  <button class="nb" data-p="p-les"><svg class="i"><use href="#i-lessons"/></svg> Уроки</button>
+  <button class="nb" data-p="p-verbs"><svg class="i"><use href="#i-verbs"/></svg> Глаголы</button>
+  <button class="nb" data-p="p-build"><svg class="i"><use href="#i-build"/></svg> Собрать фразу</button>
+  <div class="sep"></div>
+  <button class="nb" data-p="p-phr"><svg class="i"><use href="#i-phrases"/></svg> Фразы</button>
+  <button class="nb" data-p="p-all"><svg class="i"><use href="#i-words"/></svg> Слова</button>
+  <button class="nb" data-p="p-num"><svg class="i"><use href="#i-numbers"/></svg> Числа</button>
+  <button class="nb" data-p="p-ref"><svg class="i"><use href="#i-rules"/></svg> Правила</button>
   <div class="grow"></div>
-  <div class="foot"><button class="icon" id="ttsTest" title="Проверить озвучку">🔊 звук</button><button class="icon" id="themeBtn" title="Тема">🌙</button></div>
+  <div class="foot"><button class="icon" id="ttsTest" title="Проверить озвучку"><svg class="i"><use href="#i-sound"/></svg></button><button class="icon" id="themeBtn" title="Тема"><svg class="i"><use href="#i-moon"/></svg></button><button class="icon" data-p="p-set" title="Настройки"><svg class="i"><use href="#i-settings"/></svg></button></div>
 </aside>
 
 <div class="main">
 <div class="top"><div class="wrap">
   <h1 id="title">Итальянский</h1>
-  <button class="icon" id="ttsTest2" title="Проверить озвучку">🔊</button>
-  <button class="icon" id="themeBtn2" title="Тема">🌙</button>
-  <button class="icon" data-p="p-set" title="Настройки">⚙️</button>
+  <button class="icon" id="ttsTest2" title="Проверить озвучку"><svg class="i"><use href="#i-sound"/></svg></button>
+  <button class="icon" id="themeBtn2" title="Тема"><svg class="i"><use href="#i-moon"/></svg></button>
+  <button class="icon" data-p="p-set" title="Настройки"><svg class="i"><use href="#i-settings"/></svg></button>
 </div></div>
 
 <!-- ======================= СЕГОДНЯ ======================= -->
 <div class="pane on" id="p-study"><div class="wrap">
   <div class="pane-head"><h2>Сегодня</h2><span class="sub" id="todayDate"></span></div>
-  <div class="streakline"><span>Дней подряд: <b id="stStreak">0</b></span><span>Выучено: <b id="stKnown">0</b></span><span>К повторению: <b id="stDue">0</b></span></div>
-  <div class="today">
-    <button class="act main" id="startBtn"><span class="ic">🔁</span><span class="tx"><b id="startTitle">Повторить</b><small id="startHint"></small></span><span class="go">Начать ›</span></button>
-    <button class="act" id="lessonBtn"><span class="ic" id="lessonIc">📚</span><span class="tx"><b id="lessonTitle">Урок</b><small id="lessonHint"></small></span><span class="go">Открыть ›</span></button>
-    <button class="act" id="buildBtn"><span class="ic">🧩</span><span class="tx"><b>Собрать 10 фраз</b><small>из перемешанных слов — так учатся строить свои</small></span><span class="go">Играть ›</span></button>
-  </div>
-  <h3>Быстрые тренажёры</h3>
-  <div class="games">
-    <button id="gVerb"><span class="ic">⚙️</span>Формы глаголов</button>
-    <button id="gNum"><span class="ic">🔢</span>Числа на слух</button>
-    <button id="gPhr"><span class="ic">💬</span>Только фразы</button>
-  </div>
-
-  <details class="more" id="studySettings"><summary>Настройка занятия: режим, колоды, тренажёр глаголов</summary>
-    <div class="card" style="box-shadow:none">
-      <h2>Режим заданий</h2>
-      <div class="chips" id="modeChips"></div>
-    </div>
-    <div class="card" style="box-shadow:none">
-      <h2>Колоды</h2>
-      <div id="deckList"></div>
-    </div>
-    <div class="card" style="box-shadow:none">
-      <h2>Тренажёр глаголов</h2>
-      <div class="lead">Серия из 20 заданий: местоимение + глагол → форма, или предложение с пропуском.</div>
-      <div class="chips" id="vdVerbs">
-        <button class="chip on" data-v="all">все глаголы</button>
-        <button class="chip" data-v="are">-are</button>
-        <button class="chip" data-v="ereire">-ere, -ire</button>
-        <button class="chip" data-v="irr">неправильные</button>
-        <button class="chip" data-v="ea">essere, avere</button>
+  <div class="cols c21">
+    <div>
+      <div class="stats"><div><b id="stStreak">0</b>дней подряд</div><div><b id="stKnown">0</b>выучено</div><div><b id="stDue">0</b>к повторению</div></div>
+      <div class="today">
+        <button class="act main" id="startBtn"><span class="n" id="startN">0</span><span class="tx"><b id="startTitle">Повторить</b><small id="startHint"></small></span><svg class="i"><use href="#i-chev"/></svg></button>
+        <button class="act" id="lessonBtn"><span class="tx"><b id="lessonTitle">Урок</b><small id="lessonHint"></small></span><svg class="i"><use href="#i-chev"/></svg></button>
+        <button class="act" id="buildBtn"><span class="tx"><b>Собрать 10 фраз</b><small>из перемешанных слов</small></span><svg class="i"><use href="#i-chev"/></svg></button>
       </div>
-      <div class="chips" id="vdModes">
-        <button class="chip on" data-m="pick">выбрать форму</button>
-        <button class="chip on" data-m="type">написать форму</button>
-        <button class="chip on" data-m="gap">предложение с пропуском</button>
+      <div class="games">
+        <button id="gVerb"><svg class="i"><use href="#i-verbs"/></svg>Формы глаголов</button>
+        <button id="gNum"><svg class="i"><use href="#i-numbers"/></svg>Числа на слух</button>
+        <button id="gPhr"><svg class="i"><use href="#i-phrases"/></svg>Фразы</button>
+        <button id="gDict"><svg class="i"><use href="#i-ear"/></svg>Диктант</button>
       </div>
-      <div class="chips"><button class="chip on" id="vdRu">подсказки: перевод каждой формы</button></div>
-      <button class="sec" id="vdStart">▶ Серия из 20 заданий</button>
+      <details class="more" id="studySettings"><summary>Настройки занятия</summary>
+        <h3>Тип заданий</h3>
+        <div class="chips" id="modeChips"></div>
+        <h3>Колоды</h3>
+        <div id="deckList"></div>
+        <h3>Тренажёр глаголов</h3>
+        <div class="chips" id="vdVerbs">
+          <button class="chip on" data-v="all">все</button>
+          <button class="chip" data-v="are">-are</button>
+          <button class="chip" data-v="ereire">-ere, -ire</button>
+          <button class="chip" data-v="irr">неправильные</button>
+          <button class="chip" data-v="rfl">возвратные</button>
+          <button class="chip" data-v="ea">essere, avere</button>
+        </div>
+        <div class="chips" id="vdModes">
+          <button class="chip on" data-m="pick">выбрать форму</button>
+          <button class="chip on" data-m="type">написать форму</button>
+          <button class="chip on" data-m="gap">предложение с пропуском</button>
+        </div>
+        <div class="chips"><button class="chip on" id="vdRu">перевод каждой формы</button></div>
+        <button class="sec" id="vdStart">Серия из 20 заданий</button>
+      </details>
     </div>
-    <div class="muted" style="font-size:13.5px;padding:0 4px">Каждое слово — карточка. После верного ответа она возвращается через 1 → 3 → 7 → 14 → 30 дней, после ошибки — через 10 минут.
-      Сначала идут просроченные повторы, потом новые слова (лимит в настройках). «Смешанный» режим чередует все типы заданий — так запоминается лучше всего.</div>
-  </details>
+    <div>
+      <div class="course" id="courseList"></div>
+    </div>
+  </div>
 </div></div>
 
 <!-- ======================= УРОКИ ======================= -->
 <div class="pane" id="p-les"><div class="wrap">
-  <div class="pane-head"><h2>Уроки</h2><span class="sub">идея → схема → задания, 5–10 минут каждый</span></div>
-  <div id="lessonList"></div>
-  <div class="muted" style="font-size:13.5px;margin-top:12px">Урок можно проходить сколько угодно раз. Ошибки внутри урока не влияют на карточки. Подробные таблицы по каждой теме — в «Правилах».</div>
+  <div class="pane-head"><h2>Уроки</h2><span class="sub" id="lessonsDone"></span></div>
+  <div class="lessons" id="lessonList"></div>
+</div></div>
+
+<!-- ======================= ГЛАГОЛЫ ======================= -->
+<div class="pane" id="p-verbs"><div class="wrap">
+  <div class="pane-head"><h2>Глаголы</h2><span class="sub" id="vCount"></span></div>
+  <div class="vtools">
+    <input type="search" id="vq" placeholder="Поиск: по-итальянски или по-русски">
+  </div>
+  <div class="chips" id="vGroups">
+    <button class="chip on" data-g="all">все</button>
+    <button class="chip" data-g="are">-are</button>
+    <button class="chip" data-g="ere">-ere</button>
+    <button class="chip" data-g="ire">-ire</button>
+    <button class="chip" data-g="irr">неправильные</button>
+    <button class="chip" data-g="rfl">возвратные</button>
+  </div>
+  <div class="vlist" id="vList"></div>
 </div></div>
 
 <!-- ======================= СОБРАТЬ ФРАЗУ ======================= -->
 <div class="pane" id="p-build"><div class="wrap">
-  <div class="pane-head"><h2>Собрать фразу</h2><span class="sub">из готовых слов и по своему выбору</span></div>
-  <div class="seg" id="buildSeg">
-    <button class="on" data-s="bs-words">Из слов</button>
-    <button data-s="bs-own">Составь своё</button>
-    <button data-s="bs-mine">Мои фразы</button>
-  </div>
-  <div class="sub on" id="bs-words">
+  <div class="pane-head"><h2>Собрать фразу</h2></div>
+  <div class="cols c2">
     <div class="card">
-      <h2>Собери из слов</h2>
-      <div class="lead">Русская фраза → выбери итальянские слова в правильном порядке. Лишние слова есть. Так тренируется порядок слов, артикли и предлоги — то, что нужно, чтобы строить свои фразы.</div>
+      <h2>Из слов</h2>
+      <div class="lead">Русская фраза, итальянские слова вперемешку, есть лишние.</div>
       <div class="chips" id="buildSrc">
         <button class="chip on" data-src="all">все фразы</button>
-        <button class="chip" data-src="short">короткие (до 4 слов)</button>
-        <button class="chip" data-src="verbs">с глаголами -are</button>
+        <button class="chip" data-src="short">короткие</button>
+        <button class="chip" data-src="verbs">с глаголами</button>
         <button class="chip" data-src="me">о себе</button>
       </div>
-      <button class="pri" id="buildStart">▶ 10 фраз</button>
+      <button class="pri" id="buildStart">10 фраз</button>
       <div class="muted" style="font-size:13px" id="buildBest"></div>
     </div>
-  </div>
-  <div class="sub" id="bs-own">
     <div class="card">
-      <h2>Составь своё предложение</h2>
-      <div class="lead">Выбери, кто, что делает и что / где — тренажёр соберёт правильную форму, покажет чтение и перевод. Всё из пройденных слов, ошибиться нельзя.</div>
+      <h2>Составь своё</h2>
       <div class="cmp">
         <div class="row3">
           <div><label>Кто</label><select id="cSubj"></select></div>
@@ -512,9 +587,9 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
         </div>
         <div class="tog">
           <button class="chip" id="cNeg">не (non)</button>
-          <button class="chip" id="cQ">вопрос?</button>
+          <button class="chip" id="cQ">вопрос</button>
           <button class="chip" id="cPron">с местоимением</button>
-          <button class="chip" id="cTwo">+ второе предложение</button>
+          <button class="chip" id="cTwo">второе предложение</button>
         </div>
         <div id="cSecond" class="hidden">
           <div class="row3" style="margin-top:4px">
@@ -529,30 +604,28 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
       <div class="out" id="cOut"></div>
     </div>
   </div>
-  <div class="sub" id="bs-mine">
-    <div class="card mine">
-      <h2>Мои фразы</h2>
-      <div class="lead">То, что ты собрал сам и сохранил. Учатся как обычные карточки в колоде «Мои фразы» и попадают в диктант.</div>
-      <div class="dl" id="mineList"></div>
-      <button class="sec" id="mineLearn" style="margin-top:10px">▶ Учить мои фразы</button>
-    </div>
+  <div class="card mine">
+    <h2>Мои фразы</h2>
+    <div class="dl" id="mineList"></div>
+    <button class="sec" id="mineLearn" style="margin-top:10px">Учить мои фразы</button>
   </div>
 </div></div>
 
 <!-- ======================= ЕЩЁ ======================= -->
 <div class="pane" id="p-more"><div class="wrap">
   <div class="pane-head"><h2>Ещё</h2></div>
-  <div class="more">
-    <button data-p="p-num"><span class="ic">🔢</span>Числа</button>
-    <button data-p="p-all"><span class="ic">🔤</span>Все слова</button>
-    <button data-p="p-ref"><span class="ic">📐</span>Правила</button>
-    <button data-p="p-set"><span class="ic">⚙️</span>Настройки</button>
+  <div class="moregrid">
+    <button data-p="p-phr"><svg class="i"><use href="#i-phrases"/></svg>Фразы</button>
+    <button data-p="p-all"><svg class="i"><use href="#i-words"/></svg>Слова</button>
+    <button data-p="p-num"><svg class="i"><use href="#i-numbers"/></svg>Числа</button>
+    <button data-p="p-ref"><svg class="i"><use href="#i-rules"/></svg>Правила</button>
+    <button data-p="p-set"><svg class="i"><use href="#i-settings"/></svg>Настройки</button>
   </div>
 </div></div>
 
 <!-- ======================= ФРАЗЫ ======================= -->
 <div class="pane" id="p-phr"><div class="wrap">
-  <div class="pane-head"><h2>Фразы</h2><span class="sub">готовые реплики для общения</span></div>
+  <div class="pane-head"><h2>Фразы</h2></div>
   <div class="toolbar">
     <select id="phrGroup" aria-label="Раздел"></select>
     <input type="search" id="pq" placeholder="Поиск по всем фразам…">
@@ -562,7 +635,7 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
     <button class="chip" id="phrHideRu">без перевода</button>
     <button class="chip" id="phrHideIt">без итальянского</button>
     <span style="flex:1"></span>
-    <button class="chip" id="phrLearn" style="background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700">▶ Учить фразы</button>
+    <button class="chip" id="phrLearn" style="background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600">Учить фразы</button>
   </div>
   <div class="count" id="phrCount"></div>
   <div class="dl" id="phrList"></div>
@@ -570,7 +643,7 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
 
 <!-- ======================= ЧИСЛА ======================= -->
 <div class="pane" id="p-num"><div class="wrap">
-  <div class="pane-head"><h2>Числа</h2><span class="sub">0–100, счёт, номера телефонов</span></div>
+  <div class="pane-head"><h2>Числа</h2></div>
   <div class="seg" id="numSeg">
     <button class="on" data-s="ns-train">Тренажёр</button>
     <button data-s="ns-table">Таблицы</button>
@@ -581,7 +654,6 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
   <div class="sub on" id="ns-train">
     <div class="card">
       <h2>Тренажёр чисел</h2>
-      <div class="lead">Отдельно от карточек: быстрая серия заданий на числа. Ошибки показываются сразу, в конце — результат.</div>
       <h3>Диапазон</h3>
       <div class="chips" id="ndRange">
         <button class="chip on" data-r="20">0–20</button>
@@ -601,8 +673,7 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
         <button class="chip on" data-c="20">20</button>
         <button class="chip" data-c="40">40</button>
       </div>
-      <button class="pri" id="ndStart">▶ Начать</button>
-      <div class="muted" style="font-size:13px" id="ndHint">Задания «на слух» и «номер телефона» требуют озвучки — на телефоне она есть.</div>
+      <button class="pri" id="ndStart">Начать</button>
     </div>
     <div class="card" id="ndBest"></div>
   </div>
@@ -614,15 +685,15 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
       <button class="chip" id="numHideIt">без итальянского</button>
     </div>
     <div class="card">
-      <h2>0–20 <span class="muted" style="font-size:14px;font-weight:400">заучить</span></h2>
+      <h2>0–20</h2>
       <div class="numgrid" id="numGrid1"></div>
     </div>
     <div class="card">
-      <h2>Десятки и 100 <span class="muted" style="font-size:14px;font-weight:400">заучить</span></h2>
+      <h2>Десятки и 100</h2>
       <div class="numgrid" id="numGrid2"></div>
     </div>
     <div class="card">
-      <h2>21–99 <span class="muted" style="font-size:14px;font-weight:400">по правилу</span></h2>
+      <h2>21–99</h2>
       <div class="chips" id="numTens"></div>
       <div class="tbl-wrap"><table class="numtbl" id="numTbl3"></table></div>
     </div>
@@ -693,16 +764,15 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
   </div>
   <div class="abc" id="abcBar"></div>
   <div class="dl" id="allList"></div>
-  <div class="count" style="margin-top:8px">● зелёный — выучено, ● оранжевый — учится, ○ — не начато. «✓» убирает слово из занятий как известное, «↺» возвращает.</div>
 </div></div>
 
 <!-- ======================= ПРАВИЛА ======================= -->
 <div class="pane" id="p-ref"><div class="wrap">
-  <div class="pane-head"><h2>Правила</h2><span class="sub">всё пройденное, по темам; внутри темы разделы раскрываются</span></div>
+  <div class="pane-head"><h2>Правила</h2></div>
   <div class="ref list-mode" id="ref">
     <div class="topics" id="topics"></div>
     <div class="refview" id="refview">
-      <div class="refopts"><button class="refback" id="refBack">← Все темы</button><span style="flex:1"></span><button class="chip" id="refAll">развернуть всё</button></div>
+      <div class="refopts"><button class="refback" id="refBack"><svg class="i"><use href="#i-back"/></svg> Все темы</button><span style="flex:1"></span><button class="chip" id="refAll">развернуть всё</button></div>
       <div id="refContent"></div>
       <div class="pgdots" id="pgDots"></div>
       <div class="pager"><button id="pgPrev"></button><span class="pc" id="pgCnt"></span><button id="pgNext"></button></div>
@@ -733,6 +803,9 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
       </tbody>
     </table></div>
     <div class="fnote">Три группы различаются только в трёх клетках: <b>lui</b> (-a / -e / -e), <b>voi</b> (-ate / -ete / -ite) и <b>loro</b> (-ano / -ono / -ono). io, tu, noi — одинаковые у всех.</div>
+    <h3>Собери форму сам</h3>
+    <div data-live="parlare,vivere,dormire,capire,mangiare,pagare,cantare,leggere,aprire,finire"></div>
+    <div data-play="parlare:0:0"></div>
 
     <h3>Куда падает ударение</h3>
     <div class="flow"><div class="fbranch">
@@ -789,6 +862,10 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
     <div class="ring" style="margin-top:8px">
       <div class="rn"><span>io</span><b>ho</b><i>[о]</i><em>у меня есть</em></div><div class="rn"><span>tu</span><b>hai</b><i>[ай]</i><em>у тебя есть</em></div><div class="rn"><span>lui / lei / Lei</span><b>ha</b><i>[а]</i><em>у него / неё есть</em></div>
       <div class="rn"><span>noi</span><b>abbiamo</b><i>[аббьЯмо]</i><em>у нас есть</em></div><div class="rn"><span>voi</span><b>avete</b><i>[авЭтэ]</i><em>у вас есть</em></div><div class="rn"><span>loro</span><b>hanno</b><i>[Анно]</i><em>у них есть</em></div></div>
+    <h3>Попробуй: кто действует</h3>
+    <div data-live="essere,avere"></div>
+    <div data-play="essere:0:0"></div>
+    <div data-play="avere:0:0"></div>
     <h3>Идея спряжения в одном абзаце</h3>
     <div class="box">
       Глагол меняет окончание под каждое лицо — как в русском «я иду, ты идёшь, он идёт», только различия сильнее.
@@ -911,6 +988,9 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
       <div class="rn"><span>io</span><b>-o</b><i>parlo</i><em>я говорю</em></div><div class="rn"><span>tu</span><b>-i</b><i>parli</i><em>ты говоришь</em></div><div class="rn"><span>lui / lei / Lei</span><b>-a</b><i>parla</i><em>он говорит</em></div>
       <div class="rn"><span>noi</span><b>-iamo</b><i>parliamo</i><em>мы говорим</em></div><div class="rn"><span>voi</span><b>-ate</b><i>parlate</i><em>вы говорите</em></div><div class="rn"><span>loro</span><b>-ano</b><i>parlano</i><em>они говорят</em></div></div>
     <div class="fnote">Ударение: <b>pA</b>rlo · <b>pA</b>rli · <b>pA</b>rla · <b>pA</b>rlano — на основу. parli<b>A</b>mo · parl<b>A</b>te — на окончание.</div>
+    <h3>Собери форму сам</h3>
+    <div data-live="parlare,studiare,amare,abitare,lavorare,ascoltare,mangiare,pagare,cantare,giocare"></div>
+    <div data-play="abitare:0:0"></div>
     <h3>Как собирается форма</h3>
     <div class="box key"><span class="ttl">Основа + окончание</span>
       Отрезаешь <b>-are</b> от инфинитива — остаётся основа: <span class="it">parl-</span>, <span class="it">studi-</span>, <span class="it">am-</span>, <span class="it">abit-</span>.
@@ -998,6 +1078,9 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
       <div class="fcol"><div class="fhead">-ire<small>dormire</small></div><div class="fnode"><b style="font-size:18px">-o · -i · -e<br>-iamo · -ite · -ono</b><i>dormo, dormi, dorme, dormiamo, dormite, dormono</i></div></div>
     </div></div>
     <div class="fnote">Отличий всего три: у lui/lei <b>-a</b> только в -are, у voi гласная как в инфинитиве (<b>-ate / -ete / -ite</b>), у loro <b>-ano</b> против <b>-ono</b>. Всё остальное совпадает.</div>
+    <h3>Собери форму сам</h3>
+    <div data-live="vivere,leggere,scrivere,prendere,dormire,aprire,capire,finire,fare,andare,bere,venire,uscire,volere,potere,dovere"></div>
+    <div data-play="andare:0:0"></div>
     <h3>-ere: жить, читать, писать, брать, видеть</h3>
     <div data-conj="vivere,leggere,scrivere,prendere,vedere,conoscere"></div>
     <h3>-ere: ещё шесть</h3>
@@ -1028,11 +1111,11 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
       <div class="fbranch">
         <div class="fcol"><div class="fhead">мужской род<small>обычно на -o</small></div>
           <div class="fnode"><small>перед гласной</small><b>l'</b><i>l'amico, l'italiano</i></div>
-          <div class="fnode"><small>перед s+согласная, z</small><b>lo</b><i>lo studente, lo zaino, lo spagnolo</i></div>
-          <div class="fnode"><small>перед остальными</small><b>il</b><i>il signore, il russo</i></div></div>
+          <div class="fnode more"><small>перед s+согласная, z</small><b>lo</b><i>lo studente, lo zaino, lo spagnolo</i><div class="hid">Также перед gn, ps, x, y: lo gnocco, lo psicologo. Причина: «il studente» трудно произнести, а «lo studente» льётся. Женский род таких проблем не знает: la studentessa, la zia.</div></div>
+          <div class="fnode more"><small>перед остальными</small><b>il</b><i>il signore, il russo</i><div class="hid">Самый частый артикль. Во множественном числе il → i: il ragazzo → i ragazzi, il libro → i libri.</div></div></div>
         <div class="fcol"><div class="fhead">женский род<small>обычно на -a</small></div>
-          <div class="fnode"><small>перед гласной</small><b>l'</b><i>l'amica</i></div>
-          <div class="fnode"><small>перед любой согласной</small><b>la</b><i>la signora, la borsa</i></div></div>
+          <div class="fnode more"><small>перед гласной</small><b>l'</b><i>l'amica</i><div class="hid">Апостроф означает выпавшую гласную: la amica → l'amica. Во множественном числе апострофа нет: le amiche.</div></div>
+          <div class="fnode more"><small>перед любой согласной</small><b>la</b><i>la signora, la borsa</i><div class="hid">Женскому роду всё равно, какая согласная: la studentessa, la zia, la strada. Множественное число: le.</div></div></div>
       </div></div>
     <div class="flow" style="margin-top:12px"><div class="fbranch">
       <div class="fnode"><small>il →</small><b>i</b><i>il ragazzo → i ragazzi</i></div>
@@ -1880,7 +1963,7 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
 
 
   </div><!-- /refSrc -->
-  <div class="footer">Источники: тетрадь, распечатка FORMITALIA (упр. 1–27), Nuovo Espresso 1 — Lezione 1–2, листы и домашки 20.08 – 24.09. Обновлено 27.09.2026.</div>
+  <div class="footer">Источники: тетрадь, распечатка FORMITALIA (упр. 1–27), Nuovo Espresso 1 (Lezione 1–2), листы и домашки 20.08 – 24.09, частотные глаголы A1–A2. Обновлено 28.09.2026.</div>
 </div></div>
 
 <!-- ======================= НАСТРОЙКИ ======================= -->
@@ -1913,7 +1996,7 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
   </div>
   <div class="card">
     <h2>Прогресс</h2>
-    <div class="lead">Хранится в этом браузере. Чтобы перенести на другое устройство — скопируй код здесь и вставь там.</div>
+    <div class="lead">Хранится в этом браузере. Чтобы перенести на другое устройство, скопируй код здесь и вставь там.</div>
     <div class="row2">
       <button class="sec" id="expBtn">Скопировать код прогресса</button>
       <button class="sec" id="expFile">Скачать файлом</button>
@@ -1939,20 +2022,20 @@ html[data-theme="dark"] .fnote{border-color:#5a5030}
 <!-- ======================= СЕССИЯ ======================= -->
 <div id="session">
   <div class="s-top">
-    <button class="icon" id="sClose">✕</button>
+    <button class="icon" id="sClose"><svg class="i"><use href="#i-close"/></svg></button>
     <div class="prog"><i id="sProg" style="width:0%"></i></div>
     <div class="cnt" id="sCnt"></div>
-    <button class="icon" id="sMore" title="Добавить новых слов">+10</button>
+    <button class="icon" id="sMore" title="Ещё 10 новых слов"><svg class="i"><use href="#i-plus"/></svg></button>
   </div>
   <div class="s-body"><div class="wrap" id="sBody"></div></div>
 </div>
 
 <nav class="bottom">
-  <button class="on" data-p="p-study"><span class="ic">🎯</span>Сегодня</button>
-  <button data-p="p-les"><span class="ic">📚</span>Уроки</button>
-  <button data-p="p-build"><span class="ic">🧩</span>Собрать</button>
-  <button data-p="p-phr"><span class="ic">💬</span>Фразы</button>
-  <button data-p="p-more"><span class="ic">☰</span>Ещё</button>
+  <button class="on" data-p="p-study"><svg class="i"><use href="#i-today"/></svg>Сегодня</button>
+  <button data-p="p-les"><svg class="i"><use href="#i-lessons"/></svg>Уроки</button>
+  <button data-p="p-verbs"><svg class="i"><use href="#i-verbs"/></svg>Глаголы</button>
+  <button data-p="p-build"><svg class="i"><use href="#i-build"/></svg>Собрать</button>
+  <button data-p="p-more"><svg class="i"><use href="#i-more"/></svg>Ещё</button>
 </nav>
 
 <script>
@@ -3543,6 +3626,93 @@ const LEX = [
 ["lex","volere","волЭрэ","хотеть",""],
 ["lex","potere","потЭрэ","мочь",""],
 ["lex","dovere","довЭрэ","быть должным",""],
+["lex","aiutare","аютАрэ","помогать",""],
+["lex","alzare","альцАрэ","поднимать",""],
+["lex","cambiare","камбьЯрэ","менять",""],
+["lex","cenare","чэнАрэ","ужинать",""],
+["lex","cominciare","коминчЯрэ","начинать",""],
+["lex","continuare","континуАрэ","продолжать",""],
+["lex","controllare","контроллАрэ","проверять",""],
+["lex","costare","костАрэ","стоить",""],
+["lex","desiderare","дэзидэрАрэ","желать",""],
+["lex","dimenticare","димэнтикАрэ","забывать",""],
+["lex","diventare","дивэнтАрэ","становиться",""],
+["lex","domandare","домандАрэ","спрашивать",""],
+["lex","festeggiare","фэстэджЯрэ","праздновать",""],
+["lex","fermare","фэрмАрэ","останавливать",""],
+["lex","firmare","фирмАрэ","подписывать",""],
+["lex","frequentare","фрэкуэнтАрэ","посещать (курсы)",""],
+["lex","fumare","фумАрэ","курить",""],
+["lex","girare","джирАрэ","поворачивать",""],
+["lex","guidare","гуидАрэ","водить машину",""],
+["lex","incontrare","инконтрАрэ","встречать",""],
+["lex","iniziare","иницьЯрэ","начинать",""],
+["lex","insegnare","инсэньЯрэ","преподавать",""],
+["lex","invitare","инвитАрэ","приглашать",""],
+["lex","lasciare","лашЯрэ","оставлять",""],
+["lex","lavare","лавАрэ","мыть",""],
+["lex","mandare","мандАрэ","отправлять",""],
+["lex","mostrare","мострАрэ","показывать",""],
+["lex","nuotare","нуотАрэ","плавать",""],
+["lex","parcheggiare","паркэджЯрэ","парковать",""],
+["lex","passare","пассАрэ","проводить (время); проходить",""],
+["lex","pranzare","пранцАрэ","обедать",""],
+["lex","preparare","прэпарАрэ","готовить",""],
+["lex","prenotare","прэнотАрэ","бронировать",""],
+["lex","presentare","прэзэнтАрэ","представлять (кого-то)",""],
+["lex","provare","провАрэ","пробовать",""],
+["lex","raccontare","ракконтАрэ","рассказывать",""],
+["lex","regalare","рэгалАрэ","дарить",""],
+["lex","restare","рэстАрэ","оставаться",""],
+["lex","ricordare","рикордАрэ","помнить",""],
+["lex","riposare","рипозАрэ","отдыхать",""],
+["lex","salutare","салутАрэ","приветствовать, прощаться",""],
+["lex","sbagliare","збальЯрэ","ошибаться",""],
+["lex","sembrare","сэмбрАрэ","казаться",""],
+["lex","sognare","соньЯрэ","мечтать; видеть сны",""],
+["lex","sperare","спэрАрэ","надеяться",""],
+["lex","spiegare","спьегАрэ","объяснять",""],
+["lex","suonare","суонАрэ","играть (на инструменте); звонить (о звонке)",""],
+["lex","trovare","тровАрэ","находить",""],
+["lex","usare","узАрэ","использовать",""],
+["lex","visitare","визитАрэ","посещать (город, музей)",""],
+["lex","volare","волАрэ","летать",""],
+["lex","accendere","аччэндЭрэ","включать",""],
+["lex","chiedere","кьедЭрэ","просить; спрашивать",""],
+["lex","decidere","дэчидЭрэ","решать",""],
+["lex","perdere","пэрдЭрэ","терять",""],
+["lex","ricevere","ричэвЭрэ","получать",""],
+["lex","ridere","ридЭрэ","смеяться",""],
+["lex","rispondere","риспондЭрэ","отвечать",""],
+["lex","spendere","спэндЭрэ","тратить",""],
+["lex","vendere","вэндЭрэ","продавать",""],
+["lex","cadere","кадЭрэ","падать",""],
+["lex","piangere","пьянджЭрэ","плакать",""],
+["lex","discutere","дискутЭрэ","обсуждать",""],
+["lex","seguire","сэгуИрэ","следовать; следить",""],
+["lex","servire","сэрвИрэ","служить; подавать",""],
+["lex","scoprire","скопрИрэ","обнаруживать, открывать",""],
+["lex","costruire","коструИрэ","строить",""],
+["lex","spedire","спэдИрэ","отправлять (почтой)",""],
+["lex","suggerire","суджэрИрэ","предлагать, советовать",""],
+["lex","restituire","рэституИрэ","возвращать (вещь)",""],
+["lex","tenere","тэнЭрэ","держать",""],
+["lex","rimanere","риманЭрэ","оставаться",""],
+["lex","scegliere","шэльЕрэ","выбирать",""],
+["lex","spegnere","спэньЕрэ","выключать",""],
+["lex","riuscire","рьюшИрэ","удаваться; суметь",""],
+["lex","salire","салИрэ","подниматься; садиться (в транспорт)",""],
+["lex","morire","морИрэ","умирать",""],
+["lex","alzarsi","альцАрси","вставать",""],
+["lex","svegliarsi","звэльЯрси","просыпаться",""],
+["lex","lavarsi","лавАрси","мыться",""],
+["lex","vestirsi","вэстИрси","одеваться",""],
+["lex","chiamarsi","кьямАрси","зваться",""],
+["lex","sentirsi","сэнтИрси","чувствовать себя",""],
+["lex","divertirsi","дивэртИрси","развлекаться, веселиться",""],
+["lex","riposarsi","рипозАрси","отдыхать",""],
+["lex","sposarsi","спозАрси","жениться, выходить замуж",""],
+["lex","sedersi","сэдЭрси","садиться",""],
 ["lex","mi piace","ми пьЯче","мне нравится (одно)",""],
 ["lex","mi piacciono","ми пьЯччоно","мне нравятся (много)",""],
 ["lex","#","","Дни недели"],
@@ -3976,6 +4146,29 @@ const LESSONS = [
   { t:'build', it:'La mia ragazza disegna molto bene.', ru:'Моя девушка очень хорошо рисует.', tr:'ла мИа рагАцца дизЭнья мОльто бЭнэ' },
   { t:'build', it:'Compro il pane e torno a casa.', ru:'Я покупаю хлеб и возвращаюсь домой.', tr:'кОмпро иль пАнэ э тОрно а кАза' },
 ]},
+{ id:'day', icon:'', title:'Мой день: возвратные глаголы', sub:'встаю, умываюсь, одеваюсь — mi alzo, mi lavo, mi vesto', steps:[
+  { t:'idea', h:'Возвратные глаголы: «себя» стоит впереди', body:'По-русски «одеваюсь» = «одеваю себя», и «-сь» в конце. По-итальянски та же идея, только частица стоит <b>перед</b> глаголом и меняется по лицам: <b>mi</b> (себя — я), <b>ti</b> (ты), <b>si</b> (он/она), <b>ci</b> (мы), <b>vi</b> (вы), <b>si</b> (они). Сам глагол спрягается как обычно.',
+    ex:[['mi alzo','ми Альцо','я встаю'],['ti alzi','ти Альци','ты встаёшь'],['si alza','си Альца','он встаёт'],['ci alziamo','чи альцьЯмо','мы встаём'],['vi alzate','ви альцАтэ','вы встаёте'],['si alzano','си Альцано','они встают']] },
+  { t:'scheme', h:'Утро по-итальянски', html:`<div class="flow"><div class="fbranch">
+      <div class="fnode"><small>7:00</small><b style="font-size:18px">mi sveglio</b><i>просыпаюсь</i></div>
+      <div class="fnode"><small>7:05</small><b style="font-size:18px">mi alzo</b><i>встаю</i></div>
+      <div class="fnode"><small>7:10</small><b style="font-size:18px">mi lavo</b><i>умываюсь</i></div>
+      <div class="fnode"><small>7:20</small><b style="font-size:18px">mi vesto</b><i>одеваюсь</i></div>
+      <div class="fnode"><small>7:30</small><b style="font-size:18px">faccio colazione</b><i>завтракаю</i></div>
+      <div class="fnode"><small>8:00</small><b style="font-size:18px">vado al lavoro</b><i>иду на работу</i></div>
+      <div class="fnode"><small>18:00</small><b style="font-size:18px">torno a casa</b><i>возвращаюсь домой</i></div>
+      <div class="fnode"><small>20:00</small><b style="font-size:18px">ceno</b><i>ужинаю</i></div>
+      <div class="fnode"><small>23:00</small><b style="font-size:18px">vado a dormire</b><i>иду спать</i></div></div></div>
+      <div class="fnote">В словаре возвратный глагол кончается на <b>-si</b>: alzar<b>si</b>, lavar<b>si</b>, vestir<b>si</b>, chiamar<b>si</b> — «зваться», отсюда <span class="it">mi chiamo</span>.</div>` },
+  { t:'mc', q:'«Мы встаём в семь»', opts:['Ci alziamo alle sette.','Si alziamo alle sette.','Ci alzano alle sette.','Alziamo ci alle sette.'], a:0, why:'noi → ci + alziamo. Частица перед глаголом.' },
+  { t:'mc', q:'«Как тебя зовут?» буквально значит…', opts:['Как ты себя зовёшь?','Как тебя называют?','Какое твоё имя?','Кто ты?'], a:0, why:'Come ti chiami = come + ti (себя) + chiami (зовёшь).' },
+  { t:'gap', verb:'alzarsi' }, { t:'gap', verb:'svegliarsi' }, { t:'gap', verb:'lavarsi' }, { t:'gap', verb:'vestirsi' }, { t:'gap', verb:'sentirsi' }, { t:'gap', verb:'divertirsi' }, { t:'gap', verb:'cenare' }, { t:'gap', verb:'pranzare' },
+  { t:'form', verb:'alzarsi', p:0 }, { t:'form', verb:'vestirsi', p:2 }, { t:'form', verb:'svegliarsi', p:1 },
+  { t:'build', it:'Mi alzo alle sette e faccio colazione.', ru:'Я встаю в семь и завтракаю.', tr:'ми Альцо Аллэ сЭттэ э фАччо колацьОнэ' },
+  { t:'build', it:'La sera torno a casa e ceno.', ru:'Вечером я возвращаюсь домой и ужинаю.', tr:'ла сЭра тОрно а кАза э чЭно' },
+  { t:'build', it:'Come ti senti oggi?', ru:'Как ты себя чувствуешь сегодня?', tr:'кОмэ ти сЭнти Оджи' },
+  { t:'build', it:'La mia ragazza si veste sempre bene.', ru:'Моя девушка всегда хорошо одевается.', tr:'ла мИа рагАцца си вЭстэ сЭмпрэ бЭнэ' },
+]},
 ];
 
 /* ---------------- конструктор: «Составь своё» ----------------
@@ -4062,6 +4255,7 @@ const shuffle = a => { for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.r
 const pick = a => a[Math.floor(Math.random()*a.length)];
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const norm = s => s.toLowerCase().replace(/[!?…,.:;«»"()]/g,'').replace(/\s+/g,' ').trim();
+const ICO = n => `<svg class="i"><use href="#i-${n}"/></svg>`;
 const stripAcc = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’]/g,"'");
 
 /* ---------------- карточки ---------------- */
@@ -4160,6 +4354,7 @@ function showPane(id){
   if (id==='p-all') renderAll();
   if (id==='p-ref') renderRef();
   if (id==='p-les') renderLessons();
+  if (id==='p-verbs') renderVerbs();
   if (id==='p-build') renderBuild();
 }
 $$('[data-p]').forEach(b=> b.onclick = ()=> showPane(b.dataset.p));
@@ -4167,7 +4362,7 @@ function applyLook(){
   document.documentElement.setAttribute('data-theme', S().dark?'dark':'light');
   document.documentElement.classList.toggle('eink', !!S().eink);
   document.body.style.fontSize = (S().font||16)+'px';
-  ['#themeBtn','#themeBtn2'].forEach(id=>{ const b=$(id); if(b) b.textContent = S().dark ? '☀️' : '🌙'; });
+  ['#themeBtn','#themeBtn2'].forEach(id=>{ const b=$(id); if(b) b.innerHTML = ICO(S().dark ? 'sun' : 'moon'); });
 }
 ['#themeBtn','#themeBtn2'].forEach(id=>{ const b=$(id); if(b) b.onclick = ()=>{ S().dark=!S().dark; save(); applyLook(); syncSettingsUI(); }; });
 ['#ttsTest','#ttsTest2'].forEach(id=>{ const b=$(id); if(b) b.onclick = ()=>{ if(!speak('Buongiorno! Come stai?')) alert('Озвучка недоступна: включи её в настройках или установи итальянский голос в системе.'); }; });
@@ -4197,21 +4392,22 @@ function renderHome(){
   $('#todayDate').textContent = new Date().toLocaleDateString('ru-RU',{weekday:'long', day:'numeric', month:'long'});
   const newLeft = Math.max(0, S().newPerDay - today().n);
   const planned = due + Math.min(newLeft, fresh);
-  $('#startTitle').textContent = planned>0 ? `Повторить · ${planned} карточек` : 'Повторение';
-  $('#startHint').textContent = planned>0
-    ? `${due} повторов и ${Math.min(newLeft,fresh)} новых слов. Остановиться можно в любой момент.`
-    : (fresh>0 ? 'На сегодня всё повторено. Нажми — добавлю новых слов сверх лимита.' : 'Всё выучено и повторено.');
+  $('#startN').textContent = planned;
+  $('#startTitle').textContent = 'Повторить';
+  $('#startHint').textContent = planned>0 ? `${due} повторов, ${Math.min(newLeft,fresh)} новых` : (fresh>0 ? 'всё повторено, нажми для новых слов' : 'всё выучено');
   const nx = nextLesson(); const done = LESSONS.filter(l=>lessonState(l.id)).length;
-  $('#lessonIc').textContent = nx ? nx.icon : '🏆';
-  $('#lessonTitle').textContent = nx ? 'Урок: '+nx.title : 'Все уроки пройдены';
-  $('#lessonHint').textContent = nx ? `${nx.sub} · пройдено ${done} из ${LESSONS.length}` : 'Повтори любой из вкладки «Уроки»';
+  $('#lessonTitle').textContent = nx ? nx.title : 'Все уроки пройдены';
+  $('#lessonHint').textContent = nx ? `урок ${LESSONS.indexOf(nx)+1} из ${LESSONS.length}` : 'повтори любой';
+  $('#courseList').innerHTML = `<div class="chead">Курс<span>${done} из ${LESSONS.length}</span></div>` + LESSONS.map((l,i)=>{ const st=lessonState(l.id);
+    return `<button class="crow ${st?'done':''} ${nx&&nx.id===l.id?'next':''}" data-l="${l.id}"><span class="st">${st?ICO('check'):''}</span><span class="t">${esc(l.title)}</span><span class="sc">${st?st.ok+'/'+st.n:''}</span></button>`; }).join('');
+  $$('#courseList .crow').forEach(b=> b.onclick=()=> startLesson(b.dataset.l));
   $('#modeChips').innerHTML = MODES.map(([id,nm])=>`<button class="chip ${S().mode===id?'on':''}" data-m="${id}">${nm}</button>`).join('');
   $$('#modeChips .chip').forEach(b=> b.onclick=()=>{ S().mode=b.dataset.m; save(); renderHome(); });
   $('#deckList').innerHTML = DECKS.map(d=>{
     const cs = CARDS.filter(c=>c.deck===d.id); const tot = Math.max(1, cs.length);
     const k = cs.filter(c=>isKnown(P(c.key))).length, l = cs.filter(c=>isLearning(P(c.key))).length;
     const on = S().decks.includes(d.id);
-    return `<div class="deckrow"><div class="nm"><b>${d.name}</b> <span class="muted" style="font-size:12.5px">· ${cs.length}</span><small>${d.desc}</small>
+    return `<div class="deckrow"><div class="nm"><b>${d.name}</b> <span class="muted" style="font-size:12.5px">· ${cs.length}</span>
       <div class="bar"><i class="k" style="width:${100*k/tot}%"></i><i class="l" style="width:${100*l/tot}%"></i></div></div>
       <button class="sw ${on?'on':''}" data-d="${d.id}" aria-label="вкл/выкл"></button></div>`;
   }).join('');
@@ -4251,7 +4447,7 @@ function addFresh(n){
   if (more.length===0) alert('Новых слов в выбранных колодах больше нет.');
   renderStep();
 }
-function endSession(){ $('#session').classList.remove('on'); SES=null; if(window.speechSynthesis) speechSynthesis.cancel(); renderHome(); if ($('#p-les').classList.contains('on')) renderLessons(); if ($('#p-build').classList.contains('on')) renderBuild(); }
+function endSession(){ $('#session').classList.remove('on'); if (SES && SES.restoreMode){ S().mode=SES.restoreMode; } SES=null; if(window.speechSynthesis) speechSynthesis.cancel(); renderHome(); if ($('#p-les').classList.contains('on')) renderLessons(); if ($('#p-build').classList.contains('on')) renderBuild(); }
 function progressUI(){
   const total = SES.q.length, left = total - SES.i;
   $('#sProg').style.width = (100*SES.i/Math.max(1,total))+'%';
@@ -4281,7 +4477,7 @@ function cardHTML(c, {showIt=true, showTr=true, showRu=true, big=true}={}){
   if (showRu && c.src) h += `<div class="src">${esc(DECK[c.deck].name)} · ${esc(c.src)}</div>`;
   return h;
 }
-const spkBtn = c => (S().tts && window.speechSynthesis) ? `<button class="spk" data-say="${esc(ttsText(c))}">🔊 послушать</button>` : '';
+const spkBtn = c => (S().tts && window.speechSynthesis) ? `<button class="spk" data-say="${esc(ttsText(c))}">${ICO('sound')} послушать</button>` : '';
 function wireSpeak(root){ $$('[data-say]', root).forEach(b=> b.onclick = e=>{ e.stopPropagation(); speak(b.dataset.say); }); }
 
 function renderStep(){
@@ -4298,7 +4494,7 @@ function renderStep(){
       return renderStep();
     }
     const s = SES.stats, acc = s.ok+s.bad ? Math.round(100*s.ok/(s.ok+s.bad)) : 0;
-    body.innerHTML = `<div class="done"><div class="big">🎉</div><h2>Занятие закончено</h2>
+    body.innerHTML = `<div class="done"><h2>Занятие закончено</h2>
       <p>Ответов: <b>${s.ok+s.bad}</b> · верно <b>${acc}%</b> · новых слов <b>${s.new}</b></p>
       <p class="muted">Следующие повторы подтянутся сами, когда придёт их время.</p>
       <button class="pri" id="dMore">Ещё 10 новых слов</button>
@@ -4343,7 +4539,7 @@ function answered(c, ok, g){
 function feedback(c, ok, chosenText){
   const el = document.createElement('div');
   el.className = 'fb ' + (ok?'ok':'no');
-  el.innerHTML = `<div>${ok?'✅ Верно':'❌ Неверно'}</div>
+  el.innerHTML = `<div>${ok?'Верно':'Неверно'}</div>
     <div class="ans it">${esc(c.it)} <span class="tr">[${esc(c.tr)}]</span></div>
     <div>${esc(c.ru)}</div>${c.note?`<div class="muted" style="font-size:13.5px">${esc(c.note)}</div>`:''}
     <div style="margin-top:6px">${spkBtn(c)}</div>
@@ -4479,7 +4675,7 @@ function renderType(c){
     inp.disabled=true; $('#chk').disabled=true;
     inp.style.borderColor = r==='no' ? 'var(--bad)' : 'var(--ok)';
     if (r==='ok'){ answered(c,true,2); feedback(c,true); }
-    else if (r==='acc'){ answered(c,true,1); feedback(c,true); $('.fb div').textContent='✅ Почти: проверь знак ударения / апостроф'; }
+    else if (r==='acc'){ answered(c,true,1); feedback(c,true); $('.fb div').textContent='Почти: проверь знак ударения или апостроф'; }
     else { answered(c,false,0); feedback(c,false); }
   };
   SES.answered=false;
@@ -4505,7 +4701,7 @@ function renderListen(c){
   if (vars.length<3) distractors(c,'it',3-vars.length).forEach(x=>vars.push(x.it));
   const opts = shuffle([c.it, ...vars]);
   const body = $('#sBody');
-  body.innerHTML = head('listen',c) + `<div class="q"><div class="big">🔊</div><div class="note">Послушай и выбери, что прозвучало</div><button class="spk" data-say="${esc(ttsText(c))}">🔊 ещё раз</button></div>
+  body.innerHTML = head('listen',c) + `<div class="q"><div class="note">Что прозвучало?</div><button class="spk" data-say="${esc(ttsText(c))}">${ICO('sound')} ещё раз</button></div>
     <div class="opts">${opts.map((o,i)=>`<button class="opt" data-t="${esc(o)}"><span class="k">${i+1}</span><span class="it">${esc(o)}</span></button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
   wireSpeak(body); speak(ttsText(c));
   SES.answered=false;
@@ -4523,7 +4719,7 @@ function lev(a,b){ const m=a.length,n=b.length; if(!m) return n; if(!n) return m
 const dictNorm = s => stripAcc(norm(s)).replace(/['’]/g,"'").replace(/\s+/g,' ').trim();
 function renderDictation(c){
   const body = $('#sBody');
-  body.innerHTML = head('dict',c) + `<div class="q"><div class="big">🎧</div><div class="note">Послушай фразу и напиши её целиком по-итальянски</div><button class="spk" data-say="${esc(ttsText(c))}">🔊 ещё раз</button></div>
+  body.innerHTML = head('dict',c) + `<div class="q"><div class="note">Напиши фразу целиком</div><button class="spk" data-say="${esc(ttsText(c))}">${ICO('sound')} ещё раз</button></div>
     <div class="typing"><input id="ti" autocomplete="off" autocapitalize="sentences" spellcheck="false" lang="it" placeholder="…"></div>
     <button class="sec" id="chk" style="margin-top:8px">Проверить</button>
     <div class="kbd">Enter — проверить. Знаки препинания и ударения не считаются; одна-две опечатки — «с трудом».</div>`;
@@ -4534,7 +4730,7 @@ function renderDictation(c){
     const g = d===0 ? 3 : (d<=2 ? 1 : 0); const ok = g>0;
     inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor = ok?'var(--ok)':'var(--bad)';
     answered(c, ok, ok?(d===0?2:1):0); feedback(c, ok);
-    if (ok && d>0) $('.fb div').textContent = '✅ Почти: '+d+(d===1?' опечатка':' опечатки')+', сравни с образцом';
+    if (ok && d>0) $('.fb div').textContent = 'Почти: '+d+(d===1?' опечатка':' опечатки')+', сравни с образцом';
     if (!ok && a) $('.fb').insertAdjacentHTML('afterbegin', `<div class="muted" style="font-size:13px">Ты написал: <span class="it">${esc(inp.value)}</span></div>`);
   };
   $('#chk').onclick=check; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); if(!SES.answered) check(); else $('#nx')?.click(); } };
@@ -4587,7 +4783,7 @@ function rowHTML(c, showDeck){
   const s = statusOf(c);
   return `<div class="drow ${s==='sus'?'sus':''}"><span class="dot ${s==='known'?'k':s==='learn'?'l':s==='sus'?'s':''}"></span>
     <div class="txt"><span class="w">${esc(c.it)}</span> <span class="tr">[${esc(c.tr)}]</span><span class="m">${esc(c.ru)}</span>${c.note?`<span class="n">${esc(c.note)}</span>`:''}${showDeck?`<span class="n">${esc(DECK[c.deck].name)}${c.src?' · '+esc(c.src):''}</span>`:''}</div>
-    <div class="btns">${S().tts&&window.speechSynthesis?`<button data-say="${esc(ttsText(c))}" title="послушать">🔊</button>`:''}<button data-sus="${esc(c.key)}" title="${s==='sus'?'вернуть в занятия':'уже знаю — убрать из занятий'}">${s==='sus'?'↺':'✓'}</button></div></div>`;
+    <div class="btns">${S().tts&&window.speechSynthesis?`<button data-say="${esc(ttsText(c))}" title="послушать">${ICO('sound')}</button>`:''}<button data-sus="${esc(c.key)}" title="${s==='sus'?'вернуть в занятия':'уже знаю, убрать из занятий'}">${s==='sus'?ICO('repeat'):ICO('check')}</button></div></div>`;
 }
 $('#aq').addEventListener('input', e=>{ ALL.q=e.target.value; renderAll(); });
 $$('#p-all [data-sort]').forEach(b=> b.onclick=()=>{ ALL.sort=b.dataset.sort; renderAll(); });
@@ -4642,13 +4838,13 @@ function numWord(n){
   return [it, tr, T[2]+' '+U[2]];
 }
 let NUMTEN = 20;
-const numCell = n => { const [it,tr,ru]=numWord(n); return `<div class="numcell"><div class="d">${n}</div><div class="w">${it}</div><div class="t">[${tr}]</div><div class="r">${ru}</div>${S().tts&&window.speechSynthesis?`<button class="icon" style="margin-top:6px" data-say="${it}">🔊</button>`:''}</div>`; };
+const numCell = n => { const [it,tr,ru]=numWord(n); return `<div class="numcell"><div class="d">${n}</div><div class="w">${it}</div><div class="t">[${tr}]</div><div class="r">${ru}</div>${S().tts&&window.speechSynthesis?`<button class="icon" style="margin-top:6px" data-say="${it}">${ICO('sound')}</button>`:''}</div>`; };
 function renderNumbers(){
   $('#numGrid1').innerHTML = [...Array(21).keys()].map(numCell).join('');
   $('#numGrid2').innerHTML = [30,40,50,60,70,80,90,100].map(numCell).join('');
   $('#numTens').innerHTML = [20,30,40,50,60,70,80,90].map(t=>`<button class="chip ${NUMTEN===t?'on':''}" data-t="${t}">${t}–${t+9}</button>`).join('');
   $$('#numTens .chip').forEach(b=> b.onclick=()=>{ NUMTEN=+b.dataset.t; renderNumbers(); });
-  const rows=[]; for (let n=NUMTEN+1;n<=NUMTEN+9;n++){ const [it,tr,ru]=numWord(n); rows.push(`<tr><td class="n">${n}</td><td class="w">${it}</td><td class="t">[${tr}]</td><td class="r">${ru}</td><td>${S().tts&&window.speechSynthesis?`<button class="icon" data-say="${it}">🔊</button>`:''}</td></tr>`); }
+  const rows=[]; for (let n=NUMTEN+1;n<=NUMTEN+9;n++){ const [it,tr,ru]=numWord(n); rows.push(`<tr><td class="n">${n}</td><td class="w">${it}</td><td class="t">[${tr}]</td><td class="r">${ru}</td><td>${S().tts&&window.speechSynthesis?`<button class="icon" data-say="${it}">${ICO('sound')}</button>`:''}</td></tr>`); }
   $('#numTbl3').innerHTML = '<thead><tr><th></th><th>по-итальянски</th><th>читается</th><th>по-русски</th><th></th></tr></thead><tbody>'+rows.join('')+'</tbody>';
   wireSpeak($('#p-num'));
   renderNdBest();
@@ -4700,7 +4896,7 @@ function ndStep(){
   if (SES.i >= SES.q.length){
     const sec = Math.round((now()-SES.t0)/1000), s=SES.stats;
     (ST.nd ||= []).push({d: new Date().toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}), range:ND.range, ok:s.ok, n:s.ok+s.bad, sec}); if (ST.nd.length>30) ST.nd.shift(); save();
-    body.innerHTML = `<div class="done"><div class="big">${s.ok===s.ok+s.bad?'🏆':'🔢'}</div><h2>Серия закончена</h2>
+    body.innerHTML = `<div class="done"><h2>Серия закончена</h2>
       <p>Верно <b>${s.ok}</b> из <b>${s.ok+s.bad}</b> · ${sec} секунд</p>
       <button class="pri" id="dAgain">Ещё серию</button><button class="sec" id="dClose">Закрыть</button></div>`;
     $('#dAgain').onclick = startNumDrill; $('#dClose').onclick = endSession; return;
@@ -4720,8 +4916,8 @@ function ndStep(){
   // w2n / hear / phone — ввод цифр
   let q;
   if (t.m==='w2n') q = `<div class="q"><div class="big it">${numWord(t.n)[0]}</div><div class="note">Набери цифрами</div></div>`;
-  else if (t.m==='hear') q = `<div class="q"><div class="big">🔊</div><div class="note">Послушай и набери цифрами</div><button class="spk" data-say="${numWord(t.n)[0]}">🔊 ещё раз</button></div>`;
-  else q = `<div class="q"><div class="big">📞</div><div class="note">Номер читается парами. Набери все цифры подряд</div><button class="spk" data-say="${t.parts.map(p=>numWord(p)[0]).join(', ')}">🔊 ещё раз</button></div>`;
+  else if (t.m==='hear') q = `<div class="q"><div class="note">Набери цифрами то, что прозвучало</div><button class="spk" data-say="${numWord(t.n)[0]}">${ICO('sound')} ещё раз</button></div>`;
+  else q = `<div class="q"><div class="note">Номер телефона: набери все цифры подряд</div><button class="spk" data-say="${t.parts.map(p=>numWord(p)[0]).join(', ')}">${ICO('sound')} ещё раз</button></div>`;
   body.innerHTML = head + q + `<div class="typing"><input id="ti" inputmode="numeric" pattern="[0-9 ]*" autocomplete="off" placeholder="цифры…"><button class="sec" id="chk" style="width:auto">Проверить</button></div><div class="kbd">Enter — проверить</div>`;
   wireSpeak(body);
   if (t.m!=='w2n') setTimeout(()=> speak(t.m==='hear' ? numWord(t.n)[0] : t.parts.map(p=>numWord(p)[0]).join(', ')), 150);
@@ -4735,7 +4931,7 @@ function ndFeedback(t, ok){
   const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
   const ans = t.m==='phone' ? `<div class="ans">${t.parts.join(' ')}</div><div class="it">${t.parts.map(p=>numWord(p)[0]).join(', ')}</div>`
     : `<div class="ans">${t.n} — <span class="it">${numWord(t.n)[0]}</span> <span class="tr">[${numWord(t.n)[1]}]</span></div><div class="muted">${numWord(t.n)[2]}</div>`;
-  el.innerHTML = `<div>${ok?'✅ Верно':'❌ Неверно'}</div>${ans}<button class="pri next" id="nx">Дальше</button>`;
+  el.innerHTML = `<div>${ok?'Верно':'Неверно'}</div>${ans}<button class="pri next" id="nx">Дальше</button>`;
   $('#sBody').appendChild(el); $('#nx').onclick=()=>{ SES.i++; ndStep(); }; $('#nx').focus();
 }
 $('#numLearn') && ($('#numLearn').onclick = ()=> startSession(['num']));
@@ -4767,6 +4963,9 @@ function openTopic(id, userClick){
   const src = document.getElementById(id); if (!src) return;
   const clone = src.cloneNode(true); clone.removeAttribute('id');
   $$('[data-clone]', clone).forEach(el=>{ const srcEl = document.getElementById(el.dataset.clone); if(!srcEl) return; const c = srcEl.cloneNode(true); $$('.card', c).forEach(cd=>{ const h2=cd.querySelector('h2'); if(h2){ const h3=document.createElement('h3'); h3.textContent=h2.textContent; h2.replaceWith(h3); } cd.replaceWith(...cd.childNodes); }); el.replaceWith(...c.childNodes); });
+  $$('[data-live]', clone).forEach(el=> renderLive(el));
+  $$('[data-play]', clone).forEach(el=> renderPlay(el));
+  $$('.fnode.more', clone).forEach(n=> n.onclick=()=> n.classList.toggle('open'));
   $$('[data-conj]', clone).forEach(el=>{ el.innerHTML = el.dataset.conj.split(',').map(v=>{ const V=VERBS[v.trim()]; if(!V) return ''; return `<table><thead><tr><th colspan="2">${esc(v.trim())} — ${esc(V.ru)}</th></tr></thead><tbody>${PRON.map((p,i)=>`<tr><td class="sp">${esc(p)}</td><td class="ex"><b>${esc(V.f[i])}</b> <span class="tr">[${esc(V.tr[i])}]</span><br><i>${esc(V.r[i])}</i></td></tr>`).join('')}</tbody></table>`; }).join(''); el.className='conj'; });
   $('#refContent').innerHTML=''; $('#refContent').appendChild(clone); REF.page=0; paginateTopic();
   $$('#topics .tp').forEach(b=> b.classList.toggle('on', b.dataset.t===id));
@@ -5054,12 +5253,282 @@ const COMP2 = {
 Object.assign(COMP, COMP2);
 Object.keys(VERBS2).forEach(v=>{ VRU[v] = VERBS2[v].r.map(x=> x.replace(/^(я|ты|он|мы|вы|они) /,'')); });
 
+/* Автогенерация: scratchpad/gen_verbs.py + gen_verbs.js. Ещё 85 глаголов для жизни. */
+const VERBS3 = {
+  aiutare:     {ru:"помогать", g:'are', f:["aiuto","aiuti","aiuta","aiutiamo","aiutate","aiutano"], tr:["аЮто","аЮти","аЮта","аютьЯмо","аютАтэ","аЮтано"], r:["я помогаю","ты помогаешь","он помогает","мы помогаем","вы помогаете","они помогают"]},
+  alzare:      {ru:"поднимать", g:'are', f:["alzo","alzi","alza","alziamo","alzate","alzano"], tr:["Альцо","Альци","Альца","альцьЯмо","альцАтэ","Альцано"], r:["я поднимаю","ты поднимаешь","он поднимает","мы поднимаем","вы поднимаете","они поднимают"]},
+  cambiare:    {ru:"менять", g:'are', f:["cambio","cambi","cambia","cambiamo","cambiate","cambiano"], tr:["кАмбьо","кАмби","кАмбья","камбьЯмо","камбьЯтэ","кАмбьяно"], r:["я меняю","ты меняешь","он меняет","мы меняем","вы меняете","они меняют"]},
+  cenare:      {ru:"ужинать", g:'are', f:["ceno","ceni","cena","ceniamo","cenate","cenano"], tr:["чЭно","чЭни","чЭна","чэньЯмо","чэнАтэ","чЭнано"], r:["я ужинаю","ты ужинаешь","он ужинает","мы ужинаем","вы ужинаете","они ужинают"]},
+  cominciare:  {ru:"начинать", g:'are', f:["comincio","cominci","comincia","cominciamo","cominciate","cominciano"], tr:["комИнчо","комИнчи","комИнча","коминчЯмо","коминчЯтэ","комИнчано"], r:["я начинаю","ты начинаешь","он начинает","мы начинаем","вы начинаете","они начинают"]},
+  continuare:  {ru:"продолжать", g:'are', f:["continuo","continui","continua","continuiamo","continuate","continuano"], tr:["контИнуо","контИнуй","контИнуа","континуЯмо","континуАтэ","контИнуано"], r:["я продолжаю","ты продолжаешь","он продолжает","мы продолжаем","вы продолжаете","они продолжают"]},
+  controllare: {ru:"проверять", g:'are', f:["controllo","controlli","controlla","controlliamo","controllate","controllano"], tr:["контрОлло","контрОлли","контрОлла","контролльЯмо","контроллАтэ","контрОллано"], r:["я проверяю","ты проверяешь","он проверяет","мы проверяем","вы проверяете","они проверяют"]},
+  costare:     {ru:"стоить", g:'are', f:["costo","costi","costa","costiamo","costate","costano"], tr:["кОсто","кОсти","кОста","костьЯмо","костАтэ","кОстано"], r:["я стою","ты стоишь","он стоит","мы стоим","вы стоите","они стоят"]},
+  desiderare:  {ru:"желать", g:'are', f:["desidero","desideri","desidera","desideriamo","desiderate","desiderano"], tr:["дэзИдэро","дэзИдэри","дэзИдэра","дэзидэрьЯмо","дэзидэрАтэ","дэзИдэрано"], r:["я желаю","ты желаешь","он желает","мы желаем","вы желаете","они желают"]},
+  dimenticare: {ru:"забывать", g:'are', f:["dimentico","dimentichi","dimentica","dimentichiamo","dimenticate","dimenticano"], tr:["димЭнтико","димЭнтики","димЭнтика","димэнтикьЯмо","димэнтикАтэ","димЭнтикано"], r:["я забываю","ты забываешь","он забывает","мы забываем","вы забываете","они забывают"]},
+  diventare:   {ru:"становиться", g:'are', f:["divento","diventi","diventa","diventiamo","diventate","diventano"], tr:["дивЭнто","дивЭнти","дивЭнта","дивэнтьЯмо","дивэнтАтэ","дивЭнтано"], r:["я становлюсь","ты становишься","он становится","мы становимся","вы становитесь","они становятся"]},
+  domandare:   {ru:"спрашивать", g:'are', f:["domando","domandi","domanda","domandiamo","domandate","domandano"], tr:["домАндо","домАнди","домАнда","домандьЯмо","домандАтэ","домАндано"], r:["я спрашиваю","ты спрашиваешь","он спрашивает","мы спрашиваем","вы спрашиваете","они спрашивают"]},
+  festeggiare: {ru:"праздновать", g:'are', f:["festeggio","festeggi","festeggia","festeggiamo","festeggiate","festeggiano"], tr:["фэстЭджо","фэстЭджи","фэстЭджа","фэстэджЯмо","фэстэджЯтэ","фэстЭджано"], r:["я праздную","ты празднуешь","он празднует","мы празднуем","вы празднуете","они празднуют"]},
+  fermare:     {ru:"останавливать", g:'are', f:["fermo","fermi","ferma","fermiamo","fermate","fermano"], tr:["фЭрмо","фЭрми","фЭрма","фэрмьЯмо","фэрмАтэ","фЭрмано"], r:["я останавливаю","ты останавливаешь","он останавливает","мы останавливаем","вы останавливаете","они останавливают"]},
+  firmare:     {ru:"подписывать", g:'are', f:["firmo","firmi","firma","firmiamo","firmate","firmano"], tr:["фИрмо","фИрми","фИрма","фирмьЯмо","фирмАтэ","фИрмано"], r:["я подписываю","ты подписываешь","он подписывает","мы подписываем","вы подписываете","они подписывают"]},
+  frequentare: {ru:"посещать (курсы)", g:'are', f:["frequento","frequenti","frequenta","frequentiamo","frequentate","frequentano"], tr:["фрэкуЭнто","фрэкуЭнти","фрэкуЭнта","фрэкуэнтьЯмо","фрэкуэнтАтэ","фрэкуЭнтано"], r:["я посещаю","ты посещаешь","он посещает","мы посещаем","вы посещаете","они посещают"]},
+  fumare:      {ru:"курить", g:'are', f:["fumo","fumi","fuma","fumiamo","fumate","fumano"], tr:["фУмо","фУми","фУма","фумьЯмо","фумАтэ","фУмано"], r:["я курю","ты куришь","он курит","мы курим","вы курите","они курят"]},
+  girare:      {ru:"поворачивать", g:'are', f:["giro","giri","gira","giriamo","girate","girano"], tr:["джИро","джИри","джИра","джирьЯмо","джирАтэ","джИрано"], r:["я поворачиваю","ты поворачиваешь","он поворачивает","мы поворачиваем","вы поворачиваете","они поворачивают"]},
+  guidare:     {ru:"водить машину", g:'are', f:["guido","guidi","guida","guidiamo","guidate","guidano"], tr:["гуИдо","гуИди","гуИда","гуидьЯмо","гуидАтэ","гуИдано"], r:["я вожу","ты водишь","он водит","мы водим","вы водите","они водят"]},
+  incontrare:  {ru:"встречать", g:'are', f:["incontro","incontri","incontra","incontriamo","incontrate","incontrano"], tr:["инкОнтро","инкОнтри","инкОнтра","инконтрьЯмо","инконтрАтэ","инкОнтрано"], r:["я встречаю","ты встречаешь","он встречает","мы встречаем","вы встречаете","они встречают"]},
+  iniziare:    {ru:"начинать", g:'are', f:["inizio","inizi","inizia","iniziamo","iniziate","iniziano"], tr:["инИцьо","инИци","инИцья","иницьЯмо","иницьЯтэ","инИцьяно"], r:["я начинаю","ты начинаешь","он начинает","мы начинаем","вы начинаете","они начинают"]},
+  insegnare:   {ru:"преподавать", g:'are', f:["insegno","insegni","insegna","insegniamo","insegnate","insegnano"], tr:["инсЭньо","инсЭньи","инсЭнья","инсэньЯмо","инсэньЯтэ","инсЭньяно"], r:["я преподаю","ты преподаёшь","он преподаёт","мы преподаём","вы преподаёте","они преподают"]},
+  invitare:    {ru:"приглашать", g:'are', f:["invito","inviti","invita","invitiamo","invitate","invitano"], tr:["инвИто","инвИти","инвИта","инвитьЯмо","инвитАтэ","инвИтано"], r:["я приглашаю","ты приглашаешь","он приглашает","мы приглашаем","вы приглашаете","они приглашают"]},
+  lasciare:    {ru:"оставлять", g:'are', f:["lascio","lasci","lascia","lasciamo","lasciate","lasciano"], tr:["лАшо","лАши","лАша","лашЯмо","лашЯтэ","лАшано"], r:["я оставляю","ты оставляешь","он оставляет","мы оставляем","вы оставляете","они оставляют"]},
+  lavare:      {ru:"мыть", g:'are', f:["lavo","lavi","lava","laviamo","lavate","lavano"], tr:["лАво","лАви","лАва","лавьЯмо","лавАтэ","лАвано"], r:["я мою","ты моешь","он моет","мы моем","вы моете","они моют"]},
+  mandare:     {ru:"отправлять", g:'are', f:["mando","mandi","manda","mandiamo","mandate","mandano"], tr:["мАндо","мАнди","мАнда","мандьЯмо","мандАтэ","мАндано"], r:["я отправляю","ты отправляешь","он отправляет","мы отправляем","вы отправляете","они отправляют"]},
+  mostrare:    {ru:"показывать", g:'are', f:["mostro","mostri","mostra","mostriamo","mostrate","mostrano"], tr:["мОстро","мОстри","мОстра","мострьЯмо","мострАтэ","мОстрано"], r:["я показываю","ты показываешь","он показывает","мы показываем","вы показываете","они показывают"]},
+  nuotare:     {ru:"плавать", g:'are', f:["nuoto","nuoti","nuota","nuotiamo","nuotate","nuotano"], tr:["нуОто","нуОти","нуОта","нуотьЯмо","нуотАтэ","нуОтано"], r:["я плаваю","ты плаваешь","он плавает","мы плаваем","вы плаваете","они плавают"]},
+  parcheggiare:{ru:"парковать", g:'are', f:["parcheggio","parcheggi","parcheggia","parcheggiamo","parcheggiate","parcheggiano"], tr:["паркЭджо","паркЭджи","паркЭджа","паркэджЯмо","паркэджЯтэ","паркЭджано"], r:["я паркую","ты паркуешь","он паркует","мы паркуем","вы паркуете","они паркуют"]},
+  passare:     {ru:"проводить (время); проходить", g:'are', f:["passo","passi","passa","passiamo","passate","passano"], tr:["пАссо","пАсси","пАсса","пассьЯмо","пассАтэ","пАссано"], r:["я провожу","ты проводишь","он проводит","мы проводим","вы проводите","они проводят"]},
+  pranzare:    {ru:"обедать", g:'are', f:["pranzo","pranzi","pranza","pranziamo","pranzate","pranzano"], tr:["прАнцо","прАнци","прАнца","пранцьЯмо","пранцАтэ","прАнцано"], r:["я обедаю","ты обедаешь","он обедает","мы обедаем","вы обедаете","они обедают"]},
+  preparare:   {ru:"готовить", g:'are', f:["preparo","prepari","prepara","prepariamo","preparate","preparano"], tr:["прэпАро","прэпАри","прэпАра","прэпарьЯмо","прэпарАтэ","прэпАрано"], r:["я готовлю","ты готовишь","он готовит","мы готовим","вы готовите","они готовят"]},
+  prenotare:   {ru:"бронировать", g:'are', f:["prenoto","prenoti","prenota","prenotiamo","prenotate","prenotano"], tr:["прэнОто","прэнОти","прэнОта","прэнотьЯмо","прэнотАтэ","прэнОтано"], r:["я бронирую","ты бронируешь","он бронирует","мы бронируем","вы бронируете","они бронируют"]},
+  presentare:  {ru:"представлять (кого-то)", g:'are', f:["presento","presenti","presenta","presentiamo","presentate","presentano"], tr:["прэзЭнто","прэзЭнти","прэзЭнта","прэзэнтьЯмо","прэзэнтАтэ","прэзЭнтано"], r:["я представляю","ты представляешь","он представляет","мы представляем","вы представляете","они представляют"]},
+  provare:     {ru:"пробовать", g:'are', f:["provo","provi","prova","proviamo","provate","provano"], tr:["прОво","прОви","прОва","провьЯмо","провАтэ","прОвано"], r:["я пробую","ты пробуешь","он пробует","мы пробуем","вы пробуете","они пробуют"]},
+  raccontare:  {ru:"рассказывать", g:'are', f:["racconto","racconti","racconta","raccontiamo","raccontate","raccontano"], tr:["раккОнто","раккОнти","раккОнта","ракконтьЯмо","ракконтАтэ","раккОнтано"], r:["я рассказываю","ты рассказываешь","он рассказывает","мы рассказываем","вы рассказываете","они рассказывают"]},
+  regalare:    {ru:"дарить", g:'are', f:["regalo","regali","regala","regaliamo","regalate","regalano"], tr:["рэгАло","рэгАли","рэгАла","рэгальЯмо","рэгалАтэ","рэгАлано"], r:["я дарю","ты даришь","он дарит","мы дарим","вы дарите","они дарят"]},
+  restare:     {ru:"оставаться", g:'are', f:["resto","resti","resta","restiamo","restate","restano"], tr:["рЭсто","рЭсти","рЭста","рэстьЯмо","рэстАтэ","рЭстано"], r:["я остаюсь","ты остаёшься","он остаётся","мы остаёмся","вы остаётесь","они остаются"]},
+  ricordare:   {ru:"помнить", g:'are', f:["ricordo","ricordi","ricorda","ricordiamo","ricordate","ricordano"], tr:["рикОрдо","рикОрди","рикОрда","рикордьЯмо","рикордАтэ","рикОрдано"], r:["я помню","ты помнишь","он помнит","мы помним","вы помните","они помнят"]},
+  riposare:    {ru:"отдыхать", g:'are', f:["riposo","riposi","riposa","riposiamo","riposate","riposano"], tr:["рипОзо","рипОзи","рипОза","рипозьЯмо","рипозАтэ","рипОзано"], r:["я отдыхаю","ты отдыхаешь","он отдыхает","мы отдыхаем","вы отдыхаете","они отдыхают"]},
+  salutare:    {ru:"приветствовать, прощаться", g:'are', f:["saluto","saluti","saluta","salutiamo","salutate","salutano"], tr:["салУто","салУти","салУта","салутьЯмо","салутАтэ","салУтано"], r:["я приветствую","ты приветствуешь","он приветствует","мы приветствуем","вы приветствуете","они приветствуют"]},
+  sbagliare:   {ru:"ошибаться", g:'are', f:["sbaglio","sbagli","sbaglia","sbagliamo","sbagliate","sbagliano"], tr:["збАльо","збАльи","збАлья","збальЯмо","збальЯтэ","збАльяно"], r:["я ошибаюсь","ты ошибаешься","он ошибается","мы ошибаемся","вы ошибаетесь","они ошибаются"]},
+  sembrare:    {ru:"казаться", g:'are', f:["sembro","sembri","sembra","sembriamo","sembrate","sembrano"], tr:["сЭмбро","сЭмбри","сЭмбра","сэмбрьЯмо","сэмбрАтэ","сЭмбрано"], r:["я кажусь","ты кажешься","он кажется","мы кажемся","вы кажетесь","они кажутся"]},
+  sognare:     {ru:"мечтать; видеть сны", g:'are', f:["sogno","sogni","sogna","sogniamo","sognate","sognano"], tr:["сОньо","сОньи","сОнья","соньЯмо","соньЯтэ","сОньяно"], r:["я мечтаю","ты мечтаешь","он мечтает","мы мечтаем","вы мечтаете","они мечтают"]},
+  sperare:     {ru:"надеяться", g:'are', f:["spero","speri","spera","speriamo","sperate","sperano"], tr:["спЭро","спЭри","спЭра","спэрьЯмо","спэрАтэ","спЭрано"], r:["я надеюсь","ты надеешься","он надеется","мы надеемся","вы надеетесь","они надеются"]},
+  spiegare:    {ru:"объяснять", g:'are', f:["spiego","spieghi","spiega","spieghiamo","spiegate","spiegano"], tr:["спьЕго","спьЕги","спьЕга","спьегьЯмо","спьегАтэ","спьЕгано"], r:["я объясняю","ты объясняешь","он объясняет","мы объясняем","вы объясняете","они объясняют"]},
+  suonare:     {ru:"играть (на инструменте); звонить (о звонке)", g:'are', f:["suono","suoni","suona","suoniamo","suonate","suonano"], tr:["суОно","суОни","суОна","суоньЯмо","суонАтэ","суОнано"], r:["я играю","ты играешь","он играет","мы играем","вы играете","они играют"]},
+  trovare:     {ru:"находить", g:'are', f:["trovo","trovi","trova","troviamo","trovate","trovano"], tr:["трОво","трОви","трОва","тровьЯмо","тровАтэ","трОвано"], r:["я нахожу","ты находишь","он находит","мы находим","вы находите","они находят"]},
+  usare:       {ru:"использовать", g:'are', f:["uso","usi","usa","usiamo","usate","usano"], tr:["Узо","Узи","Уза","узьЯмо","узАтэ","Узано"], r:["я использую","ты используешь","он использует","мы используем","вы используете","они используют"]},
+  visitare:    {ru:"посещать (город, музей)", g:'are', f:["visito","visiti","visita","visitiamo","visitate","visitano"], tr:["вИзито","вИзити","вИзита","визитьЯмо","визитАтэ","вИзитано"], r:["я посещаю","ты посещаешь","он посещает","мы посещаем","вы посещаете","они посещают"]},
+  volare:      {ru:"летать", g:'are', f:["volo","voli","vola","voliamo","volate","volano"], tr:["вОло","вОли","вОла","вольЯмо","волАтэ","вОлано"], r:["я летаю","ты летаешь","он летает","мы летаем","вы летаете","они летают"]},
+  accendere:   {ru:"включать", g:'ere', f:["accendo","accendi","accende","accendiamo","accendete","accendono"], tr:["аччЭндо","аччЭнди","аччЭндэ","аччэндьЯмо","аччэндЭтэ","аччЭндоно"], r:["я включаю","ты включаешь","он включает","мы включаем","вы включаете","они включают"]},
+  chiedere:    {ru:"просить; спрашивать", g:'ere', f:["chiedo","chiedi","chiede","chiediamo","chiedete","chiedono"], tr:["кьЕдо","кьЕди","кьЕдэ","кьедьЯмо","кьедЭтэ","кьЕдоно"], r:["я прошу","ты просишь","он просит","мы просим","вы просите","они просят"]},
+  decidere:    {ru:"решать", g:'ere', f:["decido","decidi","decide","decidiamo","decidete","decidono"], tr:["дэчИдо","дэчИди","дэчИдэ","дэчидьЯмо","дэчидЭтэ","дэчИдоно"], r:["я решаю","ты решаешь","он решает","мы решаем","вы решаете","они решают"]},
+  perdere:     {ru:"терять", g:'ere', f:["perdo","perdi","perde","perdiamo","perdete","perdono"], tr:["пЭрдо","пЭрди","пЭрдэ","пэрдьЯмо","пэрдЭтэ","пЭрдоно"], r:["я теряю","ты теряешь","он теряет","мы теряем","вы теряете","они теряют"]},
+  ricevere:    {ru:"получать", g:'ere', f:["ricevo","ricevi","riceve","riceviamo","ricevete","ricevono"], tr:["ричЭво","ричЭви","ричЭвэ","ричэвьЯмо","ричэвЭтэ","ричЭвоно"], r:["я получаю","ты получаешь","он получает","мы получаем","вы получаете","они получают"]},
+  ridere:      {ru:"смеяться", g:'ere', f:["rido","ridi","ride","ridiamo","ridete","ridono"], tr:["рИдо","рИди","рИдэ","ридьЯмо","ридЭтэ","рИдоно"], r:["я смеюсь","ты смеёшься","он смеётся","мы смеёмся","вы смеётесь","они смеются"]},
+  rispondere:  {ru:"отвечать", g:'ere', f:["rispondo","rispondi","risponde","rispondiamo","rispondete","rispondono"], tr:["риспОндо","риспОнди","риспОндэ","риспондьЯмо","риспондЭтэ","риспОндоно"], r:["я отвечаю","ты отвечаешь","он отвечает","мы отвечаем","вы отвечаете","они отвечают"]},
+  spendere:    {ru:"тратить", g:'ere', f:["spendo","spendi","spende","spendiamo","spendete","spendono"], tr:["спЭндо","спЭнди","спЭндэ","спэндьЯмо","спэндЭтэ","спЭндоно"], r:["я трачу","ты тратишь","он тратит","мы тратим","вы тратите","они тратят"]},
+  vendere:     {ru:"продавать", g:'ere', f:["vendo","vendi","vende","vendiamo","vendete","vendono"], tr:["вЭндо","вЭнди","вЭндэ","вэндьЯмо","вэндЭтэ","вЭндоно"], r:["я продаю","ты продаёшь","он продаёт","мы продаём","вы продаёте","они продают"]},
+  cadere:      {ru:"падать", g:'ere', f:["cado","cadi","cade","cadiamo","cadete","cadono"], tr:["кАдо","кАди","кАдэ","кадьЯмо","кадЭтэ","кАдоно"], r:["я падаю","ты падаешь","он падает","мы падаем","вы падаете","они падают"]},
+  piangere:    {ru:"плакать", g:'ere', f:["piango","piangi","piange","piangiamo","piangete","piangono"], tr:["пьЯнго","пьЯнджи","пьЯнджэ","пьянджЯмо","пьянджЭтэ","пьЯнгоно"], r:["я плачу","ты плачешь","он плачет","мы плачем","вы плачете","они плачут"]},
+  discutere:   {ru:"обсуждать", g:'ere', f:["discuto","discuti","discute","discutiamo","discutete","discutono"], tr:["дискУто","дискУти","дискУтэ","дискутьЯмо","дискутЭтэ","дискУтоно"], r:["я обсуждаю","ты обсуждаешь","он обсуждает","мы обсуждаем","вы обсуждаете","они обсуждают"]},
+  seguire:     {ru:"следовать; следить", g:'ire', f:["seguo","segui","segue","seguiamo","seguite","seguono"], tr:["сЭгуо","сЭгуи","сЭгуэ","сэгуЯмо","сэгуИтэ","сЭгуоно"], r:["я следую","ты следуешь","он следует","мы следуем","вы следуете","они следуют"]},
+  servire:     {ru:"служить; подавать", g:'ire', f:["servo","servi","serve","serviamo","servite","servono"], tr:["сЭрво","сЭрви","сЭрвэ","сэрвьЯмо","сэрвИтэ","сЭрвоно"], r:["я служу","ты служишь","он служит","мы служим","вы служите","они служат"]},
+  scoprire:    {ru:"обнаруживать, открывать", g:'ire', f:["scopro","scopri","scopre","scopriamo","scoprite","scoprono"], tr:["скОпро","скОпри","скОпрэ","скопрьЯмо","скопрИтэ","скОпроно"], r:["я открываю","ты открываешь","он открывает","мы открываем","вы открываете","они открывают"]},
+  costruire:   {ru:"строить", g:'isc', f:["costruisco","costruisci","costruisce","costruiamo","costruite","costruiscono"], tr:["коструИско","коструИши","коструИшэ","коструЯмо","коструИтэ","коструИсконо"], r:["я строю","ты строишь","он строит","мы строим","вы строите","они строят"]},
+  spedire:     {ru:"отправлять (почтой)", g:'isc', f:["spedisco","spedisci","spedisce","spediamo","spedite","spediscono"], tr:["спэдИско","спэдИши","спэдИшэ","спэдьЯмо","спэдИтэ","спэдИсконо"], r:["я отправляю","ты отправляешь","он отправляет","мы отправляем","вы отправляете","они отправляют"]},
+  suggerire:   {ru:"предлагать, советовать", g:'isc', f:["suggerisco","suggerisci","suggerisce","suggeriamo","suggerite","suggeriscono"], tr:["суджэрИско","суджэрИши","суджэрИшэ","суджэрьЯмо","суджэрИтэ","суджэрИсконо"], r:["я советую","ты советуешь","он советует","мы советуем","вы советуете","они советуют"]},
+  restituire:  {ru:"возвращать (вещь)", g:'isc', f:["restituisco","restituisci","restituisce","restituiamo","restituite","restituiscono"], tr:["рэституИско","рэституИши","рэституИшэ","рэституЯмо","рэституИтэ","рэституИсконо"], r:["я возвращаю","ты возвращаешь","он возвращает","мы возвращаем","вы возвращаете","они возвращают"]},
+  tenere:      {ru:"держать", g:'irr', f:["tengo","tieni","tiene","teniamo","tenete","tengono"], tr:["тЭнго","тьЕни","тьЕнэ","тэньЯмо","тэнЭтэ","тЭнгоно"], r:["я держу","ты держишь","он держит","мы держим","вы держите","они держат"]},
+  rimanere:    {ru:"оставаться", g:'irr', f:["rimango","rimani","rimane","rimaniamo","rimanete","rimangono"], tr:["римАнго","римАни","римАнэ","риманьЯмо","риманЭтэ","римАнгоно"], r:["я остаюсь","ты остаёшься","он остаётся","мы остаёмся","вы остаётесь","они остаются"]},
+  scegliere:   {ru:"выбирать", g:'irr', f:["scelgo","scegli","sceglie","scegliamo","scegliete","scelgono"], tr:["шЭльго","шЭльи","шЭлье","шэльЯмо","шэльЕтэ","шЭльгоно"], r:["я выбираю","ты выбираешь","он выбирает","мы выбираем","вы выбираете","они выбирают"]},
+  spegnere:    {ru:"выключать", g:'irr', f:["spengo","spegni","spegne","spegniamo","spegnete","spengono"], tr:["спЭнго","спЭньи","спЭнье","спэньЯмо","спэньЕтэ","спЭнгоно"], r:["я выключаю","ты выключаешь","он выключает","мы выключаем","вы выключаете","они выключают"]},
+  riuscire:    {ru:"удаваться; суметь", g:'irr', f:["riesco","riesci","riesce","riusciamo","riuscite","riescono"], tr:["рьЕско","рьЕши","рьЕше","риушЯмо","риушИтэ","рьЕсконо"], r:["я могу","ты можешь","он может","мы можем","вы можете","они могут"]},
+  salire:      {ru:"подниматься; садиться (в транспорт)", g:'irr', f:["salgo","sali","sale","saliamo","salite","salgono"], tr:["сАльго","сАли","сАлэ","сальЯмо","салИтэ","сАльгоно"], r:["я поднимаюсь","ты поднимаешься","он поднимается","мы поднимаемся","вы поднимаетесь","они поднимаются"]},
+  morire:      {ru:"умирать", g:'irr', f:["muoio","muori","muore","moriamo","morite","muoiono"], tr:["муОйо","муОри","муОрэ","морьЯмо","морИтэ","муОйоно"], r:["я умираю","ты умираешь","он умирает","мы умираем","вы умираете","они умирают"]},
+  alzarsi:     {ru:"вставать", g:'rfl', f:["mi alzo","ti alzi","si alza","ci alziamo","vi alzate","si alzano"], tr:["ми Альцо","ти Альци","си Альца","чи альцьЯмо","ви альцАтэ","си Альцано"], r:["я встаю","ты встаёшь","он встаёт","мы встаём","вы встаёте","они встают"]},
+  svegliarsi:  {ru:"просыпаться", g:'rfl', f:["mi sveglio","ti svegli","si sveglia","ci svegliamo","vi svegliate","si svegliano"], tr:["ми звЭльо","ти звЭльи","си звЭлья","чи звэльЯмо","ви звэльЯтэ","си звЭльяно"], r:["я просыпаюсь","ты просыпаешься","он просыпается","мы просыпаемся","вы просыпаетесь","они просыпаются"]},
+  lavarsi:     {ru:"мыться", g:'rfl', f:["mi lavo","ti lavi","si lava","ci laviamo","vi lavate","si lavano"], tr:["ми лАво","ти лАви","си лАва","чи лавьЯмо","ви лавАтэ","си лАвано"], r:["я моюсь","ты моешься","он моется","мы моемся","вы моетесь","они моются"]},
+  vestirsi:    {ru:"одеваться", g:'rfl', f:["mi vesto","ti vesti","si veste","ci vestiamo","vi vestite","si vestono"], tr:["ми вЭсто","ти вЭсти","си вЭстэ","чи вэстьЯмо","ви вэстИтэ","си вЭстоно"], r:["я одеваюсь","ты одеваешься","он одевается","мы одеваемся","вы одеваетесь","они одеваются"]},
+  chiamarsi:   {ru:"зваться", g:'rfl', f:["mi chiamo","ti chiami","si chiama","ci chiamiamo","vi chiamate","si chiamano"], tr:["ми кьЯмо","ти кьЯми","си кьЯма","чи кьямьЯмо","ви кьямАтэ","си кьЯмано"], r:["я зовусь","ты зовёшься","он зовётся","мы зовёмся","вы зовётесь","они зовутся"]},
+  sentirsi:    {ru:"чувствовать себя", g:'rfl', f:["mi sento","ti senti","si sente","ci sentiamo","vi sentite","si sentono"], tr:["ми сЭнто","ти сЭнти","си сЭнтэ","чи сэнтьЯмо","ви сэнтИтэ","си сЭнтоно"], r:["я чувствую","ты чувствуешь","он чувствует","мы чувствуем","вы чувствуете","они чувствуют"]},
+  divertirsi:  {ru:"развлекаться, веселиться", g:'rfl', f:["mi diverto","ti diverti","si diverte","ci divertiamo","vi divertite","si divertono"], tr:["ми дивЭрто","ти дивЭрти","си дивЭртэ","чи дивэртьЯмо","ви дивэртИтэ","си дивЭртоно"], r:["я развлекаюсь","ты развлекаешься","он развлекается","мы развлекаемся","вы развлекаетесь","они развлекаются"]},
+  riposarsi:   {ru:"отдыхать", g:'rfl', f:["mi riposo","ti riposi","si riposa","ci riposiamo","vi riposate","si riposano"], tr:["ми рипОзо","ти рипОзи","си рипОза","чи рипозьЯмо","ви рипозАтэ","си рипОзано"], r:["я отдыхаю","ты отдыхаешь","он отдыхает","мы отдыхаем","вы отдыхаете","они отдыхают"]},
+  sposarsi:    {ru:"жениться, выходить замуж", g:'rfl', f:["mi sposo","ti sposi","si sposa","ci sposiamo","vi sposate","si sposano"], tr:["ми спОзо","ти спОзи","си спОза","чи спозьЯмо","ви спозАтэ","си спОзано"], r:["я женюсь","ты женишься","он женится","мы женимся","вы женитесь","они женятся"]},
+  sedersi:     {ru:"садиться", g:'rfl', f:["mi siedo","ti siedi","si siede","ci sediamo","vi sedete","si siedono"], tr:["ми сьЕдо","ти сьЕди","си сьЕдэ","чи сэдьЯмо","ви сэдЭтэ","си сьЕдоно"], r:["я сажусь","ты садишься","он садится","мы садимся","вы садитесь","они садятся"]},
+};
+Object.assign(VERBS, VERBS3);
+[
+["Tu (aiutare) ___ la mamma?","aiutare",1,"Ты помогаешь маме?"],
+["Chi (alzare) ___ la mano?","alzare",2,"Кто поднимает руку?"],
+["Marco (cambiare) ___ lavoro.","cambiare",2,"Марко меняет работу."],
+["Noi (cenare) ___ alle otto.","cenare",3,"Мы ужинаем в восемь."],
+["La lezione (cominciare) ___ alle nove.","cominciare",2,"Урок начинается в девять."],
+["Io (continuare) ___ a studiare.","continuare",0,"Я продолжаю учиться."],
+["Lei (controllare) ___ i biglietti.","controllare",2,"Она проверяет билеты."],
+["Quanto (costare) ___ il caffè?","costare",2,"Сколько стоит кофе?"],
+["Che cosa (desiderare) ___, signora?","desiderare",2,"Что желаете, синьора?"],
+["Io (dimenticare) ___ sempre le chiavi.","dimenticare",0,"Я всегда забываю ключи."],
+["La mia ragazza (diventare) ___ artista.","diventare",2,"Моя девушка становится художницей."],
+["Io (domandare) ___ la strada.","domandare",0,"Я спрашиваю дорогу."],
+["Domani (festeggiare) ___ il compleanno.","festeggiare",0,"Завтра я праздную день рождения."],
+["Tu (fermare) ___ un taxi?","fermare",1,"Ты останавливаешь такси?"],
+["Voi (firmare) ___ qui.","firmare",4,"Вы подписываете здесь."],
+["Io (frequentare) ___ un corso di italiano.","frequentare",0,"Я хожу на курс итальянского."],
+["Tu (fumare) ___?","fumare",1,"Ты куришь?"],
+["Voi (girare) ___ a destra.","girare",4,"Вы поворачиваете направо."],
+["Tu (guidare) ___ bene.","guidare",1,"Ты хорошо водишь."],
+["Oggi (incontrare) ___ un amico.","incontrare",0,"Сегодня я встречаю друга."],
+["Noi (iniziare) ___ alle otto.","iniziare",3,"Мы начинаем в восемь."],
+["Anna (insegnare) ___ l'italiano.","insegnare",2,"Анна преподаёт итальянский."],
+["Loro (invitare) ___ gli amici a cena.","invitare",5,"Они приглашают друзей на ужин."],
+["Io (lasciare) ___ un messaggio.","lasciare",0,"Я оставляю сообщение."],
+["Chi (lavare) ___ i piatti?","lavare",2,"Кто моет посуду?"],
+["Ti (mandare) ___ una foto.","mandare",0,"Я отправляю тебе фото."],
+["Marco (mostrare) ___ le foto.","mostrare",2,"Марко показывает фотографии."],
+["Voi (nuotare) ___ al mare?","nuotare",4,"Вы плаваете в море?"],
+["Dove (parcheggiare) ___ la macchina?","parcheggiare",1,"Где ты паркуешь машину?"],
+["Noi (passare) ___ il weekend al mare.","passare",3,"Мы проводим выходные на море."],
+["Io (pranzare) ___ all'una.","pranzare",0,"Я обедаю в час."],
+["La mamma (preparare) ___ la cena.","preparare",2,"Мама готовит ужин."],
+["Io (prenotare) ___ un tavolo per due.","prenotare",0,"Я бронирую столик на двоих."],
+["Ti (presentare) ___ la mia ragazza.","presentare",0,"Представляю тебе мою девушку."],
+["Io (provare) ___ a parlare italiano.","provare",0,"Я пробую говорить по-итальянски."],
+["Marco (raccontare) ___ una storia.","raccontare",2,"Марко рассказывает историю."],
+["Io (regalare) ___ dei fiori.","regalare",0,"Я дарю цветы."],
+["Loro (restare) ___ a casa.","restare",5,"Они остаются дома."],
+["Tu (ricordare) ___ il nome?","ricordare",1,"Ты помнишь имя?"],
+["Domenica (riposare) ___.","riposare",0,"В воскресенье я отдыхаю."],
+["Noi (salutare) ___ tutti.","salutare",3,"Мы прощаемся со всеми."],
+["Io (sbagliare) ___ strada.","sbagliare",0,"Я ошибаюсь дорогой."],
+["Tu (sembrare) ___ stanco.","sembrare",1,"Ты кажешься усталым."],
+["Io (sognare) ___ l'Italia.","sognare",0,"Я мечтаю об Италии."],
+["Noi (sperare) ___ di andare in Italia.","sperare",3,"Мы надеемся поехать в Италию."],
+["Il professore (spiegare) ___ la regola.","spiegare",2,"Преподаватель объясняет правило."],
+["Tu (suonare) ___ la chitarra?","suonare",1,"Ты играешь на гитаре?"],
+["Io non (trovare) ___ le chiavi.","trovare",0,"Я не нахожу ключи."],
+["Tu (usare) ___ il dizionario?","usare",1,"Ты пользуешься словарём?"],
+["Domani (visitare) ___ un museo.","visitare",3,"Завтра мы идём в музей."],
+["Noi (volare) ___ a Roma domani.","volare",3,"Мы летим в Рим завтра."],
+["Tu (accendere) ___ la luce?","accendere",1,"Ты включишь свет?"],
+["Io (chiedere) ___ il conto.","chiedere",0,"Я прошу счёт."],
+["Noi (decidere) ___ domani.","decidere",3,"Мы решаем завтра."],
+["Io (perdere) ___ sempre le chiavi.","perdere",0,"Я всегда теряю ключи."],
+["Oggi (ricevere) ___ un regalo.","ricevere",0,"Сегодня я получаю подарок."],
+["Perché (ridere) ___?","ridere",1,"Почему ты смеёшься?"],
+["Io (rispondere) ___ alla domanda.","rispondere",0,"Я отвечаю на вопрос."],
+["Loro (spendere) ___ molto.","spendere",5,"Они много тратят."],
+["La mia ragazza (vendere) ___ i quadri.","vendere",2,"Моя девушка продаёт картины."],
+["Il libro (cadere) ___ a terra.","cadere",2,"Книга падает на пол."],
+["Perché (piangere) ___?","piangere",1,"Почему ты плачешь?"],
+["Noi (discutere) ___ il problema.","discutere",3,"Мы обсуждаем проблему."],
+["Io (seguire) ___ un corso di italiano.","seguire",0,"Я прохожу курс итальянского."],
+["Il cameriere (servire) ___ il caffè.","servire",2,"Официант подаёт кофе."],
+["Noi (scoprire) ___ la Sicilia.","scoprire",3,"Мы открываем для себя Сицилию."],
+["Loro (costruire) ___ una casa.","costruire",5,"Они строят дом."],
+["Io (spedire) ___ un pacco.","spedire",0,"Я отправляю посылку."],
+["Tu (suggerire) ___ un ristorante?","suggerire",1,"Ты посоветуешь ресторан?"],
+["Io (restituire) ___ il libro.","restituire",0,"Я возвращаю книгу."],
+["Io (tenere) ___ la mano alla mia ragazza.","tenere",0,"Я держу мою девушку за руку."],
+["Io (rimanere) ___ a casa.","rimanere",0,"Я остаюсь дома."],
+["Tu (scegliere) ___ il vino?","scegliere",1,"Ты выбираешь вино?"],
+["Io (spegnere) ___ la luce.","spegnere",0,"Я выключаю свет."],
+["Non (riuscire) ___ a dormire.","riuscire",0,"Мне не удаётся уснуть."],
+["Noi (salire) ___ sull'autobus.","salire",3,"Мы садимся в автобус."],
+["Io (morire) ___ di fame!","morire",0,"Я умираю с голоду!"],
+["Io (alzarsi) ___ alle sette.","alzarsi",0,"Я встаю в семь."],
+["A che ora (svegliarsi) ___?","svegliarsi",1,"Во сколько ты просыпаешься?"],
+["Io (lavarsi) ___ i denti.","lavarsi",0,"Я чищу зубы."],
+["Lei (vestirsi) ___ sempre bene.","vestirsi",2,"Она всегда хорошо одевается."],
+["Come (chiamarsi) ___ la tua ragazza?","chiamarsi",2,"Как зовут твою девушку?"],
+["Come (sentirsi) ___?","sentirsi",1,"Как ты себя чувствуешь?"],
+["Noi (divertirsi) ___ molto.","divertirsi",3,"Мы очень веселимся."],
+["Voi (riposarsi) ___ domenica?","riposarsi",4,"Вы отдыхаете в воскресенье?"],
+["Marco e Anna (sposarsi) ___ in Italia.","sposarsi",5,"Марко и Анна женятся в Италии."],
+["Io (sedersi) ___ qui.","sedersi",0,"Я сажусь здесь."]
+].forEach(g=> GAPS.push(g));
+const COMP3 = {"aiutare":[["un amico","ун амИко","другу"],["la mamma","ла мАмма","маме"],["a casa","а кАза","по дому"]],
+"alzare":[["la mano","ла мАно","руку"],["la voce","ла вОчэ","голос"]],
+"cambiare":[["casa","кАза","квартиру"],["lavoro","лавОро","работу"],["idea","идЭа","мнение"]],
+"cenare":[["a casa","а кАза","дома"],["alle otto","Аллэ Отто","в восемь"],["con gli amici","кон льи амИчи","с друзьями"]],
+"cominciare":[["il lavoro","иль лавОро","работу"],["la lezione","ла лэцьОнэ","урок"],["alle nove","Аллэ нОвэ","в девять"]],
+"continuare":[["a studiare","а студьЯрэ","учиться"],["il lavoro","иль лавОро","работу"]],
+"controllare":[["il telefono","иль тэлЭфоно","телефон"],["i biglietti","и бильЕтти","билеты"],["tutto","тУтто","всё"]],
+"costare":[["molto","мОльто","дорого"],["poco","пОко","дёшево"],["dieci euro","дьЕчи эУро","десять евро"]],
+"desiderare":[["un caffè","ун каффЭ","кофе"],["una pizza","Уна пИцца","пиццу"]],
+"dimenticare":[["le chiavi","лэ кьЯви","ключи"],["tutto","тУтто","всё"],["il nome","иль нОмэ","имя"]],
+"diventare":[["artista","артИста","художником"],["grande","грАндэ","большим"]],
+"domandare":[["il prezzo","иль прЭццо","цену"],["la strada","ла стрАда","дорогу"]],
+"festeggiare":[["il compleanno","иль комплэАнно","день рождения"],["con gli amici","кон льи амИчи","с друзьями"]],
+"fermare":[["la macchina","ла мАккина","машину"],["un taxi","ун тАкси","такси"]],
+"firmare":[["il contratto","иль контрАтто","контракт"],["qui","куи","здесь"]],
+"frequentare":[["un corso di italiano","ун кОрсо ди итальЯно","курс итальянского"],["la scuola","ла скуОла","школу"]],
+"fumare":[["molto","мОльто","много"],["poco","пОко","мало"]],
+"girare":[["a destra","а дЭстра","направо"],["a sinistra","а синИстра","налево"]],
+"guidare":[["la macchina","ла мАккина","машину"],["bene","бЭнэ","хорошо"],["piano","пьЯно","медленно"]],
+"incontrare":[["un amico","ун амИко","друга"],["Marco","мАрко","Марко"],["gente nuova","джЭнтэ нуОва","новых людей"]],
+"iniziare":[["il lavoro","иль лавОро","работу"],["alle otto","Аллэ Отто","в восемь"]],
+"insegnare":[["l'italiano","литальЯно","итальянский"],["a Minsk","а минск","в Минске"],["l'arte","лАртэ","искусство"]],
+"invitare":[["gli amici","льи амИчи","друзей"],["a cena","а чЭна","на ужин"],["Marco","мАрко","Марко"]],
+"lasciare":[["le chiavi a casa","лэ кьЯви а кАза","ключи дома"],["un messaggio","ун мэссАджо","сообщение"]],
+"lavare":[["i piatti","и пьЯтти","посуду"],["la macchina","ла мАккина","машину"]],
+"mandare":[["un messaggio","ун мэссАджо","сообщение"],["una foto","Уна фОто","фото"],["una lettera","Уна лэттЭра","письмо"]],
+"mostrare":[["le foto","лэ фОто","фотографии"],["la città","ла читтА","город"]],
+"nuotare":[["bene","бЭнэ","хорошо"],["al mare","аль мАрэ","в море"],["in piscina","ин пишИна","в бассейне"]],
+"parcheggiare":[["la macchina","ла мАккина","машину"],["qui","куи","здесь"]],
+"passare":[["il weekend al mare","иль вэЭкэнд аль мАрэ","выходные на море"],["la sera a casa","ла сЭра а кАза","вечер дома"],["di qui","ди куи","здесь"]],
+"pranzare":[["a casa","а кАза","дома"],["all'una","аллУна","в час"],["al bar","аль бар","в баре"]],
+"preparare":[["la cena","ла чЭна","ужин"],["un caffè","ун каффЭ","кофе"],["la lezione","ла лэцьОнэ","урок"]],
+"prenotare":[["un tavolo","ун тАволо","столик"],["una camera","Уна кАмэра","номер"],["un biglietto","ун бильЕтто","билет"]],
+"presentare":[["un amico","ун амИко","друга"],["la mia ragazza","ла мИа рагАцца","мою девушку"]],
+"provare":[["la pizza","ла пИцца","пиццу"],["a parlare","а парлАрэ","говорить"],["il vestito","иль вэстИто","платье"]],
+"raccontare":[["una storia","Уна стОрья","историю"],["tutto","тУтто","всё"]],
+"regalare":[["un libro","ун лИбро","книгу"],["dei fiori","дЭй фьОри","цветы"],["un quadro","ун куАдро","картину"]],
+"restare":[["a casa","а кАза","дома"],["a Minsk","а минск","в Минске"],["qui","куи","здесь"]],
+"ricordare":[["tutto","тУтто","всё"],["il nome","иль нОмэ","имя"],["bene","бЭнэ","хорошо"]],
+"riposare":[["un po'","ун по","немного"],["a casa","а кАза","дома"],["al mare","аль мАрэ","на море"]],
+"salutare":[["gli amici","льи амИчи","друзей"],["tutti","тУтти","всех"]],
+"sbagliare":[["strada","стрАда","дорогой"],["sempre","сЭмпрэ","всегда"],["numero","нУмэро","номером"]],
+"sembrare":[["stanco","стАнко","усталым"],["felice","фэлИчэ","счастливым"],["facile","фачИлэ","лёгким"]],
+"sognare":[["l'Italia","литАлья","об Италии"],["il mare","иль мАрэ","о море"],["di abitare a Catania","ди абитАрэ а катАнья","жить в Катании"]],
+"sperare":[["di sì","ди сИ","что да"],["di andare in Italia","ди андАрэ ин итАлья","поехать в Италию"]],
+"spiegare":[["la regola","ла рэгОла","правило"],["tutto","тУтто","всё"],["bene","бЭнэ","хорошо"]],
+"suonare":[["la chitarra","ла китАрра","на гитаре"],["il piano","иль пьЯно","на пианино"],["bene","бЭнэ","хорошо"]],
+"trovare":[["le chiavi","лэ кьЯви","ключи"],["lavoro","лавОро","работу"],["una casa","Уна кАза","квартиру"]],
+"usare":[["il telefono","иль тэлЭфоно","телефон"],["il computer","иль компУтэр","компьютер"],["il dizionario","иль дицьонАрьо","словарь"]],
+"visitare":[["Roma","рОма","Рим"],["un museo","ун музЭо","музей"],["la Sicilia","ла сичИлья","Сицилию"]],
+"volare":[["a Roma","а рОма","в Рим"],["domani","домАни","завтра"],["in Italia","ин итАлья","в Италию"]],
+"accendere":[["la luce","ла лУчэ","свет"],["il telefono","иль тэлЭфоно","телефон"],["la TV","ла тв","телевизор"]],
+"chiedere":[["un caffè","ун каффЭ","кофе"],["aiuto","аЮто","помощи"],["il conto","иль кОнто","счёт"]],
+"decidere":[["tutto","тУтто","всё"],["di partire","ди партИрэ","уехать"],["domani","домАни","завтра"]],
+"perdere":[["le chiavi","лэ кьЯви","ключи"],["il treno","иль трЭно","поезд"],["tempo","тЭмпо","время"]],
+"ricevere":[["un messaggio","ун мэссАджо","сообщение"],["una lettera","Уна лэттЭра","письмо"],["un regalo","ун рэгАло","подарок"]],
+"ridere":[["molto","мОльто","много"],["sempre","сЭмпрэ","всегда"]],
+"rispondere":[["alla domanda","Алла домАнда","на вопрос"],["al telefono","аль тэлЭфоно","на звонок"],["subito","сУбито","сразу"]],
+"spendere":[["molto","мОльто","много"],["poco","пОко","мало"],["dieci euro","дьЕчи эУро","десять евро"]],
+"vendere":[["la macchina","ла мАккина","машину"],["i quadri","и куАдри","картины"],["la casa","ла кАза","дом"]],
+"cadere":[["a terra","а тЭрра","на землю"],["spesso","спЭссо","часто"]],
+"piangere":[["molto","мОльто","много"],["spesso","спЭссо","часто"]],
+"discutere":[["il problema","иль проблЭма","проблему"],["con gli amici","кон льи амИчи","с друзьями"]],
+"seguire":[["un corso","ун кОрсо","за курсом"],["la strada","ла стрАда","по дороге"],["Marco","мАрко","за Марко"]],
+"servire":[["il caffè","иль каффЭ","кофе"],["la cena","ла чЭна","ужин"]],
+"scoprire":[["la Sicilia","ла сичИлья","Сицилию"],["un bar nuovo","ун бар нуОво","новый бар"]],
+"costruire":[["una casa","Уна кАза","дом"],["un ponte","ун пОнтэ","мост"]],
+"spedire":[["una lettera","Уна лэттЭра","письмо"],["un pacco","ун пАкко","посылку"]],
+"suggerire":[["un ristorante","ун ристорАнтэ","ресторан"],["un film","ун фильм","фильм"]],
+"restituire":[["il libro","иль лИбро","книгу"],["i soldi","и сОльди","деньги"]],
+"tenere":[["la mano","ла мАно","за руку"],["il libro","иль лИбро","книгу"]],
+"rimanere":[["a casa","а кАза","дома"],["in Italia","ин итАлья","в Италии"],["qui","куи","здесь"]],
+"scegliere":[["la pizza","ла пИцца","пиццу"],["il vino","иль вИно","вино"],["un regalo","ун рэгАло","подарок"]],
+"spegnere":[["la luce","ла лУчэ","свет"],["il telefono","иль тэлЭфоно","телефон"],["la TV","ла тв","телевизор"]],
+"riuscire":[["a parlare","а парлАрэ","говорить"],["a capire","а капИрэ","понять"],["a dormire","а дормИрэ","уснуть"]],
+"salire":[["le scale","лэ скАлэ","по лестнице"],["sull'autobus","суллАутобус","в автобус"],["in macchina","ин мАккина","в машину"]],
+"morire":[["di fame","ди фАмэ","от голода"],["di sonno","ди сОнно","от усталости"],["dal caldo","даль кАльдо","от жары"]],
+"alzarsi":[["alle sette","Аллэ сЭттэ","в семь"],["presto","прЭсто","рано"],["tardi","тАрди","поздно"]],
+"svegliarsi":[["alle sei","Аллэ сЭй","в шесть"],["presto","прЭсто","рано"],["tardi","тАрди","поздно"]],
+"lavarsi":[["le mani","лэ мАни","руки"],["i denti","и дЭнти","зубы"],["la mattina","ла маттИна","утром"]],
+"vestirsi":[["in fretta","ин фрЭтта","быстро"],["bene","бЭнэ","хорошо"],["di nero","ди нЭро","в чёрное"]],
+"chiamarsi":[["Ilia","Илья","Илья"],["Marco","мАрко","Марко"],["Anna","Анна","Анна"]],
+"sentirsi":[["bene","бЭнэ","хорошо"],["male","мАлэ","плохо"],["stanco","стАнко","усталым"]],
+"divertirsi":[["molto","мОльто","очень"],["con gli amici","кон льи амИчи","с друзьями"],["al mare","аль мАрэ","на море"]],
+"riposarsi":[["un po'","ун по","немного"],["domenica","домэнИка","в воскресенье"]],
+"sposarsi":[["in Italia","ин итАлья","в Италии"],["l'anno prossimo","лАнно прОссимо","в следующем году"]],
+"sedersi":[["qui","куи","здесь"],["a tavola","а тАвола","за стол"],["vicino a te","вичИно а тэ","рядом с тобой"]]};
+Object.assign(COMP, COMP3);
+Object.keys(VERBS3).forEach(v=>{ VRU[v] = VERBS3[v].r.map(x=> x.replace(/^(я|ты|он|мы|вы|они) /,'')); });
+
 const VD = { verbs:'all', modes:['pick','type','gap'], ru:true };
 $('#vdRu').onclick = ()=>{ VD.ru=!VD.ru; $('#vdRu').classList.toggle('on', VD.ru); };
 $$('#vdVerbs .chip').forEach(b=> b.onclick=()=>{ VD.verbs=b.dataset.v; $$('#vdVerbs .chip').forEach(x=>x.classList.toggle('on',x===b)); });
 $$('#vdModes .chip').forEach(b=> b.onclick=()=>{ b.classList.toggle('on'); VD.modes=$$('#vdModes .chip.on').map(x=>x.dataset.m); });
-const VD_G = { all:null, are:['are'], ereire:['ere','ire','isc'], irr:['irr'], ea:['ea'] };
-function vdVerbList(){ const g = VD_G[VD.verbs]; return Object.keys(VERBS).filter(v=> !g || g.includes(VERBS[v].g)); }
+const VD_G = { all:null, are:['are'], ereire:['ere','ire','isc'], irr:['irr'], rfl:['rfl'], ea:['ea'] };
+function vdVerbList(){ if (VD.only) return [VD.only]; const g = VD_G[VD.verbs]; return Object.keys(VERBS).filter(v=> !g || g.includes(VERBS[v].g)); }
 function startVerbDrill(){
   const modes = VD.modes.length ? VD.modes : ['pick'];
   const verbs = vdVerbList();
@@ -5080,16 +5549,16 @@ function vdStep(){
   const body = $('#sBody');
   if (SES.i >= SES.q.length){
     const s=SES.stats, sec=Math.round((now()-SES.t0)/1000);
-    body.innerHTML = `<div class="done"><div class="big">${s.bad===0?'🏆':'📝'}</div><h2>Серия закончена</h2><p>Верно <b>${s.ok}</b> из <b>${s.ok+s.bad}</b> · ${sec} секунд</p>
+    body.innerHTML = `<div class="done"><h2>Серия закончена</h2><p>Верно <b>${s.ok}</b> из <b>${s.ok+s.bad}</b> · ${sec} секунд</p>
       <button class="pri" id="dAgain">Ещё серию</button><button class="sec" id="dClose">Закрыть</button></div>`;
-    $('#dAgain').onclick = startVerbDrill; $('#dClose').onclick = endSession; return;
+    $('#dAgain').onclick = startVerbDrill; $('#dClose').onclick = ()=>{ VD.only=null; endSession(); }; return;
   }
   const t = SES.q[SES.i], V = VERBS[t.v], ans = V.f[t.p]; SES.answered=false;
   const head = `<div class="mode"><span>${VD_NAME[t.m]}</span><span class="tag">${t.v} — ${esc(V.ru)}</span></div>`;
-  const fbHTML = ok => `<div>${ok?'✅ Верно':'❌ Неверно'}</div><div class="ans">${esc(PRON[t.p])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[t.p])}]</span> — ${esc(V.r[t.p])}</div>
+  const fbHTML = ok => `<div>${ok?'Верно':'Неверно'}</div><div class="ans">${esc(PRON[t.p])} <span class="it">${esc(ans)}</span> <span class="tr">[${esc(V.tr[t.p])}]</span> — ${esc(V.r[t.p])}</div>
      ${t.m==='gap'?`<div class="it">${esc(t.text.replace('___', ans).replace(/\((\w+)\)\s*/g,''))}</div><div class="muted">${esc(t.ru)}</div>`:`<div class="muted">${esc(t.v)} — ${esc(V.ru)}</div>`}`;
   const finish = ok => { if(ok) SES.stats.ok++; else SES.stats.bad++; const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
-    el.innerHTML = fbHTML(ok) + `<div style="margin-top:6px"><button class="spk" data-say="${esc(t.m==='gap' ? t.text.replace('___',ans).replace(/\((\w+)\)\s*/g,'') : ans)}">🔊 послушать</button></div><button class="pri next" id="nx">Дальше</button>`;
+    el.innerHTML = fbHTML(ok) + `<div style="margin-top:6px"><button class="spk" data-say="${esc(t.m==='gap' ? t.text.replace('___',ans).replace(/\((\w+)\)\s*/g,'') : ans)}">🔊 послушать</button></div><button class="pri next" id="nx">Дальше</button>`.replace('🔊 послушать', ICO('sound')+' послушать');
     body.appendChild(el); wireSpeak(el); $('#nx').onclick=()=>{ SES.i++; vdStep(); }; $('#nx').focus(); };
   if (t.m==='pick' || t.m==='gap'){
     const others = shuffle([...new Set(V.f.filter(f=> f!==ans))]).slice(0,3);
@@ -5174,7 +5643,7 @@ function lsChoice({head, q, opts, ans, fb, say, cls='opts', kbd='Клавиши 
     $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.v===String(ans)) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
     if (ok) SES.stats.ok++; else SES.stats.bad++;
     const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
-    el.innerHTML = `<div>${ok?'✅ Верно':'❌ Неверно'}</div>` + fb(ok) + (say && S().tts && window.speechSynthesis ? `<div style="margin-top:6px"><button class="spk" data-say="${esc(say)}">🔊 послушать</button></div>` : '') + lsNext();
+    el.innerHTML = `<div>${ok?'Верно':'Неверно'}</div>` + fb(ok) + (say && S().tts && window.speechSynthesis ? `<div style="margin-top:6px"><button class="spk" data-say="${esc(say)}">${ICO('sound')} послушать</button></div>` : '') + lsNext();
     body.appendChild(el); wireSpeak(el); if (say && S().ttsAuto) speak(say);
     $('#nx').onclick=()=>{ SES.i++; onDone(ok); }; $('#nx').focus(); el.scrollIntoView({block:'nearest'});
   });
@@ -5191,7 +5660,7 @@ function lsInput({head, q, placeholder='…', check, fb, say, kbd='Enter — п�
     inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor = ok?'var(--ok)':'var(--bad)';
     if (ok) SES.stats.ok++; else SES.stats.bad++;
     const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
-    el.innerHTML = `<div>${ok?(r.almost?'✅ Почти: '+r.almost:'✅ Верно'):'❌ Неверно'}</div>` + fb(ok, inp.value) + (say && S().tts && window.speechSynthesis ? `<div style="margin-top:6px"><button class="spk" data-say="${esc(say)}">🔊 послушать</button></div>` : '') + lsNext();
+    el.innerHTML = `<div>${ok?(r.almost?'Почти: '+r.almost:'Верно'):'Неверно'}</div>` + fb(ok, inp.value) + (say && S().tts && window.speechSynthesis ? `<div style="margin-top:6px"><button class="spk" data-say="${esc(say)}">${ICO('sound')} послушать</button></div>` : '') + lsNext();
     body.appendChild(el); wireSpeak(el); if (say && S().ttsAuto) speak(say);
     $('#nx').onclick=()=>{ SES.i++; onDone(ok); }; $('#nx').focus(); el.scrollIntoView({block:'nearest'});
   };
@@ -5234,11 +5703,11 @@ function renderBuildTask(task, head, onDone){
   const words = bTok(task.it);
   const tiles = shuffle(words.map((w,i)=>({w, id:'w'+i})).concat(buildDistractors(words).map((w,i)=>({w, id:'d'+i}))));
   const body = $('#sBody'); let ans = [];
-  body.innerHTML = head + `<div class="q"><div class="mid">${esc(task.ru)}</div><div class="note">Собери фразу по-итальянски. Лишние слова есть.</div></div>
+  body.innerHTML = head + `<div class="q"><div class="mid">${esc(task.ru)}</div></div>
     <div class="answer" id="bAns"></div>
     <div class="bank" id="bBank">${tiles.map(t=>`<button class="tile" data-id="${t.id}">${esc(t.w)}</button>`).join('')}</div>
     <div class="brow"><button class="sec" id="bClear">Сбросить</button><button class="pri" id="chk" style="margin:0">Проверить</button></div>
-    <div class="kbd">Нажимай слова по порядку. Нажми слово в ответе, чтобы вернуть его.</div>`;
+    <div class="kbd">Enter — проверить, Backspace — убрать последнее слово</div>`;
   const draw = ()=>{
     $('#bAns').innerHTML = ans.map(t=>`<button class="tile" data-id="${t.id}">${esc(t.w)}</button>`).join('');
     $$('#bBank .tile').forEach(b=> b.classList.toggle('used', ans.some(t=>t.id===b.dataset.id)));
@@ -5253,9 +5722,9 @@ function renderBuildTask(task, head, onDone){
     if (ok) SES.stats.ok++; else SES.stats.bad++;
     $('#bAns').classList.add(ok?'ok':'no'); $('#chk').disabled=true; $('#bClear').disabled=true;
     const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
-    el.innerHTML = `<div>${ok?'✅ Верно':'❌ Неверно'}</div><div class="ans it">${esc(task.it)}</div>${task.tr?`<div class="tr">[${esc(task.tr)}]</div>`:''}<div>${esc(task.ru)}</div>
+    el.innerHTML = `<div>${ok?'Верно':'Неверно'}</div><div class="ans it">${esc(task.it)}</div>${task.tr?`<div class="tr">[${esc(task.tr)}]</div>`:''}<div>${esc(task.ru)}</div>
       ${!ok && ans.length ? `<div class="muted" style="font-size:13.5px;margin-top:4px">Ты собрал: <span class="it">${esc(ans.map(t=>t.w).join(' '))}</span></div>`:''}
-      <div style="margin-top:6px">${S().tts&&window.speechSynthesis?`<button class="spk" data-say="${esc(task.it)}">🔊 послушать</button>`:''}</div>` + lsNext();
+      <div style="margin-top:6px">${S().tts&&window.speechSynthesis?`<button class="spk" data-say="${esc(task.it)}">${ICO('sound')} послушать</button>`:''}</div>` + lsNext();
     body.appendChild(el); wireSpeak(el); if (S().ttsAuto) speak(task.it);
     $('#nx').onclick=()=>{ SES.i++; onDone(ok); }; $('#nx').focus(); el.scrollIntoView({block:'nearest'});
   };
@@ -5277,7 +5746,7 @@ function bdStep(){
   if (SES.i >= SES.q.length){
     const s=SES.stats, sec=Math.round((now()-SES.t0)/1000);
     (ST.bd ||= []).push({d:new Date().toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit'}), ok:s.ok, n:s.ok+s.bad, sec}); if (ST.bd.length>30) ST.bd.shift(); save();
-    body.innerHTML = `<div class="done"><div class="big">${s.bad===0?'🏆':'🧩'}</div><h2>Серия закончена</h2><p>Собрано верно <b>${s.ok}</b> из <b>${s.ok+s.bad}</b> · ${sec} секунд</p>
+    body.innerHTML = `<div class="done"><h2>Серия закончена</h2><p>Собрано верно <b>${s.ok}</b> из <b>${s.ok+s.bad}</b> · ${sec} секунд</p>
       <button class="pri" id="dAgain">Ещё серию</button><button class="sec" id="dClose">Закрыть</button></div>`;
     $('#dAgain').onclick = ()=> startBuild(); $('#dClose').onclick = endSession; return;
   }
@@ -5295,7 +5764,7 @@ $$('#buildSeg button').forEach(b=> b.onclick=()=>{ $$('#buildSeg button').forEac
 /* ---------------- составь своё ---------------- */
 const CV_GROUPS = ()=> [['быть · иметь',['essere','avere']], ['хочу · могу · должен',['volere','potere','dovere']],
   ['-are', Object.keys(VERBS).filter(v=>VERBS[v].g==='are')], ['-ere', Object.keys(VERBS).filter(v=>VERBS[v].g==='ere')],
-  ['-ire', Object.keys(VERBS).filter(v=>['ire','isc'].includes(VERBS[v].g))], ['неправильные', Object.keys(VERBS).filter(v=>VERBS[v].g==='irr' && !['volere','potere','dovere'].includes(v))]]
+  ['-ire', Object.keys(VERBS).filter(v=>['ire','isc'].includes(VERBS[v].g))], ['неправильные', Object.keys(VERBS).filter(v=>VERBS[v].g==='irr' && !['volere','potere','dovere'].includes(v))], ['возвратные', Object.keys(VERBS).filter(v=>VERBS[v].g==='rfl')]]
   .map(([t,vs])=>[t, vs.filter(v=>COMP[v])]);
 const CV = Object.keys(COMP).filter(v=>VERBS[v]);
 const verbSelHTML = cur => CV_GROUPS().map(([t,vs])=>`<optgroup label="${esc(t)}">${vs.map(v=>`<option value="${v}" ${v===cur?'selected':''}>${esc(v)} — ${esc(VERBS[v].ru)}</option>`).join('')}</optgroup>`).join('');
@@ -5348,10 +5817,9 @@ function renderComposer(){
   const subj = SUBJ[CMP.s];
   $('#cOut').innerHTML = `<div class="it">${esc(r.it)}</div><span class="tr">[${esc(r.tr)}]</span><div class="ru">${esc(r.ru)}</div>
     ${r.note?`<div class="note">${esc(r.note)}</div>`:''}${subj.note?`<div class="note">${esc(subj.note)}</div>`:''}
-    ${!CMP.pron && subj.opt ? '<div class="note">Местоимение опущено — форма глагола сама показывает, кто. Включи «с местоимением», чтобы увидеть его.</div>':''}
-    <div class="btns">${S().tts&&window.speechSynthesis?`<button class="sec" data-say="${esc(r.it)}">🔊 Послушать</button>`:''}<button class="sec" id="cSave">＋ В мои фразы</button><button class="sec" id="cRand">🎲 Случайно</button></div>`;
+    <div class="btns">${S().tts&&window.speechSynthesis?`<button class="sec" data-say="${esc(r.it)}">Послушать</button>`:''}<button class="sec" id="cSave">В мои фразы</button><button class="sec" id="cRand">Случайно</button></div>`;
   wireSpeak($('#cOut'));
-  $('#cSave').onclick = ()=>{ addMine(r); $('#cSave').textContent='✓ Сохранено'; $('#cSave').disabled=true; };
+  $('#cSave').onclick = ()=>{ addMine(r); $('#cSave').textContent='Сохранено'; $('#cSave').disabled=true; };
   $('#cRand').onclick = ()=>{ CMP.s = Math.floor(Math.random()*SUBJ.length); CMP.v = pick(CV); CMP.c = Math.floor(Math.random()*compList(CMP.v, SUBJ[CMP.s]).length); CMP.neg = Math.random()<.2; CMP.q = Math.random()<.25; renderComposer(); };
 }
 function initComposer(){
@@ -5389,8 +5857,8 @@ function renderMine(){
   const list = CARDS.filter(c=>c.deck==='mine');
   $('#mineList').innerHTML = list.length ? list.map(c=>`<div class="drow"><span class="dot ${statusOf(c)==='known'?'k':statusOf(c)==='learn'?'l':''}"></span>
     <div class="txt"><span class="w">${esc(c.it)}</span> <span class="tr">[${esc(c.tr)}]</span><span class="m">${esc(c.ru)}</span></div>
-    <div class="btns">${S().tts&&window.speechSynthesis?`<button data-say="${esc(c.it)}">🔊</button>`:''}<button data-del="${esc(c.key)}" title="удалить">✕</button></div></div>`).join('')
-    : '<div class="dgroup">Пока пусто. Собери предложение во вкладке «Составь своё» и нажми «В мои фразы».</div>';
+    <div class="btns">${S().tts&&window.speechSynthesis?`<button data-say="${esc(c.it)}">${ICO('sound')}</button>`:''}<button data-del="${esc(c.key)}" title="удалить">${ICO('close')}</button></div></div>`).join('')
+    : '<div class="dgroup">Пока пусто</div>';
   wireSpeak($('#mineList'));
   $$('#mineList [data-del]').forEach(b=> b.onclick=()=>{ const k=b.dataset.del; ST.mine = (ST.mine||[]).filter(m=>norm(m.it)!==k); const i=CARDS.findIndex(c=>c.key===k && c.deck==='mine'); if(i>=0) CARDS.splice(i,1); delete BYKEY[k]; save(); renderMine(); });
   $('#mineLearn').disabled = !list.length;
@@ -5401,10 +5869,10 @@ $('#mineLearn').onclick = ()=> startSession(['mine']);
 function lessonState(id){ return (ST.ls||{})[id]; }
 function nextLesson(){ return LESSONS.find(l=> !lessonState(l.id)) || null; }
 function renderLessons(){
-  const nx = nextLesson();
-  $('#lessonList').innerHTML = LESSONS.map(l=>{ const st=lessonState(l.id);
-    return `<button class="lesson ${nx&&nx.id===l.id?'next':''}" data-l="${l.id}"><span class="ic">${l.icon}</span><span class="tx"><b>${esc(l.title)}</b><small>${esc(l.sub)} · ${l.steps.filter(s=>!['idea','scheme'].includes(s.t)).length} заданий</small></span>
-      <span class="st ${st?'done':''}">${st ? '✓ '+st.ok+'/'+st.n : (nx&&nx.id===l.id ? 'следующий' : '')}</span></button>`; }).join('');
+  const nx = nextLesson(); const done = LESSONS.filter(x=>lessonState(x.id)).length;
+  $('#lessonsDone').textContent = `пройдено ${done} из ${LESSONS.length}`;
+  $('#lessonList').innerHTML = LESSONS.map((l,i)=>{ const st=lessonState(l.id);
+    return `<button class="lesson ${nx&&nx.id===l.id?'next':''}" data-l="${l.id}"><span class="top"><span class="no">Урок ${i+1}</span><span class="st ${st?'done':''}">${st ? st.ok+' / '+st.n : (nx&&nx.id===l.id ? 'следующий' : '')}</span></span><b>${esc(l.title)}</b><small>${esc(l.sub)}</small></button>`; }).join('');
   $$('#lessonList .lesson').forEach(b=> b.onclick=()=> startLesson(b.dataset.l));
 }
 function startLesson(id){
@@ -5420,7 +5888,7 @@ function lsStep(){
     const s=SES.stats, n=s.ok+s.bad;
     (ST.ls ||= {})[L.id] = {ok:s.ok, n, at:now()}; save();
     const nx = nextLesson();
-    body.innerHTML = `<div class="done"><div class="big">${s.bad===0?'🏆':'📚'}</div><h2>Урок пройден</h2><p>${esc(L.title)}: верно <b>${s.ok}</b> из <b>${n}</b></p>
+    body.innerHTML = `<div class="done"><h2>Урок пройден</h2><p>${esc(L.title)}: верно <b>${s.ok}</b> из <b>${n}</b></p>
       ${nx ? `<button class="pri" id="dNext">Следующий: ${esc(nx.title)}</button>` : ''}<button class="sec" id="dAgain">Пройти ещё раз</button><button class="sec" id="dClose">Закрыть</button></div>`;
     if (nx) $('#dNext').onclick = ()=> startLesson(nx.id);
     $('#dAgain').onclick = ()=> startLesson(L.id); $('#dClose').onclick = ()=>{ endSession(); renderLessons(); }; return;
@@ -5429,7 +5897,7 @@ function lsStep(){
   if (st.c) st = {t:'card', key:st.c.key, mode:'mcru'};      // повтор проваленной карточки
   const head = lsHead(L.title, `${SES.i+1} из ${SES.q.length}`);
   const next = ()=> lsStep();
-  const exList = ex => ex && ex.length ? `<div class="exl">${ex.map(([it,tr,ru])=>`<div class="ex"><span class="i">${esc(it)}</span>${S().tts&&window.speechSynthesis?`<button class="sp" data-say="${esc(it)}">🔊</button>`:'<span class="sp"></span>'}<span class="t">[${esc(tr)}]</span><span class="r">${esc(ru)}</span></div>`).join('')}</div>` : '';
+  const exList = ex => ex && ex.length ? `<div class="exl">${ex.map(([it,tr,ru])=>`<div class="ex"><span class="i">${esc(it)}</span>${S().tts&&window.speechSynthesis?`<button class="sp" data-say="${esc(it)}">${ICO('sound')}</button>`:'<span class="sp"></span>'}<span class="t">[${esc(tr)}]</span><span class="r">${esc(ru)}</span></div>`).join('')}</div>` : '';
   if (st.t==='idea' || st.t==='scheme'){
     body.innerHTML = head + `<div class="slide"><h2>${st.h}</h2>${st.t==='idea'?`<div class="body">${st.body}</div>${exList(st.ex)}`:st.html}</div>` + lsNext('Понятно, дальше') + `<div class="kbd">Enter — дальше</div>`;
     wireSpeak(body); $('#nx').onclick=()=>{ SES.i++; next(); }; SES.answered=true;
@@ -5444,7 +5912,7 @@ function lsStep(){
   if (st.t==='art'){
     const opts = ['il','lo',"l'",'la'].map(a=>({h:esc(a), v:a}));
     const full = st.a==="l'" ? "l'"+st.w : st.a+' '+st.w;
-    lsChoice({head, q:`<div class="q"><div class="big it">___ ${esc(st.w)}</div><div class="note">${esc(st.ru)} — какой артикль?</div></div>`, opts, ans:st.a, cls:'arts', kbd:'Клавиши 1–4',
+    lsChoice({head, q:`<div class="q"><div class="big it">___ ${esc(st.w)}</div><div class="note">${esc(st.ru)}</div></div>`, opts, ans:st.a, cls:'arts', kbd:'Клавиши 1–4',
       fb:()=>`<div class="ans it">${esc(full)}</div><div>${esc(st.why)}</div>`, say: full}, next);
     return;
   }
@@ -5503,6 +5971,79 @@ $('#refAll').onclick = ()=>{ S().refAll = !S().refAll; save(); paginateTopic(); 
 $('#gVerb').onclick = ()=> startVerbDrill();
 $('#gNum').onclick = ()=>{ ND.modes = canListen() ? ['hear','n2w'] : ['n2w','w2n']; ND.range='100'; ND.count=20; startNumDrill(); };
 $('#gPhr').onclick = ()=> startSession(['fr']);
+$('#gDict').onclick = ()=>{ if (!canListen()){ alert('Диктант требует озвучки.'); return; } const m=S().mode; S().mode='dict'; startSession(['fr']); if (SES) SES.restoreMode=m; };
+
+/* ---------------- вкладка: глаголы ---------------- */
+const VB = { q:'', g:'all', open:null };
+const VG_NAME = { are:'-are', ere:'-ere', ire:'-ire', isc:'-ire (-isc-)', irr:'неправильный', rfl:'возвратный', ea:'' };
+function verbEndings(v){ const g=VERBS[v].g; return g==='are'?['o','i','a','iamo','ate','ano'] : g==='ere'?['o','i','e','iamo','ete','ono'] : (g==='ire'||g==='isc')?['o','i','e','iamo','ite','ono'] : null; }
+function formHTML(v, i){ const V=VERBS[v], f=V.f[i], e=verbEndings(v); if (e && f.endsWith(e[i]) && f.length>e[i].length){ const st=f.slice(0, f.length-e[i].length); return `${esc(st)}<em>${esc(e[i])}</em>`; } return `<em>${esc(f)}</em>`; }
+function verbExamples(v){
+  const gaps = GAPS.filter(g=>g[1]===v).slice(0,2).map(g=>({it:g[0].replace('___', VERBS[v].f[g[2]]).replace(/\((\w+)\)\s*/g,''), ru:g[3]}));
+  if (COMP[v]) [0,1].forEach(ci=>{ if (COMP[v][ci] && gaps.length<3){ const c=clause(ci===0?0:1, v, ci, false, false); gaps.push({it:capFirst(c.it)+'.', ru:capFirst(c.ru)+'.', tr:c.tr}); } });
+  return gaps;
+}
+function renderVerbs(){
+  const q = VB.q.toLowerCase().trim();
+  const groupOf = v => { const g=VERBS[v].g; return g==='isc'?'ire':g; };
+  const all = Object.keys(VERBS);
+  const list = all.filter(v=>{ const V=VERBS[v]; if (VB.g!=='all' && groupOf(v)!==VB.g) return false; if (!q) return true; return v.includes(q) || V.ru.toLowerCase().includes(q) || V.f.some(f=>f.includes(q)); })
+    .sort((x,y)=> x.localeCompare(y,'it'));
+  $('#vCount').textContent = `${list.length} из ${all.length}`;
+  $$('#vGroups .chip').forEach(b=> b.classList.toggle('on', b.dataset.g===VB.g));
+  $('#vList').innerHTML = list.map(v=>{ const V=VERBS[v]; const trInf = (CARDS.find(c=>c.deck==='lex' && norm(c.it)===v)||{}).tr || '';
+    return `<div class="vrow ${VB.open===v?'open':''}" data-v="${v}"><button class="vh"><span class="inf">${esc(v)}${trInf?`<span class="tr">[${esc(trInf)}]</span>`:''}</span><span class="ru">${esc(V.ru)}</span><span class="g">${VG_NAME[V.g]||''}</span></button>
+      <div class="vb">${VB.open===v ? verbBody(v) : ''}</div></div>`; }).join('') || '<div class="dgroup">Ничего не найдено</div>';
+  $$('#vList .vh').forEach(b=> b.onclick=()=>{ const v=b.parentElement.dataset.v; VB.open = VB.open===v ? null : v; renderVerbs(); if (VB.open){ const el=$(`#vList .vrow[data-v="${v}"]`); el && el.scrollIntoView({block:'nearest'}); } });
+  wireSpeak($('#vList'));
+  $$('#vList [data-drill]').forEach(b=> b.onclick=()=>{ VD.only=b.dataset.drill; startVerbDrill(); });
+  $$('#vList [data-sayall]').forEach(b=> b.onclick=()=>{ const V=VERBS[b.dataset.sayall]; speak(V.f.map((f,i)=> (['io','tu','lui','noi','voi','loro'][i])+' '+f).join('. ')); });
+}
+function verbBody(v){
+  const V=VERBS[v];
+  return `<div class="ring">${PRON.map((p,i)=>`<div class="rn"><span>${esc(p)} · ${esc(PRON_RU[i])}</span><b>${formHTML(v,i)}</b><i>[${esc(V.tr[i])}]</i><em>${esc(V.r[i])}</em></div>`).join('')}</div>
+    <div class="exs">${verbExamples(v).map(e=>`<div><span class="it">${esc(e.it)}</span>${e.tr?` <span class="tr">[${esc(e.tr)}]</span>`:''} <span class="muted">— ${esc(e.ru)}</span></div>`).join('')}</div>
+    <div class="bt">${S().tts&&window.speechSynthesis?`<button class="sec" data-sayall="${v}">${ICO('sound')} все формы</button>`:''}<button class="sec" data-drill="${v}">Тренировать</button></div>`;
+}
+$('#vq').addEventListener('input', e=>{ VB.q=e.target.value; renderVerbs(); });
+$$('#vGroups .chip').forEach(b=> b.onclick=()=>{ VB.g=b.dataset.g; renderVerbs(); });
+
+/* ---------------- живые блоки в правилах ---------------- */
+function renderLive(el){
+  const verbs = el.dataset.live.split(',').map(s=>s.trim()).filter(v=>VERBS[v]);
+  const st = { v:verbs[0], p:0 };
+  el.className = 'live';
+  const draw = ()=>{
+    const V=VERBS[st.v];
+    el.innerHTML = `<div class="row pr">${PRON.map((p,i)=>`<button class="${i===st.p?'on':''}" data-p="${i}">${esc(p.split(' / ')[0])}</button>`).join('')}</div>
+      <div class="row vb">${verbs.map(v=>`<button class="${v===st.v?'on':''}" data-v="${v}">${esc(v)}</button>`).join('')}</div>
+      <div class="res"><div><div class="f">${formHTML(st.v, st.p)}</div><div class="t">[${esc(V.tr[st.p])}]</div><div class="r">${esc(PRON_RU[st.p])}: ${esc(V.r[st.p])} · ${esc(st.v)} — ${esc(V.ru)}</div></div>
+        ${S().tts&&window.speechSynthesis?`<button class="spk" data-say="${esc(V.f[st.p])}">${ICO('sound')}</button>`:''}</div>`;
+    $$('[data-p]', el).forEach(b=> b.onclick=()=>{ st.p=+b.dataset.p; draw(); if (S().ttsAuto) speak(VERBS[st.v].f[st.p]); });
+    $$('[data-v]', el).forEach(b=> b.onclick=()=>{ st.v=b.dataset.v; draw(); });
+    wireSpeak(el);
+  };
+  draw();
+}
+function renderPlay(el){
+  const [v0, s0, c0] = el.dataset.play.split(':'); const st = { v:v0, s:+s0||0, c:+c0||0, neg:false };
+  el.className = 'play';
+  const draw = ()=>{
+    if (!COMP[st.v]) return;
+    const cl = compList(st.v, SUBJ[st.s]); st.c = Math.min(st.c, cl.length-1);
+    const r = clause(st.s, st.v, st.c, st.neg, true);
+    el.innerHTML = `<div class="sel"><select data-k="s">${SUBJ.map((s,i)=>`<option value="${i}" ${i===st.s?'selected':''}>${esc(s.it)} — ${esc(s.ru)}</option>`).join('')}</select>
+      <select data-k="v">${verbSelHTML(st.v)}</select>
+      <select data-k="c">${cl.map((c,i)=>`<option value="${i}" ${i===st.c?'selected':''}>${esc(c[0])} — ${esc(c[2])}</option>`).join('')}</select>
+      <button class="chip ${st.neg?'on':''}" data-k="neg">non</button></div>
+      <div class="out"><div class="it">${esc(capFirst(r.it))}.</div><span class="tr">[${esc(r.tr)}]</span><div class="ru">${esc(capFirst(r.ru))}.${r.note?' <span class="muted">'+esc(r.note)+'</span>':''}</div>
+      ${S().tts&&window.speechSynthesis?`<button class="spk" data-say="${esc(r.it)}">${ICO('sound')} послушать</button>`:''}</div>`;
+    $$('select', el).forEach(s=> s.onchange=()=>{ const k=s.dataset.k; if (k==='v'){ st.v=s.value; st.c=0; } else st[k]=+s.value; draw(); });
+    $('[data-k="neg"]', el).onclick = ()=>{ st.neg=!st.neg; draw(); };
+    wireSpeak(el);
+  };
+  draw();
+}
 
 /* ---------------- старт ---------------- */
 load(); mountMine(); applyLook(); initSettings(); initComposer(); syncSettingsUI(); renderHome();
@@ -5510,7 +6051,8 @@ load(); mountMine(); applyLook(); initSettings(); initComposer(); syncSettingsUI
 if (location.hash.startsWith('#shot=')){
   save = ()=>{};   // отладочный режим: ничего не сохранять
   const what = location.hash.slice(6);
-  if (['phr','num','ref','set','all','les','build','more','study'].includes(what)) showPane('p-'+what);
+  if (['phr','num','ref','set','all','les','build','more','study','verbs'].includes(what)) showPane('p-'+what);
+  else if (what==='verbopen'){ showPane('p-verbs'); $$('#vList .vrow')[2].querySelector('.vh').click(); }
   else if (what==='own'){ showPane('p-build'); $$('#buildSeg button')[1].click(); CMP.two=true; renderComposer(); }
   else if (what.startsWith('lesson:')){ const [id,n] = what.slice(7).split('/'); startLesson(id); for (let k=0;k<(+n||0);k++){ SES.i++; } lsStep(); }
   else if (what==='bd'){ startBuild('all',5); }
@@ -5595,6 +6137,8 @@ if (location.hash.startsWith('#selftest')){
   try{ showPane('p-build'); const samples=[]; [[0,'parlare',0,false,false],[2,'essere',4,true,false],[5,'avere',0,false,true],[10,'essere',5,false,false],[12,'abitare',1,false,false],[4,'studiare',0,false,true]].forEach(([si,v,ci,neg,q])=>{ CMP.s=si; CMP.v=v; CMP.c=ci; CMP.neg=neg; CMP.q=q; CMP.two=false; renderComposer(); samples.push(compose().it+' = '+compose().ru); });
     CMP.two=true; CMP.conj=2; CMP.s2=0; CMP.v2='amare'; CMP.c2=0; renderComposer(); samples.push(compose().it); $('#cSave').click(); log.push('composer: '+samples.join(' || ')+' | mine='+(ST.mine||[]).length+' cards mine='+CARDS.filter(c=>c.deck==='mine').length+' wide: '+wide().join(', ')); }catch(e){ errs.push('composer: '+e.message); }
   try{ showPane('p-ref'); openTopic('g3', true); const n=REF.secs.length; REF.secs[1].h.click(); log.push('ref g3 secs='+n+' open='+$$('#refContent h3.acc.open').length+' hidden='+$$('#refContent .acc-hide').length+' wide: '+wide().join(', ')); openTopic('g13', true); log.push('g13 secs='+REF.secs.length+' cloned h3='+$$('#refContent h3').length+' topics='+REF.topics.length+' secs: '+[...new Set(REF.topics.map(t=>t.sec))].join(' / ')); openTopic('g10', true); log.push('g10 conj tables='+$$('#refContent .conj table').length); }catch(e){ errs.push('accordion: '+e.message); }
+  try{ showPane('p-verbs'); const n=$$('#vList .vrow').length; $$('#vList .vrow')[0].querySelector('.vh').click(); VB.q='dorm'; renderVerbs(); const nq=$$('#vList .vrow').length; VB.q=''; VB.g='rfl'; renderVerbs(); const nr=$$('#vList .vrow').length; VB.g='all'; renderVerbs(); log.push('verbs='+n+' search dorm='+nq+' rfl='+nr+' open ring='+$$('#vList .vrow.open .rn').length+' total VERBS='+Object.keys(VERBS).length+' wide: '+wide().join(', ')); }catch(e){ errs.push('verbs: '+e.message); }
+  try{ showPane('p-ref'); openTopic('g3', true); const lv=$('#refContent .live'); $$('.row.pr button', lv)[3].click(); $$('.row.vb button', lv)[1].click(); const pl=$('#refContent .play'); $('select', pl).value='5'; $('select', pl).dispatchEvent(new Event('change')); log.push('live: '+$('.res .f', lv).textContent+' / '+$('.res .t', lv).textContent+' | play: '+$('.out .it', pl).textContent+' wide: '+wide().join(', ')); openTopic('g6', true); $('#refContent .fnode.more').click(); log.push('fnode more open='+$$('#refContent .fnode.more.open').length); }catch(e){ errs.push('live: '+e.message+' '+(e.stack||'').split(String.fromCharCode(10))[1]); }
   try{ showPane('p-les'); log.push('lesson list='+$$('#lessonList .lesson').length+' wide: '+wide().join(', ')); showPane('p-study'); log.push('today wide: '+wide().join(', ')); }catch(e){ errs.push('les pane: '+e.message); }
   log.push('phrase groups: '+phrGroups().length+' | select opts='+$('#phrGroup').options.length+' | '+phrGroups().join(' · '));
   try{ VD.modes=['pick','type','gap']; startVerbDrill(); let steps=0;
