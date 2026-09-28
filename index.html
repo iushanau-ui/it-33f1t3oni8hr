@@ -426,8 +426,8 @@ body.num-hide-it .numcell .w{visibility:hidden}
 .out .btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap} .out .btns button{width:auto;flex:1;background:var(--card)}
 .mine .drow .w{font-size:16px}
 
-span.acc{display:inline !important;position:relative;font:inherit;color:inherit;margin:0;padding:0}
-.acc::after{content:"";position:absolute;left:50%;bottom:-.12em;width:.28em;height:.28em;border-radius:50%;background:var(--accent);transform:translateX(-50%)}
+span.st{display:inline !important;font:inherit;color:var(--accent-ink);font-weight:700;margin:0;padding:0}
+body.no-st span.st{color:inherit;font-weight:inherit}
 .trainers{grid-template-columns:repeat(2,1fr)} @media (min-width:960px){ .trainers{grid-template-columns:repeat(4,1fr)} }
 .trainers button{flex-direction:column;align-items:flex-start;gap:4px;padding:14px 16px}
 .trainers button small{color:var(--muted);font-size:12.5px;font-weight:400}
@@ -458,7 +458,7 @@ body.no-ru .ruhide{display:none !important}
 .reader.ru .sent .rux{display:block}
 .sent .sp{grid-column:2;grid-row:1 / span 2;border:1px solid var(--line);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--ink2);background:var(--bg)}
 .sent .w{cursor:pointer;border-radius:4px} .sent .w:hover{background:var(--hl)} .sent .w.on{background:var(--accent-bg)}
-.reader:not(.acc) .acc::after{display:none}
+.reader:not(.showst) span.st{color:inherit;font-weight:inherit}
 .wtip{position:fixed;z-index:60;max-width:300px;background:var(--ink);color:#fff;border-radius:10px;padding:10px 14px;font-size:14px;line-height:1.4;box-shadow:0 6px 24px rgba(0,0,0,.18)}
 .wtip b{font-family:var(--serif);font-size:17px;display:block} .wtip .t{color:#9ee4d6;font-size:13px} .wtip .m{color:#cfcabd;font-size:12.5px;margin-top:3px}
 html[data-theme="dark"] .wtip{background:#f1ede4;color:#1c1a17} html[data-theme="dark"] .wtip .t{color:#0f6f62} html[data-theme="dark"] .wtip .m{color:#5d5850}
@@ -2038,6 +2038,8 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
       <select id="setDir"><option value="it">итальянское → перевод</option><option value="ru">перевод → итальянское</option><option value="mix">вперемешку</option></select></div>
     <div class="set"><div class="lbl">Транскрипция на лицевой стороне<small>Выключи, когда захочешь читать без подсказки</small></div>
       <button class="sw" id="setShowTr"></button></div>
+    <div class="set"><div class="lbl">Выделять ударную гласную<small>Цветом во всех итальянских словах</small></div>
+      <button class="sw" id="setAcc"></button></div>
   </div>
   <div class="card">
     <h2>Озвучка</h2>
@@ -4618,7 +4620,7 @@ let VF_TR = null, WORD_TR = null;
 function buildTrMaps(){ if (VF_TR) return; VF_TR={}; WORD_TR={};
   Object.values(VERBS).forEach(V=> V.f.forEach((f,i)=>{ const w=f.split(' ').pop(), t=(V.tr[i]||'').split(' ').pop(); if (w && t && !VF_TR[w]) VF_TR[w]=t; }));
   CARDS.forEach(c=>{ const w=c.it.toLowerCase().replace(/[^a-zàèéìòù' ]/g,'').trim(); if (w && !w.includes(' ') && c.tr && !c.tr.includes(' ')) WORD_TR[w.replace(/[^a-zàèéìòù]/g,'')]=c.tr; }); }
-function accWord(word, tr){ if (/[A-Z].*[A-Z]/.test(word)) return esc(word); const k=stressIdx(word, tr); if (k<0) return esc(word); return esc(word.slice(0,k))+'<span class="acc">'+esc(word[k])+'</span>'+esc(word.slice(k+1)); }
+function accWord(word, tr){ if (/[A-Z].*[A-Z]/.test(word)) return esc(word); const k=stressIdx(word, tr); if (k<0) return esc(word); return esc(word.slice(0,k))+'<span class="st">'+esc(word[k])+'</span>'+esc(word.slice(k+1)); }
 function accIt(it, tr){
   const parts = String(it).split(/(\s+)/); const trw = tr ? String(tr).replace(/[\[\]]/g,'').split(/\s+/).filter(Boolean) : [];
   const words = parts.filter(p=>!/^\s*$/.test(p) && /[A-Za-zÀ-ÿ]/.test(p));
@@ -4664,7 +4666,7 @@ const BYKEY = Object.fromEntries(CARDS.map(c=>[c.key,c]));
 const LS = 'it-trainer-v1';
 const DEF_SET = { decks: DECKS.filter(d=>d.def).map(d=>d.id), mode:'mix',
   modes:['flash','mcru','mcit','trans','type','listen'], newPerDay:20, dir:'it', showTr:true,
-  tts:true, ttsAuto:true, rate:0.85, voice:'', dark:false, eink:false, font:16 };
+  tts:true, ttsAuto:true, showAcc:true, rate:0.85, voice:'', dark:false, eink:false, font:16 };
 let ST = { prog:{}, days:{}, set:{...DEF_SET} };
 function load(){
   try{ const raw = localStorage.getItem(LS); if(raw){ const o=JSON.parse(raw); ST.prog=o.prog||{}; ST.days=o.days||{}; ST.set={...DEF_SET, ...(o.set||{})}; } }catch(e){}
@@ -4817,7 +4819,7 @@ function startSession(onlyDecks, filterFn){
   renderStep();
 }
 $('#sClose').onclick = ()=>{ endSession(); };
-function applyRu(){ document.body.classList.toggle('no-ru', S().exRu===false); $('#sRu').classList.toggle('off', S().exRu===false); }
+function applyRu(){ document.body.classList.toggle('no-st', S().showAcc===false); document.body.classList.toggle('no-ru', S().exRu===false); $('#sRu').classList.toggle('off', S().exRu===false); }
 $('#sRu').onclick = ()=>{ S().exRu = S().exRu===false ? true : false; save(); applyRu(); };
 $('#sMore').onclick = ()=> addFresh(10);
 function addFresh(n){
@@ -5346,7 +5348,7 @@ function openTopic(id, userClick){
   $$('[data-clone]', clone).forEach(el=>{ const srcEl = document.getElementById(el.dataset.clone); if(!srcEl) return; const c = srcEl.cloneNode(true); $$('.card', c).forEach(cd=>{ const h2=cd.querySelector('h2'); if(h2){ const h3=document.createElement('h3'); h3.textContent=h2.textContent; h2.replaceWith(h3); } cd.replaceWith(...cd.childNodes); }); el.replaceWith(...c.childNodes); });
   (function markStatic(root){ const sel='.it, td.ex, .fnode b, .fnode i, .rn b, .rn i, .pair .a, .ex b';
     $$(sel, root).forEach(el=>{ if (el.dataset.acc) return; el.dataset.acc='1';
-      const walk = node=>{ Array.from(node.childNodes).forEach(ch=>{ if (ch.nodeType===3){ if (/[A-Za-zÀ-ÿ]{3,}/.test(ch.nodeValue)){ const span=document.createElement('span'); span.innerHTML=accIt(ch.nodeValue); ch.replaceWith(...span.childNodes); } } else if (ch.nodeType===1 && !ch.classList.contains('tr') && !ch.classList.contains('acc') && ch.tagName!=='SMALL' && !ch.classList.contains('why') && !ch.classList.contains('hid')) walk(ch); }); };
+      const walk = node=>{ Array.from(node.childNodes).forEach(ch=>{ if (ch.nodeType===3){ if (/[A-Za-zÀ-ÿ]{3,}/.test(ch.nodeValue)){ const span=document.createElement('span'); span.innerHTML=accIt(ch.nodeValue); ch.replaceWith(...span.childNodes); } } else if (ch.nodeType===1 && !ch.classList.contains('tr') && !ch.classList.contains('st') && ch.tagName!=='SMALL' && !ch.classList.contains('why') && !ch.classList.contains('hid')) walk(ch); }); };
       walk(el); }); })(clone);
   $$('[data-live]', clone).forEach(el=> renderLive(el));
   $$('[data-play]', clone).forEach(el=> renderPlay(el));
@@ -5989,7 +5991,7 @@ function bindSwitch(id, key, after){
 }
 function syncSettingsUI(){
   $('#setNew').value = S().newPerDay; $('#setDir').value=S().dir; $('#setRate').value=String(S().rate); $('#setFont').value=String(S().font);
-  ['#setShowTr|showTr','#setTts|tts','#setTtsAuto|ttsAuto','#setDark|dark','#setEink|eink'].forEach(x=>{ const [id,k]=x.split('|'); $(id).classList.toggle('on', !!S()[k]); });
+  ['#setShowTr|showTr','#setAcc|showAcc','#setTts|tts','#setTtsAuto|ttsAuto','#setDark|dark','#setEink|eink'].forEach(x=>{ const [id,k]=x.split('|'); $(id).classList.toggle('on', !!S()[k]); });
   $('#aboutCount').textContent = DECKS.map(d=>`${d.name} — ${CARDS.filter(c=>c.deck===d.id).length}`).join('; ') + `. Всего ${CARDS.length}.`;
 }
 function initSettings(){
@@ -5998,7 +6000,7 @@ function initSettings(){
   $('#setRate').onchange = e=>{ S().rate=parseFloat(e.target.value); save(); };
   $('#setVoice').onchange = e=>{ S().voice=e.target.value; save(); };
   $('#setFont').onchange = e=>{ S().font=+e.target.value; save(); applyLook(); };
-  bindSwitch('#setShowTr','showTr'); bindSwitch('#setTts','tts'); bindSwitch('#setTtsAuto','ttsAuto');
+  bindSwitch('#setShowTr','showTr'); bindSwitch('#setAcc','showAcc',applyRu); bindSwitch('#setTts','tts'); bindSwitch('#setTtsAuto','ttsAuto');
   bindSwitch('#setDark','dark',applyLook); bindSwitch('#setEink','eink',applyLook);
   // экспорт / импорт
   const dump = ()=> JSON.stringify({v:1, exported:new Date().toISOString(), prog:ST.prog, days:ST.days});
@@ -6386,7 +6388,7 @@ function formHTML(v, i){ const V=VERBS[v], f=V.f[i], e=verbEndings(v);
   const words = f.split(' '); const last = words[words.length-1]; const trw = V.tr[i].split(' '); const trl = trw[trw.length-1];
   const k = stressIdx(last, trl); const eLen = (e && last.endsWith(e[i]) && last.length>e[i].length) ? e[i].length : last.length;
   const start = last.length - eLen;
-  let html = ''; for (let j=0;j<last.length;j++){ let ch = esc(last[j]); if (j===k) ch = `<span class="acc">${ch}</span>`; if (j===start) html += '<em>'; html += ch; } html += '</em>';
+  let html = ''; for (let j=0;j<last.length;j++){ let ch = esc(last[j]); if (j===k) ch = `<span class="st">${ch}</span>`; if (j===start) html += '<em>'; html += ch; } html += '</em>';
   return (words.length>1 ? esc(words.slice(0,-1).join(' '))+' ' : '') + html; }
 function verbExamples(v){
   const gaps = GAPS.filter(g=>g[1]===v).slice(0,2).map(g=>({it:g[0].replace('___', VERBS[v].f[g[2]]).replace(/\((\w+)\)\s*/g,''), ru:g[3]}));
@@ -6509,7 +6511,7 @@ function openText(id){
   const T = TEXTS.find(t=>t.id===id); if (!T) return; RD.cur = T;
   $('#readList').classList.add('hidden'); $('#reader').classList.remove('hidden');
   const body = $('#readBody');
-  body.className = 'reader' + (S().rdRu!==false ? ' ru' : '') + (S().rdAcc!==false ? ' acc' : '');
+  body.className = 'reader' + (S().rdRu!==false ? ' ru' : '') + (S().rdAcc!==false ? ' showst' : '');
   $('#rdRu').classList.toggle('on', S().rdRu!==false); $('#rdAcc').classList.toggle('on', S().rdAcc!==false);
   body.innerHTML = `<h2>${esc(T.title)}</h2><div class="lead">${esc(T.sub)} · уровень ${T.level} · нажми на слово, чтобы увидеть перевод</div>` +
     T.sents.map(([it,ru])=>`<div class="sent"><div class="itx">${sentHTML(it)}</div><div class="rux">${esc(ru)}</div>${S().tts&&window.speechSynthesis?`<button class="sp" data-say="${esc(it.replace(/^—\s*/,''))}">${ICO('sound')}</button>`:''}</div>`).join('') +
@@ -6525,7 +6527,7 @@ function openText(id){
 }
 $('#readBack').onclick = ()=> renderRead();
 $('#rdRu').onclick = ()=>{ S().rdRu = S().rdRu===false ? true : false; save(); $('#readBody').classList.toggle('ru', S().rdRu!==false); $('#rdRu').classList.toggle('on', S().rdRu!==false); };
-$('#rdAcc').onclick = ()=>{ S().rdAcc = S().rdAcc===false ? true : false; save(); $('#readBody').classList.toggle('acc', S().rdAcc!==false); $('#rdAcc').classList.toggle('on', S().rdAcc!==false); };
+$('#rdAcc').onclick = ()=>{ S().rdAcc = S().rdAcc===false ? true : false; save(); $('#readBody').classList.toggle('showst', S().rdAcc!==false); $('#rdAcc').classList.toggle('on', S().rdAcc!==false); };
 $('#rdSay').onclick = ()=>{ if (!RD.cur) return; speak(RD.cur.sents.map(s=>s[0].replace(/^—\s*/,'')).join(' ')); };
 document.addEventListener('click', e=>{ if (!e.target.closest('#wtip') && !e.target.closest('.w')) hideTip(); });
 
