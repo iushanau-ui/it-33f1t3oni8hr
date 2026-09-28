@@ -438,6 +438,34 @@ body.no-ru .ruhide{display:none !important}
 .lesson.special .no{color:var(--accent-ink)}
 .endq{font-family:var(--serif);font-size:24px;line-height:1.4}
 .endq .stem{border-bottom:2px solid var(--accent)} .endq input{width:5.5ch;font:inherit;border:none;border-bottom:2px solid var(--accent);background:var(--hl);color:var(--ink);text-align:center;padding:0 2px;outline:none}
+/* ============ Чтение ============ */
+.texts{display:grid;gap:12px}
+@media (min-width:640px){ .texts{grid-template-columns:1fr 1fr} }
+@media (min-width:1100px){ .texts{grid-template-columns:repeat(3,1fr)} }
+.text{display:flex;flex-direction:column;gap:6px;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:16px 18px}
+.text .top{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
+.text .lv{color:var(--accent-ink);font-weight:600}
+.text b{font-size:17px;font-family:var(--serif)} .text small{color:var(--muted);font-size:13.5px}
+.text .done{color:var(--ok);font-weight:600}
+.text:hover{border-color:var(--accent)}
+.reader{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px 28px;max-width:820px}
+.reader h2{font-family:var(--serif);font-size:28px;margin:0 0 4px;letter-spacing:-.01em}
+.reader .lead{margin-bottom:18px}
+.sent{display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:start;padding:10px 0;border-bottom:1px solid var(--line2)}
+.sent:last-of-type{border-bottom:none}
+.sent .itx{font-family:var(--serif);font-size:20px;line-height:1.55;grid-column:1}
+.sent .rux{color:var(--muted);font-size:14.5px;grid-column:1;display:none}
+.reader.ru .sent .rux{display:block}
+.sent .sp{grid-column:2;grid-row:1 / span 2;border:1px solid var(--line);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;color:var(--ink2);background:var(--bg)}
+.sent .w{cursor:pointer;border-radius:4px} .sent .w:hover{background:var(--hl)} .sent .w.on{background:var(--accent-bg)}
+.reader:not(.acc) .acc::after{display:none}
+.wtip{position:fixed;z-index:60;max-width:300px;background:var(--ink);color:#fff;border-radius:10px;padding:10px 14px;font-size:14px;line-height:1.4;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.wtip b{font-family:var(--serif);font-size:17px;display:block} .wtip .t{color:#9ee4d6;font-size:13px} .wtip .m{color:#cfcabd;font-size:12.5px;margin-top:3px}
+html[data-theme="dark"] .wtip{background:#f1ede4;color:#1c1a17} html[data-theme="dark"] .wtip .t{color:#0f6f62} html[data-theme="dark"] .wtip .m{color:#5d5850}
+.rq{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}
+.rq h3{margin-top:0}
+.rq .qq{margin:12px 0 18px} .rq .qq .qt{font-family:var(--serif);font-size:18px;margin-bottom:8px}
+.rq .opts{margin-top:8px}
 /* ============ Ещё ============ */
 .moregrid{display:grid;gap:10px;grid-template-columns:1fr 1fr}
 .moregrid button{border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:20px 12px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink)}
@@ -476,6 +504,7 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
   <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
   <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 8"/><path d="M20 4v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3L4 16"/><path d="M4 20v-4h4"/></symbol>
+  <symbol id="i-read" viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></symbol>
   <symbol id="i-ear" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 3-2 4-3 6s-1 5-4 5"/><path d="M9 10a3 3 0 0 1 6 0c0 1.5-1 2-2 3"/></symbol>
   <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4l11-11-4-4L4 16z"/><path d="M13 7l4 4"/></symbol>
 </svg>
@@ -487,6 +516,7 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
   <button class="nb" data-p="p-les"><svg class="i"><use href="#i-lessons"/></svg> Уроки</button>
   <button class="nb" data-p="p-verbs"><svg class="i"><use href="#i-verbs"/></svg> Глаголы</button>
   <button class="nb" data-p="p-build"><svg class="i"><use href="#i-build"/></svg> Собрать фразу</button>
+  <button class="nb" data-p="p-read"><svg class="i"><use href="#i-read"/></svg> Чтение</button>
   <div class="sep"></div>
   <button class="nb" data-p="p-phr"><svg class="i"><use href="#i-phrases"/></svg> Фразы</button>
   <button class="nb" data-p="p-all"><svg class="i"><use href="#i-words"/></svg> Слова</button>
@@ -625,10 +655,23 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
   </div>
 </div></div>
 
+<!-- ======================= ЧТЕНИЕ ======================= -->
+<div class="pane" id="p-read"><div class="wrap">
+  <div class="pane-head"><h2>Чтение</h2><span class="sub" id="readSub"></span></div>
+  <div id="readList" class="texts"></div>
+  <div id="reader" class="hidden">
+    <div class="refopts"><button class="refback" id="readBack" style="display:inline-flex"><svg class="i"><use href="#i-back"/></svg> Все тексты</button><span style="flex:1"></span>
+      <button class="chip" id="rdRu">перевод</button><button class="chip" id="rdAcc">ударение</button><button class="chip" id="rdSay"><svg class="i"><use href="#i-sound"/></svg> слушать всё</button></div>
+    <div class="reader" id="readBody"></div>
+  </div>
+  <div id="wtip" class="wtip hidden"></div>
+</div></div>
+
 <!-- ======================= ЕЩЁ ======================= -->
 <div class="pane" id="p-more"><div class="wrap">
   <div class="pane-head"><h2>Ещё</h2></div>
   <div class="moregrid">
+    <button data-p="p-build"><svg class="i"><use href="#i-build"/></svg>Собрать фразу</button>
     <button data-p="p-phr"><svg class="i"><use href="#i-phrases"/></svg>Фразы</button>
     <button data-p="p-all"><svg class="i"><use href="#i-words"/></svg>Слова</button>
     <button data-p="p-num"><svg class="i"><use href="#i-numbers"/></svg>Числа</button>
@@ -2053,7 +2096,7 @@ textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:v
   <button class="on" data-p="p-study"><svg class="i"><use href="#i-today"/></svg>Сегодня</button>
   <button data-p="p-les"><svg class="i"><use href="#i-lessons"/></svg>Уроки</button>
   <button data-p="p-verbs"><svg class="i"><use href="#i-verbs"/></svg>Глаголы</button>
-  <button data-p="p-build"><svg class="i"><use href="#i-build"/></svg>Собрать</button>
+  <button data-p="p-read"><svg class="i"><use href="#i-read"/></svg>Чтение</button>
   <button data-p="p-more"><svg class="i"><use href="#i-more"/></svg>Ещё</button>
 </nav>
 
@@ -4261,6 +4304,180 @@ const COMP = {
 };
 const CONJ = [ ['e','э','и', ''], ['ma','ма','но', ','], ['perché','пэркЭ','потому что', ''], ['o','о','или', ''] ];
 
+/* ====================================================================
+   ЧТЕНИЕ — простые тексты (уровень 1–3) из пройденной лексики.
+   sents: [итальянское предложение, перевод]; gloss: слово → перевод (то, чего нет в словаре);
+   q: вопросы после текста.
+   ==================================================================== */
+const TEXTS = [
+{ id:'io', level:1, title:'Mi chiamo Ilia', sub:'о себе', sents:[
+  ['Ciao! Mi chiamo Ilia.', 'Привет! Меня зовут Илья.'],
+  ['Sono bielorusso e sono di Minsk.', 'Я белорус, и я из Минска.'],
+  ['Abito a Minsk, in corso Dzeržinskij.', 'Живу в Минске, на проспекте Дзержинского.'],
+  ['Lavoro e studio: ho molto da fare tutta la settimana.', 'Работаю и учусь: у меня много дел всю неделю.'],
+  ['Parlo russo e un po\' di italiano.', 'Говорю по-русски и немного по-итальянски.'],
+  ['Studio l\'italiano perché voglio abitare in Italia, in Sicilia.', 'Учу итальянский, потому что хочу жить в Италии, на Сицилии.'],
+  ['Amo l\'Italia, la musica italiana e il caffè.', 'Люблю Италию, итальянскую музыку и кофе.'],
+  ['La mia ragazza è un\'artista: dipinge molto bene.', 'Моя девушка художница: она очень хорошо пишет картины.'],
+  ['La sera passeggiamo in centro e parliamo italiano.', 'Вечером мы гуляем в центре и говорим по-итальянски.'],
+  ['Piacere di conoscerti!', 'Приятно познакомиться!'],
+ ], gloss:{}, q:[
+  {q:'Di dov\'è Ilia?', opts:['Di Minsk','Di Roma','Di Catania','Di Boston'], a:0},
+  {q:'Perché studia l\'italiano?', opts:['Perché vuole abitare in Italia','Perché lavora in Italia','Perché ha un amico italiano','Perché è italiano'], a:0},
+  {q:'Che cosa fa la sua ragazza?', opts:['Dipinge','Canta','Cucina','Lavora in un bar'], a:0},
+ ]},
+
+{ id:'giorno', level:1, title:'La mia giornata', sub:'мой день', sents:[
+  ['Mi sveglio alle sette e mi alzo subito.', 'Просыпаюсь в семь и сразу встаю.'],
+  ['Mi lavo, mi vesto e faccio colazione: un caffè e un po\' di pane.', 'Умываюсь, одеваюсь и завтракаю: кофе и немного хлеба.'],
+  ['Alle otto vado al lavoro.', 'В восемь иду на работу.'],
+  ['Lavoro in un ufficio in centro.', 'Работаю в офисе в центре.'],
+  ['All\'una pranzo con un amico.', 'В час обедаю с другом.'],
+  ['La sera torno a casa e studio l\'italiano.', 'Вечером возвращаюсь домой и учу итальянский.'],
+  ['Ascolto le canzoni italiane e ripeto le parole nuove.', 'Слушаю итальянские песни и повторяю новые слова.'],
+  ['Alle otto ceno con la mia ragazza.', 'В восемь ужинаю с моей девушкой.'],
+  ['Poi guardiamo un film italiano.', 'Потом мы смотрим итальянский фильм.'],
+  ['Alle undici vado a dormire. Buonanotte!', 'В одиннадцать иду спать. Спокойной ночи!'],
+ ], gloss:{subito:'сразу', pane:'хлеб', ufficio:'офис', poi:'потом', buonanotte:'спокойной ночи'}, q:[
+  {q:'A che ora si sveglia?', opts:['Alle sette','Alle otto','All\'una','Alle undici'], a:0},
+  {q:'Dove lavora?', opts:['In un ufficio in centro','A casa','In un bar','A scuola'], a:0},
+  {q:'Che cosa fa la sera?', opts:['Studia l\'italiano','Lavora','Va al mare','Dorme'], a:0},
+ ]},
+
+{ id:'marco', level:1, title:'Marco e Anna', sub:'два друга', sents:[
+  ['Marco è italiano, è di Roma.', 'Марко итальянец, он из Рима.'],
+  ['Ha ventisei anni e lavora in un bar.', 'Ему двадцать шесть лет, и он работает в баре.'],
+  ['Anna è di Firenze e ha ventitré anni.', 'Анна из Флоренции, ей двадцать три года.'],
+  ['Anna studia l\'arte e dipinge.', 'Анна изучает искусство и пишет картины.'],
+  ['Marco e Anna sono amici.', 'Марко и Анна друзья.'],
+  ['La domenica vanno al mare insieme.', 'По воскресеньям они вместе ездят на море.'],
+  ['Marco ha un cane: si chiama Figaro e ha sei anni.', 'У Марко есть собака: её зовут Фигаро, ей шесть лет.'],
+  ['Anna non ha un cane, ma ha due gatti.', 'У Анны нет собаки, но есть два кота.'],
+  ['Marco parla italiano e inglese; Anna parla anche un po\' di russo.', 'Марко говорит по-итальянски и по-английски; Анна говорит ещё и немного по-русски.'],
+  ['Sono stanchi ma felici.', 'Они устали, но счастливы.'],
+ ], gloss:{amici:'друзья', insieme:'вместе', gatti:'коты'}, q:[
+  {q:'Quanti anni ha Marco?', opts:['26','23','6','36'], a:0},
+  {q:'Che cosa ha Anna?', opts:['Due gatti','Un cane','Un cane e un gatto','Niente'], a:0},
+  {q:'Quando vanno al mare?', opts:['La domenica','Il lunedì','La sera','La mattina'], a:0},
+ ]},
+
+{ id:'tre', level:1, title:'Tre studenti', sub:'текст учебника', sents:[
+  ['Questo è Juan, un ragazzo spagnolo.', 'Это Хуан, испанский парень.'],
+  ['Ha ventisei anni e studia l\'italiano in una scuola di Madrid.', 'Ему двадцать шесть лет, он учит итальянский в школе в Мадриде.'],
+  ['Juan è un interprete: parla spagnolo, inglese e tedesco.', 'Хуан переводчик: говорит по-испански, по-английски и по-немецки.'],
+  ['Questa è Katy, una ragazza americana. Ha trentun anni.', 'Это Кэти, американская девушка. Ей тридцать один год.'],
+  ['Katy è di Boston ma abita in Italia, a Firenze.', 'Кэти из Бостона, но живёт в Италии, во Флоренции.'],
+  ['Studia l\'italiano perché ama l\'Italia e l\'arte italiana.', 'Учит итальянский, потому что любит Италию и итальянское искусство.'],
+  ['Questa è Mei, una signora cinese. Mei ha cinquantatré anni e abita a Shanghai.', 'Это Мэй, китайская синьора. Мэй пятьдесят три года, она живёт в Шанхае.'],
+  ['Studia l\'italiano perché è una cantante d\'opera.', 'Учит итальянский, потому что она оперная певица.'],
+  ['Il cane di Mei si chiama Figaro e ha sei anni.', 'Собаку Мэй зовут Фигаро, ей шесть лет.'],
+ ], gloss:{interprete:'переводчик', cinese:'китайская', cantante:'певица', opera:'опера'}, q:[
+  {q:'Che lavoro fa Juan?', opts:['L\'interprete','Il cantante','L\'artista','Il professore'], a:0},
+  {q:'Dove abita Katy?', opts:['A Firenze','A Boston','A Madrid','A Shanghai'], a:0},
+  {q:'Chi ha un cane?', opts:['Mei','Juan','Katy','Nessuno'], a:0},
+ ]},
+
+{ id:'bar', level:2, title:'Al bar', sub:'диалог: заказать кофе', sents:[
+  ['— Buongiorno! Che cosa desidera?', '— Добрый день! Что желаете?'],
+  ['— Buongiorno. Un caffè e un cornetto, per favore.', '— Добрый день. Кофе и круассан, пожалуйста.'],
+  ['— Il caffè normale o macchiato?', '— Кофе обычный или с каплей молока?'],
+  ['— Normale, grazie. E un bicchiere d\'acqua.', '— Обычный, спасибо. И стакан воды.'],
+  ['— Subito! Lei è straniero?', '— Сейчас! Вы иностранец?'],
+  ['— Sì, sono bielorusso. Studio l\'italiano da un mese.', '— Да, я белорус. Учу итальянский месяц.'],
+  ['— Parla già bene! Ecco il caffè.', '— Вы уже хорошо говорите! Вот кофе.'],
+  ['— Grazie mille. Quanto costa?', '— Большое спасибо. Сколько стоит?'],
+  ['— Due euro e cinquanta.', '— Два евро пятьдесят.'],
+  ['— Ecco. Arrivederci!', '— Вот. До свидания!'],
+ ], gloss:{cornetto:'круассан', macchiato:'«запятнанный», с каплей молока', bicchiere:'стакан', acqua:'вода', straniero:'иностранец', mese:'месяц', ecco:'вот', euro:'евро', desidera:'желаете (Вы)'}, q:[
+  {q:'Che cosa ordina il cliente?', opts:['Un caffè e un cornetto','Un tè e un cornetto','Una pizza','Un caffè macchiato'], a:0},
+  {q:'Quanto costa?', opts:['Due euro e cinquanta','Tre euro','Due euro','Cinque euro'], a:0},
+  {q:'Da quanto tempo studia l\'italiano?', opts:['Da un mese','Da un anno','Da una settimana','Da due anni'], a:0},
+ ]},
+
+{ id:'artista', level:2, title:'La mia ragazza è un\'artista', sub:'о ней', sents:[
+  ['La mia ragazza si chiama Liza. È un\'artista.', 'Мою девушку зовут Лиза. Она художница.'],
+  ['Dipinge quadri e disegna ogni giorno.', 'Она пишет картины и рисует каждый день.'],
+  ['La mattina lavora a casa: prepara i colori e dipinge.', 'Утром она работает дома: готовит краски и пишет.'],
+  ['Ama l\'arte italiana: Leonardo, Botticelli, Caravaggio.', 'Она любит итальянское искусство: Леонардо, Боттичелли, Караваджо.'],
+  ['Vogliamo studiare in Italia, a Catania.', 'Мы хотим учиться в Италии, в Катании.'],
+  ['Lei vuole studiare pittura, io voglio studiare arte e media.', 'Она хочет изучать живопись, я хочу изучать искусство и медиа.'],
+  ['La sera guardiamo le foto della Sicilia e sogniamo.', 'Вечером мы смотрим фотографии Сицилии и мечтаем.'],
+  ['«Un giorno abitiamo al mare», dice Liza.', '«Однажды мы будем жить у моря», говорит Лиза.'],
+  ['Io rispondo: «Sì, ma prima studiamo l\'italiano!»', 'Я отвечаю: «Да, но сначала учим итальянский!»'],
+ ], gloss:{quadri:'картины', colori:'краски', pittura:'живопись', media:'медиа', giorno:'день', prima:'сначала', della:'di + la'}, q:[
+  {q:'Che cosa fa Liza ogni giorno?', opts:['Disegna e dipinge','Canta','Cucina','Lavora in un ufficio'], a:0},
+  {q:'Dove vogliono studiare?', opts:['A Catania','A Roma','A Firenze','A Minsk'], a:0},
+  {q:'Che cosa vuole studiare Liza?', opts:['Pittura','Musica','Medicina','Italiano'], a:0},
+ ]},
+
+{ id:'catania', level:2, title:'Una settimana a Catania', sub:'путешествие', sents:[
+  ['Lunedì arriviamo a Catania in aereo.', 'В понедельник мы прилетаем в Катанию на самолёте.'],
+  ['La città è grande e il mare è vicino.', 'Город большой, и море рядом.'],
+  ['Martedì visitiamo il centro e mangiamo una pizza.', 'Во вторник осматриваем центр и едим пиццу.'],
+  ['Mercoledì andiamo all\'Accademia: è bellissima!', 'В среду идём в Академию: она прекрасна!'],
+  ['Giovedì compriamo il pane e il caffè al mercato.', 'В четверг покупаем хлеб и кофе на рынке.'],
+  ['Venerdì incontriamo uno studente italiano, Paolo.', 'В пятницу встречаем итальянского студента, Паоло.'],
+  ['Paolo parla piano e noi capiamo quasi tutto.', 'Паоло говорит медленно, и мы понимаем почти всё.'],
+  ['Sabato passeggiamo al mare e nuotiamo.', 'В субботу гуляем у моря и плаваем.'],
+  ['Domenica torniamo a Minsk, stanchi ma felici.', 'В воскресенье возвращаемся в Минск, усталые, но счастливые.'],
+  ['Catania, a presto!', 'Катания, до скорого!'],
+ ], gloss:{aereo:'самолёт', città:'город', vicino:'близко, рядом', bellissima:'прекраснейшая', mercato:'рынок', piano:'медленно, тихо', quasi:'почти', presto:'скоро'}, q:[
+  {q:'Come arrivano a Catania?', opts:['In aereo','In treno','In macchina','In autobus'], a:0},
+  {q:'Chi è Paolo?', opts:['Uno studente italiano','Un professore','Un cameriere','Un artista'], a:0},
+  {q:'Quando tornano a Minsk?', opts:['Domenica','Sabato','Lunedì','Venerdì'], a:0},
+ ]},
+
+{ id:'weekend', level:2, title:'Il weekend', sub:'выходные', sents:[
+  ['Il sabato non lavoro.', 'По субботам я не работаю.'],
+  ['Mi alzo tardi, alle dieci, e faccio colazione con calma.', 'Встаю поздно, в десять, и спокойно завтракаю.'],
+  ['Poi telefono a un amico: «Ciao Marco, che cosa fai oggi?»', 'Потом звоню другу: «Привет, Марко, что делаешь сегодня?»'],
+  ['«Niente di speciale. Andiamo in centro?»', '«Ничего особенного. Пойдём в центр?»'],
+  ['In centro compriamo un libro e beviamo un caffè.', 'В центре мы покупаем книгу и пьём кофе.'],
+  ['La sera cuciniamo la pasta a casa mia.', 'Вечером готовим пасту у меня дома.'],
+  ['La domenica riposo: leggo, ascolto la musica e dormo un po\'.', 'В воскресенье отдыхаю: читаю, слушаю музыку и немного сплю.'],
+  ['Il lunedì torno al lavoro.', 'В понедельник возвращаюсь на работу.'],
+ ], gloss:{calma:'спокойствие (con calma — спокойно)', niente:'ничего', speciale:'особенный', libro:'книга'}, q:[
+  {q:'A che ora si alza il sabato?', opts:['Alle dieci','Alle sette','Alle otto','A mezzogiorno'], a:0},
+  {q:'Che cosa fanno in centro?', opts:['Comprano un libro e bevono un caffè','Vanno al cinema','Mangiano una pizza','Lavorano'], a:0},
+  {q:'Che cosa fa la domenica?', opts:['Riposa','Lavora','Va in centro','Cucina per gli amici'], a:0},
+ ]},
+
+{ id:'treno', level:3, title:'In treno per Roma', sub:'разговор в поезде', sents:[
+  ['Sono in treno. Vado a Roma per tre giorni.', 'Я в поезде. Еду в Рим на три дня.'],
+  ['Vicino a me c\'è una signora con un cane piccolo.', 'Рядом со мной синьора с маленькой собакой.'],
+  ['«Scusi, questo posto è libero?» chiedo.', '«Извините, это место свободно?» спрашиваю я.'],
+  ['«Sì, prego», risponde lei.', '«Да, пожалуйста», отвечает она.'],
+  ['«Lei è di Roma?» «No, sono di Napoli, ma abito a Roma da dieci anni.»', '«Вы из Рима?» «Нет, я из Неаполя, но живу в Риме десять лет.»'],
+  ['«E Lei? Non è italiano, vero?»', '«А Вы? Вы не итальянец, верно?»'],
+  ['«No, sono bielorusso. Studio l\'italiano e amo molto l\'Italia.»', '«Нет, я белорус. Учу итальянский и очень люблю Италию.»'],
+  ['«Parla bene! Che cosa vuole vedere a Roma?»', '«Хорошо говорите! Что хотите увидеть в Риме?»'],
+  ['«Il Colosseo, i musei e, naturalmente, voglio mangiare una vera pizza romana.»', '«Колизей, музеи и, конечно, хочу съесть настоящую римскую пиццу.»'],
+  ['La signora ride: «Allora deve andare da Baffetto, vicino a piazza Navona!»', 'Синьора смеётся: «Тогда Вы должны пойти к Баффетто, рядом с пьяцца Навона!»'],
+  ['Il treno arriva. «Grazie e arrivederci!» «Buon viaggio!»', 'Поезд прибывает. «Спасибо и до свидания!» «Счастливого пути!»'],
+ ], gloss:{treno:'поезд', giorni:'дни', "c'è":'есть, имеется', piccolo:'маленький', posto:'место', libero:'свободный', vero:'верно, правда', musei:'музеи', naturalmente:'конечно', vera:'настоящая', romana:'римская', allora:'тогда', piazza:'площадь', viaggio:'путешествие'}, q:[
+  {q:'Di dov\'è la signora?', opts:['Di Napoli','Di Roma','Di Milano','Di Firenze'], a:0},
+  {q:'Per quanti giorni va a Roma?', opts:['Tre','Dieci','Due','Sette'], a:0},
+  {q:'Che cosa vuole mangiare?', opts:['Una vera pizza romana','La pasta','Un cornetto','Un gelato'], a:0},
+ ]},
+
+{ id:'lettera', level:3, title:'Una lettera a Paolo', sub:'письмо другу', sents:[
+  ['Caro Paolo,', 'Дорогой Паоло,'],
+  ['come stai? Io sto bene, ma ho molto da fare.', 'как ты? У меня всё хорошо, но много дел.'],
+  ['Lavoro tutta la settimana e la sera frequento un corso di italiano.', 'Работаю всю неделю, а вечером хожу на курс итальянского.'],
+  ['Adesso conosco centocinquanta verbi e capisco quasi tutto quando parli piano.', 'Теперь я знаю сто пятьдесят глаголов и понимаю почти всё, когда ты говоришь медленно.'],
+  ['Liza dipinge molto: vuole preparare dieci quadri per l\'Accademia.', 'Лиза много пишет: хочет подготовить десять картин для Академии.'],
+  ['A Minsk fa già freddo. E a Catania? Fa ancora caldo?', 'В Минске уже холодно. А в Катании? Ещё жарко?'],
+  ['In gennaio vogliamo venire in Sicilia per una settimana.', 'В январе мы хотим приехать на Сицилию на неделю.'],
+  ['Puoi consigliare un appartamento vicino al centro?', 'Можешь посоветовать квартиру рядом с центром?'],
+  ['Scrivi presto! Un abbraccio,', 'Пиши скорее! Обнимаю,'],
+  ['Ilia', 'Илья'],
+ ], gloss:{caro:'дорогой', adesso:'теперь', verbi:'глаголы', quando:'когда', "fa freddo":'холодно', "fa caldo":'жарко', gennaio:'январь', consigliare:'посоветовать', appartamento:'квартира', abbraccio:'объятие'}, q:[
+  {q:'Quando vogliono venire in Sicilia?', opts:['In gennaio','In estate','A dicembre','A Pasqua'], a:0},
+  {q:'Che cosa fa Ilia la sera?', opts:['Frequenta un corso di italiano','Dipinge','Va al bar','Dorme'], a:0},
+  {q:'Che cosa chiede a Paolo?', opts:['Di consigliare un appartamento','Di venire a Minsk','Di comprare un quadro','Di telefonare'], a:0},
+ ]},
+];
+
 
 /* ====================================================================
    Транслитерация итальянского в русское чтение.
@@ -4514,6 +4731,7 @@ function showPane(id){
   if (id==='p-ref') renderRef();
   if (id==='p-les') renderLessons();
   if (id==='p-verbs') renderVerbs();
+  if (id==='p-read') renderRead();
   if (id==='p-set') renderHome();
   if (id==='p-build') renderBuild();
 }
@@ -4768,12 +4986,12 @@ function renderMC(c, mode){
   const pickOpt = b=>{
     if (SES.answered) return; SES.answered=true;
     const ok = b.dataset.k===c.key;
-    $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.k===c.key) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    $$('#sBody .opt').forEach(x=>{ x.disabled=true; if(x.dataset.k===c.key) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
     answered(c, ok, ok?2:0); feedback(c, ok);
   };
   SES.answered=false;
-  $$('.opt').forEach(b=> b.onclick=()=>pickOpt(b));
-  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+  $$('#sBody .opt').forEach(b=> b.onclick=()=>pickOpt(b));
+  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('#sBody .opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
 }
 
 /* --- режим: транскрипция (варианты-мутации) --- */
@@ -4809,13 +5027,13 @@ function renderTrans(c){
     <div class="opts">${opts.map((o,i)=>`<button class="opt" data-t="${esc(o)}"><span class="k">${i+1}</span><span>[${esc(o)}]</span></button>`).join('')}</div>
     <div class="kbd">Клавиши 1–4. Заглавная гласная — ударение.</div>`;
   SES.answered=false;
-  $$('.opt').forEach(b=> b.onclick=()=>{
+  $$('#sBody .opt').forEach(b=> b.onclick=()=>{
     if (SES.answered) return; SES.answered=true;
     const ok = b.dataset.t===c.tr;
-    $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.t===c.tr) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    $$('#sBody .opt').forEach(x=>{ x.disabled=true; if(x.dataset.t===c.tr) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
     answered(c, ok, ok?2:0); feedback(c, ok);
   });
-  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('#sBody .opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
 }
 
 /* --- режим: написание --- */
@@ -4838,7 +5056,7 @@ function renderType(c){
     inp.disabled=true; $('#chk').disabled=true;
     inp.style.borderColor = r==='no' ? 'var(--bad)' : 'var(--ok)';
     if (r==='ok'){ answered(c,true,2); feedback(c,true); }
-    else if (r==='acc'){ answered(c,true,1); feedback(c,true); $('.fb div').textContent='Почти: проверь знак ударения или апостроф'; }
+    else if (r==='acc'){ answered(c,true,1); feedback(c,true); $('#sBody .fb div').textContent='Почти: проверь знак ударения или апостроф'; }
     else { answered(c,false,0); feedback(c,false); }
   };
   SES.answered=false;
@@ -4868,13 +5086,13 @@ function renderListen(c){
     <div class="opts">${opts.map((o,i)=>`<button class="opt" data-t="${esc(o)}"><span class="k">${i+1}</span><span class="it">${esc(o)}</span></button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
   wireSpeak(body); speak(ttsText(c));
   SES.answered=false;
-  $$('.opt').forEach(b=> b.onclick=()=>{
+  $$('#sBody .opt').forEach(b=> b.onclick=()=>{
     if (SES.answered) return; SES.answered=true;
     const ok = b.dataset.t===c.it;
-    $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.t===c.it) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    $$('#sBody .opt').forEach(x=>{ x.disabled=true; if(x.dataset.t===c.it) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
     answered(c, ok, ok?2:0); feedback(c, ok);
   });
-  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('#sBody .opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
 }
 /* --- режим: диктант (фраза на слух → набрать целиком) --- */
 function lev(a,b){ const m=a.length,n=b.length; if(!m) return n; if(!n) return m; let prev=[...Array(n+1).keys()], cur=[];
@@ -4893,7 +5111,7 @@ function renderDictation(c){
     const g = d===0 ? 3 : (d<=2 ? 1 : 0); const ok = g>0;
     inp.disabled=true; $('#chk').disabled=true; inp.style.borderColor = ok?'var(--ok)':'var(--bad)';
     answered(c, ok, ok?(d===0?2:1):0); feedback(c, ok);
-    if (ok && d>0) $('.fb div').textContent = 'Почти: '+d+(d===1?' опечатка':' опечатки')+', сравни с образцом';
+    if (ok && d>0) $('#sBody .fb div').textContent = 'Почти: '+d+(d===1?' опечатка':' опечатки')+', сравни с образцом';
     if (!ok && a) $('.fb').insertAdjacentHTML('afterbegin', `<div class="muted" style="font-size:13px">Ты написал: <span class="it">${esc(inp.value)}</span></div>`);
   };
   $('#chk').onclick=check; inp.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); if(!SES.answered) check(); else $('#nx')?.click(); } };
@@ -5070,10 +5288,10 @@ function ndStep(){
     const opts = shuffle([t.n, ...ndDistract(t.n, ndPool())]);
     body.innerHTML = head + `<div class="q"><div class="huge">${t.n}</div><div class="note">Как это по-итальянски?</div></div>
       <div class="opts">${opts.map((o,i)=>`<button class="opt" data-n="${o}"><span class="k">${i+1}</span><span class="it">${numWord(o)[0]}</span></button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
-    $$('.opt').forEach(b=> b.onclick=()=>{ if(SES.answered) return; SES.answered=true; const ok = +b.dataset.n===t.n;
-      $$('.opt').forEach(x=>{ x.disabled=true; if(+x.dataset.n===t.n) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    $$('#sBody .opt').forEach(b=> b.onclick=()=>{ if(SES.answered) return; SES.answered=true; const ok = +b.dataset.n===t.n;
+      $$('#sBody .opt').forEach(x=>{ x.disabled=true; if(+x.dataset.n===t.n) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
       ndFeedback(t, ok); });
-    SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+    SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('#sBody .opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
     return;
   }
   // w2n / hear / phone — ввод цифр
@@ -5737,9 +5955,9 @@ function vdStep(){
       ? `<div class="q"><div class="mid it">${esc(t.text).replace('___','<b style="color:var(--accent)">___</b>')}</div><div class="note ruhide">${esc(t.ru)}</div></div>`
       : `<div class="q"><div class="big"><span class="muted" style="font-weight:400">${esc(PRON[t.p])} <small>(${esc(PRON_RU[t.p])})</small></span> · <span class="it">${esc(t.v)}</span></div><div class="note">${esc(V.ru)}<span class="ruhide">${VD.ru?` — «${esc(V.r[t.p])}»`:''}</span></div></div>`;
     body.innerHTML = head + q + `<div class="opts">${opts.map((f,k)=>`<button class="opt" data-f="${esc(f)}"><span class="k">${k+1}</span><span class="it">${esc(f)}</span>${VD.ru?`<span class="ru ruhide">${esc(V.r[V.f.indexOf(f)])}</span>`:''}</button>`).join('')}</div><div class="kbd">Клавиши 1–4</div>`;
-    $$('.opt').forEach(b=> b.onclick=()=>{ if(SES.answered) return; SES.answered=true; const ok = b.dataset.f===ans;
-      $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.f===ans) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); }); finish(ok); });
-    SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+    $$('#sBody .opt').forEach(b=> b.onclick=()=>{ if(SES.answered) return; SES.answered=true; const ok = b.dataset.f===ans;
+      $$('#sBody .opt').forEach(x=>{ x.disabled=true; if(x.dataset.f===ans) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); }); finish(ok); });
+    SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('#sBody .opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
     return;
   }
   if (t.m==='end'){
@@ -5821,17 +6039,17 @@ function lsChoice({head, q, opts, ans, fb, say, cls='opts', kbd='Клавиши 
   const body = $('#sBody');
   body.innerHTML = head + q + `<div class="${cls}">${opts.map((o,i)=>`<button class="opt" data-v="${esc(o.v)}">${cls==='opts'?`<span class="k">${i+1}</span>`:''}<span class="it">${o.h}</span>${o.x||''}</button>`).join('')}</div><div class="kbd">${kbd}</div>`;
   wireSpeak(body); SES.answered=false;
-  $$('.opt').forEach(b=> b.onclick=()=>{
+  $$('#sBody .opt').forEach(b=> b.onclick=()=>{
     if (SES.answered) return; SES.answered=true;
     const ok = b.dataset.v===String(ans);
-    $$('.opt').forEach(x=>{ x.disabled=true; if(x.dataset.v===String(ans)) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+    $$('#sBody .opt').forEach(x=>{ x.disabled=true; if(x.dataset.v===String(ans)) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
     if (ok) SES.stats.ok++; else SES.stats.bad++;
     const el=document.createElement('div'); el.className='fb '+(ok?'ok':'no');
     el.innerHTML = `<div>${ok?'Верно':'Неверно'}</div>` + fb(ok) + (say && S().tts && window.speechSynthesis ? `<div style="margin-top:6px"><button class="spk" data-say="${esc(say)}">${ICO('sound')} послушать</button></div>` : '') + lsNext();
     body.appendChild(el); wireSpeak(el); if (say && S().ttsAuto) speak(say);
     $('#nx').onclick=()=>{ SES.i++; onDone(ok); }; $('#nx').focus(); el.scrollIntoView({block:'nearest'});
   });
-  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('.opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
+  SES.keys = k=>{ if (/^[1-4]$/.test(k) && !SES.answered) $$('#sBody .opt')[+k-1]?.click(); else if ((k==='Enter'||k===' ') && SES.answered) $('#nx')?.click(); };
 }
 // задание с вводом. check(value) → {ok, g?}; fb(ok, value) → html
 function lsInput({head, q, placeholder='…', check, fb, say, kbd='Enter — проверить'}, onDone){
@@ -6240,13 +6458,85 @@ function renderPlay(el){
   draw();
 }
 
+
+/* ---------------- чтение ---------------- */
+const RD = { cur:null };
+function renderRead(){
+  const done = Object.keys(ST.read||{}).length;
+  $('#readSub').textContent = `прочитано ${done} из ${TEXTS.length}`;
+  $('#readList').innerHTML = TEXTS.map(t=>{ const st=(ST.read||{})[t.id];
+    return `<button class="text" data-t="${t.id}"><span class="top"><span class="lv">уровень ${t.level}</span><span class="${st?'done':''}">${st ? 'прочитано' : t.sents.length+' предложений'}</span></span><b>${esc(t.title)}</b><small>${esc(t.sub)}</small></button>`; }).join('');
+  $$('#readList .text').forEach(b=> b.onclick=()=> openText(b.dataset.t));
+  $('#readList').classList.remove('hidden'); $('#reader').classList.add('hidden'); hideTip();
+}
+const wclean = w => w.toLowerCase().replace(/[^a-zàèéìòù'’]/g,'').replace(/’/g,"'");
+function lookupWord(w, T){
+  const k = wclean(w); if (!k) return null;
+  const g = T && T.gloss;
+  const tryK = key => {
+    if (g && g[key]) return {it:key, ru:g[key], meta:'из текста'};
+    const c = CARDS.find(c=> c.deck!=='alfa' && norm(c.it)===key) || CARDS.find(c=> c.deck!=='alfa' && norm(c.it).split(' / ')[0]===key);
+    if (c) return {it:c.it, ru:c.ru, tr:c.tr, meta:c.note||''};
+    for (const [v,V] of Object.entries(VERBS)){ const i=V.f.findIndex(f=> f===key || f.split(' ').pop()===key); if (i>=0) return {it:V.f[i], ru:V.r[i], tr:V.tr[i], meta:`${v} — ${V.ru}`}; }
+    return null;
+  };
+  let r = tryK(k); if (r) return r;
+  if (k.includes("'")){ const parts=k.split("'"); r = tryK(parts[parts.length-1]); if (r) return {...r, meta:(parts[0]+"' + "+r.it+(r.meta?' · '+r.meta:''))}; }
+  const stripped = k.replace(/^(il|lo|la|l'|i|gli|le|un|una|uno|un')\s*/,''); if (stripped!==k){ r=tryK(stripped); if (r) return r; }
+  const forms = {'mi':'себя (я); мне','ti':'себя (ты); тебе','si':'себя (он/она/они)','ci':'себя (мы); нас','vi':'себя (вы); вас','lo':'его; артикль','la':'её; артикль','li':'их','le':'их (ж.); ей','gli':'ему; артикль','ne':'об этом','che':'что; который','chi':'кто','cosa':'что','come':'как','dove':'где','quando':'когда','perché':'почему; потому что','quanto':'сколько','quanti':'сколько','anche':'тоже','ancora':'ещё','già':'уже','sempre':'всегда','mai':'никогда','molto':'очень; много','poco':'мало','tanto':'много','tutto':'всё','tutta':'вся','tutti':'все','ogni':'каждый','oggi':'сегодня','domani':'завтра','ieri':'вчера','adesso':'сейчас','poi':'потом','prima':'сначала','dopo':'после','qui':'здесь','lì':'там','là':'там','con':'с','senza':'без','per':'для; чтобы','tra':'между; через','fra':'между; через','su':'на','da':'от; у','del':'di + il','della':'di + la','dei':'di + i','delle':'di + le','al':'a + il','alla':'a + la','ai':'a + i','alle':'a + le; в … часов','nel':'in + il','nella':'in + la','dal':'da + il','sul':'su + il','e':'и','ed':'и (перед гласной)','ma':'но','o':'или','se':'если','non':'не','sì':'да','no':'нет','anni':'лет, годы','anno':'год','mese':'месяц','giorno':'день','sera':'вечер','mattina':'утро','notte':'ночь','casa':'дом','mare':'море','amico':'друг','amica':'подруга','amici':'друзья','questo':'этот','questa':'эта','quello':'тот','quella':'та','mio':'мой','mia':'моя','tuo':'твой','tua':'твоя','suo':'его; её; Ваш','sua':'его; её; Ваша','nostro':'наш','vostro':'ваш','loro':'они; их','lui':'он','lei':'она; Вы','noi':'мы','voi':'вы','io':'я','tu':'ты','uno':'один','due':'два','tre':'три','sei':'шесть; ты есть','dieci':'десять','più':'больше; плюс','meno':'меньше; минус','bene':'хорошо','male':'плохо','grazie':'спасибо','prego':'пожалуйста','scusi':'извините (Вы)','scusa':'извини','ecco':'вот','allora':'тогда; итак','forse':'может быть','davvero':'правда','subito':'сразу'};
+  if (forms[k]) return {it:k, ru:forms[k], meta:''};
+  return null;
+}
+function hideTip(){ $('#wtip').classList.add('hidden'); $$('#readBody .w.on').forEach(x=>x.classList.remove('on')); }
+function showTip(el, T){
+  const r = lookupWord(el.dataset.w, T);
+  const tip = $('#wtip');
+  tip.innerHTML = r ? `<b>${esc(r.it)}</b>${r.tr?`<span class="t">[${esc(r.tr)}]</span>`:''}<div>${esc(r.ru)}</div>${r.meta?`<div class="m">${esc(r.meta)}</div>`:''}` : `<b>${esc(el.dataset.w)}</b><div class="m">нет в словаре</div>`;
+  tip.classList.remove('hidden');
+  const rc = el.getBoundingClientRect(); const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = rc.left + rc.width/2 - tw/2; x = Math.max(8, Math.min(window.innerWidth - tw - 8, x));
+  let y = rc.top - th - 8; if (y < 8) y = rc.bottom + 8;
+  tip.style.left = x+'px'; tip.style.top = y+'px';
+  $$('#readBody .w.on').forEach(x=>x.classList.remove('on')); el.classList.add('on');
+  if (S().tts && r && r.it) speak(r.it);
+}
+function sentHTML(s, tr){
+  // каждое слово — кликабельно; ударение точкой
+  return s.split(/(\s+)/).map(p=>{ if (/^\s*$/.test(p)) return p; const m = p.match(/^([^A-Za-zÀ-ÿ]*)([A-Za-zÀ-ÿ'’]+)([^A-Za-zÀ-ÿ]*)$/); if (!m) return esc(p);
+    return esc(m[1]) + `<span class="w" data-w="${esc(m[2])}">${accIt(m[2])}</span>` + esc(m[3]); }).join('');
+}
+function openText(id){
+  const T = TEXTS.find(t=>t.id===id); if (!T) return; RD.cur = T;
+  $('#readList').classList.add('hidden'); $('#reader').classList.remove('hidden');
+  const body = $('#readBody');
+  body.className = 'reader' + (S().rdRu!==false ? ' ru' : '') + (S().rdAcc!==false ? ' acc' : '');
+  $('#rdRu').classList.toggle('on', S().rdRu!==false); $('#rdAcc').classList.toggle('on', S().rdAcc!==false);
+  body.innerHTML = `<h2>${esc(T.title)}</h2><div class="lead">${esc(T.sub)} · уровень ${T.level} · нажми на слово, чтобы увидеть перевод</div>` +
+    T.sents.map(([it,ru])=>`<div class="sent"><div class="itx">${sentHTML(it)}</div><div class="rux">${esc(ru)}</div>${S().tts&&window.speechSynthesis?`<button class="sp" data-say="${esc(it.replace(/^—\s*/,''))}">${ICO('sound')}</button>`:''}</div>`).join('') +
+    `<div class="rq"><h3>Проверь себя</h3>${T.q.map((q,qi)=>`<div class="qq" data-q="${qi}"><div class="qt">${esc(q.q)}</div><div class="opts">${q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="it">${esc(o)}</span></button>`).join('')}</div></div>`).join('')}
+     <button class="pri" id="rdDone">Прочитано</button></div>`;
+  wireSpeak(body);
+  $$('#readBody .w').forEach(w=> w.onclick = e=>{ e.stopPropagation(); if (w.classList.contains('on')) hideTip(); else showTip(w, T); });
+  $$('#readBody .qq').forEach(qq=>{ const q=T.q[+qq.dataset.q]; $$('.opt', qq).forEach(b=> b.onclick=()=>{ if (qq.dataset.done) return; qq.dataset.done='1'; const ok=+b.dataset.i===q.a;
+      $$('.opt', qq).forEach(x=>{ x.disabled=true; if(+x.dataset.i===q.a) x.classList.add('good'); else if(x===b) x.classList.add('bad'); else x.classList.add('dim'); });
+      const fb=document.createElement('div'); fb.className='fb '+(ok?'ok':'no'); fb.innerHTML=`<div>${ok?'Верно':'Неверно'}</div>`; qq.appendChild(fb); }); });
+  $('#rdDone').onclick = ()=>{ (ST.read ||= {})[T.id] = {at:now()}; save(); renderRead(); window.scrollTo(0,0); };
+  window.scrollTo(0,0);
+}
+$('#readBack').onclick = ()=> renderRead();
+$('#rdRu').onclick = ()=>{ S().rdRu = S().rdRu===false ? true : false; save(); $('#readBody').classList.toggle('ru', S().rdRu!==false); $('#rdRu').classList.toggle('on', S().rdRu!==false); };
+$('#rdAcc').onclick = ()=>{ S().rdAcc = S().rdAcc===false ? true : false; save(); $('#readBody').classList.toggle('acc', S().rdAcc!==false); $('#rdAcc').classList.toggle('on', S().rdAcc!==false); };
+$('#rdSay').onclick = ()=>{ if (!RD.cur) return; speak(RD.cur.sents.map(s=>s[0].replace(/^—\s*/,'')).join(' ')); };
+document.addEventListener('click', e=>{ if (!e.target.closest('#wtip') && !e.target.closest('.w')) hideTip(); });
+
 /* ---------------- старт ---------------- */
 load(); mountMine(); applyLook(); applyRu(); initSettings(); initComposer(); syncSettingsUI(); renderHome();
 
 if (location.hash.startsWith('#shot=')){
   save = ()=>{};   // отладочный режим: ничего не сохранять
   const what = location.hash.slice(6);
-  if (['phr','num','ref','set','all','les','build','more','study','verbs'].includes(what)) showPane('p-'+what);
+  if (['phr','num','ref','set','all','les','build','more','study','verbs','read'].includes(what)) showPane('p-'+what);
+  else if (what.startsWith('text:')){ showPane('p-read'); openText(what.slice(5)); $('#rdRu').click(); }
   else if (what==='verbopen'){ showPane('p-verbs'); $$('#vList .vrow')[2].querySelector('.vh').click(); }
   else if (what==='own'){ showPane('p-build'); $$('#buildSeg button')[1].click(); CMP.two=true; renderComposer(); }
   else if (what.startsWith('lesson:')){ const [id,n] = what.slice(7).split('/'); startLesson(id); for (let k=0;k<(+n||0);k++){ SES.i++; } lsStep(); }
@@ -6266,7 +6556,7 @@ if (location.hash.startsWith('#shot=')){
     else if (what==='mcru'||what==='mcit') renderMC(c, what);
     else if (what==='trans') renderTrans(c);
     else if (what==='type') renderType(c);
-    else if (what==='fb'){ renderMC(c,'mcru'); $$('.opt')[1].click(); }
+    else if (what==='fb'){ renderMC(c,'mcru'); $$('#sBody .opt')[1].click(); }
   }
 }
 /* ---------------- самопроверка (#selftest) — для отладки, пользователю не нужна ---------------- */
@@ -6298,7 +6588,7 @@ if (location.hash.startsWith('#selftest')){
     const mode = item.mode; if (mode) seenModes[mode]=(seenModes[mode]||0)+1;
     if ($('#revealBtn')){ $('#revealBtn').click(); const gb=$(`.grades button[data-g="${step%4}"]`); if(!gb){ errs.push('no grades after reveal; mode='+mode+' body='+$('#sBody').innerHTML.replace(/\s+/g,' ').slice(0,400)); break; } gb.click(); continue; }
     if ($('#ti')){ $('#ti').value = step%2? item.c.it : 'xxx'; $('#chk').click(); $('#nx').click(); continue; }
-    if ($$('.opt').length){ $$('.opt')[step%4].click(); if(!$('#nx')) errs.push('no next after opt in '+mode); else $('#nx').click(); continue; }
+    if ($$('#sBody .opt').length){ $$('#sBody .opt')[step%4].click(); if(!$('#nx')) errs.push('no next after opt in '+mode); else $('#nx').click(); continue; }
     if ($('#nx')){ $('#nx').click(); continue; }
     errs.push('stuck at step '+step+' mode='+mode); break;
   }
@@ -6316,14 +6606,14 @@ if (location.hash.startsWith('#selftest')){
   }catch(e){ errs.push('FATAL '+e.message+' '+(e.stack||'').split(String.fromCharCode(10))[1]); }
   try{ endSession(); startSession(['fr']); log.push('fr-only session q='+SES.q.length+' decks='+[...new Set(SES.q.map(x=>x.c.deck))].join(',')); endSession(); }catch(e){ errs.push('fr session: '+e.message); }
   try{ ND.modes=['n2w','w2n']; ND.range='100'; ND.count=8; startNumDrill(); let steps=0;
-    while (SES && SES.i<SES.q.length && steps<40){ steps++; if($('#ti')){ $('#ti').value=String(SES.q[SES.i].n); $('#chk').click(); } else { $$('.opt')[0].click(); } $('#nx').click(); }
+    while (SES && SES.i<SES.q.length && steps<40){ steps++; if($('#ti')){ $('#ti').value=String(SES.q[SES.i].n); $('#chk').click(); } else { $$('#sBody .opt')[0].click(); } $('#nx').click(); }
     log.push('num drill done: '+JSON.stringify(SES.stats)+' hist='+(ST.nd||[]).length); endSession(); }catch(e){ errs.push('num drill: '+e.message); }
   try{ const res=[]; LESSONS.forEach(L=>{ startLesson(L.id); let steps=0;
       while (SES && SES.i<SES.q.length && steps<200){ steps++;
         if ($('#bBank')){ const st=SES.q[SES.i]; const words=bTok(st.it); words.forEach(w=>{ const b=$$('#bBank .tile').find(t=>!t.classList.contains('used') && t.textContent===w); if(b) b.click(); }); $('#chk').click(); $('#nx').click(); continue; }
         if ($('#ti')){ const st=SES.q[SES.i]; $('#ti').value = st.t==='form' ? VERBS[st.verb].f[st.p] : 'x'; $('#chk').click(); $('#nx').click(); continue; }
         if ($('#revealBtn')){ $('#revealBtn').click(); $('.grades button[data-g=\"2\"]').click(); continue; }
-        if ($$('.opt').length){ $$('.opt')[0].click(); if(!$('#nx')){ errs.push('lesson '+L.id+' no next'); break; } $('#nx').click(); continue; }
+        if ($$('#sBody .opt').length){ $$('#sBody .opt')[0].click(); if(!$('#nx')){ errs.push('lesson '+L.id+' no next'); break; } $('#nx').click(); continue; }
         if ($('#nx')){ $('#nx').click(); continue; }
         errs.push('lesson '+L.id+' stuck at '+SES.i); break; }
       res.push(L.id+':'+SES.stats.ok+'/'+(SES.stats.ok+SES.stats.bad)); endSession(); });
@@ -6333,14 +6623,15 @@ if (location.hash.startsWith('#selftest')){
   try{ showPane('p-build'); const samples=[]; [[0,'parlare',0,false,false],[2,'essere',4,true,false],[5,'avere',0,false,true],[10,'essere',5,false,false],[12,'abitare',1,false,false],[4,'studiare',0,false,true]].forEach(([si,v,ci,neg,q])=>{ CMP.s=si; CMP.v=v; CMP.c=ci; CMP.neg=neg; CMP.q=q; CMP.two=false; renderComposer(); samples.push(compose().it+' = '+compose().ru); });
     CMP.two=true; CMP.conj=2; CMP.s2=0; CMP.v2='amare'; CMP.c2=0; renderComposer(); samples.push(compose().it); $('#cSave').click(); log.push('composer: '+samples.join(' || ')+' | mine='+(ST.mine||[]).length+' cards mine='+CARDS.filter(c=>c.deck==='mine').length+' wide: '+wide().join(', ')); }catch(e){ errs.push('composer: '+e.message); }
   try{ showPane('p-ref'); openTopic('g3', true); const n=REF.secs.length; REF.secs[1].h.click(); log.push('ref g3 secs='+n+' open='+$$('#refContent h3.acc.open').length+' hidden='+$$('#refContent .acc-hide').length+' wide: '+wide().join(', ')); openTopic('g13', true); log.push('g13 secs='+REF.secs.length+' cloned h3='+$$('#refContent h3').length+' topics='+REF.topics.length+' secs: '+[...new Set(REF.topics.map(t=>t.sec))].join(' / ')); openTopic('g10', true); log.push('g10 conj tables='+$$('#refContent .conj table').length); }catch(e){ errs.push('accordion: '+e.message); }
-  try{ startVerbDrillWith(['end'],'all'); let steps=0; while (SES && SES.i<SES.q.length && steps<40){ steps++; const t=SES.q[SES.i]; if($('#ti')){ const sp=splitEnding(t.v,t.p); $('#ti').value = sp?sp[1]:VERBS[t.v].f[t.p]; $('#chk').click(); } else { $$('.opt')[0].click(); } $('#nx').click(); } log.push('end drill: '+JSON.stringify(SES.stats)); endSession(); }catch(e){ errs.push('end drill: '+e.message); }
+  try{ startVerbDrillWith(['end'],'all'); let steps=0; while (SES && SES.i<SES.q.length && steps<40){ steps++; const t=SES.q[SES.i]; if($('#ti')){ const sp=splitEnding(t.v,t.p); $('#ti').value = sp?sp[1]:VERBS[t.v].f[t.p]; $('#chk').click(); } else { $$('#sBody .opt')[0].click(); } $('#nx').click(); } log.push('end drill: '+JSON.stringify(SES.stats)); endSession(); }catch(e){ errs.push('end drill: '+e.message); }
   log.push('acc: '+['telefono','parliamo','famiglia','città','Sono di Minsk.',"l'italiano",'ciao','buongiorno','studiare','capiscono'].map(w=>accIt(w).replace(/<span class="acc">(.)<\/span>/,'[$1]')).join(' '));
+  try{ showPane('p-read'); const nt=$$('#readList .text').length; openText('bar'); const ns=$$('#readBody .sent').length; $$('#readBody .w')[3].click(); const tip=$('#wtip').textContent.trim().slice(0,40); $$('#readBody .rq .opt')[0].click(); const lk=['caffè','parlo','dipinge','mi','cornetto','ragazza','vogliamo'].map(w=>w+'='+(lookupWord(w, TEXTS[4])||{}).ru).join(' | '); log.push('read: texts='+nt+' sents='+ns+' tip='+tip+' quiz fb='+($('#readBody .rq .fb')?'ok':'none')+' | '+lk+' wide: '+wide().join(', ')); }catch(e){ errs.push('read: '+e.message+' '+(e.stack||'').split(String.fromCharCode(10))[1]); }
   try{ showPane('p-verbs'); const n=$$('#vList .vrow').length; $$('#vList .vrow')[0].querySelector('.vh').click(); VB.q='dorm'; renderVerbs(); const nq=$$('#vList .vrow').length; VB.q=''; VB.g='rfl'; renderVerbs(); const nr=$$('#vList .vrow').length; VB.g='all'; renderVerbs(); log.push('verbs='+n+' search dorm='+nq+' rfl='+nr+' open ring='+$$('#vList .vrow.open .rn').length+' total VERBS='+Object.keys(VERBS).length+' wide: '+wide().join(', ')); }catch(e){ errs.push('verbs: '+e.message); }
   try{ showPane('p-ref'); openTopic('g3', true); const lv=$('#refContent .live'); $$('.row.pr button', lv)[3].click(); $$('.row.vb button', lv)[1].click(); const pl=$('#refContent .play'); $('select', pl).value='5'; $('select', pl).dispatchEvent(new Event('change')); log.push('live: '+$('.res .f', lv).textContent+' / '+$('.res .t', lv).textContent+' | play: '+$('.out .it', pl).textContent+' wide: '+wide().join(', ')); openTopic('g6', true); $('#refContent .fnode.more').click(); log.push('fnode more open='+$$('#refContent .fnode.more.open').length); }catch(e){ errs.push('live: '+e.message+' '+(e.stack||'').split(String.fromCharCode(10))[1]); }
   try{ showPane('p-les'); log.push('lesson list='+$$('#lessonList .lesson').length+' wide: '+wide().join(', ')); showPane('p-study'); log.push('today wide: '+wide().join(', ')); }catch(e){ errs.push('les pane: '+e.message); }
   log.push('phrase groups: '+phrGroups().length+' | select opts='+$('#phrGroup').options.length+' | '+phrGroups().join(' · '));
   try{ VD.modes=['pick','type','gap']; startVerbDrill(); let steps=0;
-    while (SES && SES.i<SES.q.length && steps<40){ steps++; const t=SES.q[SES.i]; if($('#ti')){ $('#ti').value=VERBS[t.v].f[t.p]; $('#chk').click(); } else { $$('.opt')[0].click(); } $('#nx').click(); }
+    while (SES && SES.i<SES.q.length && steps<40){ steps++; const t=SES.q[SES.i]; if($('#ti')){ $('#ti').value=VERBS[t.v].f[t.p]; $('#chk').click(); } else { $$('#sBody .opt')[0].click(); } $('#nx').click(); }
     log.push('verb drill done: '+JSON.stringify(SES.stats)+' gaps='+GAPS.length); endSession(); }catch(e){ errs.push('verb drill: '+e.message); }
   log.push('ERRORS: '+(errs.length? errs.join(' || ') : 'none'));
   localStorage.removeItem(LS);
